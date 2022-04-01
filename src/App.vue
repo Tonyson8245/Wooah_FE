@@ -1,26 +1,55 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <TopHeader :PageCondition="PageCondition" />
+  <body>
+    <div class="web--content">
+      <router-view @ChangePageCondition="ChangePageCondition" />
+    </div>
+  </body>
+  <BottomFooter />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TopHeader from "./components/TopHeader.vue";
+import BottomFooter from "./components/BottomFooter.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    TopHeader,
+    BottomFooter,
+  },
+  data() {
+    return {
+      PageCondition: ["", ""],
+    };
+  },
+  methods: {
+    ChangePageCondition(page) {
+      let newArray = ["", ""];
+
+      this.PageCondition = [...newArray];
+      switch (page) {
+        case "collection":
+          this.PageCondition[0] = "active";
+          break;
+        case "shop":
+          this.PageCondition[1] = "active";
+          break;
+      }
+    }, // 각 컴포넌트에서 본인으로 바뀌었다고 신호를 줌 -> 위쪽에서 이걸 TopHeader로 전달함
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+@import "./assets/style.scss";
+
+.web--content {
+  padding: 0 15% 0 15%;
+  background: #ffffff;
+
+  @include tablet {
+    padding: 0 0 0 0;
+  }
 }
 </style>
