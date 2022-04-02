@@ -71,8 +71,9 @@
           />
           <!-- 태그끝 -->
           <!-- 하단 사진들 시작 -->
-          <div
+          <infinite-scroll
             :class="ImageContainerMove"
+            @infinite-scroll="loadDataFromLocal"
             class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 g-0 images__container"
           >
             <PostImage
@@ -86,7 +87,7 @@
                 this.Clicked_post_index = i;
               "
             />
-          </div>
+          </infinite-scroll>
         </div>
         <!-- 전체 컨테이너 -->
       </div>
@@ -177,8 +178,9 @@
 </template>
 
 <script>
+import InfiniteScroll from "infinite-loading-vue3";
 import PostImage from "./PostImage.vue";
-import posts from "../../assets/dummy/gallery";
+import dummyposts from "../../assets/dummy/gallery";
 import color from "../../assets/dummy/color";
 import FilterView from "./FilterView.vue";
 
@@ -187,7 +189,8 @@ export default {
   data() {
     return {
       //외부 데이터 시작
-      posts: posts,
+      dummyposts,
+      posts: "",
       color: color,
       //외부 데이터 끝
       // 내부 상태 데이터
@@ -243,6 +246,12 @@ export default {
       //필터 끝
     };
   },
+  mounted() {
+    //데이터 가져오는 코드 여기 넣쟈
+    this.posts = this.dummyposts;
+    this.loadDataFromLocal();
+    this.$emit("ChangePageCondition", "collection");
+  }, // 생성 될때 포스트 데이터를 가져오게 한다.
   methods: {
     ClickNextPost() {
       this.Clicked_post_index += 1;
@@ -330,6 +339,14 @@ export default {
         this.SetFilter.handfoot[index] = true;
       }
     },
+    async loadDataFromLocal() {
+      try {
+        const result = dummyposts;
+        this.posts.push(...result);
+      } catch (err) {
+        console.log("로드 실패");
+      }
+    },
   },
   watch: {
     Clicked_post_index() {
@@ -347,9 +364,7 @@ export default {
   components: {
     PostImage,
     FilterView,
-  },
-  mounted() {
-    this.$emit("ChangePageCondition", "collection");
+    InfiniteScroll,
   },
 };
 </script>
