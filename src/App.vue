@@ -52,4 +52,7 @@ export default {
     padding: 0 0 0 0;
   }
 }
+.col {
+  width: 100%;
+}
 </style>

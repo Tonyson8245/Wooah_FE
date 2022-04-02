@@ -1,5 +1,5 @@
 <template>
-  <div class="outer align-middle" @click="CheckShape">
+  <div class="outer align-middle" @click="CheckLimbs">
     <div class="check" :class="Checked">
       <i class="bi bi-check-lg bi-secondary" style="color: black"></i>
     </div>
@@ -9,11 +9,10 @@
 
 <script>
 export default {
-  name: "ShapePalette.vue",
+  name: "HandfootPalette.vue",
   props: {
-    shape: Object,
-    tempFilterfull: Boolean,
-    SetFilterShape: Boolean,
+    limbs: Object,
+    SetFilterLimbs: Boolean,
     FilterCategory: String,
   },
   data() {
@@ -22,10 +21,10 @@ export default {
     };
   },
   methods: {
-    CheckShape() {
-      this.$emit("CheckFilter", this.shape.id);
+    CheckLimbs() {
+      this.$emit("CheckFilter", this.limbs.id);
 
-      if (this.Checked == "d-none" && !this.tempFilterfull) {
+      if (this.Checked == "d-none") {
         this.Checked = "visible";
       } else {
         this.Checked = "d-none";
@@ -34,8 +33,8 @@ export default {
   },
   watch: {
     FilterCategory(data) {
-      if (data == "" || data != "디자인 쉐입") {
-        if (this.SetFilterShape == true) this.Checked = "visible";
+      if (data == "" || data != "손발") {
+        if (this.SetFilterLimbs == true) this.Checked = "visible";
         else this.Checked = "d-none";
       }
     },
@@ -56,13 +55,13 @@ export default {
 }
 .check {
   position: absolute;
-  left: 32%;
-  top: 15%;
+  left: 41%;
+  top: 10%;
   z-index: 2;
   font-size: 30px;
   @include mobile-s {
-    top: 5%;
-    left: 29%;
+    top: 9%;
+    left: 39%;
   }
 }
 .img {

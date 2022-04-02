@@ -17,6 +17,8 @@ export default {
   props: {
     color: Object,
     tempFilterfull: Boolean,
+    SetFilterColor: Boolean,
+    FilterCategory: String,
   },
   data() {
     return {
@@ -25,12 +27,20 @@ export default {
   },
   methods: {
     CheckColor() {
-      this.$emit("CheckColor", this.color.name);
+      this.$emit("CheckFilter", this.color.id);
 
-      if (this.Checked == "d-none" && this.tempFilterfull) {
+      if (this.Checked == "d-none" && !this.tempFilterfull) {
         this.Checked = "visible";
       } else {
         this.Checked = "d-none";
+      }
+    },
+  },
+  watch: {
+    FilterCategory(data) {
+      if (data == "" || data != "디자인 컬러") {
+        if (this.SetFilterColor == true) this.Checked = "visible";
+        else this.Checked = "d-none";
       }
     },
   },

@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import UltimateScroll from "../UltimateScroll.vue";
+import UltimateScroll from "./UltimateScroll.vue";
 export default {
   name: "ShopPage",
   mounted() {

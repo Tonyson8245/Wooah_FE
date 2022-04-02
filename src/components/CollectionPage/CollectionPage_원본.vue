@@ -26,7 +26,7 @@
                 class="btn dropdown-toggle btn-sm"
                 type="button"
                 :style="ButtonFocusSetting"
-                @click="FilterOpen('디자인 컬러')"
+                @click="FilterShowing('디자인 컬러')"
               >
                 <span class="btn__name">디자인 컬러</span>
               </button>
@@ -36,7 +36,7 @@
                 class="btn dropdown-toggle btn-sm"
                 :style="ButtonFocusSetting"
                 type="button"
-                @click="FilterOpen('디자인 쉐입')"
+                @click="FilterShowing('디자인 쉐입')"
               >
                 <span class="btn__name">디자인 쉐입</span>
               </button>
@@ -46,7 +46,7 @@
                 class="btn dropdown-toggle btn-sm"
                 :style="ButtonFocusSetting"
                 type="button"
-                @click="FilterOpen('옵션')"
+                @click="FilterShowing('옵션')"
               >
                 <span class="btn__name">옵션</span>
               </button>
@@ -56,23 +56,63 @@
                 class="btn dropdown-toggle btn-sm"
                 :style="ButtonFocusSetting"
                 type="button"
-                @click="FilterOpen('손발')"
+                @click="FilterShowing('손발')"
               >
                 <span class="btn__name">손발</span>
               </button>
             </div>
           </div>
-          <FilterView
-            class="filter_content"
-            :class="FilterStatus"
-            :FilterCategory="FilterCategory"
-            :SetFilter="SetFilter"
-            @ClickApply="FilterApply($event)"
-          />
+
+          <div class="filter__btn" :class="FilterShowed">
+            <h6 class="filter_title">{{ FilterCondition }}</h6>
+            <div :class="FilterSelected[0]" class="row filter__outer">
+              <ColorPaltte
+                class="col-3"
+                v-for="color in colors"
+                :key="color"
+                :color="color"
+                :tempFilterfull="tempFilterfull"
+                @CheckColor="InsertTempFilter($event)"
+              />
+            </div>
+            <div :class="FilterSelected[1]" class="row filter__outer">
+              <ShapePalette
+                class="col-3"
+                v-for="shape in shapes"
+                :key="shape"
+                :shape="shape"
+              />
+            </div>
+            <div :class="FilterSelected[2]" class="row filter__outer">
+              <OptionPalette
+                class="col-3"
+                v-for="shape in shapes"
+                :key="shape"
+                :shape="shape"
+              />
+            </div>
+            <div
+              :class="FilterSelected[3]"
+              class="row filter__outer"
+              style="padding: 20% 0 10% 0"
+            >
+              <OptionPalette
+                class="col-6"
+                v-for="shape in handfoot"
+                :key="shape"
+                :shape="shape"
+              />
+            </div>
+            <button
+              class="btn btn-secondary btn-sm filter__outer_button"
+              @click="InsertFilter"
+            >
+              확인
+            </button>
+          </div>
           <!-- 태그끝 -->
           <!-- 하단 사진들 시작 -->
           <div
-            :class="ImageContainerMove"
             class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 g-0 images__container"
           >
             <PostImage
@@ -179,8 +219,13 @@
 <script>
 import PostImage from "./PostImage.vue";
 import posts from "../../assets/dummy/gallery";
-import color from "../../assets/dummy/color";
-import FilterView from "./FilterView.vue";
+import ColorPaltte from "./ColorPaleltte.vue";
+import ShapePalette from "./ShapePalette.vue";
+import OptionPalette from "./OptionPalette.vue";
+import color from "../../assets/dummy/color.js";
+import shape from "../../assets/dummy/shape.js";
+import option from "../../assets/dummy/option.js";
+import handfoot from "../../assets/dummy/handfoot.js";
 
 export default {
   name: "CollectionPage",
@@ -188,57 +233,29 @@ export default {
     return {
       //외부 데이터 시작
       posts: posts,
-      color: color,
+      colors: color,
+      shapes: shape,
+      options: option,
+      handfoot: handfoot,
       //외부 데이터 끝
       // 내부 상태 데이터
       post: "", //포스트
       shop: "", // 샵 정보(상세보기에 사용됨)
       Clicked_post_index: "", // 현재 클릭된 post index
       ButtonCondition: ["", ""], //0번이 뒤로, 1번이 앞으로 // 처음이랑 마지막 버튼 안보여주기 위한 클래스 보관 장소
-      ButtonFocusSetting: `outline: none !important;  box-shadow: none;`, //css로 세팅이 안되서 일로옴
 
       //필터 시작
-      FilterStatus: "d-none", // 필터 보여주는지 아닌지
-      FilterCategory: "", // 필터 카테고리
-      ImageContainerMove: "", // 핕터때문에 내려가는 이미지 컨테이너 끌어올리기
+      FilterCondition: "", // 클릭된 필터버튼
+      FilterSelected: ["d-none", "d-none", "d-none", "d-none"], // 현재 활성화된 필터
+      FilterShowed: "invisible",
+      ButtonFocusSetting: `outline: none !important;  box-shadow: none;`, //css로 세팅이 안되서 일로옴,
+      tempFilter: [], // 임시 필터 컬러/쉐입/옵션 3개 이상 확인하는 부분
+      tempFilterfull: true, // 임시 필터가 가득 찾는지 여부 / /false면 가득찬것
       SetFilter: {
-        color: [
-          false, //빨강
-          false, //주황
-          false, //노랑
-          false, //초록
-          false, //하늘
-          false, //파랑
-          false, //보라
-          false, //분홍
-          false, //검정
-          false, //하양
-          false, //갈색
-          false, //연두
-        ],
-        shape: [
-          false, //스퀘어
-          false, //스퀘어드오버스쿼벌
-          false, //오벌
-          false, //라운디드
-          false, //아몬드
-          false, //마운틴피크
-          false, //스틸레토
-          false, //발레리나
-          false, //엣지
-          false, //립스틱
-          false, //플레어
-          false, //애로우헤드
-        ],
-        option: [
-          false, //프렌치
-          false, //아트
-          false, //파츠
-          false, //젤기본
-          false, //글리터
-          false, //글라데이션
-        ],
-        handfoot: [false, false],
+        color: ["", "", ""],
+        shape: ["", "", ""],
+        option: ["", "", ""],
+        type: "",
       }, //현재 설정된 필터
       //필터 끝
     };
@@ -254,99 +271,70 @@ export default {
       this.post = this.posts[this.Clicked_post_index];
       this.shop = this.post.shop;
     }, // 이전 포스트로 보내주는 함수
-    FilterOpen(data) {
-      if (this.FilterStatus == "d-none") {
-        this.FilterStatus = "visible";
-        this.FilterCategory = data;
-      } else {
-        if (this.FilterCategory == data) {
-          this.FilterStatus = "d-none";
-          this.FilterCategory = "";
-        } else this.FilterCategory = data;
+    FilterShowing(data) {
+      if (this.FilterShowed == "invisible") {
+        this.FilterCondition = data;
+        this.FilterShowed = "visible";
+      } else if (this.FilterShowed == "visible") {
+        if (this.FilterCondition == data) {
+          this.FilterCondition = "";
+          this.FilterShowed = "invisible";
+          this.FilterSelected = ["d-none", "d-none", "d-none", "d-none"];
+        } else this.FilterCondition = data;
       }
-    }, // 필터 설정 버튼 누르고 닫기
-    FilterApply(data) {
-      switch (this.FilterCategory) {
+
+      this.FilterContentShowing(data);
+    }, // 필터 껐다 켜졌다 할때 내용 바꿔주고 위에 visible 설정해주는 함수
+    FilterContentShowing(state) {
+      switch (state) {
         case "디자인 컬러":
-          this.FindApplyColor(data); // 여기서 구분해서 바꿔준다.
+          this.FilterSelected = ["visible", "d-none", "d-none", "d-none"];
           break;
         case "디자인 쉐입":
-          this.FindApplyShape(data); // 여기서 구분해서 바꿔준다.
+          this.FilterSelected = ["d-none", "visible", "d-none", "d-none"];
           break;
         case "옵션":
-          this.FindApplyOption(data); // 여기서 구분해서 바꿔준다.
+          this.FilterSelected = ["d-none", "d-none", "visible", "d-none"];
           break;
         case "손발":
-          this.FindApplyHandfoot(data); // 여기서 구분해서 바꿔준다.
+          this.FilterSelected = ["d-none", "d-none", "d-none", "visible"];
           break;
-      } // 필터 카테고리에 따라 현재 설정된 필터 값을 바꿔주는 곳
-      this.FilterStatus = "d-none";
-      this.FilterCategory = "";
+      }
+    }, // 현재 클릭된 필터 페이지 // filter 창 내부화면 변경해줌
+    InsertTempFilter(data) {
+      let index = this.tempFilter.indexOf(data);
+      if (!this.tempFilterfull) console.log("가득챴다");
 
-      //여기서 post 갱신!! 포스트 내용 vuex 로 빼고, 거기서 지지고 볶고 ㄱㄱ
-    }, // 필터의 확인 버튼 눌렀을 동작
-    FindApplyColor(filters) {
-      this.SetFilter.color = [
-        ...this.SetFilter.color.map(function () {
-          return false;
-        }),
-      ]; // 초기화 하기
-      for (let i in filters) {
-        let index = filters[i];
-        this.SetFilter.color[index] = true;
+      if (index != "-1") {
+        this.tempFilter.splice(index, 1);
+        this.tempFilterfull = true;
+      } else if (this.tempFilterfull) {
+        this.tempFilter.push(data);
+        if (this.tempFilter.length >= 3) this.tempFilterfull = false;
       }
-    },
-    FindApplyShape(filters) {
-      this.SetFilter.shape = [
-        ...this.SetFilter.shape.map(function () {
-          return false;
-        }),
-      ]; // 초기화 하기
-      for (let i in filters) {
-        let index = filters[i];
-        this.SetFilter.shape[index] = true;
-      }
-    },
-    FindApplyOption(filters) {
-      this.SetFilter.option = [
-        ...this.SetFilter.option.map(function () {
-          return false;
-        }),
-      ]; // 초기화 하기
-      for (let i in filters) {
-        let index = filters[i];
-        this.SetFilter.option[index] = true;
-      }
-    },
-    FindApplyHandfoot(filters) {
-      this.SetFilter.handfoot = [
-        ...this.SetFilter.handfoot.map(function () {
-          return false;
-        }),
-      ]; // 초기화 하기
-      console.log(filters);
-      for (let i in filters) {
-        let index = filters[i];
-        this.SetFilter.handfoot[index] = true;
-      }
-    },
+    }, //tempFilter 에 클릭된 내용 저장해둠
+    InsertFilter() {
+      this.SetFilter.FilterCondition = this.tempFilter;
+      this.tempFilter = [];
+      this.tempFilterfull = true;
+      this.FilterShowed = "invisible";
+      this.FilterSelected = ["d-none", "d-none", "d-none", "d-none"];
+    }, // 필터안에 넣는것 확인 버튼
   },
   watch: {
     Clicked_post_index() {
       // 현재 페이지 위치에 따라 버튼 사라지게 하는 것
       this.ButtonCondition = ["visible", "visible"];
-      if (this.Clicked_post_index == "0") this.ButtonCondition[0] = "d-none";
+      if (this.Clicked_post_index == "0") this.ButtonCondition[0] = "invisible";
       if (this.Clicked_post_index + 1 >= this.posts.length)
-        this.ButtonCondition[1] = "d-none";
-    },
-    FilterStatus(state) {
-      if (state == "d-none") this.ImageContainerMove = "";
-      else this.ImageContainerMove = "image__container__move";
+        this.ButtonCondition[1] = "invisible";
     },
   },
   components: {
     PostImage,
-    FilterView,
+    ColorPaltte,
+    ShapePalette,
+    OptionPalette,
   },
   mounted() {
     this.$emit("ChangePageCondition", "collection");
@@ -356,13 +344,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
+$filter-height-desktop: 350px;
+$filter-height-tablet: 320px;
+$filter-height-mobile: 310px;
 
 //이미지 컨테이너 시작
 .images__container {
   position: relative;
   z-index: 1;
-}
-.image__container__move {
   top: -$filter-height-desktop;
   @include tablet {
     top: -$filter-height-tablet;
@@ -373,6 +362,39 @@ export default {
 }
 //이미지 컨테이너 끝
 //필터 설정 시작
+.filter__btn {
+  background-color: white;
+  width: 350px;
+  height: $filter-height-desktop;
+  position: relative;
+  border-radius: 5px;
+  border: #a1a1a1 solid 0.5px;
+  z-index: 2;
+  text-align: center;
+  padding: 2% 2% 2% 2%;
+  flex-wrap: wrap;
+  @include tablet {
+    width: 350px;
+    height: $filter-height-tablet;
+  }
+  @include mobile-s {
+    width: 300px;
+    height: $filter-height-mobile;
+  }
+}
+.filter__outer {
+  height: 80%;
+}
+
+.filter__outer_button {
+  width: 95%;
+  height: auto;
+}
+.filter_title {
+  font-family: "GoyangIlsan";
+  font-weight: bold;
+  display: inline-block;
+}
 
 //필터 설정 끝
 //모달 시작

@@ -1,12 +1,12 @@
 export default [
   {
-    id: 1,
+    id: 0,
     name: "손",
     url: "#FF0000",
   },
   {
-    id: 2,
+    id: 1,
     name: "발",
-    code: "#FFA800",
+    url: "#FFA800",
   },
 ];

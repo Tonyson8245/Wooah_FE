@@ -1,4 +1,5 @@
 @import url("http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700");
+
 @font-face {
   font-family: 'GoyangIlsan';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangIlsan.woff') format('woff');
@@ -51,3 +52,9 @@ $desktop: 1500px;
   display: block;
   padding-top: 100%; /* 1:1 비율 */
 }
+
+//필터 사이즈 시작
+$filter-height-desktop: 350px;
+$filter-height-tablet: 320px;
+$filter-height-mobile: 310px;
+//필터 사이즈 끝
