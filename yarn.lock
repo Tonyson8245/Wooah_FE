@@ -6972,7 +6972,7 @@
   "resolved" "https://registry.npmmirror.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2 || ^3.2.13", "vue@^3.0.2", "vue@^3.0.5", "vue@^3.2.0", "vue@^3.2.13", "vue@3.2.31":
+"vue@^2 || ^3.2.13", "vue@^3.0.2", "vue@^3.0.5", "vue@^3.2.0", "vue@^3.2.13", "vue@^3.2.26", "vue@3.2.31":
   "integrity" "sha512-odT3W2tcffTiQCy57nOT93INw1auq5lYLLYtWpPYQQYQOOdHiqFct9Xhna6GJ+pJQaF67yZABraH47oywkJgFw=="
   "resolved" "https://registry.npmmirror.com/vue/-/vue-3.2.31.tgz"
   "version" "3.2.31"
@@ -6982,6 +6982,13 @@
     "@vue/runtime-dom" "3.2.31"
     "@vue/server-renderer" "3.2.31"
     "@vue/shared" "3.2.31"
+
+"vue3-promise-dialog@^0.2.6":
+  "integrity" "sha512-pgSanaLgzhcIIXK5BgTi52Nf/vINJfT9/u8eqBsLGGTnGgj9elVb8yC218rQdGnP6KzzJ31edeJRMtvw/24gJA=="
+  "resolved" "https://registry.npmjs.org/vue3-promise-dialog/-/vue3-promise-dialog-0.2.6.tgz"
+  "version" "0.2.6"
+  dependencies:
+    "vue" "^3.2.26"
 
 "vuex@^4.0.2":
   "integrity" "sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q=="

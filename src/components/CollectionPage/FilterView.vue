@@ -108,10 +108,10 @@ export default {
         this.FilterSelected = ["d-none", "d-none", "d-none", "d-none"];
       } else {
         switch (state) {
-          case "디자인 컬러":
+          case "컬러":
             this.FilterSelected = ["visible", "d-none", "d-none", "d-none"];
             break;
-          case "디자인 쉐입":
+          case "쉐입":
             this.FilterSelected = ["d-none", "visible", "d-none", "d-none"];
             break;
           case "옵션":
@@ -151,12 +151,12 @@ export default {
     UpdateTempFilter(SetFilter, category) {
       let arr = [];
       switch (category) {
-        case "디자인 컬러":
+        case "컬러":
           for (let i in SetFilter.color) {
             if (SetFilter.color[i] == true) arr.push(parseInt(i));
           }
           break;
-        case "디자인 쉐입":
+        case "쉐입":
           for (let i in SetFilter.shape) {
             if (SetFilter.shape[i] == true) arr.push(parseInt(i));
           }

@@ -1,9 +1,10 @@
 <template>
-  <div class="col img__outline">
+  <div class="col img__outline" style="position: relative">
+    <i class="bi bi-coin monthly" :class="post.monthly_art"></i>
     <img
       :src="post.url + `?` + index"
       class="img-thumbnail shadow-sm"
-      alt="..."
+      alt="https://via.placeholder.com/400x400"
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
       @click="$emit('ClickPost', post)"
@@ -28,5 +29,12 @@ $thumbnail-padding: 0.25rem;
 
 .img-thumbnail {
   padding: 1px;
+}
+.monthly {
+  position: absolute;
+  top: 3%;
+  right: 5%;
+  color: #c4c4c4;
+  font-size: 2em;
 }
 </style>

@@ -34,7 +34,7 @@ export default {
   },
   watch: {
     FilterCategory(data) {
-      if (data == "" || data != "디자인 쉐입") {
+      if (data == "" || data != "쉐입") {
         if (this.SetFilterShape == true) this.Checked = "visible";
         else this.Checked = "d-none";
       }

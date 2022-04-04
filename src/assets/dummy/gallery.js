@@ -1,7 +1,7 @@
 export default [
   {
     id: 1,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -9,12 +9,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "visible",
     price: 12000,
   },
   {
     id: 2,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -22,12 +22,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "invisible",
     price: 12000,
   },
   {
     id: 3,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -35,12 +35,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "visible",
     price: 12000,
   },
   {
     id: 4,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -48,12 +48,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "invisible",
     price: 12000,
   },
   {
     id: 5,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -61,12 +61,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "visible",
     price: 12000,
   },
   {
     id: 6,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -74,12 +74,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "visible",
     price: 12000,
   },
   {
     id: 7,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -87,12 +87,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "visible",
     price: 12000,
   },
   {
     id: 4,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -100,12 +100,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "invisible",
     price: 12000,
   },
   {
     id: 4,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -113,12 +113,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "invisible",
     price: 12000,
   },
   {
     id: 4,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -126,12 +126,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "invisible",
     price: 12000,
   },
   {
     id: 4,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -139,12 +139,12 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "invisible",
     price: 12000,
   },
   {
     id: 4,
-    url: "https://placeimg.com/400/400/animals",
+    url: "https://placeimg.com/400/400/tech",
     type: "image",
     shop: {
       id: 1,
@@ -152,7 +152,7 @@ export default [
       contact: "031-584-2548",
       address: "서울특별시 강남구 테헤란로 215",
     },
-    monthly_art: false,
+    monthly_art: "invisible",
     price: 12000,
   },
 ];

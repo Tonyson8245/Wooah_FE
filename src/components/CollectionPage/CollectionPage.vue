@@ -14,7 +14,11 @@
               class="form-control"
               placeholder="찾고 싶은 이미지 태그를 검색해 보세요"
             />
-            <button class="btn rounded-pill button" :style="ButtonFocusSetting">
+            <button
+              class="btn rounded-pill button"
+              :style="ButtonFocusSetting"
+              @click="Search"
+            >
               검색
             </button>
             <i class="bi bi-search"></i>
@@ -23,12 +27,22 @@
           <div class="tag--container btn-group" @click="ClickFilter">
             <div class="dropdown">
               <button
+                class="btn btn-sm"
+                style="padding: 0 0 0 0"
+                :style="[ButtonFocusSetting, MontlyArtCondition]"
+                @click="ClickMonthlyArt"
+              >
+                <span class="btn__name"> 이달의아트 </span>
+              </button>
+            </div>
+            <div class="dropdown">
+              <button
                 class="btn dropdown-toggle btn-sm"
                 type="button"
                 :style="ButtonFocusSetting"
-                @click="FilterOpen('디자인 컬러')"
+                @click="FilterOpen('컬러')"
               >
-                <span class="btn__name">디자인 컬러</span>
+                <span class="btn__name">컬러</span>
               </button>
             </div>
             <div class="dropdown">
@@ -36,9 +50,9 @@
                 class="btn dropdown-toggle btn-sm"
                 :style="ButtonFocusSetting"
                 type="button"
-                @click="FilterOpen('디자인 쉐입')"
+                @click="FilterOpen('쉐입')"
               >
-                <span class="btn__name">디자인 쉐입</span>
+                <span class="btn__name">쉐입</span>
               </button>
             </div>
             <div class="dropdown">
@@ -129,9 +143,12 @@
               </div>
               <div class="col-lg-4 ms-auto modal__content_outer">
                 <div class="modal__content_footer">
-                  <span class="modal__content_monthly_price">{{
-                    post.price
-                  }}</span>
+                  <div :class="post.monthly_art">
+                    <i class="bi bi-coin monthly"></i>
+                    <span class="modal__content_monthly_price">{{
+                      post.price
+                    }}</span>
+                  </div>
                   <div>
                     <span class="modal__content_name">
                       <span>{{ shop.name }}</span>
@@ -204,6 +221,7 @@ export default {
       FilterStatus: "d-none", // 필터 보여주는지 아닌지
       FilterCategory: "", // 필터 카테고리
       ImageContainerMove: "", // 핕터때문에 내려가는 이미지 컨테이너 끌어올리기
+      MontlyArtCondition: "",
       SetFilter: {
         color: [
           false, //빨강
@@ -242,6 +260,7 @@ export default {
           false, //글라데이션
         ],
         handfoot: [false, false],
+        monntlyart: false,
       }, //현재 설정된 필터
       //필터 끝
     };
@@ -276,10 +295,10 @@ export default {
     }, // 필터 설정 버튼 누르고 닫기
     FilterApply(data) {
       switch (this.FilterCategory) {
-        case "디자인 컬러":
+        case "컬러":
           this.FindApplyColor(data); // 여기서 구분해서 바꿔준다.
           break;
-        case "디자인 쉐입":
+        case "쉐입":
           this.FindApplyShape(data); // 여기서 구분해서 바꿔준다.
           break;
         case "옵션":
@@ -345,6 +364,15 @@ export default {
         this.posts.push(...result);
       } catch (err) {
         console.log("로드 실패");
+      }
+    },
+    ClickMonthlyArt() {
+      if (this.SetFilter.monntlyart) {
+        this.MontlyArtCondition = "";
+        this.SetFilter.monntlyart = false;
+      } else {
+        this.MontlyArtCondition = "font-weight:bold; background:#c4c4c4";
+        this.SetFilter.monntlyart = true;
       }
     },
   },
