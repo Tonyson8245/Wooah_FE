@@ -1,0 +1,60 @@
+<template>
+  <GDialog v-model="dialogState" max-width="500">
+    <div class="wrapper">
+      <div class="content">
+        <p>최대 3개까지 선택 가능합니다.</p>
+      </div>
+
+      <div class="actions">
+        <button class="btn" @click="$store.commit('alertStore/ChangeState')">
+          확인
+        </button>
+      </div>
+    </div>
+  </GDialog>
+</template>
+
+<script>
+export default {
+  name: "AlertDialog",
+  computed: {
+    dialogState() {
+      return this.$store.state.alertStore.dialogState;
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+@import "../../assets/style.scss";
+
+.wrapper {
+  color: #000;
+  @include mobile-s {
+    font-size: 12px;
+  }
+}
+.btn {
+  color: #000;
+  @include mobile-s {
+    font-size: 12px;
+  }
+}
+
+.content {
+  padding: 20px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+</style>

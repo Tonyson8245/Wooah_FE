@@ -1,10 +1,11 @@
 <template>
   <div class="col img__outline" style="position: relative">
     <i class="bi bi-coin monthly" :class="post.monthly_art"></i>
+
     <img
       :src="post.url + `?` + index"
-      class="img-thumbnail shadow-sm"
-      alt="https://via.placeholder.com/400x400"
+      class="img-thumbnail shadow-sm square"
+      aria-placeholder="https://via.placeholder.com/400x400"
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
       @click="$emit('ClickPost', post)"

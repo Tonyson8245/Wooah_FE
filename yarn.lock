@@ -3728,6 +3728,11 @@
   dependencies:
     "assert-plus" "^1.0.0"
 
+"gitart-vue-dialog@^2.0.5":
+  "integrity" "sha512-HEBOU4USXYL/FMrGM/rFtZ1fx6xS8mOMjP8xDZ4vrBvZCHglX3p/UsdQONIbRjQR5Hj+BGX97LBaFpf+0bFudA=="
+  "resolved" "https://registry.npmjs.org/gitart-vue-dialog/-/gitart-vue-dialog-2.0.5.tgz"
+  "version" "2.0.5"
+
 "glob-parent@^5.1.2":
   "integrity" "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow=="
   "resolved" "https://registry.npmmirror.com/glob-parent/-/glob-parent-5.1.2.tgz"
@@ -6972,7 +6977,7 @@
   "resolved" "https://registry.npmmirror.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2 || ^3.2.13", "vue@^3.0.2", "vue@^3.0.5", "vue@^3.2.0", "vue@^3.2.13", "vue@^3.2.26", "vue@3.2.31":
+"vue@^2 || ^3.2.13", "vue@^3.0.2", "vue@^3.0.5", "vue@^3.2.0", "vue@^3.2.13", "vue@^3.2.26", "vue@^3.2.6", "vue@3.2.31":
   "integrity" "sha512-odT3W2tcffTiQCy57nOT93INw1auq5lYLLYtWpPYQQYQOOdHiqFct9Xhna6GJ+pJQaF67yZABraH47oywkJgFw=="
   "resolved" "https://registry.npmmirror.com/vue/-/vue-3.2.31.tgz"
   "version" "3.2.31"

@@ -141,7 +141,7 @@ export default {
         // 안에 이미 동일한 데이터가 있음. 삭제
       } else {
         if (this.tempFilter.length >= 3) {
-          console.log("최대 3개까지 선택가능합니다.");
+          this.$store.commit("alertStore/ChangeState");
         } else this.tempFilter.push(data);
       }
 

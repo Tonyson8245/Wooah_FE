@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AlertDialog />
     <div>
       <div
         class="row d-flex justify-content-center align-items-center"
@@ -24,55 +25,104 @@
             <i class="bi bi-search"></i>
           </div>
           <!-- 검색 창 끝/태그 시작 -->
-          <div class="tag--container btn-group" @click="ClickFilter">
-            <div class="dropdown">
+          <div class="btn_outer">
+            <div class="btn-group" @click="ClickFilter">
+              <div class="dropdown">
+                <button
+                  class="btn btn-sm"
+                  style="min-width: 5em"
+                  :style="[ButtonFocusSetting, MontlyArtCondition]"
+                  @click="ClickMonthlyArt"
+                >
+                  <span class="btn__name"> 이달의아트 </span>
+                </button>
+              </div>
+              <div class="dropdown">
+                <button
+                  class="btn btn-sm"
+                  type="button"
+                  :style="[
+                    ButtonFocusSetting,
+                    `background-color:${Filterbar.condition[0]}`,
+                  ]"
+                  @click="FilterOpen('컬러')"
+                >
+                  <span v-if="Filterbar.condition[0] == ``" class="btn__name"
+                    >컬러<i class="bi bi-caret-down-fill"></i
+                  ></span>
+                  <span v-else class="settedFilter btn__name"
+                    ><i
+                      v-for="(c, i) in Filterbar.color"
+                      :key="i"
+                      class="bi bi-circle-fill"
+                      :style="`color:${c}`"
+                    ></i
+                  ></span>
+                  <!-- 상황에따라 필터 아이콘 온오프 -->
+                </button>
+              </div>
+              <div class="dropdown">
+                <button
+                  class="btn btn-sm"
+                  :style="[
+                    ButtonFocusSetting,
+                    `background-color:${Filterbar.condition[1]}`,
+                  ]"
+                  type="button"
+                  @click="FilterOpen('쉐입')"
+                >
+                  <span v-if="Filterbar.condition[1] == ``" class="btn__name"
+                    >쉐입<i class="bi bi-caret-down-fill"
+                  /></span>
+                  <span v-else class="settedFilter btn__name">{{
+                    Filterbar.shape
+                  }}</span>
+                </button>
+              </div>
+              <div class="dropdown">
+                <button
+                  class="btn btn-sm"
+                  :style="[
+                    ButtonFocusSetting,
+                    `background-color:${Filterbar.condition[2]}`,
+                  ]"
+                  type="button"
+                  @click="FilterOpen('옵션')"
+                >
+                  <span v-if="Filterbar.condition[2] == ``" class="btn__name"
+                    >옵션<i class="bi bi-caret-down-fill"
+                  /></span>
+                  <span v-else class="settedFilter btn__name">{{
+                    Filterbar.option
+                  }}</span>
+                </button>
+              </div>
+              <div class="dropdown">
+                <button
+                  class="btn btn-sm"
+                  :style="[
+                    ButtonFocusSetting,
+                    `background-color:${Filterbar.condition[3]}`,
+                  ]"
+                  type="button"
+                  @click="FilterOpen('손발')"
+                >
+                  <span v-if="Filterbar.condition[3] == ``" class="btn__name"
+                    >손발<i class="bi bi-caret-down-fill"
+                  /></span>
+                  <span v-else class="settedFilter btn__name">{{
+                    Filterbar.handfoot
+                  }}</span>
+                </button>
+              </div>
               <button
                 class="btn btn-sm"
-                style="padding: 0 0 0 0"
-                :style="[ButtonFocusSetting, MontlyArtCondition]"
-                @click="ClickMonthlyArt"
-              >
-                <span class="btn__name"> 이달의아트 </span>
-              </button>
-            </div>
-            <div class="dropdown">
-              <button
-                class="btn dropdown-toggle btn-sm"
-                type="button"
                 :style="ButtonFocusSetting"
-                @click="FilterOpen('컬러')"
-              >
-                <span class="btn__name">컬러</span>
-              </button>
-            </div>
-            <div class="dropdown">
-              <button
-                class="btn dropdown-toggle btn-sm"
-                :style="ButtonFocusSetting"
+                style="border: 2px solid #c4c4c4; border-radius: 15px"
                 type="button"
-                @click="FilterOpen('쉐입')"
+                @click="Reset"
               >
-                <span class="btn__name">쉐입</span>
-              </button>
-            </div>
-            <div class="dropdown">
-              <button
-                class="btn dropdown-toggle btn-sm"
-                :style="ButtonFocusSetting"
-                type="button"
-                @click="FilterOpen('옵션')"
-              >
-                <span class="btn__name">옵션</span>
-              </button>
-            </div>
-            <div class="dropdown">
-              <button
-                class="btn dropdown-toggle btn-sm"
-                :style="ButtonFocusSetting"
-                type="button"
-                @click="FilterOpen('손발')"
-              >
-                <span class="btn__name">손발</span>
+                <i class="bi bi-arrow-clockwise"></i>
               </button>
             </div>
           </div>
@@ -85,7 +135,7 @@
           />
           <!-- 태그끝 -->
           <!-- 하단 사진들 시작 -->
-          <infinite-scroll
+          <InfiniteScroll
             :class="ImageContainerMove"
             @infinite-scroll="loadDataFromLocal"
             class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 g-0 images__container"
@@ -101,7 +151,7 @@
                 this.Clicked_post_index = i;
               "
             />
-          </infinite-scroll>
+          </InfiniteScroll>
         </div>
         <!-- 전체 컨테이너 -->
       </div>
@@ -199,7 +249,10 @@ import InfiniteScroll from "infinite-loading-vue3";
 import PostImage from "./PostImage.vue";
 import dummyposts from "../../assets/dummy/gallery";
 import color from "../../assets/dummy/color";
+import shape from "../../assets/dummy/shape";
+import option from "../../assets/dummy/option";
 import FilterView from "./FilterView.vue";
+import AlertDialog from "../Common/AlertDialog.vue";
 
 export default {
   name: "CollectionPage",
@@ -209,6 +262,8 @@ export default {
       dummyposts,
       posts: "",
       color: color,
+      option: option,
+      shape: shape,
       //외부 데이터 끝
       // 내부 상태 데이터
       post: "", //포스트
@@ -218,6 +273,13 @@ export default {
       ButtonFocusSetting: `outline: none !important;  box-shadow: none;`, //css로 세팅이 안되서 일로옴
 
       //필터 시작
+      Filterbar: {
+        color: [],
+        shape: "",
+        option: "",
+        handfoot: "",
+        condition: [``, ``, ``, ``],
+      },
       FilterStatus: "d-none", // 필터 보여주는지 아닌지
       FilterCategory: "", // 필터 카테고리
       ImageContainerMove: "", // 핕터때문에 내려가는 이미지 컨테이너 끌어올리기
@@ -308,9 +370,10 @@ export default {
           this.FindApplyHandfoot(data); // 여기서 구분해서 바꿔준다.
           break;
       } // 필터 카테고리에 따라 현재 설정된 필터 값을 바꿔주는 곳
+
+      this.ChangeFilterbar();
       this.FilterStatus = "d-none";
       this.FilterCategory = "";
-
       //여기서 post 갱신!! 포스트 내용 vuex 로 빼고, 거기서 지지고 볶고 ㄱㄱ
     }, // 필터의 확인 버튼 눌렀을 동작
     FindApplyColor(filters) {
@@ -352,7 +415,6 @@ export default {
           return false;
         }),
       ]; // 초기화 하기
-      console.log(filters);
       for (let i in filters) {
         let index = filters[i];
         this.SetFilter.handfoot[index] = true;
@@ -375,6 +437,102 @@ export default {
         this.SetFilter.monntlyart = true;
       }
     },
+    ChangeFilterbar() {
+      let Filters = this.SetFilter;
+      let bar = this.Filterbar;
+      let active = `#c4c4c4;`;
+      var color_true = Object.keys(Filters.color).filter(
+        (key) => Filters.color[key] === true
+      );
+      var shape_true = Object.keys(Filters.shape).filter(
+        (key) => Filters.shape[key] === true
+      );
+      var option_true = Object.keys(Filters.option).filter(
+        (key) => Filters.option[key] === true
+      );
+
+      if (color_true.length > 0) {
+        // 현재 설정된 색깔이 1개 이상있을시
+        bar.color = []; // 초기화
+        bar.condition[0] = active; // 해당 필터에 필터 아이콘들 active 시키고
+        color_true.forEach((e) => {
+          bar.color.push(this.color[e].code); // 필터 바에 색깔 적용
+        });
+        console.log(bar);
+      } else bar.condition[0] = ``;
+
+      if (shape_true.length > 0) {
+        bar.shape = []; // 초기화
+        bar.condition[1] = active;
+        bar.shape = this.shape[shape_true[0]].name;
+        if (shape_true.length > 1) bar.shape += " +"; //1개 이상이면 + 붙임
+      } else bar.condition[1] = ``;
+
+      if (option_true.length > 0) {
+        bar.option = []; // 초기화
+        bar.condition[2] = active;
+        bar.option = this.option[option_true[0]].name;
+        if (option_true.length > 1) bar.option += " +"; //1개 이상이면 + 붙임
+      } else bar.condition[2] = ``;
+
+      if (!this.SetFilter.handfoot[0] && !this.SetFilter.handfoot[1]) {
+        bar.condition[3] = ``;
+      } else {
+        bar.condition[3] = active;
+        bar.handfoot = ""; // 초기화
+        if (this.SetFilter.handfoot[0]) bar.handfoot += "손";
+        if (this.SetFilter.handfoot[1]) bar.handfoot += "발";
+      }
+    }, //Filter bar 갱신
+    Reset() {
+      this.Filterbar = {
+        color: [],
+        shape: "",
+        option: "",
+        handfoot: "",
+        condition: [``, ``, ``, ``],
+      };
+      this.SetFilter = {
+        color: [
+          false, //빨강
+          false, //주황
+          false, //노랑
+          false, //초록
+          false, //하늘
+          false, //파랑
+          false, //보라
+          false, //분홍
+          false, //검정
+          false, //하양
+          false, //갈색
+          false, //연두
+        ],
+        shape: [
+          false, //스퀘어
+          false, //스퀘어드오버스쿼벌
+          false, //오벌
+          false, //라운디드
+          false, //아몬드
+          false, //마운틴피크
+          false, //스틸레토
+          false, //발레리나
+          false, //엣지
+          false, //립스틱
+          false, //플레어
+          false, //애로우헤드
+        ],
+        option: [
+          false, //프렌치
+          false, //아트
+          false, //파츠
+          false, //젤기본
+          false, //글리터
+          false, //글라데이션
+        ],
+        handfoot: [false, false],
+        monntlyart: false,
+      }; //현재 설정된 필터
+    },
   },
   watch: {
     Clicked_post_index() {
@@ -393,6 +551,7 @@ export default {
     PostImage,
     FilterView,
     InfiniteScroll,
+    AlertDialog,
   },
 };
 </script>
@@ -415,9 +574,6 @@ export default {
   }
 }
 //이미지 컨테이너 끝
-//필터 설정 시작
-
-//필터 설정 끝
 //모달 시작
 .modal__btn_close {
   font-size: 2em;
@@ -499,6 +655,9 @@ export default {
 }
 //모달 끝
 //태그 시작
+.settedFilter {
+  font-weight: bold;
+}
 .btn-group {
   padding: 10px 0px 10px 10px;
 
@@ -506,36 +665,38 @@ export default {
     padding: 3px 0px 3px 3px;
   }
 }
+.btn_outer {
+  overflow-y: scroll;
+  overflow-y: hidden;
+}
 
 .dropdown button {
-  float: left;
   background: #ffffff;
   font-family: "GoyangIlsan";
   font-size: 14px;
   border: 2px solid #c4c4c4;
   border-radius: 15px;
-  margin-right: 5px;
   height: 2.5em;
+  min-width: 4em;
+  text-align: center;
+  width: auto;
+  margin-right: 3px;
+  display: flex;
 
   @include tablet {
     height: 2em;
   }
   @include mobile-s {
     height: 2em;
-    margin-right: 3px;
   }
 }
 .btn__name {
-  float: left;
-  padding: 0 3px 0 3px;
   @include tablet {
-    font-size: 0.8em;
-    padding: 0 1px 0 1px;
+    font-size: 11px;
   }
-  @include mobile-s {
-    font-size: 0.1em;
-    padding: none;
-  }
+}
+.bi-caret-down-fill {
+  padding-left: 5px;
 }
 //태그 끝
 /// 검색창 부분 시작
