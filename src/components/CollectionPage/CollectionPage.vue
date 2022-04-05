@@ -116,7 +116,7 @@
                 </button>
               </div>
               <button
-                class="btn btn-sm"
+                class="btn btn-sm filter__reset"
                 :style="ButtonFocusSetting"
                 style="border: 2px solid #c4c4c4; border-radius: 15px"
                 type="button"
@@ -183,17 +183,17 @@
               ></i>
             </div>
             <div class="row" style="width: 80%">
-              <div class="col-lg-8" style="padding: 0 0 0 0">
+              <div class="col-lg-8 square" style="padding: 0 0 0 0">
                 <img
-                  :src="`https://placeimg.com/400/400/animals?`"
-                  class="shadow-sm box"
+                  :src="post.url"
+                  class="shadow-sm content"
                   alt="..."
                   style="display: inline-block"
                 />
               </div>
               <div class="col-lg-4 ms-auto modal__content_outer">
                 <div class="modal__content_footer">
-                  <div :class="post.monthly_art">
+                  <div v-if="post.monthly">
                     <i class="bi bi-coin monthly"></i>
                     <span class="modal__content_monthly_price">{{
                       post.price
@@ -215,7 +215,7 @@
                     ><br />
                   </span>
 
-                  <span class="modal__content_tags">태그들</span>
+                  <span class="modal__content_tags">{{ post.tags }}</span>
                 </div>
               </div>
             </div>
@@ -533,6 +533,12 @@ export default {
         monntlyart: false,
       }; //현재 설정된 필터
     },
+    Visiblity(boolean) {
+      console.log(boolean);
+      if (boolean) {
+        return "visible";
+      } else return "invisible";
+    },
   },
   watch: {
     Clicked_post_index() {
@@ -575,6 +581,28 @@ export default {
 }
 //이미지 컨테이너 끝
 //모달 시작
+.square {
+  position: relative;
+  width: 66.6%;
+  background-color: #f1f1f1;
+  @include tablet {
+    width: 100%;
+  }
+}
+
+.square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .modal__btn_close {
   font-size: 2em;
   float: right;
@@ -691,12 +719,18 @@ export default {
   }
 }
 .btn__name {
+  white-space: nowrap;
   @include tablet {
     font-size: 11px;
   }
 }
 .bi-caret-down-fill {
   padding-left: 5px;
+}
+.filter__reset {
+  @include tablet {
+    font-size: 11px;
+  }
 }
 //태그 끝
 /// 검색창 부분 시작

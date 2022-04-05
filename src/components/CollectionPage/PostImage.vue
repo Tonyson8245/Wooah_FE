@@ -1,41 +1,82 @@
 <template>
-  <div class="col img__outline" style="position: relative">
-    <i class="bi bi-coin monthly" :class="post.monthly_art"></i>
-
+  <div
+    class="col img__outline img-thumbnail shadow-sm"
+    style="position: relative"
+  >
+    <i
+      class="bi bi-heart-fill monthly"
+      v-if="post.monthly_art"
+      :class="[post.monthly_art, isLoaded]"
+    ></i>
     <img
       :src="post.url + `?` + index"
-      class="img-thumbnail shadow-sm square"
       aria-placeholder="https://via.placeholder.com/400x400"
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
       @click="$emit('ClickPost', post)"
+      @load="onImgLoad"
+      @error="onError"
     />
-    <!-- data-bs-toggle="modal" /     data-bs-target="#exampleModal"  // 모달 켜주는 것-->
   </div>
+
+  <!-- data-bs-toggle="modal" /     data-bs-target="#exampleModal"  // 모달 켜주는 것-->
 </template>
 
 <script>
+import img from "../../assets/img/400x400.png";
+
 export default {
   name: "PostImage",
   props: {
     post: Object,
     index: Number,
   },
-  methods() {},
+  data() {
+    return {
+      isLoaded: "invisible",
+    };
+  },
+  methods: {
+    onImgLoad() {
+      this.isLoaded = "visible";
+    },
+    onError(e) {
+      e.target.src = img;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/style.scss";
 $thumbnail-padding: 0.25rem;
 
-.img-thumbnail {
-  padding: 1px;
+.col img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
 }
+
+.img__outline {
+  padding: 2px;
+  position: relative;
+  width: 32%;
+  margin: 0.5% 0.5% 0.5% 0.5%;
+  padding-bottom: 32%;
+  overflow: hidden;
+  background: #f1f1f1;
+}
+
 .monthly {
   position: absolute;
   top: 3%;
   right: 5%;
-  color: #c4c4c4;
-  font-size: 2em;
+  color: #fd00c6;
+  font-size: 14px;
+  z-index: 1;
+  @include tablet {
+    font-size: 14px;
+  }
 }
 </style>
