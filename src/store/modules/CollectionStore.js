@@ -5,6 +5,7 @@ const CollectionStore = {
   state: {
     SearchState: false,
     SearchResult: "",
+    Ranktags: "",
   },
   mutations: {
     ChangeSearchOn(state) {
@@ -15,6 +16,9 @@ const CollectionStore = {
     },
     changeSearchResult(state, data) {
       state.SearchResult = data;
+    },
+    changeRanktags(state, data) {
+      state.Ranktags = data;
     },
   },
   actions: {
@@ -28,6 +32,14 @@ const CollectionStore = {
           .catch(function () {});
         keyword = "";
       } else context.commit("changeSearchResult", "");
+    },
+    async fetchRankTag(context) {
+      await collectionApi
+        .fetchRankTags()
+        .then(function (response) {
+          context.commit("changeRanktags", response.data);
+        })
+        .catch(function () {});
     },
   },
 };

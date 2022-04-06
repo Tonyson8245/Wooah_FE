@@ -1,5 +1,5 @@
 <template>
-  <div class="search__outline" :class="SearchState">
+  <div class="search__outline border-top-0 border" :class="SearchState">
     <div class="search">
       <input
         type="text"
@@ -16,7 +16,22 @@
       ></i>
     </div>
     <div v-if="SearchStateBoolean" class="result__outline">
-      <div class="result"></div>
+      <div class="result">
+        <ul class="list-group">
+          <li v-for="index in 10" :key="index" class="list-group-item">
+            {{ SearchResult[index - 1] }}
+          </li>
+        </ul>
+      </div>
+      <div class="ranktags">
+        <h4 class="title">인기 태그</h4>
+        <span
+          class="tags badge bg-secondary rounded-pill"
+          v-for="tag in RankTags"
+          :key="tag"
+          >{{ tag }}</span
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -37,10 +52,17 @@ export default {
     SearchStateBoolean() {
       return this.$store.state.collectionStore.SearchState;
     },
+    SearchResult() {
+      return this.$store.state.collectionStore.SearchResult;
+    },
+    RankTags() {
+      return this.$store.state.collectionStore.Ranktags;
+    },
   },
   methods: {
     ChangeState() {
       this.$store.commit("collectionStore/ChangeSearchOn");
+      this.$store.dispatch("collectionStore/fetchRankTag");
     },
     close() {
       this.$store.commit("collectionStore/ChangeSearchOff");
@@ -55,8 +77,43 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
+
+.ranktags {
+  padding: 2% 1% 0 3%;
+  font-family: "GoyangIlsan";
+}
+.ranktags title {
+  padding-left: 3%;
+  @include mobile-s {
+    font-size: 14px;
+  }
+}
+.ranktags .tags {
+  font-weight: 100;
+  margin: 0.5%;
+  font-size: 14px;
+  @include mobile-s {
+    font-size: 11px;
+  }
+}
+.result {
+  padding: 2% 1% 0 1%;
+  overflow-y: hidden;
+  max-height: 320px;
+  @include mobile-s {
+    max-height: 280px;
+  }
+}
+.result__outline .list-group-item {
+  font-family: "GoyangIlsan";
+  border: none;
+  margin-bottom: 1%;
+  min-height: 30px;
+  @include mobile-s {
+    font-size: 11px;
+  }
+}
 .result__outline {
-  overflow-y: scroll;
   height: 88%;
 }
 .search__outline {
@@ -68,14 +125,13 @@ export default {
   background: white;
 }
 .on {
-  border: #c2c2c2 solid 0.5px;
   z-index: 5;
-  height: 700px;
+  height: 600px;
   @include tablet {
-    height: 700px;
+    height: 600px;
   }
   @include mobile-s {
-    height: 600px;
+    height: 480px;
 
     border-radius: 20px;
   }
@@ -93,7 +149,13 @@ export default {
 }
 .search .bi-x-circle-fill {
   position: absolute;
-  left: 95%;
+  left: 93%;
+  @include tablet {
+    left: 92%;
+  }
+  @include mobile-s {
+    left: 90%;
+  }
 }
 .search input {
   height: 60px;
@@ -122,21 +184,6 @@ export default {
   left: 16px;
 }
 
-.search button {
-  position: absolute;
-  font-weight: bold;
-  top: 5px;
-  right: 5px;
-  height: 50px;
-  width: 110px;
-  background: #c4c4c4;
-
-  @include mobile-s {
-    height: 30px;
-    width: 60px;
-    font-size: 12px;
-  }
-}
 .search i {
   position: absolute;
   font-weight: bold;
