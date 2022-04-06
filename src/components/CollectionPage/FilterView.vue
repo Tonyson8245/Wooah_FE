@@ -187,7 +187,7 @@ export default {
   position: relative;
   border-radius: 5px;
   border: #a1a1a1 solid 0.5px;
-  z-index: 2;
+  z-index: 4;
   text-align: center;
   padding: 2% 2% 2% 2%;
   flex-wrap: wrap;

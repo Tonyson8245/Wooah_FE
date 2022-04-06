@@ -43,6 +43,7 @@ export default {
 
   methods: {
     async loadDataFromServer() {
+      console.log("더줘");
       try {
         const result = await axios.get(
           `https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc&page=${this.page}`

@@ -125,7 +125,7 @@
             <!-- 하단 사진들 시작 -->
             <InfiniteScroll
               :class="ImageContainerMove"
-              @infinite-scroll="loadDataFromLocal"
+              @infinite-scroll="moreData"
               class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 g-0 images__container"
             >
               <PostImage
@@ -245,10 +245,10 @@
 <script>
 import InfiniteScroll from "infinite-loading-vue3";
 import PostImage from "./PostImage.vue";
-import dummyposts from "../../assets/dummy/gallery";
 import color from "../../assets/dummy/color";
 import shape from "../../assets/dummy/shape";
 import option from "../../assets/dummy/option";
+import handfoot from "../../assets/dummy/handfoot";
 import FilterView from "./FilterView.vue";
 import AlertDialog from "../Common/AlertDialog.vue";
 import SearchPage from "./SearchPage.vue";
@@ -258,8 +258,7 @@ export default {
   data() {
     return {
       //외부 데이터 시작
-      dummyposts,
-      posts: "",
+      handfoot: handfoot,
       color: color,
       option: option,
       shape: shape,
@@ -328,8 +327,7 @@ export default {
   },
   mounted() {
     //데이터 가져오는 코드 여기 넣쟈
-    this.posts = this.dummyposts;
-    this.loadDataFromLocal();
+    this.$store.dispatch("collectionStore/fetchPost");
     this.$emit("ChangePageCondition", "collection");
   }, // 생성 될때 포스트 데이터를 가져오게 한다.
   methods: {
@@ -374,7 +372,68 @@ export default {
       this.FilterStatus = "d-none";
       this.FilterCategory = "";
       //여기서 post 갱신!! 포스트 내용 vuex 로 빼고, 거기서 지지고 볶고 ㄱㄱ
+
+      this.MakeQuery();
     }, // 필터의 확인 버튼 눌렀을 동작
+    MakeQuery() {
+      let query = "",
+        filterdata = this.SetFilter;
+      let flag = false;
+      let color_qeury = "&color=";
+      let shape_qeury = "&shape=";
+      let option_qeury = "&option=";
+      let handfoot_qeury = "&handfoot=";
+      let monthly_art_qeury = "";
+
+      for (let i in filterdata.color) {
+        if (filterdata.color[i] == true) {
+          color_qeury += this.color[i].en_name + " ";
+          flag = true;
+        }
+      }
+      if (flag == false) color_qeury = "";
+
+      flag = false;
+      for (let i in filterdata.shape) {
+        if (filterdata.shape[i] == true) {
+          shape_qeury += this.shape[i].en_name + " ";
+          flag = true;
+        }
+      }
+      if (flag == false) shape_qeury = "";
+
+      flag = false;
+      for (let i in filterdata.option) {
+        if (filterdata.option[i] == true) {
+          option_qeury += this.option[i].en_name + " ";
+          flag = true;
+        }
+      }
+      if (flag == false) option_qeury = "";
+
+      flag = false;
+      for (let i in filterdata.handfoot) {
+        if (filterdata.handfoot[i] == true) {
+          handfoot_qeury += this.handfoot[i].en_name + " ";
+          flag = true;
+        }
+      }
+      if (flag == false) handfoot_qeury = "";
+
+      flag = false;
+      if (filterdata.monntlyart) monthly_art_qeury = "&monthly_art=true";
+
+      query =
+        color_qeury +
+        shape_qeury +
+        option_qeury +
+        handfoot_qeury +
+        monthly_art_qeury;
+      // console.log(query);
+      this.$store.commit("collectionStore/setfilterQuery", query); //필터 쿼리 vuex 적용
+      this.$store.commit("collectionStore/resetPage", 1); //페이지 초기화
+      this.$store.dispatch("collectionStore/fetchPost"); // 불러오기
+    },
     FindApplyColor(filters) {
       this.SetFilter.color = [
         ...this.SetFilter.color.map(function () {
@@ -419,14 +478,6 @@ export default {
         this.SetFilter.handfoot[index] = true;
       }
     },
-    async loadDataFromLocal() {
-      try {
-        const result = dummyposts;
-        this.posts.push(...result);
-      } catch (err) {
-        console.log("로드 실패");
-      }
-    },
     ClickMonthlyArt() {
       if (this.SetFilter.monntlyart) {
         this.MontlyArtCondition = "";
@@ -435,6 +486,7 @@ export default {
         this.MontlyArtCondition = "font-weight:bold; background:#c4c4c4";
         this.SetFilter.monntlyart = true;
       }
+      this.MakeQuery();
     },
     ChangeFilterbar() {
       let Filters = this.SetFilter;
@@ -457,7 +509,6 @@ export default {
         color_true.forEach((e) => {
           bar.color.push(this.color[e].code); // 필터 바에 색깔 적용
         });
-        console.log(bar);
       } else bar.condition[0] = ``;
 
       if (shape_true.length > 0) {
@@ -531,12 +582,19 @@ export default {
         handfoot: [false, false],
         monntlyart: false,
       }; //현재 설정된 필터
+      this.$store.commit("collectionStore/setfilterQuery", "");
+      this.$store.commit("collectionStore/resetPage", 1);
+      this.$store.dispatch("collectionStore/fetchPost");
     },
     Visiblity(boolean) {
       console.log(boolean);
       if (boolean) {
         return "visible";
       } else return "invisible";
+    },
+    moreData() {
+      console.log("더줘");
+      this.$store.dispatch("collectionStore/fetchPost");
     },
   },
   watch: {
@@ -564,6 +622,9 @@ export default {
       if (this.$store.state.collectionStore.SearchState == true)
         return "search__move";
       else return "";
+    },
+    posts() {
+      return this.$store.state.collectionStore.posts;
     },
   },
 };

@@ -47,9 +47,13 @@ export default {
 .web--content {
   padding: 0 15% 0 15%;
   background: #ffffff;
+  min-height: 800px;
 
   @include tablet {
     padding: 0 0 0 0;
+  }
+  @include mobile-s {
+    min-height: 400px;
   }
 }
 .col {
