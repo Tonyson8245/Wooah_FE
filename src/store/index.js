@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import alertStore from "@/store/modules/alertStore";
+import CollectionStore from "@/store/modules/CollectionStore";
 
 const store = createStore({
   state() {
@@ -8,6 +9,7 @@ const store = createStore({
   mutations: {},
   modules: {
     alertStore: alertStore,
+    collectionStore: CollectionStore,
   },
 });
 

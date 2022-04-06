@@ -9,149 +9,138 @@
         <!-- 전체 컨테이너 -->
         <div class="col-md-10">
           <!-- 검색창 시작 -->
-          <div class="search">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="찾고 싶은 이미지 태그를 검색해 보세요"
-            />
-            <button
-              class="btn rounded-pill button"
-              :style="ButtonFocusSetting"
-              @click="Search"
-            >
-              검색
-            </button>
-            <i class="bi bi-search"></i>
-          </div>
+          <SearchPage />
           <!-- 검색 창 끝/태그 시작 -->
-          <div class="btn_outer">
-            <div class="btn-group" @click="ClickFilter">
-              <div class="dropdown">
+          <div :class="SearchState">
+            <div class="btn_outer btn_outer_move">
+              <div class="btn-group" @click="ClickFilter">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-sm"
+                    style="min-width: 5em"
+                    :style="[ButtonFocusSetting, MontlyArtCondition]"
+                    @click="ClickMonthlyArt"
+                  >
+                    <span class="btn__name"> 이달의아트 </span>
+                  </button>
+                </div>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-sm"
+                    type="button"
+                    :style="[
+                      ButtonFocusSetting,
+                      `background-color:${Filterbar.condition[0]}`,
+                    ]"
+                    @click="FilterOpen('컬러')"
+                  >
+                    <span v-if="Filterbar.condition[0] == ``" class="btn__name"
+                      >컬러<i class="bi bi-caret-down-fill"></i
+                    ></span>
+                    <span v-else class="settedFilter btn__name"
+                      ><i
+                        v-for="(c, i) in Filterbar.color"
+                        :key="i"
+                        class="bi bi-circle-fill"
+                        :style="`color:${c}`"
+                      ></i
+                    ></span>
+                    <!-- 상황에따라 필터 아이콘 온오프 -->
+                  </button>
+                </div>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-sm"
+                    :style="[
+                      ButtonFocusSetting,
+                      `background-color:${Filterbar.condition[1]}`,
+                    ]"
+                    type="button"
+                    @click="FilterOpen('쉐입')"
+                  >
+                    <span v-if="Filterbar.condition[1] == ``" class="btn__name"
+                      >쉐입<i class="bi bi-caret-down-fill"
+                    /></span>
+                    <span v-else class="settedFilter btn__name">{{
+                      Filterbar.shape
+                    }}</span>
+                  </button>
+                </div>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-sm"
+                    :style="[
+                      ButtonFocusSetting,
+                      `background-color:${Filterbar.condition[2]}`,
+                    ]"
+                    type="button"
+                    @click="FilterOpen('옵션')"
+                  >
+                    <span v-if="Filterbar.condition[2] == ``" class="btn__name"
+                      >옵션<i class="bi bi-caret-down-fill"
+                    /></span>
+                    <span v-else class="settedFilter btn__name">{{
+                      Filterbar.option
+                    }}</span>
+                  </button>
+                </div>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-sm"
+                    :style="[
+                      ButtonFocusSetting,
+                      `background-color:${Filterbar.condition[3]}`,
+                    ]"
+                    type="button"
+                    @click="FilterOpen('손발')"
+                  >
+                    <span v-if="Filterbar.condition[3] == ``" class="btn__name"
+                      >손발<i class="bi bi-caret-down-fill"
+                    /></span>
+                    <span v-else class="settedFilter btn__name">{{
+                      Filterbar.handfoot
+                    }}</span>
+                  </button>
+                </div>
                 <button
-                  class="btn btn-sm"
-                  style="min-width: 5em"
-                  :style="[ButtonFocusSetting, MontlyArtCondition]"
-                  @click="ClickMonthlyArt"
-                >
-                  <span class="btn__name"> 이달의아트 </span>
-                </button>
-              </div>
-              <div class="dropdown">
-                <button
-                  class="btn btn-sm"
+                  class="btn btn-sm filter__reset"
+                  :style="ButtonFocusSetting"
+                  style="border: 2px solid #c4c4c4; border-radius: 15px"
                   type="button"
-                  :style="[
-                    ButtonFocusSetting,
-                    `background-color:${Filterbar.condition[0]}`,
-                  ]"
-                  @click="FilterOpen('컬러')"
+                  @click="Reset"
                 >
-                  <span v-if="Filterbar.condition[0] == ``" class="btn__name"
-                    >컬러<i class="bi bi-caret-down-fill"></i
-                  ></span>
-                  <span v-else class="settedFilter btn__name"
-                    ><i
-                      v-for="(c, i) in Filterbar.color"
-                      :key="i"
-                      class="bi bi-circle-fill"
-                      :style="`color:${c}`"
-                    ></i
-                  ></span>
-                  <!-- 상황에따라 필터 아이콘 온오프 -->
+                  <i class="bi bi-arrow-clockwise"></i>
                 </button>
               </div>
-              <div class="dropdown">
-                <button
-                  class="btn btn-sm"
-                  :style="[
-                    ButtonFocusSetting,
-                    `background-color:${Filterbar.condition[1]}`,
-                  ]"
-                  type="button"
-                  @click="FilterOpen('쉐입')"
-                >
-                  <span v-if="Filterbar.condition[1] == ``" class="btn__name"
-                    >쉐입<i class="bi bi-caret-down-fill"
-                  /></span>
-                  <span v-else class="settedFilter btn__name">{{
-                    Filterbar.shape
-                  }}</span>
-                </button>
-              </div>
-              <div class="dropdown">
-                <button
-                  class="btn btn-sm"
-                  :style="[
-                    ButtonFocusSetting,
-                    `background-color:${Filterbar.condition[2]}`,
-                  ]"
-                  type="button"
-                  @click="FilterOpen('옵션')"
-                >
-                  <span v-if="Filterbar.condition[2] == ``" class="btn__name"
-                    >옵션<i class="bi bi-caret-down-fill"
-                  /></span>
-                  <span v-else class="settedFilter btn__name">{{
-                    Filterbar.option
-                  }}</span>
-                </button>
-              </div>
-              <div class="dropdown">
-                <button
-                  class="btn btn-sm"
-                  :style="[
-                    ButtonFocusSetting,
-                    `background-color:${Filterbar.condition[3]}`,
-                  ]"
-                  type="button"
-                  @click="FilterOpen('손발')"
-                >
-                  <span v-if="Filterbar.condition[3] == ``" class="btn__name"
-                    >손발<i class="bi bi-caret-down-fill"
-                  /></span>
-                  <span v-else class="settedFilter btn__name">{{
-                    Filterbar.handfoot
-                  }}</span>
-                </button>
-              </div>
-              <button
-                class="btn btn-sm filter__reset"
-                :style="ButtonFocusSetting"
-                style="border: 2px solid #c4c4c4; border-radius: 15px"
-                type="button"
-                @click="Reset"
-              >
-                <i class="bi bi-arrow-clockwise"></i>
-              </button>
             </div>
-          </div>
-          <FilterView
-            class="filter_content"
-            :class="FilterStatus"
-            :FilterCategory="FilterCategory"
-            :SetFilter="SetFilter"
-            @ClickApply="FilterApply($event)"
-          />
-          <!-- 태그끝 -->
-          <!-- 하단 사진들 시작 -->
-          <InfiniteScroll
-            :class="ImageContainerMove"
-            @infinite-scroll="loadDataFromLocal"
-            class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 g-0 images__container"
-          >
-            <PostImage
-              v-for="(post, i) in posts"
-              :key="post"
-              :post="post"
-              :index="i"
-              @ClickPost="
-                this.post = $event;
-                this.shop = this.post.shop;
-                this.Clicked_post_index = i;
-              "
+
+            <FilterView
+              class="filter_content"
+              :class="FilterStatus"
+              :FilterCategory="FilterCategory"
+              :SetFilter="SetFilter"
+              @ClickApply="FilterApply($event)"
             />
-          </InfiniteScroll>
+            <!-- 태그끝 -->
+            <!-- 하단 사진들 시작 -->
+            <InfiniteScroll
+              :class="ImageContainerMove"
+              @infinite-scroll="loadDataFromLocal"
+              class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 g-0 images__container"
+            >
+              <PostImage
+                v-for="(post, i) in posts"
+                :key="post"
+                :post="post"
+                :index="i"
+                @ClickPost="
+                  this.post = $event;
+                  this.shop = this.post.shop;
+                  this.Clicked_post_index = i;
+                "
+              />
+            </InfiniteScroll>
+          </div>
         </div>
         <!-- 전체 컨테이너 -->
       </div>
@@ -179,6 +168,7 @@
             <div style="width: 5%">
               <i
                 :class="ButtonCondition[0]"
+                @click="ClickPrevPost"
                 class="bi bi-arrow-left-circle-fill modal__btn_left"
               ></i>
             </div>
@@ -209,13 +199,21 @@
                     <span
                       ><i class="bi bi-telephone"></i>{{ shop.contact }}
                     </span>
-                    <span><i class="bi bi-geo-alt"></i>{{ shop.address }} </span
-                    ><br />
-                    <span><i class="bi bi-coin"></i>{{ post.price }} 원 </span
+                    <span
+                      ><i class="bi bi-geo-alt"></i>{{ shop.address }}
+                    </span>
+                    <span v-if="post.monthly_art"
+                      ><br /><i class="bi bi-coin"></i
+                      >{{ post.price }} 원 </span
                     ><br />
                   </span>
 
-                  <span class="modal__content_tags">{{ post.tags }}</span>
+                  <span
+                    class="modal__content_tags"
+                    v-for="tag in post.tags"
+                    :key="tag"
+                    >#{{ tag }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -253,6 +251,7 @@ import shape from "../../assets/dummy/shape";
 import option from "../../assets/dummy/option";
 import FilterView from "./FilterView.vue";
 import AlertDialog from "../Common/AlertDialog.vue";
+import SearchPage from "./SearchPage.vue";
 
 export default {
   name: "CollectionPage",
@@ -558,6 +557,14 @@ export default {
     FilterView,
     InfiniteScroll,
     AlertDialog,
+    SearchPage,
+  },
+  computed: {
+    SearchState() {
+      if (this.$store.state.collectionStore.SearchState == true)
+        return "search__move";
+      else return "";
+    },
   },
 };
 </script>
@@ -565,10 +572,20 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
 
+.search__move {
+  position: relative;
+  top: -$search_height-desktop;
+  @include tablet {
+    top: -$search-height-tablet;
+  }
+  @include mobile-s {
+    top: -$search-height-mobile;
+  }
+}
 //이미지 컨테이너 시작
 .images__container {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 .image__container__move {
   top: -$filter-height-desktop;
@@ -679,7 +696,8 @@ export default {
   font-size: 0.7em;
 }
 .modal__content_tags {
-  font-size: 0.5em;
+  font-size: 0.7em;
+  margin-right: 1em;
 }
 //모달 끝
 //태그 시작
@@ -694,6 +712,8 @@ export default {
   }
 }
 .btn_outer {
+  z-index: 2;
+  position: relative;
   overflow-y: scroll;
   overflow-y: hidden;
 }
@@ -733,71 +753,4 @@ export default {
   }
 }
 //태그 끝
-/// 검색창 부분 시작
-.search {
-  margin: 1em 0 0 0;
-  position: relative;
-  box-shadow: 0 0 40px rgba(51, 51, 51, 0.1);
-  background: #f8f9fa;
-
-  @include tablet {
-    margin: 0.5em 0 0 0;
-  }
-}
-
-.search input {
-  height: 60px;
-  text-indent: 25px;
-  border: 2px solid #d6d4d4;
-  border-radius: 3em;
-  background-color: #ffffff;
-  font-family: "GoyangIlsan";
-  padding-left: 30px;
-
-  @include mobile-s {
-    height: 40px;
-    font-size: 11px;
-    padding-left: 15px;
-  }
-}
-
-.search input:focus {
-  box-shadow: none;
-  border: 2px solid #a4a4a4;
-}
-
-.search .fa-search {
-  position: absolute;
-  top: 20px;
-  left: 16px;
-}
-
-.search button {
-  position: absolute;
-  font-weight: bold;
-  top: 5px;
-  right: 5px;
-  height: 50px;
-  width: 110px;
-  background: #c4c4c4;
-
-  @include mobile-s {
-    height: 30px;
-    width: 60px;
-    font-size: 12px;
-  }
-}
-.search i {
-  position: absolute;
-  font-weight: bold;
-  top: 0.7rem;
-  left: 1.3rem;
-  font-size: 25px;
-  @include mobile-s {
-    top: 0.3rem;
-    left: 0.8rem;
-    font-size: 20px;
-  }
-}
-//검색창 부분 끝
 </style>
