@@ -1,5 +1,4 @@
-import axios from "axios";
-axios.defaults.timeout = 500;
+import * as collectionApi from "@/api/collection";
 
 const CollectionStore = {
   namespaced: true,
@@ -21,21 +20,13 @@ const CollectionStore = {
   actions: {
     async searchTag(context, keyword) {
       if (keyword != "") {
-        try {
-          await axios
-            .get(`api/tags?query=${keyword}`)
-            .then(function (response) {
-              console.log("then");
-              console.log(response.data);
-              context.commit("changeSearchResult", response.data);
-            })
-            .catch(function (error) {
-              console.log("axioscatch" + error.response.status);
-            });
-          keyword = "";
-        } catch (error) {
-          console.error("catch" + error);
-        }
+        await collectionApi
+          .search(keyword)
+          .then(function (response) {
+            context.commit("changeSearchResult", response.data);
+          })
+          .catch(function () {});
+        keyword = "";
       } else context.commit("changeSearchResult", "");
     },
   },
