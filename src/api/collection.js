@@ -2,7 +2,7 @@ import http from "./http";
 // import store from "@/store"
 
 export function search(keyword) {
-  return http.get(`/tags?query=${keyword}`, {});
+  return http.get(`/tags?query=${keyword}&amount=6`, {});
 }
 
 export function fetchRankTags() {

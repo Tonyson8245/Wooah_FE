@@ -9,7 +9,10 @@
         <!-- 전체 컨테이너 -->
         <div class="col-md-10">
           <!-- 검색창 시작 -->
-          <SearchPage />
+          <SearchPage
+            @ClickTag="ClickTag($event)"
+            @MakeQuery="ClickTag($MakeQuery)"
+          />
           <!-- 검색 창 끝/태그 시작 -->
           <div :class="SearchState">
             <div class="btn_outer btn_outer_move">
@@ -411,9 +414,11 @@ export default {
         case "손발":
           this.FindApplyHandfoot(data); // 여기서 구분해서 바꿔준다.
           break;
-        case "reset":
-          break;
       } // 필터 카테고리에 따라 현재 설정된 필터 값을 바꿔주는 곳
+      if (data == "reset") {
+        this.MontlyArtCondition = "";
+        this.SetFilter.monntlyart = false;
+      }
 
       this.ChangeFilterbar();
       this.FilterStatus = "d-none";
@@ -422,8 +427,6 @@ export default {
 
       let before = this.beforeSetFilter;
       let after = this.SetFilter;
-      console.log(before);
-      console.log(after);
       let change =
         JSON.stringify(before.color) !== JSON.stringify(after.color) ||
         JSON.stringify(before.shape) !== JSON.stringify(after.shape) ||
@@ -446,7 +449,7 @@ export default {
       let color_qeury = "&color=";
       let shape_qeury = "&shape=";
       let option_qeury = "&option=";
-      let handfoot_qeury = "&handfoot=";
+      let handfoot_qeury = "&type=";
       let monthly_art_qeury = "";
 
       for (let i in filterdata.color) {
@@ -494,7 +497,7 @@ export default {
         handfoot_qeury +
         monthly_art_qeury;
 
-      console.log(query);
+      // console.log(query);
 
       this.$store.commit("collectionStore/setfilterQuery", query); //필터 쿼리 vuex 적용
       this.$store.commit("collectionStore/resetPage", 1); //페이지 초기화
@@ -607,6 +610,7 @@ export default {
         option: "",
         handfoot: "",
         condition: [``, ``, ``, ``],
+        monntlyart: false,
       };
       this.SetFilter = {
         color: [
@@ -652,6 +656,7 @@ export default {
 
       this.$store.commit("collectionStore/setfilterQuery", "");
       this.$store.commit("collectionStore/resetPage", 1);
+      this.$store.commit("collectionStore/InitTag");
       this.$store.dispatch("collectionStore/fetchPost");
     },
     Visiblity(boolean) {
@@ -662,6 +667,12 @@ export default {
     },
     moreData() {
       this.$store.dispatch("collectionStore/fetchPost");
+    },
+    ClickTag(tag) {
+      // console.log(tag);
+      this.$store.commit("collectionStore/ChangeSearchOff");
+      this.$store.commit("collectionStore/changeTag", tag);
+      this.MakeQuery();
     },
   },
   watch: {
@@ -688,7 +699,9 @@ export default {
     SearchState() {
       if (this.$store.state.collectionStore.SearchState == true)
         return "search__move";
-      else return "";
+      else {
+        return "";
+      }
     },
     posts() {
       return this.$store.state.collectionStore.posts;

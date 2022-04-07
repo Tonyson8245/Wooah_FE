@@ -4,7 +4,7 @@
       <input
         type="text"
         class="form-control"
-        placeholder="찾고 싶은 이미지 태그를 검색해 보세요"
+        :placeholder="keyword"
         @focus="ChangeState"
         @input="search($event)"
       />
@@ -18,8 +18,16 @@
     <div v-if="SearchStateBoolean" class="result__outline">
       <div class="result">
         <ul class="list-group">
-          <li v-for="index in 10" :key="index" class="list-group-item">
-            {{ SearchResult[index - 1] }}
+          <li
+            v-for="result in SearchResult"
+            :key="result"
+            class="list-group-item"
+            @click="
+              $emit('ClickTag', result);
+              keyword = result;
+            "
+          >
+            {{ result }}
           </li>
         </ul>
       </div>
@@ -29,6 +37,10 @@
           class="tags badge bg-secondary rounded-pill"
           v-for="tag in RankTags"
           :key="tag"
+          @click="
+            $emit('ClickTag', tag);
+            keyword = tag;
+          "
           >{{ tag }}</span
         >
       </div>
@@ -40,9 +52,7 @@
 export default {
   name: "SearchPage",
   data() {
-    return {
-      keyword: "",
-    };
+    return {};
   },
   computed: {
     SearchState() {
@@ -58,18 +68,36 @@ export default {
     RankTags() {
       return this.$store.state.collectionStore.Ranktags;
     },
+    keyword() {
+      if (this.$store.state.collectionStore.tag == null)
+        return "찾고 싶은 이미지 태그를 검색해 보세요";
+      else return this.$store.state.collectionStore.tag;
+    },
   },
   methods: {
     ChangeState() {
+      if (this.keyword != "") this.$store.state.collectionStore.tag = null; // 키워드 초기화
+
       this.$store.commit("collectionStore/ChangeSearchOn");
       this.$store.dispatch("collectionStore/fetchRankTag");
     },
     close() {
       this.$store.commit("collectionStore/ChangeSearchOff");
+      if (this.$store.state.collectionStore.tag == null) {
+        this.$emit("MakeQuery");
+      }
     },
     search(e) {
       let keyword = e.target.value;
       this.$store.dispatch("collectionStore/searchTag", keyword);
+    },
+  },
+  watch: {
+    keyword() {
+      if (this.keyword == "") {
+        this.keyword = "찾고 싶은 이미지 태그를 검색해 보세요";
+        this.$store.commit("collectionStore/InitTag");
+      }
     },
   },
 };
@@ -99,7 +127,7 @@ export default {
 .result {
   padding: 2% 1% 0 1%;
   overflow-y: hidden;
-  max-height: 320px;
+  height: 320px;
   @include mobile-s {
     max-height: 280px;
   }

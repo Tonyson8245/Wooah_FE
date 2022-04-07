@@ -8,8 +8,8 @@ const CollectionStore = {
     Ranktags: "",
 
     posts: [],
-    page: 1,
-    tag: "",
+    page: 0,
+    tag: null,
     filterQuery: "",
     completeFetch: true, // 포스트 가져오기 플래그
   },
@@ -29,11 +29,8 @@ const CollectionStore = {
     increasePage(state) {
       state.page++;
     },
-    decreasePage(state) {
-      state.page--;
-    },
     resetPage(state) {
-      state.page = 1;
+      state.page = 0;
       state.posts = [];
     },
     setPost(state, data) {
@@ -42,6 +39,12 @@ const CollectionStore = {
     setfilterQuery(state, data) {
       state.filterQuery = data;
       state.completeFetch = true;
+    },
+    changeTag(state, data) {
+      state.tag = data;
+    },
+    InitTag(state) {
+      state.tag = null;
     },
   },
   actions: {
@@ -65,24 +68,26 @@ const CollectionStore = {
         .catch(function () {});
     },
     async fetchPost(context) {
+      context.commit("increasePage");
       let query = "",
         unit = 16,
         page = context.state.page;
       query += context.state.filterQuery;
+
+      if (context.state.tag != null) {
+        query += `&tag=${context.state.tag}`;
+      } //태그가 있을경우
 
       if (context.state.completeFetch) {
         context.state.completeFetch = false; // 무한 페이지 로드를 막기위한 플래그
         await collectionApi
           .fetchNewPost(page, unit, query)
           .then(function (response) {
-            console.log(response);
             context.commit("setPost", response.data);
-            context.commit("increasePage");
+
             context.state.completeFetch = true; // 무한 페이지 로드를 막기위한 플래그
           })
-          .catch(function (error) {
-            console.log(error);
-          });
+          .catch(function () {});
       }
     },
   },
