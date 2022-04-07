@@ -33,7 +33,7 @@ export default {
   },
   watch: {
     FilterCategory(data) {
-      if (data == "" || data != "손발") {
+      if (data == "" || data == "손발") {
         if (this.SetFilterLimbs == true) this.Checked = "visible";
         else this.Checked = "d-none";
       }

@@ -142,6 +142,10 @@ export default {
       } else {
         if (this.tempFilter.length >= 3) {
           this.$store.commit("alertStore/ChangeState");
+          this.$store.commit(
+            "alertStore/ChangeComment",
+            "최대 3개까지 설정 가능합니다."
+          );
         } else this.tempFilter.push(data);
       }
 

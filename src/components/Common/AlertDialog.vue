@@ -2,7 +2,7 @@
   <GDialog v-model="dialogState" max-width="500">
     <div class="wrapper">
       <div class="content">
-        <p>최대 3개까지 선택 가능합니다.</p>
+        <p>{{ dialogComment }}</p>
       </div>
 
       <div class="actions">
@@ -20,6 +20,9 @@ export default {
   computed: {
     dialogState() {
       return this.$store.state.alertStore.dialogState;
+    },
+    dialogComment() {
+      return this.$store.state.alertStore.dialogComment;
     },
   },
 };

@@ -38,7 +38,7 @@ export default {
   },
   watch: {
     FilterCategory(data) {
-      if (data == "" || data != "컬러") {
+      if (data == "" || data == "컬러") {
         if (this.SetFilterColor == true) this.Checked = "visible";
         else this.Checked = "d-none";
       }

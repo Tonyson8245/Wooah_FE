@@ -11,6 +11,7 @@ const CollectionStore = {
     page: 1,
     tag: "",
     filterQuery: "",
+    completeFetch: true, // 포스트 가져오기 플래그
   },
   mutations: {
     ChangeSearchOn(state) {
@@ -40,6 +41,7 @@ const CollectionStore = {
     },
     setfilterQuery(state, data) {
       state.filterQuery = data;
+      state.completeFetch = true;
     },
   },
   actions: {
@@ -64,18 +66,24 @@ const CollectionStore = {
     },
     async fetchPost(context) {
       let query = "",
-        unit = 24,
+        unit = 16,
         page = context.state.page;
       query += context.state.filterQuery;
 
-      await collectionApi
-        .fetchNewPost(page, unit, query)
-        .then(function (response) {
-          context.commit("setPost", response.data);
-          context.commit("increasePage");
-          console.log("페이지 추우가아");
-        })
-        .catch(function () {});
+      if (context.state.completeFetch) {
+        context.state.completeFetch = false; // 무한 페이지 로드를 막기위한 플래그
+        await collectionApi
+          .fetchNewPost(page, unit, query)
+          .then(function (response) {
+            console.log(response);
+            context.commit("setPost", response.data);
+            context.commit("increasePage");
+            context.state.completeFetch = true; // 무한 페이지 로드를 막기위한 플래그
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
   },
 };

@@ -34,7 +34,7 @@ export default {
   },
   watch: {
     FilterCategory(data) {
-      if (data == "" || data != "옵션") {
+      if (data == "" || data == "옵션") {
         if (this.SetFilterOption == true) this.Checked = "visible";
         else this.Checked = "d-none";
       }

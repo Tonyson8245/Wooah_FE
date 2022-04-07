@@ -11,7 +11,7 @@ export function fetchRankTags() {
 
 export function fetchNewPost(page, unit, query) {
   let url = `/designs?page=${page}&unit=${unit}`;
-  if (query != null) url += `&${query}`;
+  if (query != null) url += `${query}`;
 
   return http.get(url, {});
 }

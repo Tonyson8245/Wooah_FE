@@ -124,21 +124,25 @@
             <!-- 태그끝 -->
             <!-- 하단 사진들 시작 -->
             <InfiniteScroll
-              :class="ImageContainerMove"
               @infinite-scroll="moreData"
-              class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 g-0 images__container"
+              :class="ImageContainerMove"
+              class="images__container"
+              :noResult="noResult"
+              :message="message"
             >
-              <PostImage
-                v-for="(post, i) in posts"
-                :key="post"
-                :post="post"
-                :index="i"
-                @ClickPost="
-                  this.post = $event;
-                  this.shop = this.post.shop;
-                  this.Clicked_post_index = i;
-                "
-              />
+              <div class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 g-0">
+                <PostImage
+                  v-for="(post, i) in posts"
+                  :key="post"
+                  :post="post"
+                  :index="i"
+                  @ClickPost="
+                    this.post = $event;
+                    this.shop = this.post.shop;
+                    this.Clicked_post_index = i;
+                  "
+                />
+              </div>
             </InfiniteScroll>
           </div>
         </div>
@@ -257,6 +261,7 @@ export default {
   name: "CollectionPage",
   data() {
     return {
+      message: "",
       //외부 데이터 시작
       handfoot: handfoot,
       color: color,
@@ -322,6 +327,46 @@ export default {
         handfoot: [false, false],
         monntlyart: false,
       }, //현재 설정된 필터
+      beforeSetFilter: {
+        color: [
+          false, //빨강
+          false, //주황
+          false, //노랑
+          false, //초록
+          false, //하늘
+          false, //파랑
+          false, //보라
+          false, //분홍
+          false, //검정
+          false, //하양
+          false, //갈색
+          false, //연두
+        ],
+        shape: [
+          false, //스퀘어
+          false, //스퀘어드오버스쿼벌
+          false, //오벌
+          false, //라운디드
+          false, //아몬드
+          false, //마운틴피크
+          false, //스틸레토
+          false, //발레리나
+          false, //엣지
+          false, //립스틱
+          false, //플레어
+          false, //애로우헤드
+        ],
+        option: [
+          false, //프렌치
+          false, //아트
+          false, //파츠
+          false, //젤기본
+          false, //글리터
+          false, //글라데이션
+        ],
+        handfoot: [false, false],
+        monntlyart: false,
+      }, //이전 설정된 필터
       //필터 끝
     };
   },
@@ -366,6 +411,8 @@ export default {
         case "손발":
           this.FindApplyHandfoot(data); // 여기서 구분해서 바꿔준다.
           break;
+        case "reset":
+          break;
       } // 필터 카테고리에 따라 현재 설정된 필터 값을 바꿔주는 곳
 
       this.ChangeFilterbar();
@@ -373,7 +420,24 @@ export default {
       this.FilterCategory = "";
       //여기서 post 갱신!! 포스트 내용 vuex 로 빼고, 거기서 지지고 볶고 ㄱㄱ
 
-      this.MakeQuery();
+      let before = this.beforeSetFilter;
+      let after = this.SetFilter;
+      console.log(before);
+      console.log(after);
+      let change =
+        JSON.stringify(before.color) !== JSON.stringify(after.color) ||
+        JSON.stringify(before.shape) !== JSON.stringify(after.shape) ||
+        JSON.stringify(before.option) !== JSON.stringify(after.option) ||
+        JSON.stringify(before.handfoot) !== JSON.stringify(after.handfoot) ||
+        JSON.stringify(before.monntlyart) !== JSON.stringify(after.monntlyart);
+      if (change) {
+        this.MakeQuery();
+        this.beforeSetFilter.color = this.SetFilter.color;
+        this.beforeSetFilter.shape = this.SetFilter.shape;
+        this.beforeSetFilter.option = this.SetFilter.option;
+        this.beforeSetFilter.handfoot = this.SetFilter.handfoot;
+        this.beforeSetFilter.monntlyart = this.SetFilter.monntlyart;
+      }
     }, // 필터의 확인 버튼 눌렀을 동작
     MakeQuery() {
       let query = "",
@@ -429,7 +493,9 @@ export default {
         option_qeury +
         handfoot_qeury +
         monthly_art_qeury;
-      // console.log(query);
+
+      console.log(query);
+
       this.$store.commit("collectionStore/setfilterQuery", query); //필터 쿼리 vuex 적용
       this.$store.commit("collectionStore/resetPage", 1); //페이지 초기화
       this.$store.dispatch("collectionStore/fetchPost"); // 불러오기
@@ -582,6 +648,8 @@ export default {
         handfoot: [false, false],
         monntlyart: false,
       }; //현재 설정된 필터
+      this.FilterApply(`reset`);
+
       this.$store.commit("collectionStore/setfilterQuery", "");
       this.$store.commit("collectionStore/resetPage", 1);
       this.$store.dispatch("collectionStore/fetchPost");
@@ -593,7 +661,6 @@ export default {
       } else return "invisible";
     },
     moreData() {
-      console.log("더줘");
       this.$store.dispatch("collectionStore/fetchPost");
     },
   },
@@ -625,6 +692,9 @@ export default {
     },
     posts() {
       return this.$store.state.collectionStore.posts;
+    },
+    noResult() {
+      return this.$store.state.error.noResult;
     },
   },
 };
