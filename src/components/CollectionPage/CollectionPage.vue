@@ -745,10 +745,12 @@ export default {
 //모달 시작
 .square {
   position: relative;
+  left: 5px;
   width: 66.6%;
   background-color: #f1f1f1;
   @include tablet {
     width: 100%;
+    left: 0px;
   }
 }
 
