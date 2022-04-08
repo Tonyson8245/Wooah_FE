@@ -5,8 +5,12 @@
         type="text"
         class="form-control"
         :placeholder="keyword"
+        :value="value"
         @focus="ChangeState"
-        @input="search($event)"
+        @input="
+          search($event);
+          value = $event.target.value;
+        "
       />
       <i class="bi bi-search"></i>
       <i
@@ -22,7 +26,10 @@
             v-for="result in SearchResult"
             :key="result"
             class="list-group-item"
-            @click="$emit('ClickTag', result)"
+            @click="
+              $emit('ClickTag', result);
+              value = ``;
+            "
           >
             {{ result }}
           </li>
@@ -34,7 +41,10 @@
           class="tags badge bg-secondary rounded-pill"
           v-for="tag in RankTags"
           :key="tag"
-          @click="$emit('ClickTag', tag)"
+          @click="
+            $emit('ClickTag', tag);
+            value = ``;
+          "
           >{{ tag }}</span
         >
       </div>
@@ -46,7 +56,7 @@
 export default {
   name: "SearchPage",
   data() {
-    return {};
+    return { value: `` };
   },
   computed: {
     SearchState() {
@@ -88,10 +98,9 @@ export default {
   },
   watch: {
     keyword() {
-      if (this.keyword == "") {
-        this.keyword = "찾고 싶은 이미지 태그를 검색해 보세요";
-        this.$store.commit("collectionStore/InitTag");
-      }
+      // if (this.keyword == "") {
+      //   this.keyword = "찾고 싶은 이미지 태그를 검색해 보세요";
+      // }
     },
   },
 };

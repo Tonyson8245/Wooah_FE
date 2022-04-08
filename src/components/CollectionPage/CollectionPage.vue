@@ -110,7 +110,7 @@
                   :style="ButtonFocusSetting"
                   style="border: 2px solid #c4c4c4; border-radius: 15px"
                   type="button"
-                  @click="Reset"
+                  @click="Reset(true)"
                 >
                   <i class="bi bi-arrow-clockwise"></i>
                 </button>
@@ -147,6 +147,9 @@
                 />
               </div>
             </InfiniteScroll>
+            <div v-if="noPost" class="noPost">
+              <span class="item">조회 결과가 없습니다.</span>
+            </div>
           </div>
         </div>
         <!-- 전체 컨테이너 -->
@@ -603,7 +606,7 @@ export default {
         if (this.SetFilter.handfoot[1]) bar.handfoot += "발";
       }
     }, //Filter bar 갱신
-    Reset() {
+    Reset(withTag) {
       this.Filterbar = {
         color: [],
         shape: "",
@@ -656,7 +659,7 @@ export default {
 
       this.$store.commit("collectionStore/setfilterQuery", "");
       this.$store.commit("collectionStore/resetPage", 1);
-      this.$store.commit("collectionStore/InitTag");
+      if (withTag) this.$store.commit("collectionStore/InitTag");
       this.$store.dispatch("collectionStore/fetchPost");
     },
     Visiblity(boolean) {
@@ -670,9 +673,10 @@ export default {
     },
     ClickTag(tag) {
       // console.log(tag);
-      this.Reset();
-      this.$store.commit("collectionStore/ChangeSearchOff");
       this.$store.commit("collectionStore/changeTag", tag);
+      this.$store.commit("collectionStore/ChangeSearchOff");
+      this.$store.commit("collectionStore/InitSearchResult");
+      this.Reset(false);
       this.MakeQuery();
     },
   },
@@ -709,6 +713,9 @@ export default {
     },
     noResult() {
       return this.$store.state.error.noResult;
+    },
+    noPost() {
+      return this.$store.state.collectionStore.noPost;
     },
   },
 };
@@ -900,4 +907,23 @@ export default {
   }
 }
 //태그 끝
+//noPost
+.noPost {
+  font-family: "GoyangIlsan";
+  width: 100%;
+  flex-direction: column;
+  height: 200px;
+  position: relative;
+  text-align: center;
+  @include mobile-s {
+    font-size: 11px;
+  }
+}
+.noPost .item {
+  position: absolute;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>
