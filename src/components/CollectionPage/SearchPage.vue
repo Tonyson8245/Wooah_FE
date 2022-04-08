@@ -112,6 +112,7 @@ export default {
 .ranktags {
   padding: 2% 1% 0 3%;
   font-family: "GoyangIlsan";
+  cursor: default;
 }
 .ranktags title {
   padding-left: 3%;
@@ -140,6 +141,7 @@ export default {
   border: none;
   margin-bottom: 1%;
   min-height: 30px;
+  cursor: default;
   @include mobile-s {
     font-size: 11px;
   }
