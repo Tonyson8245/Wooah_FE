@@ -670,6 +670,7 @@ export default {
     },
     ClickTag(tag) {
       // console.log(tag);
+      this.Reset();
       this.$store.commit("collectionStore/ChangeSearchOff");
       this.$store.commit("collectionStore/changeTag", tag);
       this.MakeQuery();

@@ -22,10 +22,7 @@
             v-for="result in SearchResult"
             :key="result"
             class="list-group-item"
-            @click="
-              $emit('ClickTag', result);
-              keyword = result;
-            "
+            @click="$emit('ClickTag', result)"
           >
             {{ result }}
           </li>
@@ -37,10 +34,7 @@
           class="tags badge bg-secondary rounded-pill"
           v-for="tag in RankTags"
           :key="tag"
-          @click="
-            $emit('ClickTag', tag);
-            keyword = tag;
-          "
+          @click="$emit('ClickTag', tag)"
           >{{ tag }}</span
         >
       </div>
@@ -88,8 +82,8 @@ export default {
       }
     },
     search(e) {
-      let keyword = e.target.value;
-      this.$store.dispatch("collectionStore/searchTag", keyword);
+      let searchkeyword = e.target.value;
+      this.$store.dispatch("collectionStore/searchTag", searchkeyword);
     },
   },
   watch: {
