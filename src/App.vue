@@ -53,6 +53,8 @@ export default {
     padding: 0 0 0 0;
   }
   @include mobile-s {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
     min-height: 400px;
   }
 }

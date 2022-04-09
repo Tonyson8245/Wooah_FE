@@ -1,5 +1,8 @@
 <template>
-  <nav class="Roboto navbar navbar-expand-lg navbar-light bg-light">
+  <nav
+    class="Roboto navbar navbar-expand-lg navbar-light bg-light"
+    style="width: 100%"
+  >
     <div class="container-fluid">
       <a class="navbar-brand" href="./">우아</a>
       <button
@@ -30,12 +33,12 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link" :class="TapCondition[0]" href="./library"
+              <a class="nav-link" :class="TapCondition[0]" href="/library"
                 >디자인모아보기</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" :class="TapCondition[1]" href="./shop">샵</a>
+              <a class="nav-link" :class="TapCondition[1]" href="/shop">샵</a>
             </li>
           </ul>
         </div>

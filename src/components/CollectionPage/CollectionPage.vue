@@ -3,8 +3,8 @@
     <AlertDialog />
     <div>
       <div
-        class="row d-flex justify-content-center align-items-center"
-        style="padding: 0 3% 0 3%"
+        class="row d-flex justify-content-center align-items-center g-0"
+        style="padding: 0 0 0 0"
       >
         <!-- 전체 컨테이너 -->
         <div class="col-md-10">
@@ -107,6 +107,7 @@
                 </div>
                 <button
                   class="btn btn-sm filter__reset"
+                  v-if="ResetStatus"
                   :style="ButtonFocusSetting"
                   style="border: 2px solid #c4c4c4; border-radius: 15px"
                   type="button"
@@ -128,12 +129,15 @@
             <!-- 하단 사진들 시작 -->
             <InfiniteScroll
               @infinite-scroll="moreData"
+              v-if="!noPost"
               :class="ImageContainerMove"
               class="images__container"
               :noResult="noResult"
               :message="message"
             >
-              <div class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 g-0">
+              <div
+                class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 row-cols-xs-3 g-0"
+              >
                 <PostImage
                   v-for="(post, i) in posts"
                   :key="post"
@@ -290,6 +294,7 @@ export default {
         condition: [``, ``, ``, ``],
       },
       FilterStatus: "d-none", // 필터 보여주는지 아닌지
+      ResetStatus: true,
       FilterCategory: "", // 필터 카테고리
       ImageContainerMove: "", // 핕터때문에 내려가는 이미지 컨테이너 끌어올리기
       MontlyArtCondition: "",
@@ -395,11 +400,12 @@ export default {
     FilterOpen(data) {
       if (this.FilterStatus == "d-none") {
         this.FilterStatus = "visible";
+        this.ResetStatus = false;
         this.FilterCategory = data;
       } else {
         if (this.FilterCategory == data) {
           this.FilterStatus = "d-none";
-          this.FilterCategory = "";
+          this.ResetStatus = true;
         } else this.FilterCategory = data;
       }
     }, // 필터 설정 버튼 누르고 닫기
@@ -425,6 +431,8 @@ export default {
 
       this.ChangeFilterbar();
       this.FilterStatus = "d-none";
+
+      this.ResetStatus = true;
       this.FilterCategory = "";
       //여기서 post 갱신!! 포스트 내용 vuex 로 빼고, 거기서 지지고 볶고 ㄱㄱ
 
@@ -689,8 +697,10 @@ export default {
         this.ButtonCondition[1] = "d-none";
     },
     FilterStatus(state) {
-      if (state == "d-none") this.ImageContainerMove = "";
-      else this.ImageContainerMove = "image__container__move";
+      if (state == "d-none") {
+        this.ImageContainerMove = "";
+        this.ResetStatus = true;
+      } else this.ImageContainerMove = "image__container__move";
     },
   },
   components: {
@@ -712,7 +722,7 @@ export default {
       return this.$store.state.collectionStore.posts;
     },
     noResult() {
-      return this.$store.state.error.noResult;
+      return this.$store.state.collectionStore.noResult;
     },
     noPost() {
       return this.$store.state.collectionStore.noPost;

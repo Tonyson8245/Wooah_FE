@@ -18,15 +18,17 @@ instance.defaults.timeout = 6000;
 instance.interceptors.response.use(
   function (response) {
     store.commit("error/setValidationError", {}); // 요청이 성공했다면 ValidationError 내용을 모두 비워준다.
-    store.commit("error/setnoResult", false); // 요청이 성공하면 noResult false로 만든다.
+    // store.commit("CollectionStore/setnoResult", false); // 요청이 성공하면 noResult false로 만든다.
     return response;
   },
   function (errors) {
-    if (errors.response.status === 422) {
+    if (errors.response.status === 500) {
       store.commit("error/setValidationError", errors.response.data);
-    } else if (errors.response.status === 404) {
-      store.commit("error/setnoResult", true);
-    } else {
+    }
+    // else if (errors.response.status === 404) {
+    //   store.commit("error/setnoResult", true);
+    // }
+    else {
       return Promise.reject(errors); // 만약 에러이지만 422이 아닐경우 그냥 그대로 보내서 catch 코드에서 잡히게 한다.
     }
   }
