@@ -1,8 +1,14 @@
 <template>
   <div class="container-sm">
     <div class="row flex-row-reverse">
-      <div class="col-xl-7 col-md-12 list__outer g-0">Column</div>
-      <div class="col-xl-5 col-md-12 map__outer g-0">Column</div>
+      <div class="col-xl-8 col-lg-8 col-sm-12 map__outer g-0">
+        <div class="map"></div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-sm-12 list__outer g-0">
+        list
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      </div>
     </div>
   </div>
 </template>
@@ -39,31 +45,41 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
-$desktop-min-height: 750px;
-$tablet-min-height: 400px;
-$mobile-min-height: 300px;
+$desktop-height: 750px;
+$tablet-height: 400px;
+$mobile-height: 300px;
 
 .container {
   flex-wrap: wrap-reverse;
+  padding-top: 2%;
+  @include tablet {
+    padding: 0 0 0 0;
+  }
 }
 .list__outer {
-  min-height: 750px;
+  height: 750px;
+  overflow-y: scroll;
   background: red;
   @include tablet {
-    min-height: $tablet-min-height;
+    height: $tablet-height;
   }
   @include mobile-s {
-    min-height: $mobile-min-height;
+    height: $mobile-height;
   }
 }
 .map__outer {
-  min-height: 750px;
+  height: 750px;
   background: blue;
   @include tablet {
-    min-height: $tablet-min-height;
+    height: $tablet-height;
+    max-height: 350px;
   }
   @include mobile-s {
-    min-height: $mobile-min-height;
+    height: $mobile-height;
+    max-height: 250px;
   }
+}
+.map {
+  background: yellow;
 }
 </style>

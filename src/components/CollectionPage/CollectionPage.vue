@@ -1,7 +1,7 @@
 <template>
   <div>
     <AlertDialog />
-    <div>
+    <div class="container-sm">
       <div
         class="row d-flex justify-content-center align-items-center g-0"
         style="padding: 0 0 0 0"

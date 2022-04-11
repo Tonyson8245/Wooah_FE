@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="Roboto navbar navbar-expand-lg navbar-light bg-light"
+    class="Roboto navbar navbar-expand-lg navbar-light bg-light p-0 m-0"
     style="width: 100%"
     :style="padding"
   >
@@ -75,9 +75,11 @@ export default {
 .navbar {
   /* font-family: "MaplestoryOTFLight"; */
   font-family: "GoyangIlsan";
+  background: white;
   font-size: 20px;
-  padding: 0 0 0 21%; // 상단 높이 맞추기 위함
-
+  border: solid #c4c4c4;
+  border-width: 0 0 0.5px 0;
+  /* padding: 0 0 0 21%; // 상단 높이 맞추기 위함 */
   @include tablet {
     font-size: 20px;
     padding: 0 0 0 0; // 모바일 상에서는 다시 붙기
