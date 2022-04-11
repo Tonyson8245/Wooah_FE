@@ -13,6 +13,8 @@ const CollectionStore = {
     completeFetch: true, // 포스트 가져오기 플래그
     noPost: false, // 포스트가 아예없음
     noResult: false,
+    post: "",
+    shop: "",
   },
   mutations: {
     ChangeSearchOn(state) {
@@ -77,7 +79,7 @@ const CollectionStore = {
         })
         .catch(function () {});
     },
-    async fetchPost(context) {
+    async fetchPosts(context) {
       let query = "",
         unit = 15,
         page = context.state.page;
@@ -91,7 +93,7 @@ const CollectionStore = {
         context.commit("increasePage");
         context.state.completeFetch = false; // 무한 페이지 로드를 막기위한 플래그
         await collectionApi
-          .fetchNewPost(page, unit, query)
+          .fetchPosts(page, unit, query)
           .then(function (response) {
             if (response.status == 200) {
               context.commit("setPost", response.data);
@@ -115,6 +117,22 @@ const CollectionStore = {
             } else console.log(error);
           });
       }
+    },
+    async fetchPost(context, id) {
+      await collectionApi
+        .fetchPost(id)
+        .then(function (response) {
+          if (response.status == 200) {
+            context.state.post = response.data;
+            context.state.shop = response.data.shop;
+          }
+        })
+        .catch(function (error) {
+          let res = error.response;
+          if (res.status == 404) {
+            context.commit(`changeNoPost`, true);
+          } else console.log(res);
+        });
     },
   },
 };

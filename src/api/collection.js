@@ -9,9 +9,14 @@ export function fetchRankTags() {
   return http.get(`/tags/trend?amount=10`, {});
 }
 
-export function fetchNewPost(page, unit, query) {
+export function fetchPosts(page, unit, query) {
   let url = `/designs?page=${page}&unit=${unit}`;
   if (query != null) url += `${query}`;
 
+  return http.get(url, {});
+}
+
+export function fetchPost(id) {
+  let url = `/designs/${id}`;
   return http.get(url, {});
 }

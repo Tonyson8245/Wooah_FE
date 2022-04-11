@@ -2,8 +2,9 @@
   <nav
     class="Roboto navbar navbar-expand-lg navbar-light bg-light"
     style="width: 100%"
+    :style="padding"
   >
-    <div class="container-fluid">
+    <div class="container-lg">
       <a class="navbar-brand" href="./">우아</a>
       <button
         class="navbar-toggler"
@@ -53,6 +54,7 @@ export default {
   data() {
     return {
       TapCondition: ["", ""], // 실제 상단 헤더의 :class 상태 // 실제 컨디션
+      padding: ``,
     };
   },
   props: {
@@ -61,6 +63,8 @@ export default {
   watch: {},
   beforeUpdate() {
     this.TapCondition = [...this.PageCondition]; // 여기서 적용
+    // if (this.TapCondition[1] == "active") this.padding = `padding : 0 0 0 0`;
+    // else this.padding = `padding : 0 0 0 23%`;
   },
 };
 </script>
@@ -69,9 +73,10 @@ export default {
 @import "../assets/style.scss";
 
 .navbar {
-  font-family: "MaplestoryOTFLight";
+  /* font-family: "MaplestoryOTFLight"; */
+  font-family: "GoyangIlsan";
   font-size: 20px;
-  padding: 0 0 0 15%; // 상단 높이 맞추기 위함
+  padding: 0 0 0 21%; // 상단 높이 맞추기 위함
 
   @include tablet {
     font-size: 20px;

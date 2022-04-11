@@ -239,6 +239,7 @@
                   class="btn-close btn-close-white"
                   data-bs-dismiss="modal"
                   aria-label="Close"
+                  @click="this.Clicked_post_index = ``"
                 ></button>
               </div>
               <i
@@ -383,7 +384,7 @@ export default {
   },
   mounted() {
     //데이터 가져오는 코드 여기 넣쟈
-    this.$store.dispatch("collectionStore/fetchPost");
+    this.$store.dispatch("collectionStore/fetchPosts");
     this.$emit("ChangePageCondition", "collection");
   }, // 생성 될때 포스트 데이터를 가져오게 한다.
   methods: {
@@ -512,7 +513,7 @@ export default {
 
       this.$store.commit("collectionStore/setfilterQuery", query); //필터 쿼리 vuex 적용
       this.$store.commit("collectionStore/resetPage", 1); //페이지 초기화
-      this.$store.dispatch("collectionStore/fetchPost"); // 불러오기
+      this.$store.dispatch("collectionStore/fetchPosts"); // 불러오기
     },
     FindApplyColor(filters) {
       this.SetFilter.color = [
@@ -668,7 +669,7 @@ export default {
       this.$store.commit("collectionStore/setfilterQuery", "");
       this.$store.commit("collectionStore/resetPage", 1);
       if (withTag) this.$store.commit("collectionStore/InitTag");
-      this.$store.dispatch("collectionStore/fetchPost");
+      this.$store.dispatch("collectionStore/fetchPosts");
     },
     Visiblity(boolean) {
       console.log(boolean);
@@ -677,7 +678,7 @@ export default {
       } else return "invisible";
     },
     moreData() {
-      this.$store.dispatch("collectionStore/fetchPost");
+      this.$store.dispatch("collectionStore/fetchPosts");
     },
     ClickTag(tag) {
       // console.log(tag);
@@ -693,14 +694,20 @@ export default {
       // 현재 페이지 위치에 따라 버튼 사라지게 하는 것
       this.ButtonCondition = ["visible", "visible"];
       if (this.Clicked_post_index == "0") this.ButtonCondition[0] = "d-none";
-      if (this.Clicked_post_index + 1 >= this.posts.length)
-        this.ButtonCondition[1] = "d-none";
+      if (this.Clicked_post_index + 1 >= this.posts.length) {
+        this.moreData();
+      }
     },
     FilterStatus(state) {
       if (state == "d-none") {
         this.ImageContainerMove = "";
         this.ResetStatus = true;
       } else this.ImageContainerMove = "image__container__move";
+    },
+    noResult() {
+      if (this.Clicked_post_index != ``) {
+        this.ButtonCondition[1] = "d-none";
+      }
     },
   },
   components: {
