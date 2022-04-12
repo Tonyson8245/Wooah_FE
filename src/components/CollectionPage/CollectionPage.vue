@@ -1,7 +1,7 @@
 <template>
   <div>
     <AlertDialog />
-    <div class="container-sm">
+    <div class="container-sm p-lg-5 pt-lg-0">
       <div
         class="row d-flex justify-content-center align-items-center g-0"
         style="padding: 0 0 0 0"
@@ -838,14 +838,18 @@ export default {
   clear: left;
   float: left;
   left: 0;
-  bottom: 0px;
+  top: 75%;
   font-family: "GoyangIlsan";
   margin: 7% 0 7% 7%;
   @include mobile-s {
+    top: initial;
     margin: 7% 0 7% 0%;
     font-size: 20px;
+    bottom: 0;
   }
   @include tablet {
+    top: initial;
+    bottom: 0;
     margin: 7% 0 7% 0%;
     position: relative;
     font-size: 50%;

@@ -36,7 +36,6 @@ export default {
           break;
         case "shop":
           this.PageCondition[1] = "active";
-          this.padding = `padding: 0 0 0 0`;
           break;
       }
     }, // 각 컴포넌트에서 본인으로 바뀌었다고 신호를 줌 -> 위쪽에서 이걸 TopHeader로 전달함

@@ -75,7 +75,9 @@ export default {
     keyword() {
       if (this.$store.state.collectionStore.tag == null)
         return "찾고 싶은 이미지 태그를 검색해 보세요";
-      else return this.$store.state.collectionStore.tag;
+      else {
+        return this.$store.state.collectionStore.tag;
+      }
     },
   },
   methods: {
@@ -97,11 +99,7 @@ export default {
     },
   },
   watch: {
-    keyword() {
-      // if (this.keyword == "") {
-      //   this.keyword = "찾고 싶은 이미지 태그를 검색해 보세요";
-      // }
-    },
+    keyword() {},
   },
 };
 </script>

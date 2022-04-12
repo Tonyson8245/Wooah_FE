@@ -89,6 +89,7 @@ export default {
   font-size: 40px;
   width: 100px;
   height: auto;
+  font-weight: bold;
 
   @include tablet {
     font-size: 30px;
