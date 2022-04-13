@@ -27,6 +27,10 @@ const routes = [
     component: Shop,
   },
   {
+    path: "/shop/:id(\\d+)",
+    component: Shop,
+  },
+  {
     path: "/:anything(.*)",
     component: ErrorPage,
   },
