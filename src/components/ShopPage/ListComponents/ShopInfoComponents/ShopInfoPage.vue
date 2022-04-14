@@ -2,7 +2,7 @@
   <div class="info_outline">
     <div class="banner card-header m-1">
       샵 정보
-      <i class="bi bi-x-lg"></i>
+      <i class="bi bi-x-lg" @click="CloseInfo"></i>
     </div>
     <div class="info__content">
       <carousel :items-to-show="1">
@@ -75,6 +75,9 @@ export default {
     },
   },
   methods: {
+    CloseInfo() {
+      this.$router.go(-1);
+    },
     ClickTab(num) {
       this.TabStatus = [``, ``, ``];
       this.TabStatus[num] = `border-width:1px 1px 0 1px; background: #fcfcfc; `;
@@ -111,8 +114,7 @@ export default {
   position: relative;
 }
 .info__content {
-  overflow-y: auto;
-  overflow-x: none;
+  overflow-y: scroll;
   height: 793px;
   @include mobile-s {
     overflow: none;

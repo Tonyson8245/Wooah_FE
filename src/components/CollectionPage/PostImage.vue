@@ -72,7 +72,7 @@ $thumbnail-padding: 0.25rem;
   position: absolute;
   top: 3%;
   right: 5%;
-  color: #fd00c6;
+  color: #ffbdf1;
   font-size: 20px;
   z-index: 1;
   @include tablet {

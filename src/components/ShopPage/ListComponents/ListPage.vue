@@ -8,6 +8,7 @@
         :key="index"
         :shop="shop"
         :index="index"
+        @click="ClickShop(shop.id)"
       ></ShopItem>
     </div>
   </div>
@@ -39,6 +40,11 @@ export default {
       return this.$store.state.ShopStore.shops;
     },
   },
+  methods: {
+    ClickShop(id) {
+      this.$router.push("/shop/" + id);
+    },
+  },
 };
 </script>
 
@@ -46,8 +52,7 @@ export default {
 @import "/src/assets/style.scss";
 
 .shoplist {
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-y: auto;
   height: $list-desktop-height;
   @include tablet-s {
     height: $list-tablet-height;

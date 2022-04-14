@@ -53,9 +53,20 @@ export default {
   has_day_off: true,
   day_off_week: [1, 3, 5],
   day_off_day: ["SUN"],
-  has_deposite: false,
+  has_deposite: true,
+  deposite: 10000,
   menu: {
     hand: [
+      {
+        name: "젤(원컬러)",
+        price: 21000,
+      },
+      {
+        name: "젤(투컬러)",
+        price: 25000,
+      },
+    ],
+    foot: [
       {
         name: "젤(원컬러)",
         price: 21000,
