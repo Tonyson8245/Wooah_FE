@@ -12,5 +12,4 @@ import { GDialog } from "gitart-vue-dialog";
 let emitter = mitt();
 let app = createApp(App);
 app.config.globalProperties.emitter = emitter;
-
 app.use(router).use(store).component("GDialog", GDialog).mount("#app");

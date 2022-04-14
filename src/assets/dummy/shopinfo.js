@@ -1,5 +1,5 @@
 export default {
-  name: "샵 이름",
+  name: "벨라네일",
   images: [
     "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fnaverbooking-phinf.pstatic.net%2F20210608_260%2F1623118179486ne1Av_JPEG%2Fimage.jpg",
     "https://lh5.googleusercontent.com/p/AF1QipMfqEl2iwKecGq_uS4RsXCQbpk_vEpa0TQrznK4=s677-k-no",

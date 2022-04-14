@@ -15,8 +15,12 @@
               지도 보기
             </button>
           </div>
-          <ListPage :MapView="MapView" :width="width" v-if="ShopId == ``" />
-          <ShopInfoPage />
+          <ListPage
+            :MapView="MapView"
+            :width="width"
+            v-if="ShopId == undefined"
+          />
+          <ShopInfoPage v-if="ShopId != undefined" />
         </div>
       </div>
     </div>
@@ -33,7 +37,7 @@ export default {
     return {
       width: 0,
       height: 0,
-      ShopId: ``,
+      ShopId: undefined,
     };
   },
   components: { NaverMap, ListPage, ShopInfoPage },
@@ -43,7 +47,7 @@ export default {
     window.addEventListener("resize", this.handleResize);
     this.handleResize(); // 화면 넓이를 측정
     this.ShopId = this.$route.params.id; // 현재 샵 상세를 찾는지 확인
-    if (this.ShopId != `` && this.width < 768) {
+    if (this.ShopId != undefined && this.width < 768) {
       // 현재 화면 넓이가 태블릿보다 좁으면 지도 끔
       this.CloseMap();
     } else this.OpenMap();

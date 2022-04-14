@@ -19,6 +19,7 @@
     "sass": "^1.49.9",
     "vue": "^3.2.13",
     "vue-router": "^4.0.14",
+    "vue3-carousel": "^0.1.38",
     "vue3-promise-dialog": "^0.2.6",
     "vuex": "^4.0.2"
   },

@@ -84,6 +84,9 @@ export default {
     font-size: 20px;
     padding: 0 0 0 0; // 모바일 상에서는 다시 붙기
   }
+  @include mobile-s {
+    font-size: 50%;
+  }
 }
 .navbar-brand {
   font-size: 40px;
@@ -94,8 +97,17 @@ export default {
   @include tablet {
     font-size: 30px;
   }
+  @include mobile-s {
+    font-size: 20px;
+  }
 } //로고
 .active {
   font-weight: bold;
+}
+</style>
+
+<style>
+.navbar-toggler {
+  font-size: 150%;
 }
 </style>

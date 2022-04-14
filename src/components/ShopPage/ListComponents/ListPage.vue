@@ -55,5 +55,9 @@ export default {
   @include tablet {
     height: $list-tablet-height + 145px;
   }
+  @include mobile-s {
+    height: auto;
+    overflow: none;
+  }
 }
 </style>
