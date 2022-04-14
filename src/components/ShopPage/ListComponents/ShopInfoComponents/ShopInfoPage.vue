@@ -20,21 +20,21 @@
       <div class="container-fluid g-0 row tab mt-3">
         <div
           class="col-4 btn btn-light"
-          :class="TabStatus[0]"
+          :style="TabStatus[0]"
           @click="ClickTab(0)"
         >
           정보
         </div>
         <div
           class="col-4 btn btn-light"
-          :class="TabStatus[1]"
+          :style="TabStatus[1]"
           @click="ClickTab(1)"
         >
           가격정보
         </div>
         <div
           class="col-4 btn btn-light"
-          :class="TabStatus[2]"
+          :style="TabStatus[2]"
           @click="ClickTab(2)"
         >
           사진
@@ -61,7 +61,12 @@ export default {
   },
   data() {
     return {
-      TabStatus: [`border-bottom-0`, ``, ``],
+      TabStatus: [
+        `border-width:1px 1px 0 1px; 
+  background: #fcfcfc;`,
+        ``,
+        ``,
+      ],
     };
   },
   computed: {
@@ -72,7 +77,19 @@ export default {
   methods: {
     ClickTab(num) {
       this.TabStatus = [``, ``, ``];
-      this.TabStatus[num] = `border-bottom-0`;
+      this.TabStatus[num] = `border-width:1px 1px 0 1px; background: #fcfcfc; `;
+
+      switch (num) {
+        case 0:
+          this.$router.go("/info");
+          break;
+        case 1:
+          this.$router.push("/price");
+          break;
+        case 2:
+          this.$router.push("/image");
+          break;
+      }
     },
   },
 };
@@ -86,9 +103,6 @@ export default {
   border: #e1e1e1 solid 1px;
 }
 
-.tab .border-bottom-0 {
-  background: #fcfcfc;
-}
 ///
 .info_outline {
   border: solid 0.5px #e1e1e1;
