@@ -81,13 +81,13 @@ export default {
 
       switch (num) {
         case 0:
-          this.$router.go("/info");
+          this.$router.push("/shop/" + this.$route.params.id + "/info");
           break;
         case 1:
-          this.$router.push("/price");
+          this.$router.push("/shop/" + this.$route.params.id + "/price");
           break;
         case 2:
-          this.$router.push("/image");
+          this.$router.push("/shop/" + this.$route.params.id + "/image");
           break;
       }
     },
