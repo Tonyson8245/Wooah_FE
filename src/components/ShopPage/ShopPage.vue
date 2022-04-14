@@ -15,12 +15,11 @@
               지도 보기
             </button>
           </div>
-          <ListPage
+          <router-view
             :MapView="MapView"
             :width="width"
             v-if="ShopId == undefined"
-          />
-          <ShopInfoPage v-if="ShopId != undefined" />
+          ></router-view>
         </div>
       </div>
     </div>
@@ -29,8 +28,6 @@
 
 <script>
 import NaverMap from "./MapComponents/NaverMap.vue";
-import ListPage from "./ListComponents/ListPage.vue";
-import ShopInfoPage from "./ListComponents/ShopInfoComponents/ShopInfoPage.vue";
 export default {
   name: "ShopPage",
   data() {
@@ -40,7 +37,7 @@ export default {
       ShopId: undefined,
     };
   },
-  components: { NaverMap, ListPage, ShopInfoPage },
+  components: { NaverMap },
 
   mounted() {
     this.$emit("ChangePageCondition", "shop");

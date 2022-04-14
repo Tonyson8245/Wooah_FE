@@ -7,6 +7,8 @@ import DetailPage from "./components/CollectionPage/DetailPage";
 import ShopImgTab from "./components/ShopPage/ListComponents/ShopInfoComponents/Tabs/ShopImgTab";
 import ShopInfoTab from "./components/ShopPage/ListComponents/ShopInfoComponents/Tabs/ShopInfoTab";
 import ShopPriceTab from "./components/ShopPage/ListComponents/ShopInfoComponents/Tabs/ShopPriceTab";
+import ListPage from "./components/ShopPage/ListComponents/ListPage";
+import ShopInfoPage from "./components/ShopPage/ListComponents/ShopInfoComponents/ShopInfoPage";
 
 const routes = [
   {
@@ -26,31 +28,59 @@ const routes = [
     component: Collection,
   },
   {
-    path: "/shop/:id(\\d+)",
+    path: "/shop",
     component: Shop,
     children: [
       {
-        path: "", //shop/0/info
-        component: ShopInfoTab,
+        path: ":id(\\d+)",
+        component: ShopInfoPage,
+        children: [
+          {
+            path: "", //shop/0/info
+            component: ShopInfoTab,
+          },
+          {
+            path: "info", //shop/0/info
+            component: ShopInfoTab,
+          },
+          {
+            path: "image", //shop/0/image
+            component: ShopImgTab,
+          },
+          {
+            path: "price", //shop/0/price
+            component: ShopPriceTab,
+          },
+        ],
       },
       {
-        path: "info", //shop/0/info
-        component: ShopInfoTab,
-      },
-      {
-        path: "image", //shop/0/image
-        component: ShopImgTab,
-      },
-      {
-        path: "price", //shop/0/price
-        component: ShopPriceTab,
+        path: "",
+        component: ListPage,
       },
     ],
   },
-  {
-    path: "/shop",
-    component: Shop,
-  },
+  // {
+  //   path: "/shop/:id(\\d+)",
+  //   component: ListPage,
+  //   children: [
+  //     {
+  //       path: "", //shop/0/info
+  //       component: Shop,
+  //     },
+  //     {
+  //       path: "info", //shop/0/info
+  //       component: ShopInfoTab,
+  //     },
+  //     {
+  //       path: "image", //shop/0/image
+  //       component: ShopImgTab,
+  //     },
+  //     {
+  //       path: "price", //shop/0/price
+  //       component: ShopPriceTab,
+  //     },
+  //   ],
+  // },
 
   {
     path: "/:anything(.*)",

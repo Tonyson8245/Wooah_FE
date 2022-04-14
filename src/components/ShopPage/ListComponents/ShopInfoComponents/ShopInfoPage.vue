@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     CloseInfo() {
-      this.$router.go(-1);
+      this.$router.push("/shop");
     },
     ClickTab(num) {
       this.TabStatus = [``, ``, ``];
