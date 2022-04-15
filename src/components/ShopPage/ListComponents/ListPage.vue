@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: white">
     <SearchPage></SearchPage>
     <TitleItem></TitleItem>
     <div class="shoplist" :style="ListHeight">

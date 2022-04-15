@@ -1,47 +1,49 @@
 <template>
-  <div class="info_outline">
-    <div class="banner card-header m-1">
-      샵 정보
-      <i class="bi bi-x-lg" @click="CloseInfo"></i>
-    </div>
-    <div class="info__content">
-      <carousel :items-to-show="1">
-        <slide class="square" v-for="slide in ShopData.images" :key="slide">
-          <img class="inner" :src="slide" alt="" />
-        </slide>
-        <template #addons>
-          <!-- <navigation class="mx-4 btn-light" />
-          <pagination class="p-0 btn-light" /> -->
-          <navigation class="mx-4" />
-          <pagination />
-        </template>
-      </carousel>
-      <div class="title p-1">{{ ShopData.name }}</div>
-      <div class="container-fluid g-0 row tab mt-3">
-        <div
-          class="col-4 btn btn-light"
-          :style="TabStatus[0]"
-          @click="ClickTab(0)"
-        >
-          정보
-        </div>
-        <div
-          class="col-4 btn btn-light"
-          :style="TabStatus[1]"
-          @click="ClickTab(1)"
-        >
-          가격정보
-        </div>
-        <div
-          class="col-4 btn btn-light"
-          :style="TabStatus[2]"
-          @click="ClickTab(2)"
-        >
-          사진
-        </div>
+  <div style="background: white">
+    <div class="info_outline">
+      <div class="banner card-header p-2">
+        샵 정보
+        <i class="bi bi-x-lg" @click="CloseInfo"></i>
       </div>
-      <div class="p-2" style="background: #fcfcfc">
-        <router-view :ShopData="ShopData"></router-view>
+      <div class="info__content">
+        <carousel :items-to-show="1">
+          <slide class="square" v-for="slide in ShopData.images" :key="slide">
+            <img class="inner" :src="slide" alt="" />
+          </slide>
+          <template #addons>
+            <!-- <navigation class="mx-4 btn-light" />
+          <pagination class="p-0 btn-light" /> -->
+            <navigation class="mx-4" />
+            <pagination />
+          </template>
+        </carousel>
+        <div class="title p-1">{{ ShopData.name }}</div>
+        <div class="container-fluid g-0 row tab mt-3">
+          <div
+            class="col-4 btn btn-light"
+            :style="TabStatus[0]"
+            @click="ClickTab(0)"
+          >
+            정보
+          </div>
+          <div
+            class="col-4 btn btn-light"
+            :style="TabStatus[1]"
+            @click="ClickTab(1)"
+          >
+            가격정보
+          </div>
+          <div
+            class="col-4 btn btn-light"
+            :style="TabStatus[2]"
+            @click="ClickTab(2)"
+          >
+            사진
+          </div>
+        </div>
+        <div class="p-2" style="background: #fcfcfc">
+          <router-view :ShopData="ShopData"></router-view>
+        </div>
       </div>
     </div>
   </div>
@@ -158,8 +160,8 @@ export default {
 //배너 시작
 .banner {
   text-align: center;
-  font-size: 1.2em;
-  background: white;
+  font-size: 1.3em;
+  background: #c4c4c4;
   font-weight: bold;
   @include mobile-s {
     font-size: 70%;

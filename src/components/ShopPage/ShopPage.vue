@@ -15,11 +15,18 @@
               지도 보기
             </button>
           </div>
-          <router-view
+          <router-view v-slot="{ Component }">
+            <transition name="scale" mode="out-in">
+              <component :MapView="MapView" :width="width" :is="Component" />
+            </transition>
+            <!-- v-if="ShopId == undefined" -->
+          </router-view>
+
+          <!-- <router-view
             :MapView="MapView"
             :width="width"
             v-if="ShopId == undefined"
-          ></router-view>
+          ></router-view> -->
         </div>
       </div>
     </div>
@@ -44,7 +51,8 @@ export default {
     window.addEventListener("resize", this.handleResize);
     this.handleResize(); // 화면 넓이를 측정
     this.ShopId = this.$route.params.id; // 현재 샵 상세를 찾는지 확인
-    if (this.ShopId != undefined && this.width < 768) {
+
+    if (this.ShopId == undefined && this.width < 768) {
       // 현재 화면 넓이가 태블릿보다 좁으면 지도 끔
       this.CloseMap();
     } else this.OpenMap();
@@ -82,7 +90,18 @@ export default {
 $desktop-height: 850px;
 $tablet-height: 350px;
 $mobile-height: 250px;
+.scale-enter-active,
+.scale-leave-active {
+  transition: all 0.1s ease;
+}
 
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0.5;
+  transform: scale(0.99);
+}
+
+//transtition 끝
 .container_outer {
   padding: 0 10% 0 10%;
   @include desktop {
