@@ -26,7 +26,8 @@ export default {
   },
   methods: {
     AnimateMarker(num) {
-      this.markers[num].setAnimation(window.naver.maps.Animation.BOUNCE);
+      if (this.markers[num] != null)
+        this.markers[num].setAnimation(window.naver.maps.Animation.BOUNCE);
     },
     AnimateMarkerOff() {
       this.markers.forEach((element) => {
@@ -58,9 +59,7 @@ export default {
       this.map.setCenter(position); // 중심 좌표 이동
     },
     SetMarker(Lat, Lng, type) {
-      var marker = new window.naver.maps.Marker({
-        map: this.map,
-      });
+      var marker = new window.naver.maps.Marker();
       var position = new window.naver.maps.LatLng(Lat, Lng);
       if (type === "제휴") {
         marker.setIcon({
@@ -79,7 +78,7 @@ export default {
           anchor: new window.naver.maps.Point(12, 34),
         });
       }
-
+      marker.setMap(this.map);
       this.markers.push(marker);
       marker.setPosition(position);
     },
