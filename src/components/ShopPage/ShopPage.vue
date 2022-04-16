@@ -19,14 +19,7 @@
             <transition name="scale" mode="out-in">
               <component :MapView="MapView" :width="width" :is="Component" />
             </transition>
-            <!-- v-if="ShopId == undefined" -->
           </router-view>
-
-          <!-- <router-view
-            :MapView="MapView"
-            :width="width"
-            v-if="ShopId == undefined"
-          ></router-view> -->
         </div>
       </div>
     </div>
