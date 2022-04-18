@@ -6702,6 +6702,13 @@ vue-loader@^17.0.0:
     hash-sum "^2.0.0"
     loader-utils "^2.0.0"
 
+vue-naver-maps@^0.14.3:
+  version "0.14.3"
+  resolved "https://registry.yarnpkg.com/vue-naver-maps/-/vue-naver-maps-0.14.3.tgz#1f66d905f75baece5734e8f82de062a36f7590b8"
+  integrity sha512-Dt/cl7j/eSzhOg3XaahmhiJIJUuA9FDZOn5sca/H7ccdczXzEwTVboH53dMZ2EA8U0VrFVZGB1MghWWKpITGxQ==
+  dependencies:
+    vue "^2.6.14"
+
 vue-router@4.0.13:
   version "4.0.13"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.0.13.tgz#47f06e2f8ff6120bfff3c27ade1356cc9de7d870"
@@ -6733,6 +6740,11 @@ vue3-promise-dialog@^0.2.6:
   integrity sha512-pgSanaLgzhcIIXK5BgTi52Nf/vINJfT9/u8eqBsLGGTnGgj9elVb8yC218rQdGnP6KzzJ31edeJRMtvw/24gJA==
   dependencies:
     vue "^3.2.26"
+
+vue@^2.6.14:
+  version "2.6.14"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
+  integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
 
 vue@^3.2.13, vue@^3.2.26:
   version "3.2.31"
