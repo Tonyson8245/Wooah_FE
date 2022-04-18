@@ -8,8 +8,7 @@
 </template>
 
 <script>
-import contact_pin from "@/assets/img/contact_pin.svg";
-import non_pin from "@/assets/img/non_pin.svg";
+import nail from "@/assets/img/nail.svg";
 export default {
   name: "NaverMap",
 
@@ -17,12 +16,11 @@ export default {
     return {
       map: null,
       markers: [],
-      infoWindows: [],
     };
   },
 
   mounted: function () {
-    this.InitMap(37.42829747263545, 126.76620435615891);
+    this.InitMap(37.485525, 126.979118);
     this.InitMarkers();
   },
   methods: {
@@ -41,85 +39,56 @@ export default {
       this.markers.forEach((e) => {
         e.setMap(null);
       });
-      this.infoWindows.forEach((e) => {
-        e.close();
-      }); //마커와 윈도우 박스 끄기
-
       this.markers = [];
-      this.infoWindows = [];
 
       this.shops.forEach((shop) => {
         console.log(shop);
-        var infoWindow = new window.naver.maps.InfoWindow({
-          content:
-            '<div style="width:150px;text-align:center;padding:10px;"><b>' +
-            shop.name +
-            "</b></div>",
-          backgroundColor: "#eee",
-          borderColor: "#a4a4a4",
-          borderWidth: 1,
-          anchorSkew: true,
-          anchorColor: "#eee",
-        });
-        this.SetMarker(shop.latitude, shop.longitude, "");
-
-        this.infoWindows.push(infoWindow);
+        this.SetMarker(shop.latitude, shop.longitude, "" ,shop.name);
       });
-
-      //왜인지 모르겠지만 바로 this.를 걸면 안된다. for 문 안이라서 그런가
-      var temp_markers = this.markers;
-      var infoWindows = this.infoWindows;
-      var temp_map = this.map;
-
-      for (var i = 0, ii = temp_markers.length; i < ii; i++) {
-        window.naver.maps.Event.addListener(
-          temp_markers[i],
-          "click",
-          this.GetClickHandler(i, temp_markers, infoWindows, temp_map)
-        );
-      }
     },
     InitMap(Lat, Lng) {
       this.map = new window.naver.maps.Map(
         document.getElementById("naverMap"),
         {
-          zoom: 10,
+          zoom: 12,
           zoomControl: true,
           zoomControlOptions: {
             position: window.naver.maps.Position.RIGHT_TOP,
           },
-        }
+          bounds: window.naver.maps.LatLngBounds.bounds(new window.naver.maps.LatLng(Lat,Lng),
+                                              new window.naver.maps.LatLng(Lat, Lng))
+        },
       );
-      var position = new window.naver.maps.LatLng(Lat, Lng);
+      // var position = new window.naver.maps.LatLng(Lat, Lng);
 
-      this.map.setCenter(position); // 중심 좌표 이동
+      // this.map.setCenter(position); // 중심 좌표 이동
     },
-    SetMarker(Lat, Lng, type) {
-      var marker = new window.naver.maps.Marker();
+    SetMarker(Lat, Lng, type ,name) {
+      var marker = new window.naver.maps.Marker({
+        title : name,
+      });
       var position = new window.naver.maps.LatLng(Lat, Lng);
-      if (type === "제휴") {
-        marker.setIcon({
-          url: contact_pin,
-          size: new window.naver.maps.Size(30, 39),
-          scaledSize: new window.naver.maps.Size(30, 39),
-          origin: new window.naver.maps.Point(0, 0),
-          anchor: new window.naver.maps.Point(12, 34),
-        });
-      } else {
-        marker.setIcon({
-          url: non_pin,
-          size: new window.naver.maps.Size(30, 39),
-          scaledSize: new window.naver.maps.Size(30, 39),
-          origin: new window.naver.maps.Point(0, 0),
-          anchor: new window.naver.maps.Point(12, 34),
-        });
-      }
-      marker.setMap(this.map);
+      marker.setIcon({
+        content:"<div style='top: 100%;left: 50%;border: solid transparent;content: "+";height: 0;width: 0;position: absolute;pointer-events: none;border-color: rgba(204, 179, 18,0);border-top-color: #d5d5d5;border-width: 1.0em;margin-left: -1.0em;'></div>"+
 
+        "<div style='border-radius: 2em;position: relative;background: #ffffff;border: 0.25em solid #d5d5d5;width:200px; height:60px; display: flex; align-items: center;'>"+ 
+        "<div style='border-radius:50%;padding:5%;height:45px;width:45px; margin-left:5px;background:#d5d5d5'><img src=" + nail + " style='height:100%;'/></div><span style='margin:auto; '>" +  name  + 
+        "</span></div>"+
+
+        "<div style='top: 80%;left: 50%;border: solid transparent;content: "+";height: 0;width: 0;position: absolute;pointer-events: none;	border-color: rgba(255, 122, 117, 0);border-top-color: #ffffff;border-width: 1.4em;margin-left: -1.4em;'></div>",
+
+        // size: window.naver.maps.Size(30, 39),
+        // scaledSize: window.naver.maps.Size(30, 39),
+        origin: window.naver.maps.Point(0, 0),
+        anchor: window.naver.maps.Point(0, 0),
+        // anchor: window.naver.maps.Point(83, 83),
+      });
+      
+      marker.setMap(this.map);
       this.markers.push(marker);
       marker.setPosition(position);
     },
-    //클릭 부분
+    
 
     // 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
     GetClickHandler(seq, markers, infoWindows, temp_map) {
@@ -145,6 +114,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "/src/assets/style.scss";
+
+
+
 .section {
   height: 100%;
   width: 100%;
