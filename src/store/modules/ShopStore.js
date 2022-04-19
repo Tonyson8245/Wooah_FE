@@ -23,6 +23,7 @@ const ShopStore = {
     shopimg: [],
     shopinfo: { name: "", images: [] },
     currentimagepage: 1,
+    noResult: true,
     completeFetch: true, // 포스트 가져오기 플래그
   },
   mutations: {
@@ -61,9 +62,9 @@ const ShopStore = {
     FetchShopImage(state, payload) {
       state.shopimg.push.apply(state.shopimg, payload);
     },
-    // SetNoResult(state, payload) {
-    //   state.noResult = payload;
-    // },
+    SetNoResult(state, payload) {
+      state.noResult = payload;
+    },
   },
   actions: {
     async getShops(context, page) {
@@ -112,10 +113,9 @@ const ShopStore = {
         })
         .catch((error) => {
           let res = error.response;
-          console.log(res);
-          // if (res.status == 404) {
-          //   context.commit(`SetNoResult`, true);
-          // } else console.log(res);
+          if (res.status == 404) {
+            context.commit(`SetNoResult`, false);
+          } else console.log(res);
         });
       // }
     },

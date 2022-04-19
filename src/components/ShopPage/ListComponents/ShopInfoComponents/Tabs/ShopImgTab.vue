@@ -1,18 +1,25 @@
 <template>
   <div class="outline">
-    <InfiniteScroll @infinite-scroll="GetShopImage">
-      <div class="container-fluid row g-0 p-0">
-        <div v-for="image in shopimages" :key="image" class="col-4 square">
-          <img class="inner" :src="image.url" alt="" />
-          <i class="bi bi-heart-fill monthly" v-if="image.monthly_art"></i>
-        </div>
+    <div class="container-fluid row g-0 p-0">
+      <div v-for="image in shopimages" :key="image" class="col-4 square">
+        <img class="inner" :src="image.url" alt="" />
+        <i class="bi bi-heart-fill monthly" v-if="image.monthly_art"></i>
       </div>
-    </InfiniteScroll>
+    </div>
+    <div style="text-align: center" class="pt-2">
+      <button
+        v-if="noResult"
+        @click="GetShopImage"
+        class="btn btn-light"
+        style="border: #e4e4e4 solid 1px; display: inline-block; margin: auto"
+      >
+        더보기
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import InfiniteScroll from "infinite-loading-vue3";
 export default {
   name: `ShopImgTab`,
   data() {
@@ -21,6 +28,9 @@ export default {
   computed: {
     shopimages() {
       return this.$store.state.ShopStore.shopimg;
+    },
+    noResult() {
+      return this.$store.state.ShopStore.noResult;
     },
   },
   mounted() {
@@ -32,9 +42,7 @@ export default {
       this.$store.dispatch("ShopStore/getShopImage", this.$route.params.id);
     },
   },
-  components: {
-    InfiniteScroll,
-  },
+  components: {},
 };
 </script>
 

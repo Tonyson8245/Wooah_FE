@@ -72,6 +72,20 @@ export default {
   },
   mounted() {
     this.FetchShopInfo();
+    var paths = this.$route.path.split("/");
+    if (paths[3] != undefined) {
+      switch (paths[3]) {
+        case "info":
+          this.ClickTab(0);
+          break;
+        case "price":
+          this.ClickTab(1);
+          break;
+        case "image":
+          this.ClickTab(2);
+          break;
+      }
+    }
   },
   computed: {
     ShopData() {
