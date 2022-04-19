@@ -16,9 +16,10 @@
         <v-pagination
           v-model="page"
           :pages="totalPage"
-          :range-size="3"
+          :range-size="1"
           active-color="#000000"
-          @update:modelValue="updateHandler"
+          :hideFirstButton="true"
+          :hideLastButton="true"
         />
       </div>
     </div>
@@ -31,11 +32,13 @@ import TitleItem from "./TitleItem.vue";
 import ShopItem from "./ShopItem.vue";
 import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
+
 export default {
   name: `ListPage`,
   data() {
     return {
       ListHeight: ``,
+      page: 1,
     };
   },
   props: {
@@ -48,13 +51,15 @@ export default {
     ShopItem,
     VPagination,
   },
-  watch: {},
+  mounted() {
+    this.$store.dispatch("ShopStore/getDistricts");
+  },
   computed: {
     shops() {
       return this.$store.state.ShopStore.shops;
     },
     totalPage() {
-      return 3;
+      return this.$store.state.ShopStore.totalpage;
     },
   },
   methods: {

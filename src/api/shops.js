@@ -7,3 +7,7 @@ export function getShops(page, sido, sigungu) {
     {}
   );
 }
+
+export function getDistricts() {
+  return http.get(`/districts`, {});
+}

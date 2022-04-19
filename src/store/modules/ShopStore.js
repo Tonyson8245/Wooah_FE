@@ -10,6 +10,7 @@ const ShopStore = {
     shopimg: shopimg,
 
     //설정 시도
+    districtData: [],
     sido: 1,
     sigungu: 1,
 
@@ -22,6 +23,13 @@ const ShopStore = {
     SetMapView(state, payload) {
       state.MapView = payload;
     },
+    FetchDistrictData(state, payload) {
+      state.districtData = payload;
+    },
+    SetDistrict(state, payload) {
+      state.sido = payload[0].id;
+      state.sigungu = payload[1].id;
+    },
   },
   actions: {
     async getShops(context, page) {
@@ -29,6 +37,16 @@ const ShopStore = {
         .getShops(page, context.state.sido, context.state.sigungu)
         .then(function (response) {
           console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    async getDistricts(context) {
+      await shopApi
+        .getDistricts()
+        .then(function (response) {
+          context.commit("FetchDistrictData", response.data);
         })
         .catch(function (error) {
           console.log(error);

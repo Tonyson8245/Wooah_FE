@@ -152,8 +152,7 @@ export default {
     },
   },
   watch: {
-    width(state) {
-      console.log(state);
+    width() {
       this.SetMedia();
     },
   },
