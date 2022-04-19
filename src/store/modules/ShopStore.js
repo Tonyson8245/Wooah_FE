@@ -23,7 +23,6 @@ const ShopStore = {
     shopimg: [],
     shopinfo: { name: "", images: [] },
     currentimagepage: 1,
-    noResult: false,
     completeFetch: true, // 포스트 가져오기 플래그
   },
   mutations: {
@@ -62,9 +61,9 @@ const ShopStore = {
     FetchShopImage(state, payload) {
       state.shopimg.push.apply(state.shopimg, payload);
     },
-    SetNoResult(state, payload) {
-      state.noResult = payload;
-    },
+    // SetNoResult(state, payload) {
+    //   state.noResult = payload;
+    // },
   },
   actions: {
     async getShops(context, page) {
@@ -100,25 +99,25 @@ const ShopStore = {
     },
 
     async getShopImage(context, id) {
-      if (context.state.completeFetch) {
-        context.commit("IncreaseImagePage");
-        context.state.completeFetch = false; // 무한 페이지 로드를 막기위한 플래그
-        await shopApi
-          .getShopImg(id, context.state.currentimagepage) // id와 페이지
-          .then((response) => {
-            if (response.status == 200) {
-              context.commit("FetchShopImage", response.data);
-              console.log(response.data);
-            }
-          })
-          .catch((error) => {
-            let res = error.response;
-            console.log(res);
-            // if (res.status == 404) {
-            //   context.commit(`SetNoResult`, true);
-            // } else console.log(res);
-          });
-      }
+      // if (context.state.completeFetch) {
+      context.commit("IncreaseImagePage");
+      context.state.completeFetch = false; // 무한 페이지 로드를 막기위한 플래그
+      await shopApi
+        .getShopImg(id, context.state.currentimagepage) // id와 페이지
+        .then((response) => {
+          if (response.status == 200) {
+            context.commit("FetchShopImage", response.data);
+            console.log(response.data);
+          }
+        })
+        .catch((error) => {
+          let res = error.response;
+          console.log(res);
+          // if (res.status == 404) {
+          //   context.commit(`SetNoResult`, true);
+          // } else console.log(res);
+        });
+      // }
     },
   },
 };

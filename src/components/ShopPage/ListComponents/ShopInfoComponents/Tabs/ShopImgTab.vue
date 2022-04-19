@@ -1,10 +1,6 @@
 <template>
   <div class="outline">
-    <InfiniteScroll
-      @infinite-scroll="GetShopImage"
-      :message="message"
-      :noResult="noResult"
-    >
+    <InfiniteScroll @infinite-scroll="GetShopImage">
       <div class="container-fluid row g-0 p-0">
         <div v-for="image in shopimages" :key="image" class="col-4 square">
           <img class="inner" :src="image.url" alt="" />
@@ -26,21 +22,14 @@ export default {
     shopimages() {
       return this.$store.state.ShopStore.shopimg;
     },
-    message() {
-      return this.$store.state.ShopStore.message;
-    },
-    noResult() {
-      return this.$store.state.ShopStore.noResult;
-    },
   },
   mounted() {
-    this.$store.commit("ShopStore/ResetImagePage");
+    // this.$store.commit("ShopStore/ResetImagePage");
     this.GetShopImage();
   },
   methods: {
     GetShopImage() {
       this.$store.dispatch("ShopStore/getShopImage", this.$route.params.id);
-      console.log("밥");
     },
   },
   components: {
