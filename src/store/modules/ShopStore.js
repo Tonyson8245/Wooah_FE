@@ -1,27 +1,30 @@
-import shops from "../../assets/dummy/shop";
-import shopinfo from "../../assets/dummy/shopinfo";
-import shopimg from "../../assets/dummy/shopimages";
 import * as shopApi from "@/api/shops";
 const ShopStore = {
   namespaced: true,
   state: {
     MapView: true,
-    shopinfo: shopinfo,
-    shopimg: shopimg,
 
     //설정 시도
     districtData: [],
     sido: 1,
     sigungu: 1,
+    mapCenter: [], // 지도 중심
 
     //샵 리스트 데이터
     totalpage: 0,
-    shops: shops,
+    shops: "",
     currentpage: 0,
     focusmarker: null,
 
-    //shop 데이터
+    //shop 마커데이터
     shop: null,
+
+    //shop 상세 데이터
+    shopimg: [],
+    shopinfo: { name: "", images: [] },
+    currentimagepage: 1,
+    noResult: false,
+    completeFetch: true, // 포스트 가져오기 플래그
   },
   mutations: {
     SetMapView(state, payload) {
@@ -45,6 +48,22 @@ const ShopStore = {
     },
     SetShop(state, payload) {
       state.shop = payload;
+    }, // 샵 마커 최상위로 올리기위한 mutation
+    FetchShopinfo(state, payload) {
+      state.shopinfo = payload;
+    },
+    IncreaseImagePage(state) {
+      state.currentimagepage++;
+    },
+    ResetImagePage(state) {
+      state.currentimagepage = 1;
+      state.shopimg = [];
+    },
+    FetchShopImage(state, payload) {
+      state.shopimg.push.apply(state.shopimg, payload);
+    },
+    SetNoResult(state, payload) {
+      state.noResult = payload;
     },
   },
   actions: {
@@ -68,6 +87,38 @@ const ShopStore = {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    async getShopDetail(context, id) {
+      await shopApi
+        .getShopDetail(id)
+        .then(function (response) {
+          context.commit("FetchShopinfo", response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    async getShopImage(context, id) {
+      if (context.state.completeFetch) {
+        context.commit("IncreaseImagePage");
+        context.state.completeFetch = false; // 무한 페이지 로드를 막기위한 플래그
+        await shopApi
+          .getShopImg(id, context.state.currentimagepage) // id와 페이지
+          .then((response) => {
+            if (response.status == 200) {
+              context.commit("FetchShopImage", response.data);
+              console.log(response.data);
+            }
+          })
+          .catch((error) => {
+            let res = error.response;
+            console.log(res);
+            // if (res.status == 404) {
+            //   context.commit(`SetNoResult`, true);
+            // } else console.log(res);
+          });
+      }
     },
   },
 };

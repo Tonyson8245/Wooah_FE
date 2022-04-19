@@ -1,18 +1,16 @@
 <template>
   <div style="background: white">
     <div class="info_outline">
-      <div class="banner card-header p-2">
+      <div class="banner card-header" style="padding: 2.5%">
         샵 정보
         <i class="bi bi-x-lg" @click="CloseInfo"></i>
       </div>
       <div class="info__content">
-        <carousel :items-to-show="1">
+        <carousel v-if="ShopData.images.length > 0" :items-to-show="1">
           <slide class="square" v-for="slide in ShopData.images" :key="slide">
             <img class="inner" :src="slide" alt="" />
           </slide>
           <template #addons>
-            <!-- <navigation class="mx-4 btn-light" />
-          <pagination class="p-0 btn-light" /> -->
             <navigation class="mx-4" />
             <pagination />
           </template>
@@ -61,15 +59,19 @@ export default {
     Pagination,
     Navigation,
   },
+  props: {},
   data() {
     return {
       TabStatus: [
-        `border-width:1px 1px 0 1px; 
+        `border-width:1px 1px 0 1px;
   background: #fcfcfc;`,
         ``,
         ``,
       ],
     };
+  },
+  mounted() {
+    this.FetchShopInfo();
   },
   computed: {
     ShopData() {
@@ -77,6 +79,10 @@ export default {
     },
   },
   methods: {
+    FetchShopInfo() {
+      var id = this.$route.params.id;
+      this.$store.dispatch("ShopStore/getShopDetail", id);
+    },
     CloseInfo() {
       this.$router.push("/shop");
     },

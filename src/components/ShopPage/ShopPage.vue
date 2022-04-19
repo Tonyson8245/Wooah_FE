@@ -122,15 +122,7 @@ $mobile-height: 250px;
     /* height: 0px; */
   }
 }
-.list__outer {
-  /* height: $list-desktop-height;
-  @include tablet-s {
-    height: $list-tablet-height + 130;
-  }
-  @include mobile-s {
-    height: $list-mobile-height + 100;
-  } */
-}
+
 .btn__set {
   display: none;
   @include tablet-s {

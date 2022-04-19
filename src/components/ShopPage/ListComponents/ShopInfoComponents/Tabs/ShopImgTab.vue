@@ -1,21 +1,50 @@
 <template>
   <div class="outline">
-    <div class="container-fluid row g-0 p-0">
-      <div v-for="image in shopimages" :key="image" class="col-4 square">
-        <img class="inner" :src="image.url" alt="" />
-        <i class="bi bi-heart-fill monthly" v-if="image.monthly_art"></i>
+    <InfiniteScroll
+      @infinite-scroll="GetShopImage"
+      :message="message"
+      :noResult="noResult"
+    >
+      <div class="container-fluid row g-0 p-0">
+        <div v-for="image in shopimages" :key="image" class="col-4 square">
+          <img class="inner" :src="image.url" alt="" />
+          <i class="bi bi-heart-fill monthly" v-if="image.monthly_art"></i>
+        </div>
       </div>
-    </div>
+    </InfiniteScroll>
   </div>
 </template>
 
 <script>
+import InfiniteScroll from "infinite-loading-vue3";
 export default {
   name: `ShopImgTab`,
+  data() {
+    return {};
+  },
   computed: {
     shopimages() {
       return this.$store.state.ShopStore.shopimg;
     },
+    message() {
+      return this.$store.state.ShopStore.message;
+    },
+    noResult() {
+      return this.$store.state.ShopStore.noResult;
+    },
+  },
+  mounted() {
+    this.$store.commit("ShopStore/ResetImagePage");
+    this.GetShopImage();
+  },
+  methods: {
+    GetShopImage() {
+      this.$store.dispatch("ShopStore/getShopImage", this.$route.params.id);
+      console.log("밥");
+    },
+  },
+  components: {
+    InfiniteScroll,
   },
 };
 </script>

@@ -48,7 +48,7 @@ footer {
   background: #c4c4c4;
   width: 100%;
   height: auto;
-  padding: 3em 0 3em 0;
+  padding: 2.4em 0 2.4em 0;
 
   display: flex;
   align-items: center;

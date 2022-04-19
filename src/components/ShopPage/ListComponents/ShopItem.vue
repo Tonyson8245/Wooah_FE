@@ -64,10 +64,11 @@ export default {
 }
 .info__container .title {
   font-weight: bold;
-  font-size: 1.1em;
+  font-size: 1em;
 }
 .info__container .address {
   font-size: 0.7em;
+  color: #0a0a0a;
 }
 .info__container .keyword {
   margin-right: 3%;

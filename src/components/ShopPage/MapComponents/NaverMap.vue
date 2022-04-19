@@ -22,12 +22,10 @@ export default {
   props: {
     width: Number,
   },
-
   mounted: function () {
     if (window.naver && window.naver.maps) {
       this.SetMedia();
       this.InitMap(37.485525, 126.979118);
-      this.InitMarkers();
     } else {
       const script = document.createElement("script");
       script.onload = () => naver.maps.load(this.initMap);
@@ -60,12 +58,11 @@ export default {
     },
     InitMap(Lat, Lng) {
       this.map = new naver.maps.Map(document.getElementById("naverMap"));
-
       if (this.media == "desktop") {
         this.map.setOptions({
           minZoom: 14,
           maxZoom: 21,
-          zoom: 17,
+          zoom: 14,
           zoomControl: true,
           zoomControlOptions: {
             position: naver.maps.Position.RIGHT_TOP,
@@ -75,7 +72,7 @@ export default {
         this.map.setOptions({
           minZoom: 14,
           maxZoom: 21,
-          zoom: 17,
+          zoom: 14,
           zoomControl: false,
           zoomControlOptions: {
             position: naver.maps.Position.RIGHT_TOP,
@@ -155,6 +152,12 @@ export default {
     shop() {
       return this.$store.state.ShopStore.shop;
     }, // 샵리스트를 클릭 했을때 이벤트 발생을 위한 변수
+    district() {
+      return [
+        this.$store.state.ShopStore.sido,
+        this.$store.state.ShopStore.sigungu,
+      ];
+    },
   },
   watch: {
     width() {
@@ -170,7 +173,6 @@ export default {
       });
 
       if (state != null) {
-        console.log(state);
         this.markers[state].setZIndex(100);
         // this.AnimateMarker(state);
       }
@@ -182,6 +184,7 @@ export default {
       this.map.setCenter(position); // 중앙 지정 변경
       this.map.setZoom(20, true); // 줌
     }, // 샵을 클릭했을때 지도 형태를 위한 설정
+    district() {},
   },
 };
 </script>

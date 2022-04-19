@@ -13,7 +13,7 @@
         @mouseleave="FocusoutShop()"
       ></ShopItem>
     </div>
-    <div style="text-align: center">
+    <div style="text-align: center; margin: 2%">
       <div style="display: inline-block">
         <v-pagination
           v-model="page"
@@ -69,8 +69,8 @@ export default {
   methods: {
     ClickShop(id, index) {
       this.$router.push("/shop/" + id);
-      this.FocusoutShop();
-      this.$store.commit("ShopStore/SetShop", index);
+      this.FocusoutShop(); // 해당 샵에서 포커스 벗어남
+      this.$store.commit("ShopStore/SetShop", index); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
     },
     FocusShop(index) {
       if (this.pindex != index) {
