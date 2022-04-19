@@ -8,7 +8,9 @@
         :key="index"
         :shop="shop"
         :index="index"
-        @click="ClickShop(shop.id)"
+        @click="ClickShop(shop.id, index)"
+        @mouseover="FocusShop(index)"
+        @mouseleave="FocusoutShop()"
       ></ShopItem>
     </div>
     <div style="text-align: center">
@@ -17,9 +19,9 @@
           v-model="page"
           :pages="totalPage"
           :range-size="1"
-          active-color="#000000"
-          :hideFirstButton="true"
-          :hideLastButton="true"
+          active-color="#e4e4e4"
+          :hideFirstButton="false"
+          :hideLastButton="false"
         />
       </div>
     </div>
@@ -39,6 +41,7 @@ export default {
     return {
       ListHeight: ``,
       page: 1,
+      pindex: null,
     };
   },
   props: {
@@ -52,6 +55,7 @@ export default {
     VPagination,
   },
   mounted() {
+    this.$store.dispatch("ShopStore/getShops", 1);
     this.$store.dispatch("ShopStore/getDistricts");
   },
   computed: {
@@ -63,8 +67,26 @@ export default {
     },
   },
   methods: {
-    ClickShop(id) {
+    ClickShop(id, index) {
       this.$router.push("/shop/" + id);
+      this.FocusoutShop();
+      this.$store.commit("ShopStore/SetShop", index);
+    },
+    FocusShop(index) {
+      if (this.pindex != index) {
+        this.$store.commit("ShopStore/SetFocusmarker", index);
+        this.pindex = index;
+      }
+    },
+    FocusoutShop() {
+      if (this.pindex != null) {
+        this.$store.commit("ShopStore/SetFocusmarker", null);
+      }
+    },
+  },
+  watch: {
+    page(state) {
+      this.$store.dispatch("ShopStore/getShops", state);
     },
   },
 };

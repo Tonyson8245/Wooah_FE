@@ -26,7 +26,7 @@ export default {
   mounted: function () {
     if (window.naver && window.naver.maps) {
       this.SetMedia();
-      this.InitMap(37.485525, 126.999418);
+      this.InitMap(37.485525, 126.979118);
       this.InitMarkers();
     } else {
       const script = document.createElement("script");
@@ -63,9 +63,9 @@ export default {
 
       if (this.media == "desktop") {
         this.map.setOptions({
-          minZoom: 12,
+          minZoom: 14,
           maxZoom: 21,
-          zoom: 10,
+          zoom: 17,
           zoomControl: true,
           zoomControlOptions: {
             position: naver.maps.Position.RIGHT_TOP,
@@ -73,9 +73,9 @@ export default {
         });
       } else {
         this.map.setOptions({
-          minZoom: 12,
+          minZoom: 14,
           maxZoom: 21,
-          zoom: 10,
+          zoom: 17,
           zoomControl: false,
           zoomControlOptions: {
             position: naver.maps.Position.RIGHT_TOP,
@@ -95,9 +95,8 @@ export default {
         },
         map: this.map,
       });
-
       this.markers.push(marker);
-    },
+    }, //마커 하나하나 만들어주는 메서드 (위도, 경도, 제휴 유무, 샵이름)
     GetMarkerLayoutMobile(name) {
       return (
         "<div style='font-size:50%'><div style='top: 100%;left: 50%;border: solid transparent;content: " +
@@ -111,7 +110,7 @@ export default {
         "<div style='top: 80%;left: 50%;border: solid transparent;content: " +
         ";height: 0;width: 0;position: absolute;pointer-events: none;	border-color: rgba(255, 122, 117, 0);border-top-color: #ffffff;border-width: 0.8em;margin-left: -0.8em;'></div></div>"
       );
-    },
+    }, //모바일형태에 맞는 커스텀 마커를 제공하는 메서드 (샵이름)
     GetMarkerLayoutDesktop(name) {
       return (
         "<div><div style='top: 100%;left: 50%;border: solid transparent;content: " +
@@ -125,11 +124,11 @@ export default {
         "<div style='top: 80%;left: 50%;border: solid transparent;content: " +
         ";height: 0;width: 0;position: absolute;pointer-events: none;	border-color: rgba(255, 122, 117, 0);border-top-color: #ffffff;border-width: 0.8em;margin-left: -0.8em;'></div></div>"
       );
-    },
+    }, // 데스크탑 형태에 맞는 커스텀 마커를 제공하는 메서드 (샵이름)
     GetMarkLayout(name) {
       if (this.media == "desktop") return this.GetMarkerLayoutDesktop(name);
       else return this.GetMarkerLayoutMobile(name);
-    },
+    }, //위의 커스텀 마커를 화면 상황에 따라 제공해주는 메서드
     SetMedia() {
       if (this.width > 768 || this.width == 0) {
         if (this.media != "desktop") {
@@ -144,17 +143,45 @@ export default {
           this.InitMarkers();
         }
       }
-    },
+    }, //현재 화면 넓이를 확인해 desktop 또는 mobile 형태로 media 변수를 변경해주는 메서드
   },
   computed: {
     shops() {
       return this.$store.state.ShopStore.shops;
-    },
+    }, // 전체 마커 설정을 위한 샵 리스트
+    focusmarker() {
+      return this.$store.state.ShopStore.focusmarker;
+    }, // 커서 올라갔을때 마커 최상단 위치를 위한 변수값
+    shop() {
+      return this.$store.state.ShopStore.shop;
+    }, // 샵리스트를 클릭 했을때 이벤트 발생을 위한 변수
   },
   watch: {
     width() {
       this.SetMedia();
     },
+    shops() {
+      this.InitMarkers();
+    },
+    focusmarker(state) {
+      this.markers.forEach((marker) => {
+        marker.setZIndex(5);
+        // marker.setAnimation(null);
+      });
+
+      if (state != null) {
+        console.log(state);
+        this.markers[state].setZIndex(100);
+        // this.AnimateMarker(state);
+      }
+    },
+    shop(state) {
+      var shop = this.shops[state];
+      var position = new naver.maps.LatLng(shop.latitude, shop.longitude);
+      this.markers[state].setZIndex(state); // 최상단에 위치 하게
+      this.map.setCenter(position); // 중앙 지정 변경
+      this.map.setZoom(20, true); // 줌
+    }, // 샵을 클릭했을때 지도 형태를 위한 설정
   },
 };
 </script>

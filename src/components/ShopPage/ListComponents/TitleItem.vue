@@ -47,6 +47,7 @@ export default {
     changeDistrict(sido, sigungu) {
       this.region = sido.name + ` ` + sigungu.name;
       this.$store.commit("ShopStore/SetDistrict", [sido, sigungu]);
+      this.$store.dispatch("ShopStore/getShops", 1);
     },
   },
 };

@@ -3,7 +3,7 @@ import http from "./http";
 
 export function getShops(page, sido, sigungu) {
   return http.get(
-    `/shops?page=${page}&unit=10&sido=${sido}&sigungu=${sigungu}}`,
+    `/shops?page=${page}&unit=6&sido=${sido}&sigungu=${sigungu}`,
     {}
   );
 }

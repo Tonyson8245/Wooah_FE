@@ -64,17 +64,17 @@ export default {
 }
 .info__container .title {
   font-weight: bold;
-  font-size: 1em;
+  font-size: 1.1em;
 }
 .info__container .address {
-  font-size: 0.5em;
+  font-size: 0.7em;
 }
 .info__container .keyword {
   margin-right: 3%;
   padding-inline: 3%;
   background: #e4e4e4;
   border: #c4c4c4 0.5px solid;
-  font-size: 0.55em;
+  font-size: 0.6em;
   font-weight: 500;
   font-style: italic;
 }
