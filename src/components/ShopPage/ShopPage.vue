@@ -3,7 +3,7 @@
     <div class="container-lg">
       <div class="row flex-row-reverse">
         <div v-if="MapView" class="col-md-8 col-sm-12 map__outer g-0">
-          <NaverMap />
+          <NaverMap :width="width" />
         </div>
 
         <div class="col-md-4 col-sm-12 list__outer g-0">

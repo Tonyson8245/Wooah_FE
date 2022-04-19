@@ -15,12 +15,18 @@ export default {
     return {
       map: null,
       markers: [],
+      media: "desktop",
+      anchor: [100, 60],
     };
+  },
+  props: {
+    width: Number,
   },
 
   mounted: function () {
     if (window.naver && window.naver.maps) {
-      this.InitMap(37.485525, 126.979218);
+      this.SetMedia();
+      this.InitMap(37.485525, 126.999418);
       this.InitMarkers();
     } else {
       const script = document.createElement("script");
@@ -50,21 +56,32 @@ export default {
 
       this.shops.forEach((shop) => {
         this.SetMarker(shop.latitude, shop.longitude, "", shop.name);
-        console.log(shop);
       });
     },
     InitMap(Lat, Lng) {
-      this.map = new naver.maps.Map(document.getElementById("naverMap"), {
-        zoom: 13,
-        zoomControl: true,
-        zoomControlOptions: {
-          position: naver.maps.Position.RIGHT_TOP,
-        },
-        // bounds: naver.maps.LatLngBounds.bounds(
-        //   new naver.maps.LatLng(Lat, Lng),
-        //   new naver.maps.LatLng(Lat, Lng)
-        // ),
-      });
+      this.map = new naver.maps.Map(document.getElementById("naverMap"));
+
+      if (this.media == "desktop") {
+        this.map.setOptions({
+          minZoom: 12,
+          maxZoom: 21,
+          zoom: 10,
+          zoomControl: true,
+          zoomControlOptions: {
+            position: naver.maps.Position.RIGHT_TOP,
+          },
+        });
+      } else {
+        this.map.setOptions({
+          minZoom: 12,
+          maxZoom: 21,
+          zoom: 10,
+          zoomControl: false,
+          zoomControlOptions: {
+            position: naver.maps.Position.RIGHT_TOP,
+          },
+        });
+      }
       var position = new naver.maps.LatLng(Lat, Lng);
       this.map.setCenter(position); // 중심 좌표 이동
     },
@@ -73,29 +90,71 @@ export default {
         title: name,
         position: new naver.maps.LatLng(Lat, Lng),
         icon: {
-          content:
-            "<div><div style='top: 100%;left: 50%;border: solid transparent;content: " +
-            ";height: 0;width: 0;position: absolute;pointer-events: none;border-color: rgba(204, 179, 18,0);border-top-color: #d5d5d5;border-width: 1.0em;margin-left: -1.0em;'></div>" +
-            "<div style='border-radius: 2em;position: relative;background: #ffffff;border: 0.25em solid #d5d5d5;width:200px; height:60px; display: flex; align-items: center;'>" +
-            "<div style='border-radius:50%;padding:5%;height:45px;width:45px; margin-left:5px;background:#d5d5d5'><img src=" +
-            nail +
-            " style='height:100%;'/></div><span style='margin:auto; '>" +
-            name +
-            "</span></div>" +
-            "<div style='top: 80%;left: 50%;border: solid transparent;content: " +
-            ";height: 0;width: 0;position: absolute;pointer-events: none;	border-color: rgba(255, 122, 117, 0);border-top-color: #ffffff;border-width: 1.4em;margin-left: -1.4em;'></div></div>",
-          size: new naver.maps.Size(22, 35),
-          anchor: new naver.maps.Point(100, 80),
+          content: this.GetMarkLayout(name),
+          anchor: new naver.maps.Point(this.anchor[0], this.anchor[1]),
         },
         map: this.map,
       });
 
       this.markers.push(marker);
     },
+    GetMarkerLayoutMobile(name) {
+      return (
+        "<div style='font-size:50%'><div style='top: 100%;left: 50%;border: solid transparent;content: " +
+        ";height: 0;width: 0;position: absolute;pointer-events: none;border-color: rgba(204, 179, 18,0);border-top-color: #d5d5d5;border-width: 0.3em;margin-left: -0.3em;'></div>" +
+        "<div style='border-radius: 2em;position: relative;background: #ffffff;border: 0.11em solid #d5d5d5; width:13em; height:3em; display: flex; align-items: center;'>" +
+        "<div style='border-radius:50%;height:2em;width:2em;  margin-top:0.3em;margin-left:0.3em;margin-bottom:0.3em;background:#d5d5d5;text-align: center;'><img src=" +
+        nail +
+        " style='height:50%;'/></div><span style='margin:0.5em; text-align: center;'>" +
+        name +
+        "</span></div>" +
+        "<div style='top: 80%;left: 50%;border: solid transparent;content: " +
+        ";height: 0;width: 0;position: absolute;pointer-events: none;	border-color: rgba(255, 122, 117, 0);border-top-color: #ffffff;border-width: 0.8em;margin-left: -0.8em;'></div></div>"
+      );
+    },
+    GetMarkerLayoutDesktop(name) {
+      return (
+        "<div><div style='top: 100%;left: 50%;border: solid transparent;content: " +
+        ";height: 0;width: 0;position: absolute;pointer-events: none;border-color: rgba(204, 179, 18,0);border-top-color: #d5d5d5;border-width: 0.3em;margin-left: -0.3em;'></div>" +
+        "<div style='display:flex; border-radius: 2em;position: relative;background: #ffffff;border: 0.11em solid #d5d5d5; width:13em; height:3em; display: flex; align-items: center;'>" +
+        "<div style='border-radius:50%;height:2em;width:2em; margin-top:0.3em;margin-left:0.3em;margin-bottom:0.3em;background:#d5d5d5;text-align: center;'><img src=" +
+        nail +
+        " style='height:50%;'/></div><span style='margin-left:auto;margin-right:auto;'>" +
+        name +
+        "</span></div>" +
+        "<div style='top: 80%;left: 50%;border: solid transparent;content: " +
+        ";height: 0;width: 0;position: absolute;pointer-events: none;	border-color: rgba(255, 122, 117, 0);border-top-color: #ffffff;border-width: 0.8em;margin-left: -0.8em;'></div></div>"
+      );
+    },
+    GetMarkLayout(name) {
+      if (this.media == "desktop") return this.GetMarkerLayoutDesktop(name);
+      else return this.GetMarkerLayoutMobile(name);
+    },
+    SetMedia() {
+      if (this.width > 768 || this.width == 0) {
+        if (this.media != "desktop") {
+          this.media = "desktop";
+          this.anchor = [100, 60];
+          this.InitMarkers();
+        }
+      } else {
+        if (this.media != "mobile") {
+          this.media = "mobile";
+          this.anchor = [50, 30];
+          this.InitMarkers();
+        }
+      }
+    },
   },
   computed: {
     shops() {
       return this.$store.state.ShopStore.shops;
+    },
+  },
+  watch: {
+    width(state) {
+      console.log(state);
+      this.SetMedia();
     },
   },
 };
