@@ -13,28 +13,32 @@
     <div class="p-2">
       <div class="title">연락처</div>
       <div class="content pt-2">
-        <div v-for="contact in ShopData.contacts" :key="contact">
+        <div v-if="ShopData.contact.phone != null">
+          <img src="../../../../../../src/assets/img/telephone.png" alt="" />
+          {{ ShopData.contact.phone }}
+        </div>
+        <div v-for="data in ShopData.contact" :key="data">
           <img
-            v-if="contact.type === `PHONE`"
+            v-if="data.type === `PHONE`"
             src="../../../../../../src/assets/img/telephone.png"
             alt=""
           />
           <img
-            v-if="contact.type === `KAKAO_OPENCHAT`"
+            v-if="data.type === `KAKAO_OPENCHAT`"
             src="../../../../../../src/assets/img/kakao-talk.png"
             alt=""
           />
           <img
-            v-if="contact.type === `INSTAMGRAM`"
+            v-if="data.type === `INSTAMGRAM`"
             src="../../../../../../src/assets/img/instagram.png"
             alt=""
           />
           <img
-            v-if="contact.type === `BLOG`"
+            v-if="data.type === `BLOG`"
             src="../../../../../../src/assets/img/blogging.png"
             alt=""
           />
-          {{ contact.content }}
+          {{ data.content }}
         </div>
       </div>
     </div>
@@ -59,6 +63,11 @@ export default {
   name: `ShopInfoTab`,
   props: {
     ShopData: Object,
+  },
+  watch: {
+    ShopData() {
+      console.log(this.ShopData);
+    },
   },
 };
 </script>
