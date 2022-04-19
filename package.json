@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@hennge/vue3-pagination": "^1.0.17",
     "@popperjs/core": "^2.11.4",
     "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
