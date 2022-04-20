@@ -5,11 +5,19 @@
         <!-- :class="SearchState" -->
         <div class="search">
           <input
+            id="inputform"
+            v-model="value"
+            @keyup.enter="Search($event.target.value)"
             type="text"
             class="form-control"
             placeholder="샵 이름을 검색해보세요."
           />
           <i class="bi bi-search"></i>
+          <i
+            class="bi bi-x-circle-fill"
+            @click="close"
+            v-if="keyword != ``"
+          ></i>
         </div>
       </div>
     </div>
@@ -19,6 +27,28 @@
 <script>
 export default {
   name: `SearchPage`,
+  data() {
+    return {
+      value: "",
+    };
+  },
+  methods: {
+    Search(keyword) {
+      if (keyword.trim() != "") {
+        var real = keyword.trim();
+        this.$store.commit("ShopStore/SetKeyword", real);
+      } else this.value = "";
+    },
+    close() {
+      this.$store.commit("ShopStore/SetKeyword", "");
+      this.value = "";
+    },
+  },
+  computed: {
+    keyword() {
+      return this.$store.state.ShopStore.keyword;
+    },
+  },
 };
 </script>
 
@@ -51,12 +81,13 @@ export default {
 }
 .search .bi-x-circle-fill {
   position: absolute;
-  left: 93%;
+  font-weight: bold;
+  left: 92%;
   @include tablet {
-    left: 92%;
+    left: 91%;
   }
   @include mobile-s {
-    left: 90%;
+    left: 29%;
   }
 }
 .search input {
@@ -74,7 +105,6 @@ export default {
     padding-left: 15px;
   }
 }
-
 .search input:focus {
   box-shadow: none;
   border: 1.5px solid #a4a4a4;
@@ -88,7 +118,7 @@ export default {
 
 .search i {
   position: absolute;
-  font-weight: bold;
+  color: #a4a4a4;
   top: 0.6rem;
   left: 1rem;
   font-size: 18px;

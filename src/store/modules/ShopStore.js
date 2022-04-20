@@ -7,7 +7,7 @@ const ShopStore = {
     //설정 시도
     districtData: [],
     sido: 1,
-    sigungu: 1,
+    sigungu: 0,
     mapCenter: [], // 지도 중심
 
     //샵 리스트 데이터
@@ -25,6 +25,9 @@ const ShopStore = {
     currentimagepage: 1,
     noResult: true,
     completeFetch: true, // 포스트 가져오기 플래그
+
+    //검색
+    keyword: false,
   },
   mutations: {
     SetMapView(state, payload) {
@@ -35,7 +38,8 @@ const ShopStore = {
     },
     SetDistrict(state, payload) {
       state.sido = payload[0].id;
-      state.sigungu = payload[1].id;
+      if (payload[1] != 0) state.sigungu = payload[1].id;
+      else state.sigungu = 0;
     },
     FetchTotalpage(state, payload) {
       state.totalpage = payload;
@@ -64,6 +68,9 @@ const ShopStore = {
     },
     SetNoResult(state, payload) {
       state.noResult = payload;
+    },
+    SetKeyword(state, payload) {
+      state.keyword = payload;
     },
   },
   actions: {
@@ -109,11 +116,11 @@ const ShopStore = {
             context.commit("FetchShopImage", response.data);
           }
         })
-        .catch((error) => {
+        .catch(function (error) {
           let res = error.response;
           if (res.status == 404) {
             context.commit(`SetNoResult`, false);
-          } else console.log(res);
+          }
         });
     },
   },

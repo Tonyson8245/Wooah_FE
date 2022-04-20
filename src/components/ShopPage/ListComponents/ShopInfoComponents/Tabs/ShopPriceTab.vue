@@ -3,7 +3,7 @@
     <div class="p-3">
       <div v-if="ShopData.has_deposit">
         <div class="container-fluid row p-0 mb-1">
-          <div class="col-5 title ps-4" style="text-align: left">예약금</div>
+          <div class="col-5 title" style="text-align: left">예약금</div>
           <div class="col-7 content" style="text-align: right">
             {{ ShopData.deposit }}원
           </div>
@@ -72,7 +72,8 @@ export default {
 .outline {
   font-family: "GoyangIlsan";
   font-size: 1.2em;
-  @include desktop {
+
+  @include tablet {
     font-size: 90%;
   }
 }

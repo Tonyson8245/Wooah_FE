@@ -65,6 +65,9 @@ export default {
     totalPage() {
       return this.$store.state.ShopStore.totalpage;
     },
+    keyword() {
+      return this.$store.state.ShopStore.keyword;
+    },
   },
   methods: {
     ClickShop(id, index) {
@@ -87,6 +90,9 @@ export default {
   watch: {
     page(state) {
       this.$store.dispatch("ShopStore/getShops", state);
+    },
+    keyword(state) {
+      console.log("다시 검색해!" + state);
     },
   },
 };

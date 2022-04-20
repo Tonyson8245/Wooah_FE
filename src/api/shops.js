@@ -2,10 +2,12 @@ import http from "./http";
 // import store from "@/store"
 
 export function getShops(page, sido, sigungu) {
-  return http.get(
-    `/shops?page=${page}&unit=10&sido=${sido}&sigungu=${sigungu}`,
-    {}
-  );
+  if (sigungu != 0) {
+    return http.get(
+      `/shops?page=${page}&unit=10&sido=${sido}&sigungu=${sigungu}`,
+      {}
+    );
+  } else return http.get(`/shops?page=${page}&unit=10&sido=${sido}`, {});
 }
 
 export function getDistricts() {

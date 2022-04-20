@@ -37,7 +37,9 @@ export default {
       ShopId: undefined,
     };
   },
-  components: { NaverMap },
+  components: {
+    NaverMap,
+  },
 
   mounted() {
     this.$emit("ChangePageCondition", "shop");

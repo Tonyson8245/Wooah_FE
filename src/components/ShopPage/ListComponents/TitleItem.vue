@@ -1,6 +1,6 @@
 <template>
   <div class="title__container container-fluid row g-0">
-    <div class="col-6 title">
+    <div class="col-6 title p-3">
       <span>{{ title }}</span>
     </div>
     <div class="col-6 region">
@@ -17,6 +17,11 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <template v-for="(sido, i) in districtData" :key="i">
             <span class="dropdown-header">{{ sido.name }}</span>
+            <li>
+              <a class="dropdown-item" @click="changeDistrict(sido, 0)">
+                전체
+              </a>
+            </li>
             <li v-for="sigungu in districtData[i].sigungu" :key="sigungu">
               <a class="dropdown-item" @click="changeDistrict(sido, sigungu)">{{
                 sigungu.name
@@ -34,18 +39,25 @@ export default {
   name: `TitleItem`,
   data() {
     return {
-      title: "내 주변 샵 보기",
-      region: "서울특별시 동작구",
+      region: "서울특별시 전체",
     };
   },
   computed: {
     districtData() {
       return this.$store.state.ShopStore.districtData;
     },
+    title() {
+      if (this.$store.state.ShopStore.keyword == "") {
+        return `내 주변 샵보기`;
+      } else {
+        return `검색 결과`;
+      }
+    },
   },
   methods: {
     changeDistrict(sido, sigungu) {
-      this.region = sido.name + ` ` + sigungu.name;
+      if (sigungu != 0) this.region = sido.name + ` ` + sigungu.name;
+      else this.region = sido.name + ` 전체`;
       this.$store.commit("ShopStore/SetDistrict", [sido, sigungu]);
       this.$store.dispatch("ShopStore/getShops", 1);
     },

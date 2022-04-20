@@ -78,11 +78,6 @@ export default {
   props: {
     ShopData: Object,
   },
-  watch: {
-    ShopData() {
-      console.log(this.ShopData);
-    },
-  },
 };
 </script>
 
