@@ -11,10 +11,17 @@
         v-if="noResult"
         @click="GetShopImage"
         class="btn btn-light"
-        style="border: #e4e4e4 solid 1px; display: inline-block; margin: auto"
+        style="
+          border: #e4e4e4 solid 1px;
+          display: inline-block;
+          margin: auto;
+          outline: none !important;
+          box-shadow: none;
+        "
       >
         더보기
       </button>
+      <span v-else style="font-size: 0.8em">마지막 페이지입니다.</span>
     </div>
   </div>
 </template>
@@ -65,7 +72,6 @@ export default {
     font-size: 18px;
   }
 }
-
 .square:after {
   content: "";
   display: block;

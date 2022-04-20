@@ -13,7 +13,7 @@
         @mouseleave="FocusoutShop()"
       ></ShopItem>
     </div>
-    <div style="text-align: center; margin: 2%">
+    <div style="text-align: center; margin-top: 2%">
       <div style="display: inline-block">
         <v-pagination
           v-model="page"

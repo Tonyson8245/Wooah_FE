@@ -1,6 +1,6 @@
 <template>
   <div style="background: white">
-    <div class="info_outline">
+    <div class="info_outline" v-if="ShopData != null">
       <div class="banner card-header" style="padding: 2.5%">
         샵 정보
         <i class="bi bi-x-lg" @click="CloseInfo"></i>
@@ -126,6 +126,7 @@ export default {
 .tab .btn {
   background: #f3f3f3;
   border: #e1e1e1 solid 1px;
+  font-size: 1em;
 }
 
 ///

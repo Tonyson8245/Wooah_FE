@@ -91,7 +91,7 @@ $mobile-height: 250px;
 .scale-enter-from,
 .scale-leave-to {
   opacity: 0.5;
-  transform: scale(0.99);
+  transform: scale(1);
 }
 
 //transtition 끝

@@ -21,7 +21,7 @@ const ShopStore = {
 
     //shop 상세 데이터
     shopimg: [],
-    shopinfo: { name: "", images: [] },
+    shopinfo: null,
     currentimagepage: 1,
     noResult: true,
     completeFetch: true, // 포스트 가져오기 플래그
@@ -100,7 +100,6 @@ const ShopStore = {
     },
 
     async getShopImage(context, id) {
-      // if (context.state.completeFetch) {
       context.commit("IncreaseImagePage");
       context.state.completeFetch = false; // 무한 페이지 로드를 막기위한 플래그
       await shopApi
@@ -108,7 +107,6 @@ const ShopStore = {
         .then((response) => {
           if (response.status == 200) {
             context.commit("FetchShopImage", response.data);
-            console.log(response.data);
           }
         })
         .catch((error) => {
@@ -117,7 +115,6 @@ const ShopStore = {
             context.commit(`SetNoResult`, false);
           } else console.log(res);
         });
-      // }
     },
   },
 };
