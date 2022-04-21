@@ -8,6 +8,7 @@ const ShopStore = {
     districtData: [],
     sido: 1,
     sigungu: 0,
+    newDistrictSet: "",
     mapCenter: [], // 지도 중심
 
     //샵 리스트 데이터
@@ -38,13 +39,19 @@ const ShopStore = {
     },
     SetDistrict(state, payload) {
       state.sido = payload[0].id;
+
       if (payload[1] != 0) state.sigungu = payload[1].id;
       else state.sigungu = 0;
+
+      state.newDistrictSet = payload[2]; // 갱신 확인법
+      state.shop = null;
     },
     FetchTotalpage(state, payload) {
+      if (payload == null) payload = 0;
       state.totalpage = payload;
     },
     FetchShops(state, payload) {
+      if (payload == null) payload = "";
       state.shops = payload;
     },
     SetFocusmarker(state, payload) {
@@ -120,6 +127,26 @@ const ShopStore = {
           let res = error.response;
           if (res.status == 404) {
             context.commit(`SetNoResult`, false);
+          }
+        });
+    },
+    async searchShops(context, payload) {
+      // payload.keyword,payload.page
+      await shopApi
+        .searchShops(
+          payload.page,
+          context.state.sido,
+          context.state.sigungu,
+          payload.keyword
+        )
+        .then(function (response) {
+          context.commit("FetchTotalpage", response.data.total_page);
+          context.commit("FetchShops", response.data.shops);
+        })
+        .catch(function (error) {
+          if (error.response.status == 404) {
+            context.commit("FetchTotalpage", null);
+            context.commit("FetchShops", null);
           }
         });
     },

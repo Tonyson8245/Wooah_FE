@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     background() {
-      if (this.index % 2 == 0) return `background:#e1e1e1`;
+      if (this.index % 2 == 0) return `background:#f1f1f1`;
       return ``;
     },
   },
@@ -99,7 +99,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 5%;
   border: solid #e1e1e1 1px;
 }

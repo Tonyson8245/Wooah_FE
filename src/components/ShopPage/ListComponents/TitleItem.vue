@@ -38,10 +38,9 @@
 export default {
   name: `TitleItem`,
   data() {
-    return {
-      region: "서울특별시 전체",
-    };
+    return {};
   },
+  beforemounted() {},
   computed: {
     districtData() {
       return this.$store.state.ShopStore.districtData;
@@ -53,12 +52,34 @@ export default {
         return `검색 결과`;
       }
     },
+    region() {
+      var data = this.$store.state.ShopStore.districtData;
+      if (data.length > 0) {
+        var sigungu = this.$store.state.ShopStore.sigungu;
+        var sido = this.$store.state.ShopStore.sido;
+
+        var sigunguName, sidoName;
+
+        if (sigungu != 0) {
+          sigunguName = data[sido - 1].sigungu[sigungu - 1].name;
+          sidoName = data[sido - 1].name;
+
+          return sidoName + ` ` + sigunguName;
+        } else {
+          sidoName = data[sido - 1].name;
+
+          return sidoName + ` 전체`;
+        }
+      } else return "서울특별시 전체";
+    },
   },
   methods: {
     changeDistrict(sido, sigungu) {
-      if (sigungu != 0) this.region = sido.name + ` ` + sigungu.name;
-      else this.region = sido.name + ` 전체`;
-      this.$store.commit("ShopStore/SetDistrict", [sido, sigungu]);
+      this.$store.commit("ShopStore/SetDistrict", [
+        sido,
+        sigungu,
+        Math.random(),
+      ]);
       this.$store.dispatch("ShopStore/getShops", 1);
     },
   },

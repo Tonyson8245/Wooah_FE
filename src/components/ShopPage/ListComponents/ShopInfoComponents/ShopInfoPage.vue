@@ -182,7 +182,7 @@ export default {
 .banner {
   text-align: center;
   font-size: 1.3em;
-  background: #c4c4c4;
+  background: #d4d4d4;
   font-weight: bold;
   @include mobile-s {
     font-size: 70%;

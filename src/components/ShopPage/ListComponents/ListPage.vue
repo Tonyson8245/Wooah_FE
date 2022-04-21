@@ -71,7 +71,12 @@ export default {
   },
   methods: {
     ClickShop(id, index) {
-      this.$router.push("/shop/" + id);
+      if (
+        this.shops[index].is_partner == null ||
+        this.shops[index].is_partner == true
+      ) {
+        this.$router.push("/shop/" + id);
+      }
       this.FocusoutShop(); // 해당 샵에서 포커스 벗어남
       this.$store.commit("ShopStore/SetShop", index); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
     },
@@ -89,10 +94,21 @@ export default {
   },
   watch: {
     page(state) {
-      this.$store.dispatch("ShopStore/getShops", state);
+      if (this.keyword == "") this.$store.dispatch("ShopStore/getShops", state);
+      else
+        this.$store.dispatch("ShopStore/searchShops", {
+          keyword: this.keyword,
+          page: state,
+        }); // 다음 페이지 불러오기 // 검색 상태일 경우 검색api 활용/ 아닐 경우 일반 내주변 모아보기 api활용
     },
     keyword(state) {
-      console.log("다시 검색해!" + state);
+      if (state != "")
+        this.$store.dispatch("ShopStore/searchShops", {
+          keyword: state,
+          page: 1,
+        });
+      // 검색 요청
+      else this.$store.dispatch("ShopStore/getShops", 1);
     },
   },
 };

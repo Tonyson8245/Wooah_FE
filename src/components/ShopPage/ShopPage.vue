@@ -87,7 +87,7 @@ $tablet-height: 350px;
 $mobile-height: 250px;
 .scale-enter-active,
 .scale-leave-active {
-  transition: all 0.05s ease;
+  transition: all 0.08s ease;
 }
 
 .scale-enter-from,

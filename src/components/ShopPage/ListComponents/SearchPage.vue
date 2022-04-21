@@ -58,7 +58,7 @@ export default {
 //검색쪽 시작
 .search__outline {
   width: 100%;
-  background: #c4c4c4;
+  background: #d4d4d4;
 }
 .search__container {
   background-color: #a4a4a4;
@@ -107,7 +107,7 @@ export default {
 }
 .search input:focus {
   box-shadow: none;
-  border: 1.5px solid #a4a4a4;
+  border: 1.5px solid #e4e4e4;
 }
 
 .search .fa-search {
