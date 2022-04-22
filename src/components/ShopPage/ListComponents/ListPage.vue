@@ -2,7 +2,7 @@
   <div style="background: white">
     <SearchPage></SearchPage>
     <TitleItem></TitleItem>
-    <div class="shoplist" :style="ListHeight">
+    <div class="shoplist" :style="ListHeight" v-if="!noResultlist">
       <ShopItem
         v-for="(shop, index) in shops"
         :key="index"
@@ -12,6 +12,14 @@
         @mouseover="FocusShop(index)"
         @mouseleave="FocusoutShop()"
       ></ShopItem>
+    </div>
+    <div
+      class="shoplist parent"
+      :style="ListHeight"
+      v-else
+      style="text-align: center"
+    >
+      <div class="child">조건에 맞는 샵이 존재하지 않습니다.</div>
     </div>
     <div style="text-align: center; margin-top: 2%">
       <div style="display: inline-block">
@@ -41,7 +49,6 @@ export default {
     return {
       ListHeight: ``,
       page: 1,
-      pindex: null,
     };
   },
   props: {
@@ -68,6 +75,9 @@ export default {
     keyword() {
       return this.$store.state.ShopStore.keyword;
     },
+    noResultlist() {
+      return this.$store.state.ShopStore.noResultlist;
+    },
   },
   methods: {
     ClickShop(id, index) {
@@ -81,15 +91,10 @@ export default {
       this.$store.commit("ShopStore/SetShop", index); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
     },
     FocusShop(index) {
-      if (this.pindex != index) {
-        this.$store.commit("ShopStore/SetFocusmarker", index);
-        this.pindex = index;
-      }
+      this.$store.commit("ShopStore/SetFocusmarker", index);
     },
     FocusoutShop() {
-      if (this.pindex != null) {
-        this.$store.commit("ShopStore/SetFocusmarker", null);
-      }
+      this.$store.commit("ShopStore/SetFocusmarker", null);
     },
   },
   watch: {
@@ -130,5 +135,14 @@ export default {
     height: auto;
     overflow: none;
   }
+}
+.parent {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.child {
+  font-family: "GoyangIlsan";
+  margin: auto;
 }
 </style>

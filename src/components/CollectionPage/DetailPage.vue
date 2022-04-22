@@ -113,8 +113,10 @@ export default {
   margin-top: 2%;
   height: auto;
   width: 100%;
-  padding: 0 10% 0 10%;
-
+  padding: 0 23% 0 23%;
+  @include desktop {
+    padding: 0 10% 0 10%;
+  }
   @include mobile-s {
     padding: 0 0 0 0;
   }
@@ -210,6 +212,7 @@ export default {
 
 .modal__content_outer {
   height: auto;
+  white-space: nowrap;
   position: absolute;
   bottom: 0;
   margin-bottom: 3%;

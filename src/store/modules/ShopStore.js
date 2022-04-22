@@ -16,6 +16,7 @@ const ShopStore = {
     shops: "",
     currentpage: 0,
     focusmarker: null,
+    noResultlist: false,
 
     //shop 마커데이터
     shop: null,
@@ -31,6 +32,9 @@ const ShopStore = {
     keyword: false,
   },
   mutations: {
+    SetnoResultlist(state, payload) {
+      state.noResultlist = payload;
+    },
     SetMapView(state, payload) {
       state.MapView = payload;
     },
@@ -44,6 +48,7 @@ const ShopStore = {
       else state.sigungu = 0;
 
       state.newDistrictSet = payload[2]; // 갱신 확인법
+      state.keyword = false;
       state.shop = null;
     },
     FetchTotalpage(state, payload) {
@@ -87,9 +92,14 @@ const ShopStore = {
         .then(function (response) {
           context.commit("FetchTotalpage", response.data.total_page);
           context.commit("FetchShops", response.data.shops);
+          context.commit("SetnoResultlist", false);
         })
         .catch(function (error) {
-          console.log(error);
+          if (error.response.status == 404) {
+            context.commit("FetchTotalpage", null);
+            context.commit("FetchShops", null);
+            context.commit("SetnoResultlist", true);
+          }
         });
     },
     async getDistricts(context) {
@@ -142,11 +152,13 @@ const ShopStore = {
         .then(function (response) {
           context.commit("FetchTotalpage", response.data.total_page);
           context.commit("FetchShops", response.data.shops);
+          context.commit("SetnoResultlist", false);
         })
         .catch(function (error) {
           if (error.response.status == 404) {
             context.commit("FetchTotalpage", null);
             context.commit("FetchShops", null);
+            context.commit("SetnoResultlist", true);
           }
         });
     },

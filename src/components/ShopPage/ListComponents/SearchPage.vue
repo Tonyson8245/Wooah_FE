@@ -10,7 +10,7 @@
             @keyup.enter="Search($event.target.value)"
             type="text"
             class="form-control"
-            placeholder="샵 이름을 검색해보세요."
+            placeholder="지역 별 샵 이름을 검색해보세요."
           />
           <i class="bi bi-search"></i>
           <i
@@ -47,6 +47,11 @@ export default {
   computed: {
     keyword() {
       return this.$store.state.ShopStore.keyword;
+    },
+  },
+  watch: {
+    keyword() {
+      if (!this.keyword) this.value = ""; // keyword 값이 false 인 경우 초기화가 된 경우기 때문에 현재 input안의 내용도 초기화 시킴
     },
   },
 };

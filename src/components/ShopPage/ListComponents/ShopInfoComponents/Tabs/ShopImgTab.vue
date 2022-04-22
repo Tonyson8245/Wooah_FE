@@ -2,7 +2,7 @@
   <div class="outline">
     <div class="container-fluid row g-0 p-0">
       <div v-for="image in shopimages" :key="image" class="col-4 square">
-        <img class="inner" :src="image.url" alt="" />
+        <img class="inner" :src="image.url" alt="" @click="Click(image.id)" />
         <i class="bi bi-heart-fill monthly" v-if="image.monthly_art"></i>
       </div>
     </div>
@@ -47,6 +47,9 @@ export default {
   methods: {
     GetShopImage() {
       this.$store.dispatch("ShopStore/getShopImage", this.$route.params.id);
+    },
+    Click(id) {
+      this.$router.push({ path: "/library/p/" + id });
     },
   },
   components: {},
