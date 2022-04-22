@@ -57,14 +57,23 @@ export default {
       padding: ``,
     };
   },
-  props: {
-    PageCondition: Array, // 부모가 보내준 페이지 컨디션
+  props: {},
+  watch: {
+    PageConditions(state) {
+      switch (state) {
+        case "collection":
+          this.TapCondition = ["active", ""];
+          break;
+        case "shop":
+          this.TapCondition = ["", "active"];
+          break;
+      }
+    },
   },
-  watch: {},
-  beforeUpdate() {
-    this.TapCondition = [...this.PageCondition]; // 여기서 적용
-    // if (this.TapCondition[1] == "active") this.padding = `padding : 0 0 0 0`;
-    // else this.padding = `padding : 0 0 0 23%`;
+  computed: {
+    PageConditions() {
+      return this.$store.state.pagecondintion;
+    },
   },
 };
 </script>

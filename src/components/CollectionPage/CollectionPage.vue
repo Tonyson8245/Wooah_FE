@@ -385,7 +385,7 @@ export default {
   mounted() {
     //데이터 가져오는 코드 여기 넣쟈
     this.$store.dispatch("collectionStore/fetchPosts");
-    this.$emit("ChangePageCondition", "collection");
+    this.$store.commit("Setpagecondition", "collection");
   }, // 생성 될때 포스트 데이터를 가져오게 한다.
   methods: {
     ClickNextPost() {

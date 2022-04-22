@@ -6,9 +6,15 @@ import ShopStore from "@/store/modules/ShopStore";
 
 const store = createStore({
   state() {
-    return {};
+    return {
+      pagecondintion: false,
+    };
   },
-  mutations: {},
+  mutations: {
+    Setpagecondition(state, payload) {
+      state.pagecondintion = payload;
+    },
+  },
   modules: {
     alertStore: alertStore,
     collectionStore: CollectionStore,

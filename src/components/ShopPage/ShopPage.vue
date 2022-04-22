@@ -42,7 +42,7 @@ export default {
   },
 
   mounted() {
-    this.$emit("ChangePageCondition", "shop");
+    this.$store.commit("Setpagecondition", "shop");
     window.addEventListener("resize", this.handleResize);
     this.handleResize(); // 화면 넓이를 측정
     this.ShopId = this.$route.params.id; // 현재 샵 상세를 찾는지 확인
