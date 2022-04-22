@@ -66,6 +66,9 @@ export default {
     this.$store.dispatch("ShopStore/getDistricts");
   },
   computed: {
+    pageReset() {
+      return this.$store.state.ShopStore.pageReset;
+    },
     shops() {
       return this.$store.state.ShopStore.shops;
     },
@@ -98,6 +101,12 @@ export default {
     },
   },
   watch: {
+    pageReset(state) {
+      if (state) {
+        this.page = 1;
+        this.$store.commit("ShopStore/SetPageReset", false);
+      }
+    },
     page(state) {
       if (this.keyword == "") this.$store.dispatch("ShopStore/getShops", state);
       else

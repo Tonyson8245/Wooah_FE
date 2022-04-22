@@ -65,7 +65,7 @@ export default {
 
       if (this.media == "desktop") {
         this.map.setOptions({
-          minZoom: 12,
+          minZoom: 10,
           maxZoom: 21,
           zoom: 12,
           zoomControl: true,
@@ -268,7 +268,7 @@ export default {
         latitude = this.distrctData[sido - 1].sigungu[sigungu - 1].latitude;
         longitude = this.distrctData[sido - 1].sigungu[sigungu - 1].longitude;
       } else {
-        zoom = 12;
+        zoom = 10;
         latitude = this.distrctData[sido - 1].latitude;
         longitude = this.distrctData[sido - 1].longitude;
       }

@@ -6,6 +6,7 @@
         <div class="search">
           <input
             id="inputform"
+            autocomplete="off"
             v-model="value"
             @keyup.enter="Search($event.target.value)"
             type="text"

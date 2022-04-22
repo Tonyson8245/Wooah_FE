@@ -17,6 +17,7 @@ const ShopStore = {
     currentpage: 0,
     focusmarker: null,
     noResultlist: false,
+    pageReset: false,
 
     //shop 마커데이터
     shop: null,
@@ -32,6 +33,9 @@ const ShopStore = {
     keyword: false,
   },
   mutations: {
+    SetPageReset(state, payload) {
+      state.pageReset = payload;
+    },
     SetnoResultlist(state, payload) {
       state.noResultlist = payload;
     },
@@ -87,6 +91,7 @@ const ShopStore = {
   },
   actions: {
     async getShops(context, page) {
+      if (page == 1) context.commit("SetPageReset", true);
       await shopApi
         .getShops(page, context.state.sido, context.state.sigungu)
         .then(function (response) {
@@ -142,6 +147,7 @@ const ShopStore = {
     },
     async searchShops(context, payload) {
       // payload.keyword,payload.page
+      if (payload.page == 1) context.commit("SetPageReset", true);
       await shopApi
         .searchShops(
           payload.page,
