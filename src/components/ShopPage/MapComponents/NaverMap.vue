@@ -51,10 +51,19 @@ export default {
         e.setMap(null);
       });
       this.markers = [];
+
       if (this.shops != "") {
         this.shops.forEach((shop) => {
           this.SetMarker(shop.latitude, shop.longitude, "", shop.name);
         });
+      }
+
+      for (var i = 0, ii = this.markers.length; i < ii; i++) {
+        naver.maps.Event.addListener(
+          this.markers[i],
+          "click",
+          this.GetClickHandler(this.shops, i, this.$router, this.$store)
+        );
       }
     },
     InitMap(Lat, Lng) {
@@ -199,6 +208,17 @@ export default {
         }
       }
     }, //현재 화면 넓이를 확인해 desktop 또는 mobile 형태로 media 변수를 변경해주는 메서드
+    GetClickHandler(shops, seq, router, store) {
+      return function () {
+        if (shops[seq].is_partner == null || shops[seq].is_partner == true) {
+          router.push("/shop/" + shops[seq].id);
+        }
+        store.commit("ShopStore/SetShop", seq); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
+      };
+    },
+    MovetoShopDetail(i) {
+      this.$router.push("/shop/" + i);
+    },
   },
   computed: {
     shops() {
