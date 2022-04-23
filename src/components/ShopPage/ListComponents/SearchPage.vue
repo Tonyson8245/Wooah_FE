@@ -33,6 +33,9 @@ export default {
       value: "",
     };
   },
+  mounted() {
+    if (this.keyword != false) this.value = this.keyword; //
+  },
   methods: {
     Search(keyword) {
       if (keyword.trim() != "") {
@@ -41,7 +44,7 @@ export default {
       } else this.value = "";
     },
     close() {
-      this.$store.commit("ShopStore/SetKeyword", "");
+      this.$store.commit("ShopStore/SetKeyword", false);
       this.value = "";
     },
   },
@@ -52,7 +55,8 @@ export default {
   },
   watch: {
     keyword() {
-      if (!this.keyword) this.value = ""; // keyword 값이 false 인 경우 초기화가 된 경우기 때문에 현재 input안의 내용도 초기화 시킴
+      if (!this.keyword) this.value = "";
+      // keyword 값이 false 인 경우 초기화가 된 경우기 때문에 현재 input안의 내용도 초기화 시킴
     },
   },
 };

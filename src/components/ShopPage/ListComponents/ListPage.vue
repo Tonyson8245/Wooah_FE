@@ -64,8 +64,12 @@ export default {
   mounted() {
     this.$store.dispatch("ShopStore/getShops", 1);
     this.$store.dispatch("ShopStore/getDistricts");
+    if (this.currentpage != 0) this.page = this.currentpage;
   },
   computed: {
+    currentpage() {
+      return this.$store.state.ShopStore.currentpage;
+    },
     pageReset() {
       return this.$store.state.ShopStore.pageReset;
     },
@@ -114,6 +118,7 @@ export default {
           keyword: this.keyword,
           page: state,
         }); // 다음 페이지 불러오기 // 검색 상태일 경우 검색api 활용/ 아닐 경우 일반 내주변 모아보기 api활용
+      this.$store.commit("ShopStore/SetCurrentPage", state);
     },
     keyword(state) {
       if (state != "")

@@ -33,8 +33,12 @@ const ShopStore = {
     keyword: false,
   },
   mutations: {
+    SetCurrentPage(state, payload) {
+      state.currentpage = payload;
+    },
     SetPageReset(state, payload) {
       state.pageReset = payload;
+      state.currentpage = 0;
     },
     SetnoResultlist(state, payload) {
       state.noResultlist = payload;
@@ -91,21 +95,23 @@ const ShopStore = {
   },
   actions: {
     async getShops(context, page) {
-      if (page == 1) context.commit("SetPageReset", true);
-      await shopApi
-        .getShops(page, context.state.sido, context.state.sigungu)
-        .then(function (response) {
-          context.commit("FetchTotalpage", response.data.total_page);
-          context.commit("FetchShops", response.data.shops);
-          context.commit("SetnoResultlist", false);
-        })
-        .catch(function (error) {
-          if (error.response.status == 404) {
-            context.commit("FetchTotalpage", null);
-            context.commit("FetchShops", null);
-            context.commit("SetnoResultlist", true);
-          }
-        });
+      if (context.state.keyword == false) {
+        if (page == 1) context.commit("SetPageReset", true);
+        await shopApi
+          .getShops(page, context.state.sido, context.state.sigungu)
+          .then(function (response) {
+            context.commit("FetchTotalpage", response.data.total_page);
+            context.commit("FetchShops", response.data.shops);
+            context.commit("SetnoResultlist", false);
+          })
+          .catch(function (error) {
+            if (error.response.status == 404) {
+              context.commit("FetchTotalpage", null);
+              context.commit("FetchShops", null);
+              context.commit("SetnoResultlist", true);
+            }
+          });
+      }
     },
     async getDistricts(context) {
       await shopApi
@@ -122,6 +128,7 @@ const ShopStore = {
         .getShopDetail(id)
         .then(function (response) {
           context.commit("FetchShopinfo", response.data);
+          context.commit("ResetImagePage");
         })
         .catch(function (error) {
           console.log(error);
@@ -146,7 +153,6 @@ const ShopStore = {
         });
     },
     async searchShops(context, payload) {
-      // payload.keyword,payload.page
       if (payload.page == 1) context.commit("SetPageReset", true);
       await shopApi
         .searchShops(

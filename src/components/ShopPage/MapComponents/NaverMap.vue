@@ -102,7 +102,7 @@ export default {
         title: name,
         position: new naver.maps.LatLng(Lat, Lng),
         icon: {
-          content: this.GetMarkLayout(name),
+          content: this.GetMarkLayout(name, type),
           anchor: new naver.maps.Point(this.anchor[0], this.anchor[1]),
         },
         map: this.map,
@@ -237,8 +237,8 @@ export default {
       this.map.setCenter(position); // 중앙 지정 변경
       this.map.setZoom(zoom, true); // 줌
     },
-    SelectShop() {
-      var position;
+    SelectShop(index) {
+      var position, name, lat, lng;
       var info = this.shopinfo;
 
       this.markers.forEach((e) => {
@@ -246,11 +246,21 @@ export default {
       });
       this.markers = []; // 전체 마커 없애기
 
-      position = new naver.maps.LatLng(info.latitude, info.longitude);
-      this.SetMarker(info.latitude, info.longitude, "focus", info.name);
+      if (this.shopinfo != null) {
+        name = info.name;
+        lat = info.latitude;
+        lng = info.longitude;
+      } //  shopinfo 가 있는 경우, shop/${id}와 리스트를 통해서 들어오는 경우 모두 가능하게 하기 위해 이렇게 작성
+      else {
+        name = this.shops[index].name;
+        lat = this.shops[index].latitude;
+        lng = this.shops[index].longitude;
+      } // info가 없을 경우 , 리스트를 통해서 들어오게 되기때문에 shops[index]를 이용
 
+      this.SetMarker(lat, lng, "focus", name);
+      position = new naver.maps.LatLng(lat, lng);
       this.map.setCenter(position); // 중앙 지정 변경
-      this.map.setZoom(20, false); // 줌
+      this.map.setZoom(20, true); // 줌}
     }, // Shop info에 데이터가 바뀌면 지도도 바뀐다.
   },
   computed: {
@@ -282,7 +292,7 @@ export default {
   },
   watch: {
     shopinfo() {
-      this.SelectShop("direct");
+      this.SelectShop();
     },
     width() {
       this.SetMedia();
@@ -300,7 +310,7 @@ export default {
         // marker.setAnimation(null);
       });
 
-      if (state != null) {
+      if (state != null && this.markers[state] != null) {
         this.markers[state].setZIndex(100);
 
         this.markers[state].setIcon({
