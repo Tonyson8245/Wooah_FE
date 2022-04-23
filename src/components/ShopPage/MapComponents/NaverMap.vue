@@ -219,6 +219,25 @@ export default {
     MovetoShopDetail(i) {
       this.$router.push("/shop/" + i);
     },
+    ZoomOutDistrict() {
+      var sigungu = this.district[1];
+      var sido = this.district[0];
+      var latitude, longitude, zoom;
+
+      if (sigungu != 0) {
+        zoom = 14;
+        latitude = this.distrctData[sido - 1].sigungu[sigungu - 1].latitude;
+        longitude = this.distrctData[sido - 1].sigungu[sigungu - 1].longitude;
+      } else {
+        zoom = 12;
+        latitude = this.distrctData[sido - 1].latitude;
+        longitude = this.distrctData[sido - 1].longitude;
+      }
+
+      var position = new naver.maps.LatLng(latitude, longitude);
+      this.map.setCenter(position); // 중앙 지정 변경
+      this.map.setZoom(zoom, true); // 줌
+    },
   },
   computed: {
     shops() {
@@ -239,6 +258,9 @@ export default {
     },
     distrctData() {
       return this.$store.state.ShopStore.districtData;
+    },
+    keyword() {
+      return this.$store.state.ShopStore.keyword; // 검색할때 현재 설정 지역 전체를 보여주기 위함
     },
   },
   watch: {
@@ -279,24 +301,11 @@ export default {
       }
     }, // 샵을 클릭했을때 지도 형태를 위한 설정
     district() {
-      var sigungu = this.district[1];
-      var sido = this.district[0];
-      var latitude, longitude, zoom;
-
-      if (sigungu != 0) {
-        zoom = 14;
-        latitude = this.distrctData[sido - 1].sigungu[sigungu - 1].latitude;
-        longitude = this.distrctData[sido - 1].sigungu[sigungu - 1].longitude;
-      } else {
-        zoom = 10;
-        latitude = this.distrctData[sido - 1].latitude;
-        longitude = this.distrctData[sido - 1].longitude;
-      }
-
-      var position = new naver.maps.LatLng(latitude, longitude);
-      this.map.setCenter(position); // 중앙 지정 변경
-      this.map.setZoom(zoom, true); // 줌
+      this.ZoomOutDistrict();
     }, // 지역 변경할때 작동
+    keyword() {
+      this.ZoomOutDistrict(); // 해당 지역 표시
+    },
   },
 };
 </script>

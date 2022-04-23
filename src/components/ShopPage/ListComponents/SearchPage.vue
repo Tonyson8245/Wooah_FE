@@ -93,7 +93,7 @@ export default {
     left: 91%;
   }
   @include mobile-s {
-    left: 29%;
+    left: 90%;
   }
 }
 .search input {
@@ -129,7 +129,7 @@ export default {
   left: 1rem;
   font-size: 18px;
   @include mobile-s {
-    top: 0.3rem;
+    top: 0.6rem;
     left: 0.8rem;
     font-size: 15px;
   }
