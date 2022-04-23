@@ -1,6 +1,6 @@
 <template>
   <div class="title__container container-fluid row g-0">
-    <div class="col-6 title p-3">
+    <div class="col-6 title">
       <span>{{ title }}</span>
     </div>
     <div class="col-6 region">

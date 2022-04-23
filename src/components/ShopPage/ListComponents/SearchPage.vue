@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="search__outline p-2">
+    <div class="search__outline">
       <div class="search__container">
         <!-- :class="SearchState" -->
         <div class="search">
@@ -65,6 +65,11 @@ export default {
 .search__outline {
   width: 100%;
   background: #d4d4d4;
+  padding: 2%;
+  @include mobile-s {
+    font-size: 70%;
+    padding: 1%;
+  }
 }
 .search__container {
   background-color: #a4a4a4;
@@ -83,6 +88,9 @@ export default {
 
   @include tablet {
     margin: 0.5em 0 0 0;
+  }
+  @include mobile-s {
+    margin: 0.1em 0 0 0;
   }
 }
 .search .bi-x-circle-fill {
@@ -106,7 +114,7 @@ export default {
   padding-left: 30px;
   font-size: 0.9em;
   @include mobile-s {
-    height: 40px;
+    height: 31px;
     font-size: 11px;
     padding-left: 15px;
   }
@@ -129,8 +137,8 @@ export default {
   left: 1rem;
   font-size: 18px;
   @include mobile-s {
-    top: 0.6rem;
-    left: 0.8rem;
+    top: 0.3rem;
+    left: 0.7rem;
     font-size: 15px;
   }
 }

@@ -16,7 +16,7 @@ export default {
       map: null,
       markers: [],
       media: "desktop",
-      anchor: [100, 60],
+      anchor: [27, 53],
     };
   },
   props: {
@@ -45,7 +45,6 @@ export default {
         element.setAnimation(null);
       });
     },
-
     InitMarkers() {
       this.markers.forEach((e) => {
         e.setMap(null);
@@ -86,7 +85,7 @@ export default {
         this.map.setOptions({
           minZoom: 10,
           maxZoom: 21,
-          zoom: 12,
+          zoom: 14,
           zoomControl: true,
           zoomControlOptions: {
             position: naver.maps.Position.RIGHT_TOP,
@@ -125,10 +124,10 @@ export default {
         color = "#000000";
       }
       return (
-        "<div style='font-size:50%'><div style='top: 100%;left: 50%;border: solid transparent;content: " +
+        "<div style='font-size:50%'><div style='top: 2.9em;left: 1.4em;border: solid transparent;content: " + // 꼭지 위치
         ";height: 0;width: 0;position: absolute;pointer-events: none;border-top-color: " +
         outline +
-        ";border-width: 0.3em;margin-left: -0.3em;'></div>" +
+        ";border-width: 0.6em;margin-left: -0.3em;'></div>" +
         "<div style='border-radius: 2em;position: relative;background: " +
         background +
         ";border: 0.11em solid " +
@@ -143,8 +142,8 @@ export default {
         "'>" +
         name +
         "</span></div>" +
-        "<div style='top: 80%;left: 50%;border: solid transparent;content: " +
-        ";height: 0;width: 0;position: absolute;pointer-events: none;	border-top-color: " +
+        "<div style='top: 2.5em;left: 1.7em;border: solid transparent;content: " +
+        ";height: 0;width: 0;position: absolute;pointer-events: none;	border-top-color: " + // 꼭지 위치
         background +
         ";border-width: 0.8em;margin-left: -0.8em;'></div></div>"
       );
@@ -164,26 +163,26 @@ export default {
       }
 
       return (
-        "<div><div style='top: 100%;left: 50%;border: solid transparent;content: " +
-        ";height: 0;width: 0;position: absolute;pointer-events: none;border-top-color: " +
+        "<div><div style='top: 2.8em;left: 1.4em;border: solid transparent;content: " +
+        ";height: 0;width: 0;position: absolute;pointer-events: none;border-top-color: " + //꼭지위치
         outline +
-        ";border-width: 0.3em;margin-left: -0.3em;'></div>" +
+        ";border-width: 0.6em;margin-left: -0.3em;'></div>" +
         "<div style='display:flex; border-radius: 2em;position: relative;background: " +
         background +
         ";border: 0.11em solid " +
         outline +
-        "; width:13em; height:3em; display: flex; align-items: center;'>" +
+        "; width:auto; height:3em; display: flex; align-items: center;'>" +
         "<div style='border-radius:50%;height:2em;width:2em; margin-top:0.3em;margin-left:0.3em;margin-bottom:0.3em;background:" +
         outline +
         ";text-align: center;'><img src=" +
         nail +
-        " style='height:50%;'/></div><span style='margin-left:auto;margin-right:auto; font-weight:bold;color:" +
+        " style='height:50%; z-index:100;'/></div><span style='margin: 0 1em 0 1em; white-space:nowrap;font-weight:bold;color:" +
         color +
         "'>" +
         name +
         "</span></div>" +
-        "<div style='top: 80%;left: 50%;border: solid transparent;content: " +
-        ";height: 0;width: 0;position: absolute;pointer-events: none;border-top-color: " +
+        "<div style='top: 2.5em;left: 1.7em;border: solid transparent;content: " +
+        ";height: 0;width: 0;position: absolute;pointer-events: none;border-top-color: " + //꼭지위치
         background +
         ";border-width: 0.8em;margin-left: -0.8em;'></div></div>"
       );
@@ -197,13 +196,13 @@ export default {
       if (this.width > 768 || this.width == 0) {
         if (this.media != "desktop") {
           this.media = "desktop";
-          this.anchor = [100, 60];
+          this.anchor = [27, 53];
           this.InitMarkers();
         }
       } else {
         if (this.media != "mobile") {
           this.media = "mobile";
-          this.anchor = [50, 30];
+          this.anchor = [14, 27];
           this.InitMarkers();
         }
       }
@@ -238,6 +237,22 @@ export default {
       this.map.setCenter(position); // 중앙 지정 변경
       this.map.setZoom(zoom, true); // 줌
     },
+    SelectShop(state) {
+      var position;
+      if (state == "direct") {
+        var info = this.shopinfo;
+        position = new naver.maps.LatLng(info.latitude, info.longitude);
+        this.SetMarker(info.latitude, info.longitude, "focus", info.name);
+      } else {
+        var shop = this.shops[state];
+        position = new naver.maps.LatLng(shop.latitude, shop.longitude);
+        this.markers[state].setZIndex(state); // 최상단에 위치 하게
+        this.$store.commit("ShopStore/SetShop", null); // 샵 선택 초기화}, //샵 선택시 확대되는 동작
+      }
+
+      this.map.setCenter(position); // 중앙 지정 변경
+      this.map.setZoom(20, true); // 줌
+    },
   },
   computed: {
     shops() {
@@ -262,8 +277,14 @@ export default {
     keyword() {
       return this.$store.state.ShopStore.keyword; // 검색할때 현재 설정 지역 전체를 보여주기 위함
     },
+    shopinfo() {
+      return this.$store.state.ShopStore.shopinfo;
+    },
   },
   watch: {
+    shopinfo() {
+      this.SelectShop("direct");
+    },
     width() {
       this.SetMedia();
     },
@@ -291,13 +312,7 @@ export default {
     },
     shop(state) {
       if (state != null) {
-        var shop = this.shops[state];
-        var position = new naver.maps.LatLng(shop.latitude, shop.longitude);
-        this.markers[state].setZIndex(state); // 최상단에 위치 하게
-        this.map.setCenter(position); // 중앙 지정 변경
-        this.map.setZoom(20, true); // 줌
-
-        this.$store.commit("ShopStore/SetShop", null); // 샵 선택 초기화
+        this.SelectShop(state);
       }
     }, // 샵을 클릭했을때 지도 형태를 위한 설정
     district() {

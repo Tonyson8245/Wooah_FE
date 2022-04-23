@@ -8,12 +8,12 @@
 
         <div class="col-md-4 col-sm-12 list__outer g-0">
           <div class="btn__set">
-            <button class="btn col-12 p-0" v-if="MapView" @click="CloseMap">
+            <!-- <button class="btn col-12 p-0" v-if="MapView" @click="CloseMap">
               지도 숨기기
             </button>
             <button class="btn col-12 p-0" v-if="!MapView" @click="OpenMap">
               지도 보기
-            </button>
+            </button> -->
           </div>
           <router-view v-slot="{ Component }">
             <transition name="scale" mode="out-in">
