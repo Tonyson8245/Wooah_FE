@@ -237,22 +237,21 @@ export default {
       this.map.setCenter(position); // 중앙 지정 변경
       this.map.setZoom(zoom, true); // 줌
     },
-    SelectShop(state) {
+    SelectShop() {
       var position;
-      if (state == "direct") {
-        var info = this.shopinfo;
-        position = new naver.maps.LatLng(info.latitude, info.longitude);
-        this.SetMarker(info.latitude, info.longitude, "focus", info.name);
-      } else {
-        var shop = this.shops[state];
-        position = new naver.maps.LatLng(shop.latitude, shop.longitude);
-        this.markers[state].setZIndex(state); // 최상단에 위치 하게
-        this.$store.commit("ShopStore/SetShop", null); // 샵 선택 초기화}, //샵 선택시 확대되는 동작
-      }
+      var info = this.shopinfo;
+
+      this.markers.forEach((e) => {
+        e.setMap(null);
+      });
+      this.markers = []; // 전체 마커 없애기
+
+      position = new naver.maps.LatLng(info.latitude, info.longitude);
+      this.SetMarker(info.latitude, info.longitude, "focus", info.name);
 
       this.map.setCenter(position); // 중앙 지정 변경
-      this.map.setZoom(20, true); // 줌
-    },
+      this.map.setZoom(20, false); // 줌
+    }, // Shop info에 데이터가 바뀌면 지도도 바뀐다.
   },
   computed: {
     shops() {
