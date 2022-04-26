@@ -4,10 +4,10 @@ import http from "./http";
 export function getShops(page, sido, sigungu) {
   if (sigungu != 0) {
     return http.get(
-      `/shops?page=${page}&unit=6&sido=${sido}&sigungu=${sigungu}`,
+      `/shops?page=${page}&unit=10&sido=${sido}&sigungu=${sigungu}`,
       {}
     );
-  } else return http.get(`/shops?page=${page}&unit=6&sido=${sido}`, {});
+  } else return http.get(`/shops?page=${page}&unit=10&sido=${sido}`, {});
 }
 
 export function getDistricts() {
@@ -25,12 +25,12 @@ export function getShopImg(id, page) {
 export function searchShops(page, sido, sigungu, query) {
   if (sigungu != 0) {
     return http.get(
-      `/search/shops?page=${page}&unit=6&query=${query}&sido=${sido}&sigungu=${sigungu}`,
+      `/search/shops?page=${page}&unit=10&query=${query}&sido=${sido}&sigungu=${sigungu}`,
       {}
     );
   } else
     return http.get(
-      `/search/shops?page=${page}&unit=6&query=${query}&sido=${sido}`,
+      `/search/shops?page=${page}&unit=10&query=${query}&sido=${sido}`,
       {}
     );
 }

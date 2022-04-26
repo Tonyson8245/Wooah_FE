@@ -55,6 +55,9 @@
 <script>
 export default {
   name: "MainPage",
+  mounted() {
+    this.$store.commit("Setpagecondition", "");
+  }, // 생성 될때 포스트 데이터를 가져오게 한다.
 };
 </script>
 

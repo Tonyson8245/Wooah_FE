@@ -9,6 +9,7 @@ import ShopInfoTab from "./components/ShopPage/ListComponents/ShopInfoComponents
 import ShopPriceTab from "./components/ShopPage/ListComponents/ShopInfoComponents/Tabs/ShopPriceTab";
 import ListPage from "./components/ShopPage/ListComponents/ListPage";
 import ShopInfoPage from "./components/ShopPage/ListComponents/ShopInfoComponents/ShopInfoPage";
+const path = process.env.NODE_ENV === "production" ? "/test/" : "";
 
 const routes = [
   {
@@ -59,35 +60,12 @@ const routes = [
       },
     ],
   },
-  // {
-  //   path: "/shop/:id(\\d+)",
-  //   component: ListPage,
-  //   children: [
-  //     {
-  //       path: "", //shop/0/info
-  //       component: Shop,
-  //     },
-  //     {
-  //       path: "info", //shop/0/info
-  //       component: ShopInfoTab,
-  //     },
-  //     {
-  //       path: "image", //shop/0/image
-  //       component: ShopImgTab,
-  //     },
-  //     {
-  //       path: "price", //shop/0/price
-  //       component: ShopPriceTab,
-  //     },
-  //   ],
-  // },
-
   {
     path: "/:anything(.*)",
     component: ErrorPage,
   },
 ];
 
-const router = createRouter({ history: createWebHistory(), routes });
+const router = createRouter({ history: createWebHistory(path), routes });
 
 export default router;

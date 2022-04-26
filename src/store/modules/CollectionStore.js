@@ -1,5 +1,5 @@
 import * as collectionApi from "@/api/collection";
-
+import "whatwg-fetch";
 const CollectionStore = {
   namespaced: true,
   state: {

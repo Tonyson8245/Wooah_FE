@@ -23,7 +23,8 @@
     "vue-router": "4.0.13",
     "vue3-carousel": "^0.1.38",
     "vue3-promise-dialog": "^0.2.6",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

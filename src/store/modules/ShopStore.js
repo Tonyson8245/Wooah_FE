@@ -1,4 +1,5 @@
 import * as shopApi from "@/api/shops";
+import "whatwg-fetch";
 const ShopStore = {
   namespaced: true,
   state: {

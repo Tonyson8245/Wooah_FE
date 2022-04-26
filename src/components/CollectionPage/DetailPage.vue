@@ -94,13 +94,13 @@ export default {
     },
     dialogState(state) {
       if (!state) {
-        this.$router.push({ path: "/library" });
+        this.$router.push({ path: "./library" });
       }
     },
   },
   methods: {
     ClickMore() {
-      this.$router.push({ path: "/library" });
+      this.$router.push({ path: "./library" });
     },
   },
 };

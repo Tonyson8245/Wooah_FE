@@ -5,7 +5,7 @@
     :style="padding"
   >
     <div class="container-lg">
-      <a class="navbar-brand" href="./">우아</a>
+      <a class="navbar-brand" @click="this.$router.push('/')">우아</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -34,12 +34,20 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link" :class="TapCondition[0]" href="/library"
+              <a
+                class="nav-link"
+                :class="TapCondition[0]"
+                @click="this.$router.push('/library')"
                 >디자인모아보기</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" :class="TapCondition[1]" href="/shop">샵</a>
+              <a
+                class="nav-link"
+                :class="TapCondition[1]"
+                @click="this.$router.push('/shop')"
+                >샵</a
+              >
             </li>
           </ul>
         </div>
@@ -66,6 +74,9 @@ export default {
           break;
         case "shop":
           this.TapCondition = ["", "active"];
+          break;
+        default:
+          this.TapCondition = ["", ""];
           break;
       }
     },
