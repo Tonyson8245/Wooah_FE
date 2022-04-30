@@ -9,7 +9,6 @@ import ShopInfoTab from "./components/ShopPage/ListComponents/ShopInfoComponents
 import ShopPriceTab from "./components/ShopPage/ListComponents/ShopInfoComponents/Tabs/ShopPriceTab";
 import ListPage from "./components/ShopPage/ListComponents/ListPage";
 import ShopInfoPage from "./components/ShopPage/ListComponents/ShopInfoComponents/ShopInfoPage";
-const path = process.env.NODE_ENV === "production" ? "/test/" : "";
 
 const routes = [
   {
@@ -66,6 +65,5 @@ const routes = [
   },
 ];
 
-const router = createRouter({ history: createWebHistory(path), routes });
-
+const router = createRouter({ history: createWebHistory(), routes });
 export default router;
