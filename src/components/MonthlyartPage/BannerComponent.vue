@@ -1,13 +1,13 @@
 <template>
   <div class="banner__container container">
-    <div class="banner__outline row col-11 col-lg-12">
+    <div class="banner__outline row">
       <!-- 이달의 아트메인 -->
       <div style="z-index: 1">
         <div v-if="title == `monthlyart`">
           <div class="icons">
             <p>4월의 네일 디자인</p>
           </div>
-          <div class="text container g-0" style="width: 100%">
+          <div class="text container g-0" style="width: 50%">
             <div class="row g-0">
               <div class="col-lg-6 col-md-12">
                 <p># 원하는 가격대에 따라</p>
