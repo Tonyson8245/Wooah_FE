@@ -140,6 +140,7 @@ export default {
   overflow-y: scroll;
   height: 793px;
   @include mobile-s {
+    height: auto;
     overflow: none;
   }
 }
