@@ -38,7 +38,7 @@
                 class="nav-link"
                 :class="TapCondition[0]"
                 @click="this.$router.push('/library')"
-                >디자인모아보기</a
+                >디자인</a
               >
             </li>
             <li class="nav-item">
@@ -47,6 +47,22 @@
                 :class="TapCondition[1]"
                 @click="this.$router.push('/shop')"
                 >샵</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                :class="TapCondition[2]"
+                @click="this.$router.push('/monthlyart')"
+                >이달의아트</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                :class="TapCondition[3]"
+                @click="this.$router.push('/comparison')"
+                >가격비교</a
               >
             </li>
           </ul>
@@ -70,13 +86,19 @@ export default {
     PageConditions(state) {
       switch (state) {
         case "collection":
-          this.TapCondition = ["active", ""];
+          this.TapCondition = ["active", "", "", ""];
           break;
         case "shop":
-          this.TapCondition = ["", "active"];
+          this.TapCondition = ["", "active", "", ""];
+          break;
+        case "monthlyart":
+          this.TapCondition = ["", "", "active", ""];
+          break;
+        case "comparison":
+          this.TapCondition = ["", "", "", "active"];
           break;
         default:
-          this.TapCondition = ["", ""];
+          this.TapCondition = ["", "", "", "", ""];
           break;
       }
     },

@@ -210,13 +210,13 @@ export default {
     GetClickHandler(shops, seq, router, store) {
       return function () {
         if (shops[seq].is_partner == null || shops[seq].is_partner == true) {
-          router.push("./shop/" + shops[seq].id);
+          router.push("/shop/" + shops[seq].id);
         }
         store.commit("ShopStore/SetShop", seq); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
       };
     },
     MovetoShopDetail(i) {
-      this.$router.push("./shop/" + i);
+      this.$router.push("/shop/" + i);
     },
     ZoomOutDistrict() {
       var sigungu = this.district[1];

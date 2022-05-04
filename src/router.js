@@ -9,6 +9,8 @@ import ShopInfoTab from "./components/ShopPage/ListComponents/ShopInfoComponents
 import ShopPriceTab from "./components/ShopPage/ListComponents/ShopInfoComponents/Tabs/ShopPriceTab";
 import ListPage from "./components/ShopPage/ListComponents/ListPage";
 import ShopInfoPage from "./components/ShopPage/ListComponents/ShopInfoComponents/ShopInfoPage";
+import MonthlyartPage from "./components/MonthlyartPage/MonthlyartPage";
+import ComparisonPage from "./components/ComparisonPage/ComparisonPage";
 
 const routes = [
   {
@@ -18,6 +20,14 @@ const routes = [
   {
     path: "/",
     component: MainPage,
+  },
+  {
+    path: "/comparison",
+    component: ComparisonPage,
+  },
+  {
+    path: "/monthlyart",
+    component: MonthlyartPage,
   },
   {
     path: "/library/p/:id(\\d+)",
