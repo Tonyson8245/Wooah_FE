@@ -3,11 +3,13 @@
     <banner :title="title" />
     <div class="monthlyart__container container">
       <region class="region" :fontSize="fontSize" />
-      <list
-        v-for="(thumbnail, i) in this.thumbnails"
-        :key="i"
-        :thumbnail="thumbnail"
-      />
+      <div v-if="!nothumbnails">
+        <list
+          v-for="(thumbnail, i) in thumbnails"
+          :key="i"
+          :thumbnail="thumbnail"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +41,9 @@ export default {
     thumbnails() {
       return this.$store.state.MonthlyartStore.thumbnails;
     },
+    nothumbnails() {
+      return this.$store.state.MonthlyartStore.nothumbnails;
+    },
   },
   mounted() {
     this.$store.commit("Setpagecondition", "monthlyart");
@@ -59,6 +64,7 @@ export default {
 @import "/src/assets/style.scss";
 .monthlyart__container {
   font-family: "GoyangIlsan";
+  padding-inline: 2%;
 }
 .region {
   text-align: right;

@@ -7,7 +7,7 @@
           <div class="icons">
             <p>4월의 네일 디자인</p>
           </div>
-          <div class="text container g-0" style="width: 50%">
+          <div class="text container g-0" :style="`width:` + textWidth">
             <div class="row g-0">
               <div class="col-lg-6 col-md-12">
                 <p># 원하는 가격대에 따라</p>
@@ -44,6 +44,11 @@ export default {
         return require("../../assets/img/monthlyart_banner.png");
       else return require("../../assets/img/monthlyart_2022_05.png");
     },
+    textWidth() {
+      var width = this.$store.state.CommonStore.width;
+      if (width > 1400) return `40%`;
+      else return `50%`;
+    },
   },
 };
 </script>
@@ -52,8 +57,8 @@ export default {
 @import "../../assets/style.scss";
 
 .banner__container {
-  height: 300px;
-  padding: 1% 0 1% 0;
+  height: 250px;
+  padding: 0.5%;
   @include tablet {
     height: 200px;
     font-size: 70%;
@@ -65,7 +70,7 @@ export default {
 }
 .banner__outline {
   background-color: #949494;
-  border-radius: 8px;
+  border-radius: 5px;
   height: 100%;
   margin: auto;
   position: relative;
