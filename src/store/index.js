@@ -3,6 +3,8 @@ import alertStore from "@/store/modules/alertStore";
 import CollectionStore from "@/store/modules/CollectionStore";
 import error from "@/store/error";
 import ShopStore from "@/store/modules/ShopStore";
+import CommonStore from "@/store/modules/CommonStore";
+import MonthlyartStore from "./modules/MonthlyartStore";
 
 const store = createStore({
   state() {
@@ -20,6 +22,8 @@ const store = createStore({
     collectionStore: CollectionStore,
     error,
     ShopStore,
+    CommonStore,
+    MonthlyartStore,
   },
 });
 

@@ -1,7 +1,7 @@
 <template>
   <TopHeader />
   <body>
-    <div class="web--content" :style="padding">
+    <div class="web--content">
       <router-view />
     </div>
   </body>
@@ -20,8 +20,24 @@ export default {
   },
   data() {
     return {
-      padding: ``,
+      width: ``,
+      height: ``,
     };
+  },
+  mounted() {
+    this.$store.dispatch("CommonStore/getDistricts");
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
+      this.$store.commit("CommonStore/SetSize", [this.width, this.height]);
+    },
   },
 };
 </script>
