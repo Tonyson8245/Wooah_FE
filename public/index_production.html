@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <!-- META TAG -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="wooah" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="robots" content="ALL" />
+
+    <meta
+      name="keywords"
+      content="네일,네일아트,네일 아트,네일샵,네일 샵,네일디자인,손톱,발톱,미용"
+    />
+    <meta
+      id="meta-description"
+      name="description"
+      content="네일아트 가격비교, 디자인 선택, 샵 위치 정보까지! 네일아트 올인원 플랫폼, 우아!"
+    />
+
+    <meta property="og:title" content="우아 - 다양한 네일 정보을 한눈에" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="http://placeimg.com/640/480/animals" />
+    <meta
+      property="og:description"
+      content="네일아트 가격비교, 디자인 선택, 샵 위치 정보까지! 네일아트 올인원 플랫폼, 우아!"
+    />
+    <!-- 변경필요 -->
+    <meta
+      property="og:site_name"
+      content="Wooah - 다양한 네일 디자인과 시술을 한눈에"
+    />
+    <!-- META TAG -->
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta
+      name="naver-site-verification"
+      content="27b1aa977a01686bf786c2683d187f7ce8cb5256"
+    />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <script
+      type="text/javascript"
+      src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ggfrhn6ovz"
+    ></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    />
+
+    <title>우아 - 다양한 네일 정보을 한눈에</title>
+  </head>
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
+    </noscript>
+    <!-- <div id="app"></div> -->
+    <!-- built files will be auto injected -->
+
+    <!-- 서비스 준비중 -->
+    <button class="button">서비스 준비중입니다.</button>
+    <dialog>
+      <div class="dialog__inner">
+        <button class="button button-close close">╳</button>
+        <div class="dialog__content">
+          <h3 style="text-align: center">우아 - 우리들의 아름다움</h3>
+          <p>네일아트 가격비교, 디자인 선택, 샵 위치 정보까지!</p>
+          <p style="text-align: center">네일아트 올인원 플랫폼, 우아!</p>
+          <h6 style="text-align: center">5월 중 출시 예정</h6>
+        </div>
+      </div>
+    </dialog>
+    <!-- 서비스 준비중 -->
+  </body>
+</html>
+<style scoped>
+  body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Nunito", sans-serif;
+  }
+
+  .button {
+    border: none;
+    background-color: #afb8c9;
+    padding: 17px 55px 17px 55px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-family: "Nunito", sans-serif;
+    color: #fff;
+    box-shadow: 0 10px 25px #3c4a5645;
+    outline: none;
+    cursor: pointer;
+  }
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  p {
+    font-size: 16px;
+  }
+
+  .button-close {
+    padding: 10px;
+    align-self: flex-end;
+    background-color: transparent;
+    box-shadow: none;
+    color: #838282;
+  }
+
+  dialog {
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    animation: appear 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+    box-shadow: 0 25px 40px -20px #3c4a56;
+  }
+
+  .dialog__animate-out {
+    animation: dissappear 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  }
+  .dialog__inner {
+    display: flex;
+    flex-direction: column;
+    color: #838282;
+  }
+  .dialog__close-btn {
+    align-self: flex-end;
+  }
+  .dialog__content {
+    padding: 0 55px 55px 55px;
+  }
+  .dialog__footer {
+    padding: 55px 55px 0 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes dissappear {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+</style>
+<script>
+  const modal = document.querySelector("dialog");
+  const btn = document.querySelector("button");
+  const btnClose = document.querySelectorAll(".close");
+
+  btn.addEventListener("click", () => openModal());
+  btnClose.forEach((elm) => elm.addEventListener("click", () => closeModal()));
+  modal.addEventListener("click", (e) => detectBackdropClick(e));
+
+  openModal = () => {
+    modal.showModal();
+  };
+
+  closeModal = () => {
+    modal.classList.add("dialog__animate-out");
+    modal.addEventListener("animationend", handleClose, false);
+  };
+
+  handleClose = () => {
+    modal.classList.remove("dialog__animate-out");
+    modal.removeEventListener("animationend", handleClose, false);
+    modal.close();
+  };
+
+  detectBackdropClick = (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  };
+</script>
