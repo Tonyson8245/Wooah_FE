@@ -60,142 +60,18 @@
         continue.</strong
       >
     </noscript>
-    <!-- <div id="app"></div> -->
+    <div id="app"></div>
     <!-- built files will be auto injected -->
-
-    <!-- 서비스 준비중 -->
-    <button class="button">서비스 준비중입니다.</button>
-    <dialog>
-      <div class="dialog__inner">
-        <button class="button button-close close">╳</button>
-        <div class="dialog__content">
-          <h3 style="text-align: center">우아 - 우리들의 아름다움</h3>
-          <p>네일아트 가격비교, 디자인 선택, 샵 위치 정보까지!</p>
-          <p style="text-align: center">네일아트 올인원 플랫폼, 우아!</p>
-          <h6 style="text-align: center">5월 중 출시 예정</h6>
-        </div>
-      </div>
-    </dialog>
-    <!-- 서비스 준비중 -->
+  </body>
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
   </body>
 </html>
-<style scoped>
-  body {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Nunito", sans-serif;
-  }
-
-  .button {
-    border: none;
-    background-color: #afb8c9;
-    padding: 17px 55px 17px 55px;
-    border-radius: 30px;
-    font-size: 15px;
-    font-family: "Nunito", sans-serif;
-    color: #fff;
-    box-shadow: 0 10px 25px #3c4a5645;
-    outline: none;
-    cursor: pointer;
-  }
-
-  h3 {
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
-  p {
-    font-size: 16px;
-  }
-
-  .button-close {
-    padding: 10px;
-    align-self: flex-end;
-    background-color: transparent;
-    box-shadow: none;
-    color: #838282;
-  }
-
-  dialog {
-    padding: 0;
-    border: none;
-    border-radius: 6px;
-    animation: appear 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-    box-shadow: 0 25px 40px -20px #3c4a56;
-  }
-
-  .dialog__animate-out {
-    animation: dissappear 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-  }
-  .dialog__inner {
-    display: flex;
-    flex-direction: column;
-    color: #838282;
-  }
-  .dialog__close-btn {
-    align-self: flex-end;
-  }
-  .dialog__content {
-    padding: 0 55px 55px 55px;
-  }
-  .dialog__footer {
-    padding: 55px 55px 0 55px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  @keyframes appear {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes dissappear {
-    from {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-  }
-</style>
-<script>
-  const modal = document.querySelector("dialog");
-  const btn = document.querySelector("button");
-  const btnClose = document.querySelectorAll(".close");
-
-  btn.addEventListener("click", () => openModal());
-  btnClose.forEach((elm) => elm.addEventListener("click", () => closeModal()));
-  modal.addEventListener("click", (e) => detectBackdropClick(e));
-
-  openModal = () => {
-    modal.showModal();
-  };
-
-  closeModal = () => {
-    modal.classList.add("dialog__animate-out");
-    modal.addEventListener("animationend", handleClose, false);
-  };
-
-  handleClose = () => {
-    modal.classList.remove("dialog__animate-out");
-    modal.removeEventListener("animationend", handleClose, false);
-    modal.close();
-  };
-
-  detectBackdropClick = (event) => {
-    if (event.target === modal) {
-      closeModal();
-    }
-  };
-</script>
