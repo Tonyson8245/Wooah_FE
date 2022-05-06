@@ -9,6 +9,7 @@ const CommonStore = {
     districtData: [],
     sido: 1,
     sigungu: 0,
+    newDistrictSet: ``,
   },
   mutations: {
     SetSize(state, payload) {

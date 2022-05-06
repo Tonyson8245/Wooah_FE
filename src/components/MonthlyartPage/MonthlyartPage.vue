@@ -3,7 +3,7 @@
     <banner :title="title" />
     <div class="monthlyart__container container">
       <region class="region" :fontSize="fontSize" />
-      <div v-if="!nothumbnails">
+      <div v-if="!nothumbnails" :key="componentKey">
         <list
           v-for="(thumbnail, i) in thumbnails"
           :key="i"
@@ -24,6 +24,8 @@ export default {
   data() {
     return {
       fontSize: `btn-lg`,
+      districtCheck: ``,
+      componentKey: 0,
     };
   },
   computed: {
@@ -43,6 +45,24 @@ export default {
     },
     nothumbnails() {
       return this.$store.state.MonthlyartStore.nothumbnails;
+    },
+    newDistrictSet() {
+      return this.$store.state.CommonStore.newDistrictSet;
+    },
+  },
+  watch: {
+    newDistrictSet(a) {
+      if (a != this.districtCheck) {
+        console.log(a + " " + this.districtCheck);
+        this.$store.dispatch("MonthlyartStore/getThumbnails", [
+          this.sido,
+          this.sigungu,
+        ]);
+        this.districtCheck = a;
+      }
+    },
+    thumbnails() {
+      this.componentKey += 1;
     },
   },
   mounted() {

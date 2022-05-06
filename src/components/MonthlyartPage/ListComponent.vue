@@ -2,7 +2,11 @@
   <div class="outline">
     <div class="header d-flex justify-content-between">
       <span class="header__price_range">{{ thumbnail.price_range }}</span>
-      <div class="more" v-if="width > 400">
+      <div
+        class="more"
+        v-if="width > 400"
+        @click="clickMore(thumbnail.price_range)"
+      >
         <span class="me-1">더보기</span><i class="bi bi-chevron-right"></i>
       </div>
     </div>
@@ -15,7 +19,9 @@
     </div>
     <div v-if="!(width > 576)" class="footer">
       <div class="more_btn btn">
-        <div style="display: block">더보기 <i class="bi bi-plus"></i></div>
+        <div style="display: block" @click="clickMore(thumbnail.price_range)">
+          더보기 <i class="bi bi-plus"></i>
+        </div>
       </div>
     </div>
   </div>
@@ -29,6 +35,26 @@ export default {
     return {
       arts: this.thumbnail.arts,
     };
+  },
+  methods: {
+    clickMore(data) {
+      var detailpath;
+      switch (data) {
+        case "1만 원대":
+          detailpath = `10000`;
+          break;
+        case "2만 원대":
+          detailpath = `20000`;
+          break;
+        case "3만 원대":
+          detailpath = `30000`;
+          break;
+        case "4만 원대":
+          detailpath = `40000`;
+          break;
+      }
+      this.$router.push({ path: "/monthlyart/" + detailpath });
+    }, // 더보기
   },
   props: {
     thumbnail: Object,
@@ -46,12 +72,12 @@ export default {
 <style lang="scss" scoped>
 @import "/src/assets/style.scss";
 .outline {
+  margin-bottom: 5%;
 }
 .header {
   width: 100%;
   height: auto;
   padding-inline: 1%;
-  padding-bottom: 1%;
 }
 .header i {
   font-size: 1.3em;

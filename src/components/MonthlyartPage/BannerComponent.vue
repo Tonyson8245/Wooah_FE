@@ -57,8 +57,8 @@ export default {
 @import "../../assets/style.scss";
 
 .banner__container {
-  height: 250px;
-  padding: 0.5%;
+  height: 300px;
+  padding: 0.5% 2% 0.5% 2%;
   @include tablet {
     height: 200px;
     font-size: 70%;

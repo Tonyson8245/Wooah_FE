@@ -1,15 +1,15 @@
 <template>
-  <div class="outline" style="overflow: hidden">
+  <div class="outline" style="overflow: hidden" @mouseleave="show = false">
     <square
+      @click="clickImage(art.id)"
       :url="art.url"
       style="width: 100%"
       @mouseover="show = true"
-      @mouseout="show = false"
     />
     <transition name="slide-fade">
       <div class="detail" style="display: flex" v-if="show">
         <div style="margin: auto; width: 90%">
-          <p class="title">
+          <p class="title" @click="clickShop(shop.id)">
             {{ shop.name }} <i class="bi bi-chevron-right"></i>
           </p>
           <div class="info">
@@ -39,6 +39,14 @@ export default {
   components: {
     Square,
   },
+  methods: {
+    clickImage(id) {
+      this.$router.push("/library/p/" + id);
+    },
+    clickShop(id) {
+      this.$router.push("/shop/" + id);
+    },
+  },
   computed: {
     width() {
       return this.$store.state.CommonStore.width;
@@ -67,7 +75,6 @@ export default {
 }
 //
 .outline {
-  height: 100%;
   position: relative;
   @include mobile-s {
     font-size: 70%;
