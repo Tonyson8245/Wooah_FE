@@ -6,8 +6,26 @@
       style="width: 100%"
       @mouseover="show = true"
     />
-    <transition name="slide-fade">
-      <div class="detail" style="display: flex" v-if="show">
+    <div v-if="toggle" class="toggleOn">
+      <transition name="slide-fade">
+        <div class="detail" style="display: flex" v-if="show">
+          <div style="margin: auto; width: 90%">
+            <p class="title" @click="clickShop(shop.id)">
+              {{ shop.name }} <i class="bi bi-chevron-right"></i>
+            </p>
+            <div class="info">
+              <span
+                ><i class="bi bi-telephone-fill"></i>{{ shop.contact }}</span
+              >
+              <br v-if="width < 1200" />
+              <span><i class="bi bi-geo-alt-fill"></i>{{ shop.address }}</span>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+    <div v-if="!toggle" class="toggleOff">
+      <div class="detail" style="display: flex">
         <div style="margin: auto; width: 90%">
           <p class="title" @click="clickShop(shop.id)">
             {{ shop.name }} <i class="bi bi-chevron-right"></i>
@@ -19,7 +37,7 @@
           </div>
         </div>
       </div>
-    </transition>
+    </div>
   </div>
 </template>
 
@@ -35,6 +53,7 @@ export default {
   },
   props: {
     art: Object,
+    toggle: Boolean,
   },
   components: {
     Square,
@@ -84,7 +103,16 @@ export default {
   position: relative;
   z-index: 0;
 }
-.detail {
+.toggleOff .detail {
+  width: 100%;
+  z-index: 1;
+  background: #e4e4e4;
+  opacity: 0.8;
+  height: auto;
+  padding: 6% 0 6% 0;
+}
+
+.toggleOn .detail {
   position: absolute;
   bottom: 0%;
   width: 100%;

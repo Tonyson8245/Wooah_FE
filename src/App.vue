@@ -48,7 +48,6 @@ export default {
 .web--content {
   background: #fafafa;
   min-height: 750px;
-
   @include tablet {
   }
   @include mobile-s {

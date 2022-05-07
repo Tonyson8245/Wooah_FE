@@ -1,6 +1,6 @@
 <template>
   <div class="outline">
-    <div class="header d-flex justify-content-between">
+    <div class="header d-flex justify-content-between align-items-center">
       <span class="header__price_range">{{ thumbnail.price_range }}</span>
       <div
         class="more"
@@ -12,8 +12,12 @@
     </div>
     <div class="body container">
       <div class="row">
-        <div v-for="art in arts" :key="art" class="col-lg-3 col-sm-6 col-6 p-1">
-          <ThumbnailComponent :art="art" />
+        <div
+          v-for="art in arts"
+          :key="art"
+          class="col-lg-3 col-md-3 col-sm-3 col-6 p-1"
+        >
+          <ThumbnailComponent :art="art" :toggle="true" />
         </div>
       </div>
     </div>
@@ -73,19 +77,26 @@ export default {
 @import "/src/assets/style.scss";
 .outline {
   margin-bottom: 5%;
+  @include tablet {
+    font-size: 80%;
+  }
+  @include mobile-s {
+    font-size: 60%;
+  }
 }
 .header {
   width: 100%;
   height: auto;
-  padding-inline: 1%;
+  padding-inline: 0.5%;
+  padding-bottom: 0.5%;
 }
 .header i {
-  font-size: 1.3em;
+  font-size: 1.1em;
   font-weight: bold;
 }
 .header .header__price_range {
   font-weight: bold;
-  font-size: 1.4em;
+  font-size: 1.2em;
 }
 .more {
   display: flex;
@@ -100,6 +111,10 @@ export default {
   border: #e4e4e4 solid 1px;
   border-radius: 5px;
   background: #f4f4f4;
+
+  @include mobile-s {
+    font-size: 60%;
+  }
 }
 .footer {
   width: 100%;

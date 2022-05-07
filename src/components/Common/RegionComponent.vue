@@ -68,11 +68,7 @@ export default {
   },
   methods: {
     changeDistrict(sido, sigungu) {
-      this.$store.commit("CommonStore/SetDistrict", [
-        sido,
-        sigungu,
-        Math.random(),
-      ]);
+      this.$store.commit("CommonStore/SetDistrict", [sido, sigungu]);
     },
   },
 };
