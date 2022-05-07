@@ -135,15 +135,15 @@ const ShopStore = {
           console.log(error);
         });
     },
-
     async getShopImage(context, id) {
-      context.commit("IncreaseImagePage");
       context.state.completeFetch = false; // 무한 페이지 로드를 막기위한 플래그
       await shopApi
         .getShopImg(id, context.state.currentimagepage) // id와 페이지
         .then((response) => {
           if (response.status == 200) {
             context.commit("FetchShopImage", response.data);
+
+            context.commit("IncreaseImagePage");
           }
         })
         .catch(function (error) {
