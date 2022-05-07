@@ -4,7 +4,7 @@ import CollectionStore from "@/store/modules/CollectionStore";
 import error from "@/store/error";
 import ShopStore from "@/store/modules/ShopStore";
 import CommonStore from "@/store/modules/CommonStore";
-import MonthlyartStore from "./modules/MonthlyartStore";
+import MonthlyartStore from "@/store/modules/MonthlyartStore";
 
 const store = createStore({
   state() {
