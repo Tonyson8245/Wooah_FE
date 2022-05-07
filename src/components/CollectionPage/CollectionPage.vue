@@ -461,7 +461,7 @@ export default {
       let color_qeury = "&color=";
       let shape_qeury = "&shape=";
       let option_qeury = "&option=";
-      let handfoot_qeury = "&type=";
+      let handfoot_qeury = "&body_part=";
       let monthly_art_qeury = "";
 
       for (let i in filterdata.color) {

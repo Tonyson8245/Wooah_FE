@@ -8,7 +8,7 @@
             <p>4월의 네일 디자인</p>
           </div>
           <div class="text container g-0" :style="`width:` + textWidth">
-            <div class="row g-0">
+            <div class="row g-0" style="font-size: 70%">
               <div class="col-lg-6 col-md-12">
                 <p># 원하는 가격대에 따라</p>
               </div>
@@ -19,7 +19,7 @@
           </div>
         </div>
         <div v-if="title != `monthlyart`">
-          <div class="text">
+          <div class="text" style="margin-left: 1%">
             <p>{{ title }}</p>
           </div>
         </div>
@@ -57,14 +57,15 @@ export default {
 @import "../../assets/style.scss";
 
 .banner__container {
-  height: 300px;
-  padding: 0.5% 2% 0.5% 2%;
+  height: 230px;
+  margin-top: 1%;
+  margin-bottom: 1%;
   @include tablet {
-    height: 200px;
+    height: 180px;
     font-size: 70%;
   }
   @include mobile-s {
-    height: 150px;
+    height: 130px;
     font-size: 50%;
   }
 }
@@ -74,7 +75,7 @@ export default {
   height: 100%;
   margin: auto;
   position: relative;
-  min-width: 300px;
+  min-width: 250px;
 }
 .side__img {
   z-index: 0;
@@ -98,7 +99,7 @@ export default {
 }
 .banner__outline .text {
   position: absolute;
-  bottom: 10%;
+  bottom: 15%;
   left: 2.5%;
 }
 .banner__outline .icons {
@@ -106,7 +107,7 @@ export default {
   top: 20%;
   left: 3%;
   display: flex;
-  font-size: 2.5em;
+  font-size: 2em;
   width: 100%;
   color: white;
   font-family: "GoyangIlsan";

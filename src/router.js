@@ -11,6 +11,8 @@ import ListPage from "./components/ShopPage/ListComponents/ListPage";
 import ShopInfoPage from "./components/ShopPage/ListComponents/ShopInfoComponents/ShopInfoPage";
 import MonthlyartPage from "./components/MonthlyartPage/MonthlyartPage";
 import ComparisonPage from "./components/ComparisonPage/ComparisonPage";
+import MonthlyartMain from "./components/MonthlyartPage/container/MonthlyartMain";
+import MonthlyartDetail from "./components/MonthlyartPage/container/MonthlyartDetail";
 
 const routes = [
   {
@@ -28,6 +30,16 @@ const routes = [
   {
     path: "/monthlyart",
     component: MonthlyartPage,
+    children: [
+      {
+        path: "",
+        component: MonthlyartMain,
+      },
+      {
+        path: ":price(\\d+)",
+        component: MonthlyartDetail,
+      },
+    ],
   },
   {
     path: "/library/p/:id(\\d+)",
@@ -75,5 +87,12 @@ const routes = [
   },
 ];
 
-const router = createRouter({ history: createWebHistory(), routes });
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+  scrollBehavior() {
+    // always scroll to top
+    return { top: 0, behavior: "instant" };
+  },
+});
 export default router;

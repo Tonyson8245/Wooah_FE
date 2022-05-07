@@ -9,7 +9,8 @@ const CommonStore = {
     districtData: [],
     sido: 1,
     sigungu: 0,
-    newDistrictSet: ``,
+    // newDistrictSet: ``,
+    updateDistrict: false,
   },
   mutations: {
     SetSize(state, payload) {
@@ -26,7 +27,10 @@ const CommonStore = {
       if (payload[1] != 0) state.sigungu = payload[1].id;
       else state.sigungu = 0;
 
-      state.newDistrictSet = payload[2]; // 갱신 확인법
+      state.updateDistrict = true;
+    },
+    setUpdateDistrict(state, payload) {
+      state.updateDistrict = payload;
     },
   },
   actions: {
