@@ -35,7 +35,6 @@ export default {
   data() {
     return {
       loadStatus: true, // 데이터의 변화가 생겼으면 true, 그전까지는 false 유지
-      window: this.window,
     };
   },
   mounted() {

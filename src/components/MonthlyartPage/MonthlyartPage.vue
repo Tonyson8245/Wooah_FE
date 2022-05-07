@@ -29,23 +29,6 @@ export default {
     };
   },
 
-  mounted() {
-    this.$store.commit("Setpagecondition", "monthlyart");
-    this.reset();
-    this.getThumbnails();
-  },
-  methods: {
-    getThumbnails() {
-      this.$store.dispatch("MonthlyartStore/getThumbnails", {
-        sido: this.sido,
-        sigungu: this.sigungu,
-      });
-    },
-    click() {},
-    reset() {
-      this.$store.commit("MonthlyartStore/resetThumbnail");
-    },
-  },
   computed: {
     title() {
       var title;
@@ -74,25 +57,8 @@ export default {
       } //  가격에 따라 배너 타이틀 변경
       return title;
     },
-    sido() {
-      return this.$store.state.CommonStore.sido;
-    },
-    sigungu() {
-      return this.$store.state.CommonStore.sigungu;
-    },
-    updateDistrict() {
-      return this.$store.state.CommonStore.updateDistrict;
-    },
   },
-  watch: {
-    updateDistrict(a) {
-      if (a) {
-        this.reset();
-        this.getThumbnails();
-        this.$store.commit("CommonStore/setUpdateDistrict", false);
-      }
-    },
-  },
+
   components: {
     banner,
     region,
