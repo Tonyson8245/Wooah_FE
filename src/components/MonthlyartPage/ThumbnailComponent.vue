@@ -32,7 +32,7 @@
           </p>
           <div class="info">
             <span><i class="bi bi-telephone-fill"></i>{{ shop.contact }}</span>
-            <br v-if="width < 1200" />
+            <br />
             <span><i class="bi bi-geo-alt-fill"></i>{{ shop.address }}</span>
           </div>
         </div>
@@ -108,7 +108,6 @@ export default {
   z-index: 1;
   background: #e4e4e4;
   opacity: 0.8;
-  height: auto;
   padding: 6% 0 6% 0;
 }
 
