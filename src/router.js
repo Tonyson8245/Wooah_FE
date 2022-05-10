@@ -28,6 +28,10 @@ const routes = [
     component: ComparisonPage,
   },
   {
+    path: "/comparison/:type",
+    component: ComparisonPage,
+  },
+  {
     path: "/monthlyart",
     component: MonthlyartPage,
     children: [

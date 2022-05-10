@@ -3,7 +3,7 @@
     <button
       class="btn dropdown-toggle"
       type="button"
-      :style="css"
+      :style="css + font"
       id="dropdownMenuButton1"
       data-bs-toggle="dropdown"
       aria-expanded="false"
@@ -35,6 +35,9 @@ export default {
     return {
       css: "outline: none !important; box-shadow: none;",
     };
+  },
+  props: {
+    font: String,
   },
   mounted() {},
   computed: {
