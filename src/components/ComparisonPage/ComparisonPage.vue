@@ -45,7 +45,7 @@
                 </div>
               </div>
             </div>
-            <div class="result__body mb-1">
+            <div class="result__body mb-1" v-if="result.length > 0">
               <ShopItem
                 v-for="(shop, i) in shops"
                 :key="i"
@@ -54,6 +54,7 @@
                 :shop="shop"
               />
             </div>
+            <div v-else class="p-5">조건에 맞는 샵이 없습니다.</div>
           </div>
         </div>
       </div>
@@ -121,7 +122,7 @@ export default {
       else return css;
     },
     result() {
-      return this.$store.state.ComparisonStore.result[0];
+      return this.$store.state.ComparisonStore.result;
     },
     menu() {
       return this.$store.state.ComparisonStore.result[0].estimate;

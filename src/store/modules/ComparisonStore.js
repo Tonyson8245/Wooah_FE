@@ -71,7 +71,9 @@ const ComparisonStore = {
         .then(function (response) {
           context.commit("setResult", response.data);
         })
-        .catch(function () {});
+        .catch(function () {
+          context.commit("setResult", []);
+        });
     },
   },
 };

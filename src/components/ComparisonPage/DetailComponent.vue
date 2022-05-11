@@ -7,7 +7,10 @@
       <div class="col-md-6 col-12 arrow">
         <div :class="arrowboxCSS" class="message">
           <div class="message__header">
-            <div class="stepNum">STEP {{ step }}</div>
+            <div class="stepNum">
+              STEP {{ step }}
+              <span v-if="substep != 1">- {{ substep - 1 }}</span>
+            </div>
             <div class="title">{{ substep_info.name }}</div>
             <div class="content">{{ substep_info.description }}</div>
             <div class="line"></div>
@@ -216,9 +219,11 @@ export default {
       if (this.type == "hand") return this.questions.hand[this.step - 1];
       else return this.questions.foot[this.step - 1];
     },
+    substep() {
+      return this.$store.state.ComparisonStore.substep;
+    },
     substep_info() {
-      var ss = this.$store.state.ComparisonStore.substep;
-      return this.step_info.substep[ss - 1];
+      return this.step_info.substep[this.substep - 1];
     },
     sido() {
       return this.$store.state.CommonStore.sido;
