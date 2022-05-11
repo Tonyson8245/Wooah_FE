@@ -4,37 +4,68 @@
       <div class="col-md-6 col-12">
         <div class="square"><img :src="imgUrl" alt="" class="inner" /></div>
       </div>
-
       <div class="col-md-6 col-12 arrow">
         <div :class="arrowboxCSS" class="message">
           <div class="message__header">
-            <div class="stepNum">STEP {{ focusNum }}</div>
-            <div class="title">{{ info.name }}</div>
-            <div class="content">{{ info.description }}</div>
+            <div class="stepNum">STEP {{ step }}</div>
+            <div class="title">{{ substep_info.name }}</div>
+            <div class="content">{{ substep_info.description }}</div>
             <div class="line"></div>
           </div>
-          <div v-if="info.answer.length % 2 == 1" class="row p-2">
-            <div v-for="answer in info.answer" :key="answer" class="col-4 g-1">
-              <div class="btn btn-secondary" @click="clickButton(answer)">
-                {{ answer }}
+
+          <div class="buttons" v-if="!substep_info.input">
+            <!-- input 아닌거 -->
+            <div
+              v-if="substep_info.answer.length % 2 == 1"
+              class="row buttons_inner"
+            >
+              <!-- 세줄짜리 -->
+              <div
+                v-for="answer in substep_info.answer"
+                :key="answer"
+                class="col-4 g-2"
+              >
+                <div class="btn btn-secondary" @click="clickbutton(answer)">
+                  {{ answer }}
+                </div>
               </div>
             </div>
-            <div v-if="info.skip" class="g-1">
-              <div class="btn btn-skip" @click="clickButton(`건너뛰기`)">
-                건너뛰기
+            <div v-else class="row buttons_inner" style="width: 100%">
+              <!-- 두줄짜리 -->
+              <div
+                v-for="answer in substep_info.answer"
+                :key="answer"
+                class="col-6 g-2"
+              >
+                <div class="btn btn-secondary" @click="clickbutton(answer)">
+                  {{ answer }}
+                </div>
               </div>
             </div>
           </div>
-          <div v-else class="row p-2">
-            <div v-for="answer in info.answer" :key="answer" class="col-6 g-1">
-              <div class="btn btn-secondary" @click="clickButton(answer)">
-                {{ answer }}
-              </div>
+          <div class="buttons" v-else>
+            <div
+              class="buttons_inner d-flex align-items-center justify-content-center"
+            >
+              <input
+                :class="{ 'apply-shake': shake }"
+                type="text"
+                class="form-control m-5 me-1 ms-0"
+                style="width: 20%"
+                ref="submit"
+                placeholder="0"
+                @input="value = $event.target.value"
+              />개
             </div>
-            <div v-if="info.skip" class="g-1">
-              <div class="btn btn-skip" @click="clickButton(`건너뛰기`)">
+          </div>
+          <div class="bottom" v-if="substep_info.skip || substep_info.input">
+            <div v-if="substep_info.skip">
+              <div class="btn btn-skip" @click="clickbutton('건너뛰기')">
                 건너뛰기
               </div>
+            </div>
+            <div v-if="substep_info.input">
+              <div class="btn btn-skip" @click="clickbutton('확인')">확인</div>
             </div>
           </div>
         </div>
@@ -44,50 +75,132 @@
 </template>
 
 <script>
-import data from "@/assets/dummy/question.js";
+import questions from "@/assets/dummy/question.js";
 export default {
   name: `DetailComponent`,
   data() {
     return {
       image: [`step1.png`, `step2.png`, `step3.png`, `step4.png`, `step5.png`],
-      data: data,
-      status: "시술선택",
-      result: "",
+      questions: questions,
+      name: "",
+      option: "",
+      value: "",
+      shake: false,
     };
   },
+  mounted() {
+    window.addEventListener("animationend", () => {
+      this.shake = false;
+    });
+  },
   methods: {
-    clickButton(answer) {
-      console.log(answer);
+    shakeAnimation() {
+      this.shake = true;
+    },
+    clickbutton(answer) {
       switch (answer) {
-        case `건너뛰기`:
-          this.$store.commit("ComparisonStore/increaseNum");
-          this.skip();
-      }
-    },
-    skip() {
-      switch (this.focusNum) {
-        case 1:
-          this.status = "젤제거";
+        case "건너뛰기":
+          this.increseStep();
           break;
-        case 2:
-          this.status = "손톱연장";
+        case "케어만":
+        case "영양만":
+        case "케어+영양":
+        case "남자케어":
+          this.increseStep();
+          this.name += answer;
           break;
-        case 3:
-          if (this.type == "foot") this.state = "발톱교정";
+        case "젤 기본":
+        case "그라데이션":
+        case "프렌치":
+          this.increseSubStep();
+          this.name += answer;
           break;
-        case 4:
-          if (this.type == "foot") this.state = "각질관리";
-          break;
-      }
-    },
-  }, // 버튼 눌러서 발생하는 이벤트들을 저장
 
+        case "케어포함":
+        case "케어+영양포함":
+          this.increseSubStep();
+          this.inertOption(answer);
+          break;
+        case "원컬러":
+        case "투컬러":
+          this.increseStep();
+          this.inertOption(answer);
+          break;
+        case "네, 젤이 있어요":
+          this.increseSubStep();
+          break;
+        case "자샵":
+        case "타샵":
+          this.increseStep();
+
+          this.name += "젤제거";
+          this.inertOption(answer);
+          break;
+        case "아니요, 없어요.":
+          this.increseStep();
+          break;
+        case "네, 연장 할 거에요":
+          this.increseSubStep();
+          this.name += `연장`;
+          break;
+        case "아니요, 연장 안할거에요.":
+          this.increseStep();
+          break;
+        case "확인":
+          if (this.value > 0 && this.value <= 10) {
+            this.increseStep();
+            this.option = "개당";
+          } else {
+            this.shakeAnimation();
+          }
+          break;
+
+        case "네, 교정 할거에요.":
+          this.increseStep();
+          this.name += `내성발톱교정`;
+          break;
+        case "네, 각질관리 할거에요.":
+          this.increseStep();
+          this.name += `각질관리`;
+          break;
+        case "아니요, 안할거에요.":
+          this.increseStep();
+          break;
+      }
+    }, // 버튼 눌러서 발생하는 이벤트
+    increseStep() {
+      this.$store.commit("ComparisonStore/increseStep");
+    }, // 단계 넘어가기
+    increseSubStep() {
+      this.$store.commit("ComparisonStore/increseSubStep");
+    }, // 서브 스텝으로가기
+    inertOption(answer) {
+      if (this.option.length > 0) this.option += " " + answer;
+      else this.option = answer;
+    }, //옵션에 값있을때 띄어쓰기
+    findid(keyword, option) {
+      var id;
+      if (option == "")
+        id = this.procedure_table.findIndex((x) => x.name === keyword);
+      else
+        id = this.procedure_table.findIndex(
+          (x) => x.name === keyword && x.option === option
+        );
+      if (id != -1) return this.procedure_table[id].id;
+      else return -1;
+    },
+  },
   computed: {
-    focusNum() {
-      return this.$store.state.ComparisonStore.focusNum;
+    procedure_table() {
+      if (this.type == "hand")
+        return this.$store.state.ComparisonStore.procedure_table.hand;
+      else return this.$store.state.ComparisonStore.procedure_table.foot;
+    },
+    step() {
+      return this.$store.state.ComparisonStore.step;
     },
     imgUrl() {
-      return require("../../assets/img/" + this.image[this.focusNum - 1]);
+      return require("../../assets/img/" + this.image[this.step - 1]);
     },
     width() {
       return this.$store.state.CommonStore.width;
@@ -98,14 +211,52 @@ export default {
     },
     type() {
       return this.$store.state.ComparisonStore.type;
-    }, // 현재 손발 종류
-    total_questions() {
-      if (this.type == "hand") return data.hand;
-      else return data.foot;
     },
-    info() {
-      return this.total_questions[this.status];
+    step_info() {
+      if (this.type == "hand") return this.questions.hand[this.step - 1];
+      else return this.questions.foot[this.step - 1];
     },
+    substep_info() {
+      var ss = this.$store.state.ComparisonStore.substep;
+      return this.step_info.substep[ss - 1];
+    },
+    sido() {
+      return this.$store.state.CommonStore.sido;
+    },
+    sigungu() {
+      return this.$store.state.CommonStore.sigungu;
+    },
+    totalStep() {
+      return this.$store.state.ComparisonStore.totalStep;
+    },
+  },
+  watch: {
+    step(a) {
+      var id = "";
+
+      if (this.option.length > 0) this.option = "(" + this.option + ")";
+
+      id = this.findid(this.name, this.option);
+      if (id != -1) {
+        if (id == 19 || id == 38) id += "e" + this.value;
+
+        this.$store.commit("ComparisonStore/setQuery", {
+          index: a - 2,
+          value: id,
+        });
+      }
+      this.option = "";
+      this.name = "";
+
+      // 만약 전체 갯수를 넘으면 쿼리 실행
+      if (this.totalStep < this.step) {
+        this.$store.dispatch("ComparisonStore/fetchPriceList", {
+          qeury: this.query,
+          sido: this.sido,
+          sigungu: this.sigungu,
+        });
+      }
+    }, // 스텝 변화할때 마다 최종 쿼리를 변경해준다.
   },
 };
 </script>
@@ -117,8 +268,14 @@ export default {
 }
 .arrow {
   padding: 4%;
-  @include tablet {
+  @include desktop {
     padding: 0;
+    font-size: 80%;
+  }
+}
+input {
+  @include tablet {
+    font-size: 80%;
   }
 }
 img {
@@ -213,9 +370,11 @@ img {
 }
 .message {
   padding: 5%;
+  height: 100%;
 }
 .message__header {
   text-align: left;
+  height: auto;
 }
 .stepNum {
   color: #9900ff;
@@ -238,12 +397,52 @@ img {
 .btn {
   background: #ba9aff;
   width: 100%;
-  font-size: 80%;
+  font-size: 0.8em;
   white-space: nowrap;
   padding-inline: 0;
 }
 .btn-skip {
   background: #9900ff;
   color: white;
+}
+.buttons {
+  height: 60%;
+
+  display: flex;
+}
+.buttons_inner {
+  margin: auto;
+  width: 100%;
+}
+.bottom {
+  height: 30%;
+}
+
+// 흔드는 것
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+.apply-shake {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 </style>

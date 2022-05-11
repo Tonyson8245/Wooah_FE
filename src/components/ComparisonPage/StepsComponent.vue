@@ -1,28 +1,29 @@
 <template>
   <div class="d-flex">
-    <div v-for="i in totalNum" :key="i" class="d-flex">
-      <Step :num="i" :focus="focusNum == i" />
-      <img src="@/assets/icon/dotthree.png" alt="" v-if="i != totalNum" />
+    <div v-for="i in totalStep" :key="i" class="d-flex">
+      <StepComponent :num="i" :focus="step == i" />
+      <img src="@/assets/icon/dotthree.png" alt="" v-if="i != totalStep" />
     </div>
   </div>
 </template>
 
 <script>
-import Step from "@/components/ComparisonPage/StepComponent.vue";
+import StepComponent from "@/components/ComparisonPage/StepComponent.vue";
 export default {
   name: `StepsComponent`,
   data() {
     return {};
   },
-  props: {
-    totalNum: Number,
-  },
+
   components: {
-    Step,
+    StepComponent,
   },
   computed: {
-    focusNum() {
-      return this.$store.state.ComparisonStore.focusNum;
+    step() {
+      return this.$store.state.ComparisonStore.step;
+    },
+    totalStep() {
+      return this.$store.state.ComparisonStore.totalStep;
     },
   },
 };

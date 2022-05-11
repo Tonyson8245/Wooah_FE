@@ -27,10 +27,7 @@ const routes = [
     path: "/comparison",
     component: ComparisonPage,
   },
-  {
-    path: "/comparison/:type",
-    component: ComparisonPage,
-  },
+
   {
     path: "/monthlyart",
     component: MonthlyartPage,
