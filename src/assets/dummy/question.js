@@ -45,13 +45,13 @@ export default {
           skip: false,
           input: false,
         },
-        {
-          name: "시술 위치",
-          description: `어디서 네일을 받으셨었나요?`,
-          answer: [`자샵`, `타샵`],
-          skip: false,
-          input: false,
-        },
+        // {
+        //   name: "시술 위치",
+        //   description: `어디서 네일을 받으셨었나요?`,
+        //   answer: [`자샵`, `타샵`],
+        //   skip: false,
+        //   input: false,
+        // },
       ],
     },
     {

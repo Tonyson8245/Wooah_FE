@@ -1,5 +1,6 @@
 <template>
   <div class="outline">
+    <GDialog :yesno="true" />
     <div class="header">
       <Region :font="font" />
       <p class="title">맞춤 시술 가격 비교</p>
@@ -14,6 +15,7 @@
             페디(발)
           </div>
         </div>
+
         <div v-if="totalStep >= step">
           <!-- <div v-if="false"> -->
           <div class="container__step">
@@ -23,11 +25,13 @@
             <Detail />
           </div>
         </div>
-        <div class="result__outline" v-else-if="result != undefined">
+        <div class="result__outline" v-else-if="result">
           <div class="result__container">
             <div class="result__header p-3">
               <div class="d-flex title">
-                <div class="me-auto p-2 bd-highlight">비교결과</div>
+                <div class="me-auto p-2 bd-highlight">
+                  비교결과 {{ districttext }}
+                </div>
                 <div class="p-2 d-flex" @click="restart">
                   다시하기
                   <img src="@/assets/img/recheck.svg" alt="" />
@@ -45,7 +49,7 @@
                 </div>
               </div>
             </div>
-            <div class="result__body mb-1" v-if="result.length > 0">
+            <div class="result__body mb-1" v-if="this.result != []">
               <ShopItem
                 v-for="(shop, i) in shops"
                 :key="i"
@@ -67,6 +71,7 @@ import Region from "@/components/Common/RegionComponent.vue";
 import Steps from "@/components/ComparisonPage/StepsComponent.vue";
 import Detail from "@/components/ComparisonPage/DetailComponent.vue";
 import ShopItem from "@/components/Common/ShopItem.vue";
+import GDialog from "@/components/Common/AlertDialog.vue";
 
 export default {
   name: `comparison`,
@@ -84,6 +89,7 @@ export default {
     restart() {
       this.$store.commit("ComparisonStore/resetQuery");
       this.$store.commit("ComparisonStore/resetStep");
+      this.$store.commit("ComparisonStore/setResult", []);
     },
   },
   mounted() {
@@ -91,14 +97,22 @@ export default {
     this.$store.commit("Setpagecondition", "comparison");
     this.$store.commit("ComparisonStore/setType", "hand");
     this.restart();
+    if (this.page == `foot`) {
+      this.$store.commit("ComparisonStore/setTotalStep", 5);
+    } else this.$store.commit("ComparisonStore/setTotalStep", 3);
   },
   components: {
     Region,
     Steps,
     Detail,
     ShopItem,
+    GDialog,
   },
+
   computed: {
+    districttext() {
+      return "- " + this.$store.state.CommonStore.districttext;
+    },
     type() {
       return this.$store.state.ComparisonStore.type;
     },
@@ -121,6 +135,12 @@ export default {
       if (this.width < 420) return css + `font-size:100%`;
       else return css;
     },
+    sido() {
+      return this.$store.state.CommonStore.sido;
+    },
+    sigungu() {
+      return this.$store.state.CommonStore.sigungu;
+    },
     result() {
       return this.$store.state.ComparisonStore.result;
     },
@@ -128,7 +148,20 @@ export default {
       return this.$store.state.ComparisonStore.result[0].estimate;
     },
     shops() {
-      return this.$store.state.ComparisonStore.result[0].shops;
+      if (this.result != []) {
+        return this.$store.state.ComparisonStore.result[0].shops;
+      } else return "";
+    },
+  },
+  watch: {
+    districttext() {
+      if (this.result != []) {
+        this.$store.dispatch("ComparisonStore/fetchPriceList", {
+          qeury: this.query,
+          sido: this.sido,
+          sigungu: this.sigungu,
+        });
+      } // 결과가 있는 상태에서 텍스트가 바뀌면 지역 바꿔서 검색 결과 노출
     },
   },
 };

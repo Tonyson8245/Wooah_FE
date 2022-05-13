@@ -96,4 +96,5 @@ const router = createRouter({
     return { top: 0, behavior: "instant" };
   },
 });
+
 export default router;

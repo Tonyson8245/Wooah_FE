@@ -11,6 +11,7 @@ const CommonStore = {
     sigungu: 0,
     // newDistrictSet: ``,
     updateDistrict: false,
+    districttext: "",
   },
   mutations: {
     SetSize(state, payload) {
@@ -31,6 +32,9 @@ const CommonStore = {
     },
     setUpdateDistrict(state, payload) {
       state.updateDistrict = payload;
+    },
+    setDistricttext(state, payload) {
+      state.districttext = payload;
     },
   },
   actions: {

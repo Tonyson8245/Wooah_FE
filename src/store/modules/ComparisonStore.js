@@ -11,11 +11,11 @@ const ComparisonStore = {
     result: "",
   },
   watch: {
-    step(a) {
-      if (a > this.totalStep) {
-        this.step = 1;
-      }
-    },
+    // step(a) {
+    //   if (a > this.totalStep) {
+    //     this.step = 1;
+    //   }
+    // },
   },
   mutations: {
     setQuery(state, payload) {
@@ -57,14 +57,14 @@ const ComparisonStore = {
           context.commit("setProcedure_table", response.data);
         })
         .catch(function () {});
-    },
+    }, // 시술 목록 가져옴
     async fetchPriceList(context, payload) {
       var newQuery = "";
       context.state.query.forEach((e) => {
         if (e != null) newQuery += e + " ";
-      });
+      }); // 배열을 API 에 맞느는 쿼리 형태로 만듬
 
-      context.commit("resetQuery");
+      // context.commit("resetQuery"); 쿼리 초기화
 
       await comparisonApi
         .fetchPriceList(newQuery, payload.sido, payload.sigungu)

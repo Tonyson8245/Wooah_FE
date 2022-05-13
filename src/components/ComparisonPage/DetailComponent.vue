@@ -4,6 +4,7 @@
       <div class="col-md-6 col-12">
         <div class="square"><img :src="imgUrl" alt="" class="inner" /></div>
       </div>
+
       <div class="col-md-6 col-12 arrow">
         <div :class="arrowboxCSS" class="message">
           <div class="message__header">
@@ -15,7 +16,6 @@
             <div class="content">{{ substep_info.description }}</div>
             <div class="line"></div>
           </div>
-
           <div class="buttons" v-if="!substep_info.input">
             <!-- input 아닌거 -->
             <div
@@ -28,7 +28,11 @@
                 :key="answer"
                 class="col-4 g-2"
               >
-                <div class="btn btn-secondary" @click="clickbutton(answer)">
+                <div
+                  class="btn"
+                  style="color: white"
+                  @click="clickbutton(answer)"
+                >
                   {{ answer }}
                 </div>
               </div>
@@ -40,7 +44,11 @@
                 :key="answer"
                 class="col-6 g-2"
               >
-                <div class="btn btn-secondary" @click="clickbutton(answer)">
+                <div
+                  class="btn"
+                  style="color: white"
+                  @click="clickbutton(answer)"
+                >
                   {{ answer }}
                 </div>
               </div>
@@ -89,6 +97,7 @@ export default {
       option: "",
       value: "",
       shake: false,
+      show: true,
     };
   },
   mounted() {
@@ -101,6 +110,7 @@ export default {
       this.shake = true;
     },
     clickbutton(answer) {
+      this.show = !this.show;
       switch (answer) {
         case "건너뛰기":
           this.increseStep();
@@ -130,15 +140,19 @@ export default {
           this.inertOption(answer);
           break;
         case "네, 젤이 있어요":
-          this.increseSubStep();
-          break;
-        case "자샵":
-        case "타샵":
+          // this.increseSubStep();
           this.increseStep();
-
+          this.inertOption("타샵");
           this.name += "젤제거";
-          this.inertOption(answer);
+
           break;
+        // case "자샵":
+        // case "타샵":
+        //   this.increseStep();
+
+        //   this.name += "젤제거";
+        //   this.inertOption(answer);
+        // break;
         case "아니요, 없어요.":
           this.increseStep();
           break;
@@ -379,7 +393,6 @@ img {
 }
 .message__header {
   text-align: left;
-  height: auto;
 }
 .stepNum {
   color: #9900ff;
@@ -449,5 +462,13 @@ img {
 
 .apply-shake {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
