@@ -27,6 +27,7 @@ const routes = [
     path: "/comparison",
     component: ComparisonPage,
   },
+
   {
     path: "/monthlyart",
     component: MonthlyartPage,
@@ -95,4 +96,5 @@ const router = createRouter({
     return { top: 0, behavior: "instant" };
   },
 });
+
 export default router;

@@ -3,7 +3,7 @@
     <button
       class="btn dropdown-toggle"
       type="button"
-      :style="css"
+      :style="css + font"
       id="dropdownMenuButton1"
       data-bs-toggle="dropdown"
       aria-expanded="false"
@@ -36,12 +36,16 @@ export default {
       css: "outline: none !important; box-shadow: none;",
     };
   },
+  props: {
+    font: String,
+  },
   mounted() {},
   computed: {
     districtData() {
       return this.$store.state.CommonStore.districtData;
     },
     region() {
+      var text;
       var data = this.$store.state.CommonStore.districtData;
       if (data.length > 0) {
         var sigungu = this.$store.state.CommonStore.sigungu;
@@ -53,19 +57,23 @@ export default {
           sigunguName = data[sido - 1].sigungu[sigungu - 1].name;
           sidoName = data[sido - 1].name;
 
-          return sidoName + ` ` + sigunguName;
+          text = sidoName + ` ` + sigunguName;
         } else {
           sidoName = data[sido - 1].name;
 
-          return sidoName + ` 전체`;
+          text = sidoName + ` 전체`;
         }
-      } else return "서울특별시 전체";
+      } else text = "서울특별시 전체";
+
+      this.$store.commit("CommonStore/setDistricttext", text);
+      return text;
     },
     fontSize() {
       if (this.$store.state.CommonStore.width > 767) return `btn-lg`;
       else return ``;
     },
   },
+  watch: {},
   methods: {
     changeDistrict(sido, sigungu) {
       this.$store.commit("CommonStore/SetDistrict", [sido, sigungu]);

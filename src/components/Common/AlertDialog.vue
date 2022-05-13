@@ -5,10 +5,22 @@
         <p>{{ dialogComment }}</p>
       </div>
 
-      <div class="actions">
+      <div class="actions" v-if="!yesno">
         <button class="btn" @click="$store.commit('alertStore/ChangeState')">
           확인
         </button>
+      </div>
+      <div v-if="yesno" class="container-fluid row">
+        <div class="actions col-6">
+          <button class="btn" @click="$store.commit('alertStore/ChangeState')">
+            확인
+          </button>
+        </div>
+        <div class="actions col-6">
+          <button class="btn" @click="$store.commit('alertStore/ChangeState')">
+            취소
+          </button>
+        </div>
       </div>
     </div>
   </GDialog>
@@ -17,6 +29,9 @@
 <script>
 export default {
   name: "AlertDialog",
+  props: {
+    yesno: Boolean,
+  },
   computed: {
     dialogState() {
       return this.$store.state.alertStore.dialogState;

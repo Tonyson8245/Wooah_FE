@@ -18,7 +18,6 @@ export default {
 .square {
   width: 100%;
   position: relative;
-  background: white;
   border-radius: 5%;
 }
 
@@ -32,6 +31,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
+  left: 0;
   object-fit: cover;
   border: solid #e1e1e1 1px;
 }
