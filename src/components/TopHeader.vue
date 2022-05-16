@@ -4,7 +4,7 @@
     style="width: 100%"
     :style="padding"
   >
-    <div class="container-lg">
+    <div class="container-lg" style="padding: 0.3% 0 0.3% 0">
       <a class="navbar-brand" @click="this.$router.push('/')">우아</a>
       <button
         class="navbar-toggler"
@@ -116,18 +116,17 @@ export default {
 
 .navbar {
   /* font-family: "MaplestoryOTFLight"; */
-  font-family: "GoyangIlsan";
+  font-family: "GoyangDeogyang";
   background: white;
   font-size: 20px;
   border: solid #c4c4c4;
   border-width: 0 0 0.5px 0;
-  /* padding: 0 0 0 21%; // 상단 높이 맞추기 위함 */
   @include tablet {
     font-size: 20px;
     padding: 0 0 0 0; // 모바일 상에서는 다시 붙기
   }
   @include mobile-s {
-    font-size: 50%;
+    font-size: 80%;
   }
 }
 .navbar-brand {

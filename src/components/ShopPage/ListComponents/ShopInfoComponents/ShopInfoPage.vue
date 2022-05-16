@@ -214,6 +214,13 @@ ol {
 }
 .carousel__prev,
 .carousel__next {
-  background-color: #c4c4c4 !important;
+  background-color: white !important;
+  color: #e355fc;
+}
+.carousel__prev {
+  left: -3%;
+}
+.carousel__next {
+  right: -3%;
 }
 </style>

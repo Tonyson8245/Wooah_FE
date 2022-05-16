@@ -289,7 +289,7 @@ export default {
   padding: 4%;
   @include desktop {
     padding: 0;
-    font-size: 80%;
+    /* font-size: 80%; */
   }
 }
 input {
@@ -388,7 +388,7 @@ img {
   height: 100%;
 }
 .message {
-  padding: 5%;
+  padding: 7%;
   height: 100%;
 }
 .message__header {
@@ -397,7 +397,7 @@ img {
 .stepNum {
   color: #9900ff;
   font-weight: bold;
-  font-size: 1em;
+  font-size: 0.8em;
 }
 .title {
   font-size: 1.2em;

@@ -12,14 +12,30 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'GoyangDeogyang';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangDeogyang.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@import url(//fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
 
+.nanummyeongjo * {
+ font-family: 'Nanum Myeongjo', serif;
+}
 /* 적응형 사이즈 구분.start*/
 $mobile-xs: 360px;
 $mobile-s: 420px;
 $tablet: 992px;
 $desktop: 1500px;
 $tablet-s: 767px;
-
+$banner : 1110px;
+$sm : 575px; 
+@mixin sm {
+  @media (max-width: #{$sm}) {
+    @content;
+  }
+}
 @mixin mobile-xs {
   @media (max-width: #{$mobile-xs}) {
     @content;
@@ -43,6 +59,11 @@ $tablet-s: 767px;
 
 @mixin desktop {
   @media (max-width: #{$desktop}) {
+    @content;
+  }
+}
+@mixin banner {
+  @media (max-width: #{$banner}) {
     @content;
   }
 }
