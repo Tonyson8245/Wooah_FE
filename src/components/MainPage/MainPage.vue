@@ -1,5 +1,5 @@
 <template>
-  <div class="p-0 outline">
+  <div class="outline">
     <!-- 상단 배너 시작 -->
     <div
       id="carouselExampleControlsNoTouching"
@@ -54,22 +54,34 @@
         <div class="title_ko">최신 업데이트 디자인</div>
       </div>
       <div class="newest_body ps-lg-5 pe-lg-5">
-        <div class="container-fluid ps-lg-5 pe-lg-5">
-          <Carousel :settings="settings" :breakpoints="breakpoints">
-            <Slide v-for="i in 8" :key="i">
+        <div class="container-lg ps-lg-5 pe-lg-5">
+          <carousel
+            :settings="settings"
+            :breakpoints="breakpoints"
+            v-if="designs.length !== 0"
+          >
+            <slide
+              v-for="(design, i) in designs"
+              :key="i"
+              @click="clickNewestDesign(design.id)"
+            >
               <div class="carousel__item" style="width: 90%; padding: 5%">
-                <Square :url="url" />
+                <Square :url="design.url" />
                 <div>
-                  <div class="title fw-bold p-2">네일123211 조아{{ i }}</div>
-                  <div class="tags">#1월_네일 #기분전환 #손님 ...더보기</div>
+                  <div class="title fw-bold p-2">{{ design.shop.name }}</div>
+                  <div class="tags" v-if="design.tags != null">
+                    <span v-for="tag in design.tags" :key="tag"
+                      >#{{ tag + " " }}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </Slide>
+            </slide>
 
             <template #addons>
               <Navigation v-if="bannerStatus == 'desktop'" />
             </template>
-          </Carousel>
+          </carousel>
         </div>
       </div>
     </div>
@@ -86,11 +98,11 @@
             <div class="rank_table square">
               <div class="rank_table__inner inner">
                 <div class="title fw-bold">태그 검색 순위</div>
-                <table class="table table-sm table-borderless">
-                  <tr v-for="i in 5" :key="i" style="color: #b900fa">
-                    <th scope="row" class="col-2">{{ i }}</th>
-                    <td class="col-7">{{ i }}위 태그 제목</td>
-                    <td class="col-3">{{ 50 - i }}건</td>
+                <table class="table table-sm table-borderless m-0">
+                  <tr v-for="tag in tagrank" :key="tag" style="color: #b900fa">
+                    <td scope="row" class="col-2">{{ tag.rank }}</td>
+                    <td class="col-7">{{ tag.content }}</td>
+                    <td class="col-3">{{ tag.count }}건</td>
                   </tr>
                 </table>
               </div>
@@ -108,9 +120,9 @@
     <!-- 태그 랭크 끝 -->
     <!-- 이달의 아트 시작 -->
     <div class="monthlyart__outer">
-      <div class="container-fluid">
+      <div class="container-lg">
         <div class="monthlyart__inner row">
-          <div class="col-sm-6 col-12 title">
+          <div class="col-sm-6 col-12 title p-0">
             <div class="square_half">
               <div class="inner">
                 <span class="monthly_title_span fw-bold"
@@ -122,11 +134,23 @@
           <div class="col-sm-6 col-12 link">
             <div class="square">
               <div class="inner">
-                <div class="row fw-bold">
-                  <div class="col-6 tile"><span>~ 2만원 대</span></div>
-                  <div class="col-6 tile"><span>~ 3만원 대</span></div>
-                  <div class="col-6 tile"><span>~ 4만원 대</span></div>
-                  <div class="col-6 tile"><span>더보기...</span></div>
+                <div class="row fw-bold" v-if="monthlyart.length > 0">
+                  <div
+                    class="col-6 tile p-0"
+                    v-for="i in 3"
+                    :key="i"
+                    @click="clickMonthlyart(monthlyart[i].price_range)"
+                  >
+                    <square :url="monthlyart[i].arts[0].url" />
+                    <div class="text fw-bold">
+                      ~ {{ monthlyart[i].price_range }}만원 대
+                    </div>
+                  </div>
+
+                  <div class="col-6 tile p-0" @click="clickMonthlyart(`more`)">
+                    <square :url="monthlyart[4].arts[0].url" />
+                    <div class="text fw-bold">더보기...</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -136,16 +160,25 @@
     </div>
     <!-- 이달의 아트 끝 -->
     <div class="shops__outer">
-      <div class="container-fluid">
+      <div class="container-lg">
         <div class="shops__inner row">
-          <div class="title col-sm-3 fw-bold">
-            <Region :font="'color:white; '" class="fw-bold" />
+          <div class="title col-sm-3">
+            <Region :font="'color:white; '" />
             <div>네일샵</div>
-            <div class="btn">샵 더보기</div>
+            <button class="btn" @click="clickShop(`more`)">샵 더보기</button>
           </div>
           <div class="content col-sm-9 col-12 align-self-center">
-            <Carousel :itemsToShow="3" :autoplay="5000" :wrapAround="true">
-              <Slide v-for="i in 8" :key="i">
+            <Carousel
+              :itemsToShow="3"
+              :autoplay="3000"
+              :wrapAround="true"
+              v-if="8 !== 0"
+            >
+              <Slide
+                v-for="(shop, i) in shops"
+                :key="i"
+                @click="clickShop(shop.id)"
+              >
                 <div
                   class="m-lg-3 m-1"
                   style="
@@ -155,24 +188,20 @@
                     border-radius: 5%;
                   "
                 >
-                  <Square :url="url" />
+                  <Square :url="shop.url" />
                   <div class="shopinfo p-2">
-                    <span class="fw-bold">쵸코네일{{ i }}</span
+                    <span class="fw-bold">{{ shop.name }}</span
                     >>
                     <div class="contact">
                       <i class="bi bi-telephone-fill"></i>
-                      <span>010-8245-8698</span>
+                      <span>{{ shop.contact }}</span>
                       <br />
                       <i class="bi bi-geo-alt-fill"></i>
-                      <span>서울 동작구 사당1동</span>
+                      <span>{{ shop.address }}</span>
                     </div>
                   </div>
                 </div>
               </Slide>
-
-              <!-- <template #addons>
-                <Navigation v-if="bannerStatus == 'desktop'" />
-              </template> -->
             </Carousel>
           </div>
         </div>
@@ -186,7 +215,6 @@ import "vue3-carousel/dist/carousel.css";
 import Square from "@/components/Common/SquareComponent.vue";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import Region from "@/components/Common/RegionComponent.vue";
-
 export default {
   name: "MainPage",
   data() {
@@ -210,6 +238,13 @@ export default {
   },
   mounted() {
     this.$store.commit("Setpagecondition", "");
+    this.$store.dispatch("MainStore/fetchDesigns");
+    this.$store.dispatch("MainStore/fetchTagrank", 5);
+    this.$store.dispatch("MainStore/fetchThumbnails");
+    this.$store.dispatch("MainStore/getShops", {
+      sido: this.sido,
+      sigungu: this.sigungu,
+    });
   },
   computed: {
     width() {
@@ -226,14 +261,53 @@ export default {
       const today = new Date();
       return today.getMonth() + 1;
     },
+    designs() {
+      return this.$store.state.MainStore.designs;
+    },
+    tagrank() {
+      return this.$store.state.MainStore.tagrank;
+    },
+    monthlyart() {
+      return this.$store.state.MainStore.monthlyart;
+    },
+    sido() {
+      return this.$store.state.CommonStore.sido;
+    },
+    sigungu() {
+      return this.$store.state.CommonStore.sigungu;
+    },
+    shops() {
+      return this.$store.state.MainStore.shops;
+    },
   },
-  watch: {},
+  watch: {
+    sigungu() {
+      this.$store.dispatch("MainStore/getShops", {
+        sido: this.sido,
+        sigungu: this.sigungu,
+      }); // 위치가 바뀌면 샵 내용을 바꾼다.
+    },
+  },
   components: {
     Carousel,
     Slide,
     Square,
     Navigation,
     Region,
+  },
+  methods: {
+    clickNewestDesign(id) {
+      this.$router.push("/library/p/" + id);
+    },
+    clickMonthlyart(price_range) {
+      if (price_range == `more`) {
+        this.$router.push("/monthlyart");
+      } else this.$router.push("/monthlyart/" + price_range * 10000);
+    },
+    clickShop(shopid) {
+      if (shopid == `more`) this.$router.push("/shop");
+      else this.$router.push("/shop/" + shopid);
+    },
   },
 };
 </script>
@@ -310,12 +384,16 @@ export default {
 }
 .newest_body .tags {
   font-size: 0.8vw;
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .carousel__item {
   border: solid 1px #e0bfe6;
   background-color: #ffffff;
   color: #6500a8;
-  border-radius: 8px;
+  :border-radius: 8px;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -349,6 +427,8 @@ export default {
 }
 .rank_table__inner {
   padding: 10%;
+  display: flex;
+  flex-direction: column;
 }
 .rank_table__inner .title {
   font-size: 2vw;
@@ -357,6 +437,7 @@ export default {
   }
 }
 .rank_table__inner table {
+  flex: 1;
   font-size: 1.5vw;
   height: 80%;
   @include sm {
@@ -371,7 +452,7 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  font-size: 2.8vw;
+  font-size: 2.5vw;
   @include sm {
     text-align: center;
     font-size: 4.5vw;
@@ -410,13 +491,28 @@ export default {
 }
 .row .tile {
   font-family: "GoyangDeogyang";
-  text-align: center;
-  margin: auto;
-  color: #c300ff;
+  position: relative;
+  background-color: gray;
+  color: white;
   font-size: 1.5vw;
   @include sm {
     font-size: 5vw;
   }
+}
+.tile .text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+.tile .square {
+  filter: saturate(50%) opacity(70%);
 }
 
 // 이달의 아트 끝
@@ -428,7 +524,6 @@ export default {
   background: #e386ff;
   padding: 12% 0 12% 0;
   text-align: center;
-  font-family: "GoyangDeogyang";
   color: white;
   font-size: 1.3em;
   @include sm {
