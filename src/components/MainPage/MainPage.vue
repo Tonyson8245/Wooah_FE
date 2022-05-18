@@ -95,11 +95,11 @@
             <span>#태그로 알아보는 #네일 아트 디자인 #트렌드</span>
           </div>
           <div class="col-sm-6 col-12 rank">
-            <div class="rank_table square">
+            <div class="square rank_table">
               <div class="rank_table__inner inner">
                 <div class="title fw-bold">태그 검색 순위</div>
                 <table class="table table-sm table-borderless m-0">
-                  <tr v-for="tag in tagrank" :key="tag" style="color: #b900fa">
+                  <tr v-for="tag in tagrank" :key="tag">
                     <td scope="row" class="col-2">{{ tag.rank }}</td>
                     <td class="col-7">{{ tag.content }}</td>
                     <td class="col-3">{{ tag.count }}건</td>
@@ -172,7 +172,7 @@
               :itemsToShow="3"
               :autoplay="3000"
               :wrapAround="true"
-              v-if="8 !== 0"
+              v-if="shops.length !== 0"
             >
               <Slide
                 v-for="(shop, i) in shops"
@@ -185,7 +185,7 @@
                     background: white;
                     padding: 5%;
                     width: 100%;
-                    border-radius: 5%;
+                    border-radius: 10%;
                   "
                 >
                   <Square :url="shop.url" />
@@ -234,6 +234,7 @@ export default {
           snapAlign: "start",
         },
       },
+      timer: null,
     };
   },
   mounted() {
@@ -246,6 +247,7 @@ export default {
       sigungu: this.sigungu,
     });
   },
+
   computed: {
     width() {
       return this.$store.state.CommonStore.width;
@@ -313,9 +315,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
 @import "../../assets/style.scss";
 .outline {
   font-family: "GoyangIlsan";
+  background: $pl-6;
   @include tablet-s {
     font-size: 80%;
   }
@@ -339,10 +343,10 @@ export default {
   left: 0;
   background: linear-gradient(
     to right,
-    white 0%,
+    $pl-6 0%,
     rgba(255, 0, 0, 0) 10%,
     rgba(255, 0, 0, 0) 90%,
-    white 100%
+    $pl-6 100%
   ); /* W3C */
 } // 배너 페이드 아웃 필터
 .banner_1 {
@@ -359,12 +363,11 @@ export default {
 //최신 업데이트 디자인 시작
 .newest {
   padding: 5% 0 5% 0;
-  background: #faeefc;
 }
 .newest_header {
   font-family: "GoyangDeogyang";
   text-align: center;
-  color: #6500a8;
+  color: $pa-2;
 }
 .newest_header .title_en {
   font-size: 1vw;
@@ -390,10 +393,10 @@ export default {
   white-space: nowrap;
 }
 .carousel__item {
-  border: solid 1px #e0bfe6;
-  background-color: #ffffff;
-  color: #6500a8;
-  :border-radius: 8px;
+  border: solid 1px $pl-4;
+  background-color: white;
+  color: $pl-1;
+  border-radius: 8px;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -402,7 +405,6 @@ export default {
 //최신 업데이트 디자인 끝
 //태그 랭크 시작
 .tag_rank__outer {
-  font-family: "GoyangDeogyang";
   background: url("@/assets/img/tag_rank_background.svg");
 }
 .tag_rank__inner {
@@ -410,7 +412,7 @@ export default {
 }
 .tag_rank__inner .rank {
   padding-inline: 7%;
-  color: #6500a8;
+  color: $pa-2;
   @include banner {
     padding: 5%;
   }
@@ -422,7 +424,7 @@ export default {
 
 .rank_table {
   background: white;
-  border-radius: 5px;
+  border-radius: 10%;
   border: 1px solid #c4c4c4;
 }
 .rank_table__inner {
@@ -431,12 +433,14 @@ export default {
   flex-direction: column;
 }
 .rank_table__inner .title {
+  color: $pa-2;
   font-size: 2vw;
   @include sm {
     font-size: 6vw;
   }
 }
 .rank_table__inner table {
+  color: $pa-1;
   flex: 1;
   font-size: 1.5vw;
   height: 80%;
@@ -445,6 +449,7 @@ export default {
     padding-top: 0;
   }
 }
+
 .tag_rank__inner .intro {
   margin: auto;
   font-style: italic;
@@ -518,10 +523,10 @@ export default {
 // 이달의 아트 끝
 // 샵 시작
 .shops__inner {
-  background: #fcebff;
+  background: $pl-5;
 }
 .shops__inner .title {
-  background: #e386ff;
+  background: $pl-3;
   padding: 12% 0 12% 0;
   text-align: center;
   color: white;
@@ -533,7 +538,7 @@ export default {
 }
 
 .shops__inner .btn {
-  background: #fb00ff;
+  background: $pl-1;
   color: white;
   margin-top: 30%;
   width: 80%;
@@ -560,7 +565,6 @@ export default {
 .square {
   width: 100%;
   position: relative;
-  border-radius: 5px;
 }
 
 .square:after {

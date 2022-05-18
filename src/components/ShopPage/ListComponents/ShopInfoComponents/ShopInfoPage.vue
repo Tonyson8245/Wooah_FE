@@ -124,14 +124,13 @@ export default {
 @import "/src/assets/style.scss";
 //탭
 .tab .btn {
-  background: #f3f3f3;
-  border: #e1e1e1 solid 1px;
+  color: black;
+  border: $pl-5 solid 1px;
   font-size: 1em;
 }
 
 ///
 .info_outline {
-  border: solid 0.5px #e1e1e1;
   font-size: 16px;
   font-family: "GoyangIlsan";
   position: relative;
@@ -183,7 +182,8 @@ export default {
 .banner {
   text-align: center;
   font-size: 1.3em;
-  background: #d4d4d4;
+  background: $pl-6;
+  color: $pl-1;
   font-weight: bold;
   @include mobile-s {
     font-size: 70%;

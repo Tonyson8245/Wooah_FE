@@ -98,6 +98,7 @@ $mobile-height: 250px;
 
 //transtition 끝
 .container_outer {
+  background: $pl-6;
   padding: 0 10% 0 10%;
   @include desktop {
     padding: 0 0 0 0;
@@ -109,7 +110,12 @@ $mobile-height: 250px;
 }
 .container-lg {
   flex-wrap: wrap-reverse;
-  border: #f3f3f3 1px solid;
+  border: $pl-4 1px solid;
+  border-radius: 15px;
+  overflow: hidden;
+  @include tablet {
+    border-radius: 0px;
+  }
   @include mobile-s {
     border: none;
   }

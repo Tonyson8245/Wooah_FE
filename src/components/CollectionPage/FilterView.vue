@@ -185,12 +185,12 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
 .filter__btn {
-  background-color: white;
+  background-color: $pl-6;
   width: 350px;
   height: $filter-height-desktop;
   position: relative;
-  border-radius: 5px;
-  border: #a1a1a1 solid 0.5px;
+  border-radius: 15px;
+  border: $pl-4 solid 0.5px;
   z-index: 4;
   text-align: center;
   padding: 2% 2% 2% 2%;
@@ -210,6 +210,10 @@ export default {
 
 .filter__outer_button {
   width: 95%;
+  background: $pl-3;
+  border-radius: 15px;
+  border: solid 1px $pl-4;
+
   height: auto;
 }
 .filter_title {

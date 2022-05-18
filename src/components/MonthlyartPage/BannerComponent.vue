@@ -70,7 +70,7 @@ export default {
   }
 }
 .banner__outline {
-  background-color: #949494;
+  background-color: $pl-2;
   border-radius: 5px;
   height: 100%;
   margin: auto;
@@ -94,7 +94,7 @@ export default {
   font-size: 1.5em;
   color: white;
   font-style: italic;
-  font-family: "GoyangIlsan";
+  font-family: "GoyangDeogyang";
   margin-bottom: 0;
 }
 .banner__outline .text {
@@ -110,6 +110,6 @@ export default {
   font-size: 2em;
   width: 100%;
   color: white;
-  font-family: "GoyangIlsan";
+  font-family: "GoyangDeogyang";
 }
 </style>

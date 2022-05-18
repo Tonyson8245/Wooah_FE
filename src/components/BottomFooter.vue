@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="">
     <div class="container-fluid">
       <div class="info row" style="display: flex">
         <table class="col-lg-6 col-md-6">
@@ -45,7 +45,7 @@ export default {};
 @import "../assets/style.scss";
 
 footer {
-  background: #c4c4c4;
+  background: #fef4ff;
   width: 100%;
   height: auto;
   padding: 2.4em 0 2.4em 0;

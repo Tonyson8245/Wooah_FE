@@ -13,31 +13,35 @@
     <div class="p-2">
       <div class="title">연락처</div>
       <div class="content pt-2">
-        <div v-if="ShopData.contact.phone != null">
+        <div v-if="ShopData.contacts.phone != null">
           <img src="../../../../../../src/assets/img/telephone.png" alt="" />
-          {{ ShopData.contact.phone }}
+          {{ ShopData.contacts.phone }}
         </div>
-        <div v-if="ShopData.contact.kakao_id != null">
+        <div v-if="ShopData.contacts.kakao_id != null">
           <img src="../../../../../../src/assets/img/kakao-talk.png" alt="" />
-          {{ ShopData.contact.kakao_id }}
+          {{ ShopData.contacts.kakao_id }}
         </div>
-        <div v-if="ShopData.contact.kakao_openchat != null">
+        <div v-if="ShopData.contacts.kakao_openchat != null">
           <img src="../../../../../../src/assets/img/kakao-talk.png" alt="" />
-          {{ ShopData.contact.kakao_openchat }}
+          {{ ShopData.contacts.kakao_openchat }}
         </div>
-        <div v-if="ShopData.contact.instagram != null">
+        <div v-if="ShopData.contacts.instagram != null">
           <img src="../../../../../../src/assets/img/instagram.png" alt="" />
-          <a href="{{ ShopData.contact.instagram }}">{{
-            ShopData.contact.instagram
+          <a href="{{ ShopData.contacts.instagram }}">{{
+            ShopData.contacts.instagram
           }}</a>
         </div>
-        <div v-if="ShopData.contact.blog != null">
+        <div v-if="ShopData.contacts.blog != null">
           <img src="../../../../../../src/assets/img/blogging.png" alt="" />
-          <a href="{{ ShopData.contact.blog }}">{{ ShopData.contact.blog }}</a>
+          <a href="{{ ShopData.contacts.blog }}">{{
+            ShopData.contacts.blog
+          }}</a>
         </div>
-        <div v-if="ShopData.contact.site != null">
+        <div v-if="ShopData.contacts.site != null">
           <img src="../../../../../../src/assets/img/blogging.png" alt="" />
-          <a href="{{ ShopData.contact.site }}">{{ ShopData.contact.site }}</a>
+          <a href="{{ ShopData.contacts.site }}">{{
+            ShopData.contacts.site
+          }}</a>
         </div>
       </div>
     </div>

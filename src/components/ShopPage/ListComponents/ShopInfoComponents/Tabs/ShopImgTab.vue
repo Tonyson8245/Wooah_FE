@@ -62,7 +62,7 @@ export default {
   width: 33.3%;
   position: relative;
   background: white;
-  /* border-radius: 5%; */
+  /* border-radius: 10%; */
 }
 .square .bi {
   position: absolute;
@@ -87,7 +87,7 @@ export default {
   height: 100%;
   object-fit: cover;
   padding: 0.5%;
-  /* border-radius: 5%; */
+  /* border-radius: 10%; */
   /* border: solid #e1e1e1 1px; */
 }
 </style>

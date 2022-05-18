@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="outline">
     <AlertDialog />
     <div class="container-sm p-lg-5 pt-lg-0">
       <div
@@ -109,7 +109,7 @@
                   class="btn btn-sm filter__reset"
                   v-if="ResetStatus"
                   :style="ButtonFocusSetting"
-                  style="border: 2px solid #c4c4c4; border-radius: 15px"
+                  style="border-radius: 15px"
                   type="button"
                   @click="Reset(true)"
                 >
@@ -384,6 +384,7 @@ export default {
   },
   mounted() {
     //데이터 가져오는 코드 여기 넣쟈
+    this.$store.commit("collectionStore/setfilterQuery", "");
     this.$store.dispatch("collectionStore/fetchPosts");
     this.$store.commit("Setpagecondition", "collection");
   }, // 생성 될때 포스트 데이터를 가져오게 한다.
@@ -564,7 +565,7 @@ export default {
         this.MontlyArtCondition = "";
         this.SetFilter.monntlyart = false;
       } else {
-        this.MontlyArtCondition = "font-weight:bold; background:#c4c4c4";
+        this.MontlyArtCondition = "font-weight:bold; background:#fbebfd; ";
         this.SetFilter.monntlyart = true;
       }
       this.MakeQuery();
@@ -572,7 +573,7 @@ export default {
     ChangeFilterbar() {
       let Filters = this.SetFilter;
       let bar = this.Filterbar;
-      let active = `#c4c4c4;`;
+      let active = `#fbebfd;`;
       var color_true = Object.keys(Filters.color).filter(
         (key) => Filters.color[key] === true
       );
@@ -740,7 +741,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
-
+.outline {
+  background: $pl-6;
+  height: inherit;
+}
 .search__move {
   position: relative;
   top: -$search_height-desktop;
@@ -771,7 +775,6 @@ export default {
   position: relative;
   left: 5px;
   width: 66.6%;
-  background-color: #f1f1f1;
   @include tablet {
     width: 100%;
     left: 0px;
@@ -805,7 +808,7 @@ export default {
   }
 }
 .modal__btn_right {
-  color: white;
+  color: $pl-4;
   font-size: 1.5em;
   position: absolute;
   bottom: 50%;
@@ -815,7 +818,7 @@ export default {
   }
 }
 .modal__btn_left {
-  color: white;
+  color: $pl-4;
   font-size: 1.5em;
   position: absolute;
   bottom: 50%;
@@ -856,7 +859,7 @@ export default {
   }
 }
 .modal__content_outer {
-  background-color: #a1a1a1;
+  background-color: $pl-2;
   position: relative;
   height: auto;
 }
@@ -894,10 +897,10 @@ export default {
 }
 
 .dropdown button {
-  background: #ffffff;
+  background: white;
   font-family: "GoyangIlsan";
   font-size: 14px;
-  border: 2px solid #c4c4c4;
+  border: 2px solid $pl-4;
   border-radius: 15px;
   height: 2.5em;
   min-width: 4em;
@@ -923,6 +926,8 @@ export default {
   padding-left: 5px;
 }
 .filter__reset {
+  background: white;
+  border: 2px solid $pl-4;
   @include tablet {
     font-size: 11px;
   }

@@ -122,8 +122,8 @@ export default {
   }
 }
 .header .btn {
-  border: solid #c4c4c4 1px !important;
-  background: #e4e4e4;
+  background: $pl-3;
+  color: white;
   @include tablet {
     font-size: 80%;
   }

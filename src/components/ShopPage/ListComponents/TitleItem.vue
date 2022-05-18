@@ -90,6 +90,7 @@ export default {
 @import "/src/assets/style.scss";
 //제목 시작
 .title__container {
+  color: $pl-1;
   height: 4em;
   width: 100%;
   @include tablet {
@@ -113,7 +114,14 @@ export default {
   font-size: 1em;
   text-align: right;
 }
+
+.dropdown-menu span,
+.dropdown-item {
+  color: $pl-2;
+}
 .dropdown-toggle {
+  box-shadow: unset;
+  color: $pl-1;
   @include tablet-s {
     font-size: 1.8em;
   }

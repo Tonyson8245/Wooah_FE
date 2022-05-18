@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     background() {
-      if (this.index % 2 == 0) return `background:#f1f1f1`;
+      if (this.index % 2 == 0) return `background:#fbebfd`;
       return ``;
     },
   },
@@ -42,7 +42,8 @@ export default {
 @import "/src/assets/style.scss";
 
 .container-fluid {
-  border: solid #e1e1e1 1px;
+  color: $pl-1;
+  border: solid $pl-5 1px;
   padding: 3%;
   font-size: 130%;
   @include desktop {
@@ -68,7 +69,7 @@ export default {
 }
 .info__container .address {
   font-size: 0.7em;
-  color: #0a0a0a;
+  color: $pl-1;
 }
 .info__container .keyword {
   margin-right: 3%;
@@ -86,7 +87,7 @@ export default {
   width: 100%;
   position: relative;
   background: white;
-  border-radius: 5%;
+  border-radius: 10%;
 }
 
 .square:after {
@@ -100,7 +101,7 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 5%;
+  border-radius: 10%;
   border: solid #e1e1e1 1px;
 }
 //이미지 끝
