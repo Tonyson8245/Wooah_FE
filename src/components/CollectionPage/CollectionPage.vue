@@ -14,7 +14,7 @@
             @MakeQuery="ClickTag($MakeQuery)"
           />
           <!-- 검색 창 끝/태그 시작 -->
-          <div :class="SearchState">
+          <div class="btn_container">
             <div class="btn_outer btn_outer_move">
               <div class="btn-group" @click="ClickFilter">
                 <div class="dropdown">
@@ -117,7 +117,6 @@
                 </button>
               </div>
             </div>
-
             <FilterView
               class="filter_content"
               :class="FilterStatus"
@@ -125,6 +124,8 @@
               :SetFilter="SetFilter"
               @ClickApply="FilterApply($event)"
             />
+          </div>
+          <div :class="SearchState">
             <!-- 태그끝 -->
             <!-- 하단 사진들 시작 -->
             <InfiniteScroll
@@ -143,6 +144,7 @@
                   :key="post"
                   :post="post"
                   :index="i"
+                  :objectfit="`cover`"
                   @ClickPost="
                     this.post = $event;
                     this.shop = this.post.shop;
@@ -188,12 +190,19 @@
             </div>
             <div class="row" style="width: 80%">
               <div class="col-lg-8 square" style="padding: 0 0 0 0">
-                <img
+                <!-- <img
                   :src="post.url"
                   class="shadow-sm content"
                   alt="..."
+                  style="display: inline-block; background: #fbebfd"
+                /> -->
+                <PostImage
+                  class="content"
                   style="display: inline-block"
+                  :post="post"
+                  :objectfit="`contain`"
                 />
+                <!-- 모달의 이미지 -->
               </div>
               <div class="col-lg-4 ms-auto modal__content_outer">
                 <div class="modal__content_footer">
@@ -788,10 +797,11 @@ export default {
 }
 
 .content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  position: absolute !important;
+  margin: 0 0 0 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
 }
 
 .modal__btn_close {
@@ -894,6 +904,7 @@ export default {
   position: relative;
   overflow-y: scroll;
   overflow-y: hidden;
+  background: #fbebfd;
 }
 
 .dropdown button {
@@ -951,5 +962,10 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+.btn_container {
+  position: sticky;
+  top: 0%;
+  z-index: 3;
 }
 </style>
