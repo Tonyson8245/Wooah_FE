@@ -152,6 +152,15 @@ const ShopStore = {
             context.commit(`SetNoResult`, false);
           }
         });
+
+      await shopApi
+        .getShopImg(id, context.state.currentimagepage + 1) //
+        .catch(function (error) {
+          let res = error.response;
+          if (res.status == 404) {
+            context.commit(`SetNoResult`, false);
+          }
+        }); //다음 페이지 유무 확인용
     },
     async searchShops(context, payload) {
       if (payload.page == 1) context.commit("SetPageReset", true);

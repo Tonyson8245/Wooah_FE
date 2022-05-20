@@ -1,6 +1,6 @@
 <template>
   <div class="container_outer p-lg-2">
-    <div class="container-lg">
+    <div class="container-md">
       <div class="row flex-row-reverse">
         <div v-if="MapView" class="col-md-8 col-sm-12 map__outer g-0">
           <NaverMap :width="width" />
@@ -99,7 +99,6 @@ $mobile-height: 250px;
 //transtition 끝
 .container_outer {
   background: $pl-6;
-  padding: 0 10% 0 10%;
   @include desktop {
     padding: 0 0 0 0;
     margin: 0 0 0 0;
@@ -108,18 +107,24 @@ $mobile-height: 250px;
     width: 100%;
   }
 }
-.container-lg {
+.container-md {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  height: $desktop-height;
   flex-wrap: wrap-reverse;
   border: $pl-4 1px solid;
   border-radius: 15px;
   overflow: hidden;
   @include tablet {
+    height: auto;
     border-radius: 0px;
   }
   @include mobile-s {
+    height: auto;
     border: none;
   }
 }
+
 .map__outer {
   height: $desktop-height;
   @include tablet-s {

@@ -90,6 +90,7 @@ export default {
 @import "/src/assets/style.scss";
 //제목 시작
 .title__container {
+  border: $pl-5 0.5px solid;
   color: $pl-1;
   height: 4em;
   width: 100%;

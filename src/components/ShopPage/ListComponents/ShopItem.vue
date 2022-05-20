@@ -42,7 +42,7 @@ export default {
 @import "/src/assets/style.scss";
 
 .container-fluid {
-  color: $pl-1;
+  color: $pl-0;
   border: solid $pl-5 1px;
   padding: 3%;
   font-size: 130%;
@@ -69,16 +69,17 @@ export default {
 }
 .info__container .address {
   font-size: 0.7em;
-  color: $pl-1;
+  color: $pl-0;
 }
 .info__container .keyword {
   margin-right: 3%;
   padding-inline: 3%;
-  background: #e4e4e4;
-  border: #c4c4c4 0.5px solid;
+  background: $pl-4;
+  border: $pl-2 0.5px solid;
   font-size: 0.6em;
   font-weight: 500;
   font-style: italic;
+  color: $pl-0 !important;
 }
 
 //샵 정보 끝

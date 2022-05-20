@@ -72,24 +72,32 @@ export default {
   },
   mounted() {
     this.FetchShopInfo();
-    var paths = this.$route.path.split("/");
-    if (paths[3] != undefined) {
-      switch (paths[3]) {
-        case "info":
-          this.ClickTab(0);
-          break;
-        case "price":
-          this.ClickTab(1);
-          break;
-        case "image":
-          this.ClickTab(2);
-          break;
-      }
-    }
   },
+
   computed: {
     ShopData() {
       return this.$store.state.ShopStore.shopinfo;
+    },
+    path() {
+      return this.$route.path.split("/");
+    },
+  },
+  watch: {
+    path(a) {
+      if (a[1] == `shop` && a[2] != undefined) {
+        // 샵페이지면서 샵아이디가 있을 경우에만 탭 이동
+        switch (a[3]) {
+          case "price":
+            this.ClickTab(1);
+            break;
+          case "image":
+            this.ClickTab(2);
+            break;
+          default:
+            this.ClickTab(0);
+            break;
+        }
+      }
     },
   },
   methods: {
@@ -136,7 +144,9 @@ export default {
   position: relative;
 }
 .info__content {
+  background: #fcfcfc;
   overflow-y: scroll;
+  overflow-x: hidden;
   height: 793px;
   @include mobile-s {
     height: auto;
@@ -182,8 +192,8 @@ export default {
 .banner {
   text-align: center;
   font-size: 1.3em;
-  background: $pl-6;
-  color: $pl-1;
+  background: $pl-1;
+  color: $pl-6;
   font-weight: bold;
   @include mobile-s {
     font-size: 70%;

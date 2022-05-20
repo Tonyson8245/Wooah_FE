@@ -116,7 +116,7 @@ export default {
 
 .navbar {
   font-family: "GoyangDeogyang";
-  background: $pl-6;
+  background: white;
   font-size: 20px;
   border: solid $pl-4;
   border-width: 0 0 0.5px 0;

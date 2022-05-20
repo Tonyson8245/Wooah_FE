@@ -5,7 +5,7 @@
         <table class="col-lg-6 col-md-6">
           <tr>
             <td><span class="title">상호</span>우아</td>
-            <td><span class="title">대표</span>이빛보라</td>
+            <td><span class="title">대표</span>윤지열</td>
             <th colspan="2" style="font-weight: normal">
               <span class="title">주소</span>서울시 동작구 사당로 16길7(07011)
             </th>
