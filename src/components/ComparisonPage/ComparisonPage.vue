@@ -131,7 +131,7 @@ export default {
       return this.$store.state.CommonStore.width;
     },
     font() {
-      var css = `color:#904DFF; font-weight: bold; padding-bottom:0; `;
+      var css = `color:#d500f9; font-weight: bold; padding-bottom:0; `;
       if (this.width < 420) return css + `font-size:100%`;
       else return css;
     },
@@ -170,6 +170,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/style.scss";
 .outline {
+  background: $pl-6;
   font-family: "GoyangIlsan";
   @include mobile-s {
     font-size: 80%;
@@ -181,13 +182,13 @@ export default {
 }
 .header .title {
   font-weight: bold;
-  color: #904dff;
+  color: $pa-1;
   font-size: 1.8em;
   margin: 0;
 }
 .body {
   height: auto;
-  background: #f8eeff;
+  background: $pl-5;
   width: 100%;
   text-align: center;
 }
@@ -200,14 +201,14 @@ export default {
   }
 } // 가운데 정렬
 .tab {
-  background: #ecd7ff;
+  background: $pa-0;
   font-size: 1.2em;
   font-weight: bold;
   padding: 1%;
-  color: #ba9aff;
+  color: $pl-6;
 }
 .active {
-  background: #ddb8ff;
+  background: $pa-1;
   color: white;
 }
 .container__step {
@@ -228,7 +229,7 @@ export default {
 }
 .result__container {
   background: white;
-  border: #5200ff solid 2px;
+  border: $pa-2 solid 2px;
   border-radius: 10px;
   width: 70%;
   @include tablet {
@@ -239,7 +240,7 @@ export default {
 .result__header .title {
   font-size: 1.2em;
   font-weight: bold;
-  color: #5200ff;
+  color: $pa-2;
 }
 
 .result__header .content {
@@ -255,7 +256,7 @@ export default {
   padding: 1% 0 1% 0;
 }
 .result__body {
-  background: #f0e9ff;
+  background: $pl-6;
   max-height: 400px;
   overflow-y: scroll;
   @include mobile-s {

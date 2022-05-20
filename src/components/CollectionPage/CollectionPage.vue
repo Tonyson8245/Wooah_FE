@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="outline">
     <AlertDialog />
     <div class="container-sm p-lg-5 pt-lg-0">
       <div
@@ -14,7 +14,7 @@
             @MakeQuery="ClickTag($MakeQuery)"
           />
           <!-- 검색 창 끝/태그 시작 -->
-          <div :class="SearchState">
+          <div class="btn_container">
             <div class="btn_outer btn_outer_move">
               <div class="btn-group" @click="ClickFilter">
                 <div class="dropdown">
@@ -109,7 +109,7 @@
                   class="btn btn-sm filter__reset"
                   v-if="ResetStatus"
                   :style="ButtonFocusSetting"
-                  style="border: 2px solid #c4c4c4; border-radius: 15px"
+                  style="border-radius: 15px"
                   type="button"
                   @click="Reset(true)"
                 >
@@ -117,7 +117,6 @@
                 </button>
               </div>
             </div>
-
             <FilterView
               class="filter_content"
               :class="FilterStatus"
@@ -125,6 +124,8 @@
               :SetFilter="SetFilter"
               @ClickApply="FilterApply($event)"
             />
+          </div>
+          <div :class="SearchState">
             <!-- 태그끝 -->
             <!-- 하단 사진들 시작 -->
             <InfiniteScroll
@@ -143,6 +144,7 @@
                   :key="post"
                   :post="post"
                   :index="i"
+                  :objectfit="`cover`"
                   @ClickPost="
                     this.post = $event;
                     this.shop = this.post.shop;
@@ -188,12 +190,19 @@
             </div>
             <div class="row" style="width: 80%">
               <div class="col-lg-8 square" style="padding: 0 0 0 0">
-                <img
+                <!-- <img
                   :src="post.url"
                   class="shadow-sm content"
                   alt="..."
+                  style="display: inline-block; background: #fbebfd"
+                /> -->
+                <PostImage
+                  class="content"
                   style="display: inline-block"
+                  :post="post"
+                  :objectfit="`contain`"
                 />
+                <!-- 모달의 이미지 -->
               </div>
               <div class="col-lg-4 ms-auto modal__content_outer">
                 <div class="modal__content_footer">
@@ -384,6 +393,7 @@ export default {
   },
   mounted() {
     //데이터 가져오는 코드 여기 넣쟈
+    this.$store.commit("collectionStore/setfilterQuery", "");
     this.$store.dispatch("collectionStore/fetchPosts");
     this.$store.commit("Setpagecondition", "collection");
   }, // 생성 될때 포스트 데이터를 가져오게 한다.
@@ -564,7 +574,7 @@ export default {
         this.MontlyArtCondition = "";
         this.SetFilter.monntlyart = false;
       } else {
-        this.MontlyArtCondition = "font-weight:bold; background:#c4c4c4";
+        this.MontlyArtCondition = "font-weight:bold; background:#fbebfd; ";
         this.SetFilter.monntlyart = true;
       }
       this.MakeQuery();
@@ -572,7 +582,7 @@ export default {
     ChangeFilterbar() {
       let Filters = this.SetFilter;
       let bar = this.Filterbar;
-      let active = `#c4c4c4;`;
+      let active = `#fbebfd;`;
       var color_true = Object.keys(Filters.color).filter(
         (key) => Filters.color[key] === true
       );
@@ -740,7 +750,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
-
+.outline {
+  background: $pl-6;
+  height: inherit;
+}
 .search__move {
   position: relative;
   top: -$search_height-desktop;
@@ -771,7 +784,6 @@ export default {
   position: relative;
   left: 5px;
   width: 66.6%;
-  background-color: #f1f1f1;
   @include tablet {
     width: 100%;
     left: 0px;
@@ -785,10 +797,11 @@ export default {
 }
 
 .content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  position: absolute !important;
+  margin: 0 0 0 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
 }
 
 .modal__btn_close {
@@ -805,7 +818,7 @@ export default {
   }
 }
 .modal__btn_right {
-  color: white;
+  color: $pl-4;
   font-size: 1.5em;
   position: absolute;
   bottom: 50%;
@@ -815,7 +828,7 @@ export default {
   }
 }
 .modal__btn_left {
-  color: white;
+  color: $pl-4;
   font-size: 1.5em;
   position: absolute;
   bottom: 50%;
@@ -856,7 +869,7 @@ export default {
   }
 }
 .modal__content_outer {
-  background-color: #a1a1a1;
+  background-color: $pl-2;
   position: relative;
   height: auto;
 }
@@ -891,13 +904,14 @@ export default {
   position: relative;
   overflow-y: scroll;
   overflow-y: hidden;
+  background: #fbebfd;
 }
 
 .dropdown button {
-  background: #ffffff;
+  background: white;
   font-family: "GoyangIlsan";
   font-size: 14px;
-  border: 2px solid #c4c4c4;
+  border: 2px solid $pl-4;
   border-radius: 15px;
   height: 2.5em;
   min-width: 4em;
@@ -923,6 +937,8 @@ export default {
   padding-left: 5px;
 }
 .filter__reset {
+  background: white;
+  border: 2px solid $pl-4;
   @include tablet {
     font-size: 11px;
   }
@@ -946,5 +962,10 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+.btn_container {
+  position: sticky;
+  top: 0%;
+  z-index: 3;
 }
 </style>

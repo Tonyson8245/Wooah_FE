@@ -1,5 +1,5 @@
 <template>
-  <TopHeader />
+  <TopHeader class="top" />
   <body>
     <div class="web--content">
       <router-view />
@@ -46,8 +46,8 @@ export default {
 @import "./assets/style.scss";
 
 .web--content {
-  background: #fafafa;
-  /* min-height: 750px; */
+  background: $pl-6;
+  min-height: 720px;
   @include tablet {
   }
   @include mobile-s {

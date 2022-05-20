@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="Roboto navbar navbar-expand-lg navbar-light bg-light p-0 m-0"
+    class="Roboto navbar navbar-expand-lg p-0 m-0 navbar-secondary"
     style="width: 100%"
     :style="padding"
   >
@@ -115,26 +115,25 @@ export default {
 @import "../assets/style.scss";
 
 .navbar {
-  /* font-family: "MaplestoryOTFLight"; */
-  font-family: "GoyangIlsan";
+  font-family: "GoyangDeogyang";
   background: white;
   font-size: 20px;
-  border: solid #c4c4c4;
+  border: solid $pl-4;
   border-width: 0 0 0.5px 0;
-  /* padding: 0 0 0 21%; // 상단 높이 맞추기 위함 */
   @include tablet {
     font-size: 20px;
-    padding: 0 0 0 0; // 모바일 상에서는 다시 붙기
   }
   @include mobile-s {
-    font-size: 50%;
+    font-size: 80%;
   }
 }
 .navbar-brand {
+  vertical-align: middle;
   font-size: 40px;
   width: 100px;
   height: auto;
   font-weight: bold;
+  color: $pa-1;
 
   @include tablet {
     font-size: 30px;
@@ -143,13 +142,41 @@ export default {
     font-size: 20px;
   }
 } //로고
+
+.container-lg {
+  padding-inline: 0.3%;
+  @include tablet {
+    padding-inline: 2%;
+  }
+  @include mobile-s {
+    padding-inline: 2%;
+  }
+}
+.nav-link {
+  color: $pl-2;
+  padding: 0.1% 0 0.1% 0;
+}
+.nav-item > a:hover {
+  color: $pl-3;
+}
 .active {
-  font-weight: bold;
+  color: $pl-3;
+  text-decoration: underline;
+  text-underline-position: under;
 }
 </style>
 
 <style>
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(213, 0, 249, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
 .navbar-toggler {
-  font-size: 150%;
+  box-shadow: unset;
+}
+.offcanvas-title {
+  color: #aa00ff;
+}
+.text-reset {
+  color: #aa00ff;
 }
 </style>

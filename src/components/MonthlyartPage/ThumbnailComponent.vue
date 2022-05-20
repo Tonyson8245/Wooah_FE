@@ -95,8 +95,11 @@ export default {
 //
 .outline {
   position: relative;
+  border-radius: 15px;
+  overflow: hidden;
   @include mobile-s {
     font-size: 70%;
+    border-radius: 10px;
   }
 }
 .square {
@@ -106,7 +109,7 @@ export default {
 .toggleOff .detail {
   width: 100%;
   z-index: 1;
-  background: #e4e4e4;
+  background: $pl-4;
   opacity: 0.8;
   padding: 6% 0 6% 0;
 }
@@ -116,7 +119,7 @@ export default {
   bottom: 0%;
   width: 100%;
   z-index: 1;
-  background: #e4e4e4;
+  background: white;
   opacity: 0.8;
   height: 35%;
   @include mobile-s {

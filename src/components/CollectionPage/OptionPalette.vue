@@ -3,7 +3,7 @@
     <div class="check" :class="Checked">
       <i class="bi bi-check-lg bi-secondary" style="color: black"></i>
     </div>
-    <i class="bi bi-fingerprint img" style="color: #c4c4c4"></i>
+    <i class="bi bi-fingerprint img"></i>
   </div>
 </template>
 

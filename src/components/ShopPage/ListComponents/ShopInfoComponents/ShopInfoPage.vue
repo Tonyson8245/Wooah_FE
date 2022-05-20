@@ -72,24 +72,32 @@ export default {
   },
   mounted() {
     this.FetchShopInfo();
-    var paths = this.$route.path.split("/");
-    if (paths[3] != undefined) {
-      switch (paths[3]) {
-        case "info":
-          this.ClickTab(0);
-          break;
-        case "price":
-          this.ClickTab(1);
-          break;
-        case "image":
-          this.ClickTab(2);
-          break;
-      }
-    }
   },
+
   computed: {
     ShopData() {
       return this.$store.state.ShopStore.shopinfo;
+    },
+    path() {
+      return this.$route.path.split("/");
+    },
+  },
+  watch: {
+    path(a) {
+      if (a[1] == `shop` && a[2] != undefined) {
+        // 샵페이지면서 샵아이디가 있을 경우에만 탭 이동
+        switch (a[3]) {
+          case "price":
+            this.ClickTab(1);
+            break;
+          case "image":
+            this.ClickTab(2);
+            break;
+          default:
+            this.ClickTab(0);
+            break;
+        }
+      }
     },
   },
   methods: {
@@ -124,20 +132,21 @@ export default {
 @import "/src/assets/style.scss";
 //탭
 .tab .btn {
-  background: #f3f3f3;
-  border: #e1e1e1 solid 1px;
+  color: black;
+  border: $pl-5 solid 1px;
   font-size: 1em;
 }
 
 ///
 .info_outline {
-  border: solid 0.5px #e1e1e1;
   font-size: 16px;
   font-family: "GoyangIlsan";
   position: relative;
 }
 .info__content {
+  background: #fcfcfc;
   overflow-y: scroll;
+  overflow-x: hidden;
   height: 793px;
   @include mobile-s {
     height: auto;
@@ -183,7 +192,8 @@ export default {
 .banner {
   text-align: center;
   font-size: 1.3em;
-  background: #d4d4d4;
+  background: $pl-1;
+  color: $pl-6;
   font-weight: bold;
   @include mobile-s {
     font-size: 70%;
@@ -214,6 +224,13 @@ ol {
 }
 .carousel__prev,
 .carousel__next {
-  background-color: #c4c4c4 !important;
+  background-color: white !important;
+  color: #e355fc;
+}
+.carousel__prev {
+  left: -3%;
+}
+.carousel__next {
+  right: -3%;
 }
 </style>

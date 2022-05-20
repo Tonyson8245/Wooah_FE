@@ -38,7 +38,7 @@
       <div class="ranktags">
         <h4 class="title">인기 태그</h4>
         <span
-          class="tags badge bg-secondary rounded-pill"
+          class="tags badge rounded-pill"
           v-for="tag in RankTags"
           :key="tag"
           @click="
@@ -109,19 +109,20 @@ export default {
 
 .ranktags {
   padding: 2% 1% 0 3%;
-  font-family: "GoyangIlsan";
+  font-family: "GoyangDeogyang";
   cursor: default;
 }
-.ranktags title {
-  padding-left: 3%;
+.ranktags .title {
+  color: $pa-2;
+  font-weight: bold;
   @include mobile-s {
     font-size: 14px;
   }
 }
 .ranktags .tags {
-  font-weight: 100;
   margin: 0.5%;
   font-size: 14px;
+  background: $pa-0;
   @include mobile-s {
     font-size: 11px;
   }
@@ -172,7 +173,6 @@ export default {
 .search {
   display: inline;
   margin: 1em 0 0 0;
-  background: #f8f9fa;
 
   @include tablet {
     margin: 0.5em 0 0 0;
@@ -191,9 +191,9 @@ export default {
 .search input {
   height: 60px;
   text-indent: 25px;
-  border: 0.5px solid #d6d4d4;
+  border: 0.5px solid $pl-4;
   border-radius: 3em;
-  background-color: #ffffff;
+  background-color: white;
   font-family: "GoyangIlsan";
   padding-left: 30px;
 
@@ -206,7 +206,6 @@ export default {
 
 .search input:focus {
   box-shadow: none;
-  border: 2px solid #a4a4a4;
 }
 
 .search .fa-search {
