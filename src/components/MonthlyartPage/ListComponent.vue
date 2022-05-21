@@ -1,7 +1,9 @@
 <template>
   <div class="outline">
     <div class="header d-flex justify-content-between align-items-center">
-      <span class="header__price_range">{{ thumbnail.price_range }}</span>
+      <span class="header__price_range"
+        >~ {{ thumbnail.price_range + 1 }}만원 대</span
+      >
       <div
         class="more"
         v-if="width > 400"
@@ -42,22 +44,7 @@ export default {
   },
   methods: {
     clickMore(data) {
-      var detailpath;
-      switch (data) {
-        case "1만 원대":
-          detailpath = `10000`;
-          break;
-        case "2만 원대":
-          detailpath = `20000`;
-          break;
-        case "3만 원대":
-          detailpath = `30000`;
-          break;
-        case "4만 원대":
-          detailpath = `40000`;
-          break;
-      }
-      this.$router.push({ path: "/monthlyart/" + detailpath });
+      this.$router.push({ path: "/monthlyart/" + data * 10000 });
     }, // 더보기
   },
   props: {

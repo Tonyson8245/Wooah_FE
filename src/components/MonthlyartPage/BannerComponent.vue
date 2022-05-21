@@ -5,7 +5,7 @@
       <div style="z-index: 1">
         <div v-if="title == `monthlyart`">
           <div class="icons">
-            <p>4월의 네일 디자인</p>
+            <p>{{ Month }}월의 네일 디자인</p>
           </div>
           <div class="text container g-0" :style="`width:` + textWidth">
             <div class="row g-0" style="font-size: 70%">
@@ -49,6 +49,10 @@ export default {
       if (width > 1400) return `40%`;
       else return `50%`;
     },
+    Month() {
+      const today = new Date();
+      return today.getMonth() + 1;
+    },
   },
 };
 </script>
@@ -70,7 +74,7 @@ export default {
   }
 }
 .banner__outline {
-  background-color: #949494;
+  background-color: $pl-3;
   border-radius: 5px;
   height: 100%;
   margin: auto;
@@ -94,7 +98,7 @@ export default {
   font-size: 1.5em;
   color: white;
   font-style: italic;
-  font-family: "GoyangIlsan";
+  font-family: "GoyangDeogyang";
   margin-bottom: 0;
 }
 .banner__outline .text {
@@ -110,6 +114,6 @@ export default {
   font-size: 2em;
   width: 100%;
   color: white;
-  font-family: "GoyangIlsan";
+  font-family: "GoyangDeogyang";
 }
 </style>

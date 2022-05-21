@@ -27,7 +27,7 @@
           <div v-if="type == `foot`" class="container-fluid row p-0 mb-1">
             <div class="col-3 type">발</div>
             <div class="col-9">
-              <div v-for="menu in ShopData.menu.hand" :key="menu" class="pb-3">
+              <div v-for="menu in ShopData.menu.foot" :key="menu" class="pb-3">
                 <div class="d-flex justify-content-between">
                   <span class="menu_name flex-grow-1">{{ menu.name }}</span
                   ><span class="menu_price">{{ menu.price }}원</span>

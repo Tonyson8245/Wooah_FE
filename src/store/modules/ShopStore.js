@@ -129,7 +129,6 @@ const ShopStore = {
         .getShopDetail(id)
         .then(function (response) {
           context.commit("FetchShopinfo", response.data);
-          context.commit("ResetImagePage");
         })
         .catch(function (error) {
           console.log(error);
@@ -142,7 +141,6 @@ const ShopStore = {
         .then((response) => {
           if (response.status == 200) {
             context.commit("FetchShopImage", response.data);
-
             context.commit("IncreaseImagePage");
           }
         })
@@ -152,6 +150,15 @@ const ShopStore = {
             context.commit(`SetNoResult`, false);
           }
         });
+
+      await shopApi
+        .getShopImg(id, context.state.currentimagepage) //
+        .catch(function (error) {
+          let res = error.response;
+          if (res.status == 404) {
+            context.commit(`SetNoResult`, false);
+          }
+        }); //다음 페이지 유무 확인용
     },
     async searchShops(context, payload) {
       if (payload.page == 1) context.commit("SetPageReset", true);

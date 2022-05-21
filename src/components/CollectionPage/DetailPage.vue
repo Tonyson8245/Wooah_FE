@@ -10,6 +10,9 @@
             class="content square"
             alt="..."
             style="display: inline-block"
+            @click="onClick($event.target, post.url)"
+            @load="onImgLoad"
+            @error="onError"
           />
         </div>
         <div class="col-lg-4 col-md-12 content_container">
@@ -55,11 +58,12 @@
 </template>
 
 <script>
+import img from "@/assets/img/400x400.png";
 import AlertDialog from "../Common/AlertDialog.vue";
 export default {
   name: `DetailPage`,
   data() {
-    return {};
+    return { error: false, updated: false };
   },
   mounted() {
     this.$emit("ChangePageCondition", "collection");
@@ -102,6 +106,25 @@ export default {
     ClickMore() {
       this.$router.push({ path: "/library" });
     },
+    onImgLoad() {
+      this.isLoaded = "visible";
+
+      if (!this.error) {
+        this.error = false;
+        this.updated = false;
+      }
+    },
+    onError(e) {
+      this.error = true;
+      e.target.src = img; //어차피 오류나면 클릭해서 모달이 뜨지 않을테니, 그냥 새로고침하게 하자
+      e.target.setAttribute(`data-bs-toggle`, "");
+    },
+    onClick(e, url) {
+      if (this.error) {
+        e.src = url + `?` + this.index + new Date().getTime();
+        this.error = false;
+      }
+    },
   },
 };
 </script>
@@ -110,12 +133,11 @@ export default {
 @import "../../assets/style.scss";
 
 .outer {
-  margin-top: 2%;
   height: auto;
   width: 100%;
-  padding: 0 23% 0 23%;
+  padding: 4% 23% 0 23%;
   @include desktop {
-    padding: 0 10% 0 10%;
+    padding: 2% 10% 0 10%;
   }
   @include mobile-s {
     padding: 0 0 0 0;
@@ -123,7 +145,6 @@ export default {
 }
 
 .modal__parent {
-  width: 100%;
   padding-bottom: 64%;
   position: relative;
   @include tablet {
@@ -144,18 +165,19 @@ export default {
   }
 }
 .modal__child .img_container {
+  border: $pl-4 solid 0.3px;
   padding: 0 0 0 0;
-  border: #d4d4d4 solid 0.3px;
-  background: #f1f1f1;
+  background: $pl-6;
   @include tablet {
     height: 75%;
   }
 }
 
 .modal__child .content_container {
-  border: #d4d4d4 solid 0.3px;
+  color: white;
+  border: $pl-4 solid 0.3px;
   border-width: 0.3px 0.3px 0.3px 0px;
-  background: white;
+  background: $pl-1;
   @include tablet {
     height: 25%;
     border-width: 0px 0.3px 0.3px 0.3px;
@@ -169,7 +191,7 @@ export default {
 .square {
   position: relative;
   width: 100%;
-  background-color: #f1f1f1;
+  background-color: #fcf4fd;
   @include tablet {
     width: 100%;
     left: 0px;
@@ -193,9 +215,9 @@ export default {
 }
 
 .btn__child .btn {
-  background: #c4c4c4;
+  background: $pl-1;
   border: none;
-  color: black;
+  color: white;
   font-size: 18px;
   font-family: "GoyangIlsan";
   width: 38%;

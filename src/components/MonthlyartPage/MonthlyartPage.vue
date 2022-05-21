@@ -1,16 +1,22 @@
 <template>
-  <div class="container-sm p-lg-5 pt-lg-0">
-    <div class="row d-flex justify-content-center align-items-center g-0">
-      <div class="col-md-10">
-        <banner :title="title" />
-        <div class="monthlyart__container container">
-          <region class="region" :fontSize="fontSize" />
-          <router-view v-slot="{ Component }">
-            <transition name="scale" mode="out-in">
-              <component :is="Component" />
-            </transition>
-            <!-- router-transition -->
-          </router-view>
+  <div class="outline">
+    <div class="container-lg p-lg-5 pt-lg-0">
+      <div class="row d-flex justify-content-center align-items-center g-0">
+        <div class="col-md-10">
+          <banner :title="title" />
+          <div class="monthlyart__container container">
+            <region
+              class="region"
+              :fontSize="fontSize"
+              :font="`color:#CF88DB; `"
+            />
+            <router-view v-slot="{ Component }">
+              <transition name="scale" mode="out-in">
+                <component :is="Component" />
+              </transition>
+              <!-- router-transition -->
+            </router-view>
+          </div>
         </div>
       </div>
     </div>
@@ -36,22 +42,7 @@ export default {
       else {
         switch (this.$route.params.price) {
           case `10000`:
-            title = `1만원 대`;
-            break;
-          case `20000`:
-            title = `2만원 대`;
-            break;
-          case `30000`:
-            title = `3만원 대`;
-            break;
-          case `40000`:
-            title = `4만원 대`;
-            break;
-          case `50000`:
-            title = `5만원 대`;
-            break;
-          case `60000`:
-            title = `6만원 대`;
+            title = `~ ` + (this.$route.params.price / 10000 + 1) + `만원 대`;
             break;
         }
       } //  가격에 따라 배너 타이틀 변경
@@ -88,5 +79,10 @@ export default {
   text-align: right;
 }
 .outline {
+  background: $pl-6;
+  min-height: 1000px;
+  @include mobile-s {
+    min-height: 500px;
+  }
 }
 </style>

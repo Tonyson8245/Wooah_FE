@@ -289,7 +289,7 @@ export default {
   padding: 4%;
   @include desktop {
     padding: 0;
-    font-size: 80%;
+    /* font-size: 80%; */
   }
 }
 input {
@@ -311,7 +311,7 @@ img {
   height: 100%;
   position: relative;
   background: #ffffff;
-  border: 1px solid #ba9aff;
+  border: 1px solid $pa-2;
   border-radius: 5px;
 }
 .arrow_box_left:after,
@@ -334,7 +334,7 @@ img {
 }
 .arrow_box_left:before {
   border-color: rgba(153, 0, 255, 0);
-  border-right-color: #9900ff;
+  border-right-color: $pa-2;
   border-width: 16px;
   margin-top: -16px;
 }
@@ -343,7 +343,7 @@ img {
   min-height: 50px;
   position: relative;
   background: #ffffff;
-  border: 1px solid #9900ff;
+  border: 1px solid $pa-2;
 }
 .arrow_box:after,
 .arrow_box:before {
@@ -365,7 +365,7 @@ img {
 }
 .arrow_box:before {
   border-color: rgba(153, 0, 255, 0);
-  border-bottom-color: #9900ff;
+  border-bottom-color: $pa-2;
   border-width: 16px;
   margin-left: -16px;
 }
@@ -388,16 +388,16 @@ img {
   height: 100%;
 }
 .message {
-  padding: 5%;
+  padding: 7%;
   height: 100%;
 }
 .message__header {
   text-align: left;
 }
 .stepNum {
-  color: #9900ff;
+  color: $pa-1;
   font-weight: bold;
-  font-size: 1em;
+  font-size: 0.8em;
 }
 .title {
   font-size: 1.2em;
@@ -407,20 +407,20 @@ img {
 }
 .line {
   border-bottom-style: solid;
-  border-bottom-color: #9900ff;
+  border-bottom-color: $pa-1;
   border-bottom-width: 5px;
   padding-top: 2%;
   width: 20%;
 }
 .btn {
-  background: #ba9aff;
+  background: $pa-0;
   width: 100%;
   font-size: 0.8em;
   white-space: nowrap;
   padding-inline: 0;
 }
 .btn-skip {
-  background: #9900ff;
+  background: $pa-1;
   color: white;
 }
 .buttons {

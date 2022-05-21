@@ -8,7 +8,15 @@
       <div class="info__content">
         <carousel v-if="ShopData.images.length > 0" :items-to-show="1">
           <slide class="square" v-for="slide in ShopData.images" :key="slide">
-            <img class="inner" :src="slide" alt="" />
+            <img
+              class="inner"
+              :src="slide"
+              alt=""
+              style="object-fit: contain"
+              @click="onClick($event.target, slide)"
+              @load="onImgLoad"
+              @error="onError"
+            />
           </slide>
           <template #addons>
             <navigation class="mx-4" />
@@ -48,6 +56,7 @@
 </template>
 
 <script>
+import img from "@/assets/img/400x400.png";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
@@ -68,31 +77,59 @@ export default {
         ``,
         ``,
       ],
+      error: false,
+      updated: false,
     };
   },
   mounted() {
     this.FetchShopInfo();
-    var paths = this.$route.path.split("/");
-    if (paths[3] != undefined) {
-      switch (paths[3]) {
-        case "info":
-          this.ClickTab(0);
-          break;
-        case "price":
-          this.ClickTab(1);
-          break;
-        case "image":
-          this.ClickTab(2);
-          break;
-      }
-    }
   },
   computed: {
     ShopData() {
       return this.$store.state.ShopStore.shopinfo;
     },
+    path() {
+      return this.$route.path.split("/");
+    },
+  },
+  watch: {
+    path(a) {
+      if (a[1] == `shop` && a[2] != undefined) {
+        // 샵페이지면서 샵아이디가 있을 경우에만 탭 이동
+        switch (a[3]) {
+          case "price":
+            this.ClickTab(1);
+            break;
+          case "image":
+            this.ClickTab(2);
+            break;
+          default:
+            this.ClickTab(0);
+            break;
+        }
+      }
+    },
   },
   methods: {
+    onImgLoad() {
+      this.isLoaded = "visible";
+
+      if (!this.error) {
+        this.error = false;
+        this.updated = false;
+      }
+    },
+    onError(e) {
+      this.error = true;
+      e.target.src = img; //어차피 오류나면 클릭해서 모달이 뜨지 않을테니, 그냥 새로고침하게 하자
+      e.target.setAttribute(`data-bs-toggle`, "");
+    },
+    onClick(e, slide) {
+      if (this.error) {
+        e.src = slide + `?` + this.index + new Date().getTime();
+        this.error = false;
+      }
+    },
     FetchShopInfo() {
       var id = this.$route.params.id;
       this.$store.dispatch("ShopStore/getShopDetail", id);
@@ -124,20 +161,21 @@ export default {
 @import "/src/assets/style.scss";
 //탭
 .tab .btn {
-  background: #f3f3f3;
-  border: #e1e1e1 solid 1px;
+  color: black;
+  border: $pl-5 solid 1px;
   font-size: 1em;
 }
 
 ///
 .info_outline {
-  border: solid 0.5px #e1e1e1;
   font-size: 16px;
   font-family: "GoyangIlsan";
   position: relative;
 }
 .info__content {
+  background: #fcfcfc;
   overflow-y: scroll;
+  overflow-x: hidden;
   height: 793px;
   @include mobile-s {
     height: auto;
@@ -183,7 +221,8 @@ export default {
 .banner {
   text-align: center;
   font-size: 1.3em;
-  background: #d4d4d4;
+  background: $pl-1;
+  color: $pl-6;
   font-weight: bold;
   @include mobile-s {
     font-size: 70%;
@@ -214,6 +253,13 @@ ol {
 }
 .carousel__prev,
 .carousel__next {
-  background-color: #c4c4c4 !important;
+  background-color: white !important;
+  color: #e355fc;
+}
+.carousel__prev {
+  left: -3%;
+}
+.carousel__next {
+  right: -3%;
 }
 </style>

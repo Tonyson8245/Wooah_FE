@@ -110,6 +110,7 @@ export default {
   padding: 0 0 0 0;
 }
 .header {
+  color: $pl-1;
   font-size: 1.1em;
   margin: 0 0 1% 0;
   vertical-align: center;
@@ -122,8 +123,8 @@ export default {
   }
 }
 .header .btn {
-  border: solid #c4c4c4 1px !important;
-  background: #e4e4e4;
+  background: $pl-3;
+  color: white;
   @include tablet {
     font-size: 80%;
   }

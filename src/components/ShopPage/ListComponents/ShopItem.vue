@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     background() {
-      if (this.index % 2 == 0) return `background:#f1f1f1`;
+      if (this.index % 2 == 0) return `background:#fbebfd`;
       return ``;
     },
   },
@@ -42,7 +42,8 @@ export default {
 @import "/src/assets/style.scss";
 
 .container-fluid {
-  border: solid #e1e1e1 1px;
+  color: $pl-0;
+  border: solid $pl-5 1px;
   padding: 3%;
   font-size: 130%;
   @include desktop {
@@ -68,16 +69,17 @@ export default {
 }
 .info__container .address {
   font-size: 0.7em;
-  color: #0a0a0a;
+  color: $pl-0;
 }
 .info__container .keyword {
   margin-right: 3%;
   padding-inline: 3%;
-  background: #e4e4e4;
-  border: #c4c4c4 0.5px solid;
+  background: $pl-4;
+  border: $pl-2 0.5px solid;
   font-size: 0.6em;
   font-weight: 500;
   font-style: italic;
+  color: $pl-0 !important;
 }
 
 //샵 정보 끝
@@ -86,7 +88,7 @@ export default {
   width: 100%;
   position: relative;
   background: white;
-  border-radius: 5%;
+  border-radius: 10%;
 }
 
 .square:after {
@@ -100,7 +102,7 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 5%;
+  border-radius: 10%;
   border: solid #e1e1e1 1px;
 }
 //이미지 끝

@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="col img__outline img-thumbnail shadow-sm"
-    style="position: relative"
-  >
+  <div class="col img__outline img-thumbnail" style="position: relative">
     <i
       class="bi bi-heart-fill monthly"
       v-if="post.monthly_art"
@@ -10,12 +7,16 @@
     ></i>
     <img
       :src="post.url + `?` + index"
-      aria-placeholder="https://via.placeholder.com/400x400"
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
-      @click="$emit('ClickPost', post)"
+      @click="
+        if (!error) $emit('ClickPost', post);
+        else updateimg();
+      "
       @load="onImgLoad"
       @error="onError"
+      :style="`object-fit:` + objectfit"
+      ref="img"
     />
   </div>
 
@@ -30,20 +31,39 @@ export default {
   props: {
     post: Object,
     index: Number,
+    objectfit: String,
   },
   data() {
     return {
       isLoaded: "invisible",
+      error: false,
+      updated: false,
     };
   },
   methods: {
-    onImgLoad() {
+    onImgLoad(e) {
       this.isLoaded = "visible";
+
+      if (!this.error) {
+        this.error = false;
+        this.updated = false;
+        e.target.setAttribute(`data-bs-toggle`, "modal");
+      }
     },
     onError(e) {
-      e.target.src = img;
+      this.error = true;
+      e.target.src = img; //어차피 오류나면 클릭해서 모달이 뜨지 않을테니, 그냥 새로고침하게 하자
+      e.target.setAttribute(`data-bs-toggle`, "");
+    },
+    updateimg() {
+      if (this.error) {
+        this.$refs.img.src =
+          this.post.url + `?` + this.index + new Date().getTime();
+        this.error = false;
+      }
     },
   },
+  computed: {},
 };
 </script>
 
@@ -55,17 +75,17 @@ $thumbnail-padding: 0.25rem;
   width: 100%;
   height: 100%;
   position: absolute;
-  object-fit: cover;
+  background: $pl-6;
+  background-color: white;
 }
 
 .img__outline {
-  padding: 2px;
+  padding: 0 0 0 0;
   position: relative;
   width: 32%;
   margin: 0.5% 0.5% 0.5% 0.5%;
   padding-bottom: 32%;
   overflow: hidden;
-  background: #f1f1f1;
 }
 
 .monthly {

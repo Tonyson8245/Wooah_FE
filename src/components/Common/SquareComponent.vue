@@ -18,7 +18,7 @@ export default {
 .square {
   width: 100%;
   position: relative;
-  border-radius: 5%;
+  border-radius: 10%;
 }
 
 .square:after {
