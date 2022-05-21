@@ -139,7 +139,7 @@
               <div
                 class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 row-cols-xs-3 g-0"
               >
-                <PostImage
+                <post-image
                   v-for="(post, i) in posts"
                   :key="post"
                   :post="post"
@@ -197,6 +197,7 @@
                   style="display: inline-block; background: #fbebfd"
                 /> -->
                 <PostImage
+                  v-if="post != ``"
                   class="content"
                   style="display: inline-block"
                   :post="post"

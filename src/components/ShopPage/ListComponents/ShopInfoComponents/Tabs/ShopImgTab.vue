@@ -6,9 +6,16 @@
         <i class="bi bi-heart-fill monthly" v-if="image.monthly_art"></i>
       </div>
     </div>
-    <div style="text-align: center" class="pt-2">
+    <div
+      style="text-align: center"
+      class="pt-2"
+      v-if="shopimages.length > 0 || !noResult"
+    >
+      <span v-if="!noResult" style="font-size: 0.8em"
+        >마지막 페이지입니다.</span
+      >
       <button
-        v-if="noResult"
+        v-else
         @click="GetShopImage"
         class="btn btn-light"
         style="
@@ -21,7 +28,6 @@
       >
         더보기
       </button>
-      <span v-else style="font-size: 0.8em">마지막 페이지입니다.</span>
     </div>
   </div>
 </template>
@@ -41,7 +47,7 @@ export default {
     },
   },
   mounted() {
-    // this.$store.commit("ShopStore/ResetImagePage");
+    this.$store.commit("ShopStore/ResetImagePage");
     this.GetShopImage();
   },
   methods: {

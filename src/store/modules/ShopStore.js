@@ -129,7 +129,6 @@ const ShopStore = {
         .getShopDetail(id)
         .then(function (response) {
           context.commit("FetchShopinfo", response.data);
-          context.commit("ResetImagePage");
         })
         .catch(function (error) {
           console.log(error);
@@ -142,7 +141,6 @@ const ShopStore = {
         .then((response) => {
           if (response.status == 200) {
             context.commit("FetchShopImage", response.data);
-
             context.commit("IncreaseImagePage");
           }
         })
@@ -154,7 +152,7 @@ const ShopStore = {
         });
 
       await shopApi
-        .getShopImg(id, context.state.currentimagepage + 1) //
+        .getShopImg(id, context.state.currentimagepage) //
         .catch(function (error) {
           let res = error.response;
           if (res.status == 404) {

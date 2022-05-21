@@ -8,7 +8,15 @@
       <div class="info__content">
         <carousel v-if="ShopData.images.length > 0" :items-to-show="1">
           <slide class="square" v-for="slide in ShopData.images" :key="slide">
-            <img class="inner" :src="slide" alt="" />
+            <img
+              class="inner"
+              :src="slide"
+              alt=""
+              style="object-fit: contain"
+              @click="onClick($event.target, slide)"
+              @load="onImgLoad"
+              @error="onError"
+            />
           </slide>
           <template #addons>
             <navigation class="mx-4" />
@@ -48,6 +56,7 @@
 </template>
 
 <script>
+import img from "@/assets/img/400x400.png";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
@@ -68,12 +77,13 @@ export default {
         ``,
         ``,
       ],
+      error: false,
+      updated: false,
     };
   },
   mounted() {
     this.FetchShopInfo();
   },
-
   computed: {
     ShopData() {
       return this.$store.state.ShopStore.shopinfo;
@@ -101,6 +111,25 @@ export default {
     },
   },
   methods: {
+    onImgLoad() {
+      this.isLoaded = "visible";
+
+      if (!this.error) {
+        this.error = false;
+        this.updated = false;
+      }
+    },
+    onError(e) {
+      this.error = true;
+      e.target.src = img; //어차피 오류나면 클릭해서 모달이 뜨지 않을테니, 그냥 새로고침하게 하자
+      e.target.setAttribute(`data-bs-toggle`, "");
+    },
+    onClick(e, slide) {
+      if (this.error) {
+        e.src = slide + `?` + this.index + new Date().getTime();
+        this.error = false;
+      }
+    },
     FetchShopInfo() {
       var id = this.$route.params.id;
       this.$store.dispatch("ShopStore/getShopDetail", id);

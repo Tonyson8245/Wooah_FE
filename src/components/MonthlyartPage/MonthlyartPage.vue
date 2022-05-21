@@ -5,7 +5,11 @@
         <div class="col-md-10">
           <banner :title="title" />
           <div class="monthlyart__container container">
-            <region class="region" :fontSize="fontSize" />
+            <region
+              class="region"
+              :fontSize="fontSize"
+              :font="`color:#CF88DB; `"
+            />
             <router-view v-slot="{ Component }">
               <transition name="scale" mode="out-in">
                 <component :is="Component" />

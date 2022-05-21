@@ -1,11 +1,13 @@
 <template>
-  <TopHeader class="top" />
-  <body>
-    <div class="web--content">
-      <router-view />
-    </div>
-  </body>
-  <BottomFooter />
+  <div class="viewport">
+    <TopHeader class="top" />
+    <body>
+      <div class="web--content">
+        <router-view />
+      </div>
+    </body>
+    <BottomFooter />
+  </div>
 </template>
 
 <script>
@@ -44,7 +46,9 @@ export default {
 
 <style lang="scss">
 @import "./assets/style.scss";
-
+.viewport {
+  cursor: default;
+}
 .web--content {
   background: $pl-6;
   min-height: 720px;

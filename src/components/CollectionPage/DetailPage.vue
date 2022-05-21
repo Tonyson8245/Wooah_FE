@@ -10,6 +10,9 @@
             class="content square"
             alt="..."
             style="display: inline-block"
+            @click="onClick($event.target, post.url)"
+            @load="onImgLoad"
+            @error="onError"
           />
         </div>
         <div class="col-lg-4 col-md-12 content_container">
@@ -55,11 +58,12 @@
 </template>
 
 <script>
+import img from "@/assets/img/400x400.png";
 import AlertDialog from "../Common/AlertDialog.vue";
 export default {
   name: `DetailPage`,
   data() {
-    return {};
+    return { error: false, updated: false };
   },
   mounted() {
     this.$emit("ChangePageCondition", "collection");
@@ -102,6 +106,25 @@ export default {
     ClickMore() {
       this.$router.push({ path: "/library" });
     },
+    onImgLoad() {
+      this.isLoaded = "visible";
+
+      if (!this.error) {
+        this.error = false;
+        this.updated = false;
+      }
+    },
+    onError(e) {
+      this.error = true;
+      e.target.src = img; //어차피 오류나면 클릭해서 모달이 뜨지 않을테니, 그냥 새로고침하게 하자
+      e.target.setAttribute(`data-bs-toggle`, "");
+    },
+    onClick(e, url) {
+      if (this.error) {
+        e.src = url + `?` + this.index + new Date().getTime();
+        this.error = false;
+      }
+    },
   },
 };
 </script>
@@ -114,7 +137,7 @@ export default {
   width: 100%;
   padding: 4% 23% 0 23%;
   @include desktop {
-    padding: 0 10% 0 10%;
+    padding: 2% 10% 0 10%;
   }
   @include mobile-s {
     padding: 0 0 0 0;

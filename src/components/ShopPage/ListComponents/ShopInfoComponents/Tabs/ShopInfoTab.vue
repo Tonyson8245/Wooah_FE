@@ -15,7 +15,9 @@
       <div class="content pt-2">
         <div v-if="ShopData.contacts.phone != null">
           <img src="../../../../../../src/assets/img/telephone.png" alt="" />
-          {{ ShopData.contacts.phone }}
+          <a v-bind:href="`tel:+82.` + ShopData.contacts.phone">{{
+            ShopData.contacts.phone
+          }}</a>
         </div>
         <div v-if="ShopData.contacts.kakao_id != null">
           <img src="../../../../../../src/assets/img/kakao-talk.png" alt="" />
@@ -27,19 +29,19 @@
         </div>
         <div v-if="ShopData.contacts.instagram != null">
           <img src="../../../../../../src/assets/img/instagram.png" alt="" />
-          <a href="{{ ShopData.contacts.instagram }}">{{
+          <a target="_blank" v-bind:href="ShopData.contacts.instagram">{{
             ShopData.contacts.instagram
           }}</a>
         </div>
         <div v-if="ShopData.contacts.blog != null">
           <img src="../../../../../../src/assets/img/blogging.png" alt="" />
-          <a href="{{ ShopData.contacts.blog }}">{{
+          <a target="_blank" v-bind:href="ShopData.contacts.blog">{{
             ShopData.contacts.blog
           }}</a>
         </div>
         <div v-if="ShopData.contacts.site != null">
           <img src="../../../../../../src/assets/img/blogging.png" alt="" />
-          <a href="{{ ShopData.contacts.site }}">{{
+          <a target="_blank" v-bind:href="ShopData.contacts.site">{{
             ShopData.contacts.site
           }}</a>
         </div>

@@ -131,10 +131,10 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-12 link">
+          <div class="col-sm-6 col-12 link p-0">
             <div class="square">
               <div class="inner">
-                <div class="row fw-bold" v-if="monthlyart.length > 0">
+                <div class="row fw-bold m-0" v-if="monthlyart.length > 0">
                   <div
                     class="col-6 tile p-0"
                     v-for="i in 3"
@@ -185,11 +185,11 @@
                     background: white;
                     padding: 5%;
                     width: 100%;
-                    border-radius: 10%;
+                    border-radius: 15px;
                   "
                 >
                   <Square :url="shop.url" />
-                  <div class="shopinfo p-2">
+                  <div class="shopinfo">
                     <span class="fw-bold">{{ shop.name }}</span
                     >>
                     <div class="contact">
@@ -492,6 +492,7 @@ export default {
 }
 .link .row {
   height: 100%;
+  width: 100%;
   display: flex;
 }
 .row .tile {

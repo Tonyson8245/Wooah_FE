@@ -110,6 +110,7 @@ export default {
   padding: 0 0 0 0;
 }
 .header {
+  color: $pl-1;
   font-size: 1.1em;
   margin: 0 0 1% 0;
   vertical-align: center;

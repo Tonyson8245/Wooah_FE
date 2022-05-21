@@ -76,6 +76,7 @@ $thumbnail-padding: 0.25rem;
   height: 100%;
   position: absolute;
   background: $pl-6;
+  background-color: white;
 }
 
 .img__outline {
@@ -85,7 +86,6 @@ $thumbnail-padding: 0.25rem;
   margin: 0.5% 0.5% 0.5% 0.5%;
   padding-bottom: 32%;
   overflow: hidden;
-  background: #f1f1f1;
 }
 
 .monthly {

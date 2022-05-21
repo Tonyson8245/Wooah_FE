@@ -36,32 +36,36 @@
             <li class="nav-item">
               <a
                 class="nav-link"
+                data-bs-dismiss="offcanvas"
                 :class="TapCondition[0]"
-                @click="this.$router.push('/library')"
+                @click="ClickTo('/library')"
                 >디자인</a
               >
             </li>
             <li class="nav-item">
               <a
                 class="nav-link"
+                data-bs-dismiss="offcanvas"
                 :class="TapCondition[1]"
-                @click="this.$router.push('/shop')"
+                @click="ClickTo('/shop')"
                 >샵</a
               >
             </li>
             <li class="nav-item">
               <a
                 class="nav-link"
+                data-bs-dismiss="offcanvas"
                 :class="TapCondition[2]"
-                @click="this.$router.push('/monthlyart')"
+                @click="ClickTo('/monthlyart')"
                 >이달의아트</a
               >
             </li>
             <li class="nav-item">
               <a
                 class="nav-link"
+                data-bs-dismiss="offcanvas"
                 :class="TapCondition[3]"
-                @click="this.$router.push('/comparison')"
+                @click="ClickTo('/comparison')"
                 >가격비교</a
               >
             </li>
@@ -108,12 +112,22 @@ export default {
       return this.$store.state.pagecondintion;
     },
   },
+  methods: {
+    ClickTo(a) {
+      this.$router.push(a);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../assets/style.scss";
-
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+  outline: none;
+  box-shadow: none;
+}
 .navbar {
   font-family: "GoyangDeogyang";
   background: white;
