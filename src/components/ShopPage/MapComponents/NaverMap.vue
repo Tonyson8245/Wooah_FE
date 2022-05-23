@@ -117,7 +117,7 @@ export default {
       if (type == "focus") {
         background = "#ce93d8";
         outline = "#ab47bc";
-        color = "#ffffff";
+        color = "#ab47bc";
       } else {
         background = "#ffffff";
         outline = "#ab47bc";

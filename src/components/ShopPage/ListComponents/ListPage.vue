@@ -62,9 +62,9 @@ export default {
     VPagination,
   },
   mounted() {
-    this.$store.dispatch("ShopStore/getShops", 1);
-    this.$store.dispatch("ShopStore/getDistricts");
     if (this.currentpage != 0) this.page = this.currentpage;
+    this.$store.dispatch("ShopStore/getShops", this.page);
+    this.$store.dispatch("ShopStore/getDistricts");
   },
   computed: {
     currentpage() {
@@ -92,7 +92,7 @@ export default {
         this.shops[index].is_partner == null ||
         this.shops[index].is_partner == true
       ) {
-        this.$router.push("/shop/" + id);
+        this.$router.push("/shop/" + id + "/info");
       }
       this.FocusoutShop(); // 해당 샵에서 포커스 벗어남
       this.$store.commit("ShopStore/SetShop", index); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
@@ -105,30 +105,26 @@ export default {
     },
   },
   watch: {
-    pageReset(state) {
-      if (state) {
-        this.page = 1;
-        this.$store.commit("ShopStore/SetPageReset", false);
-      }
-    },
     page(state) {
       if (this.keyword == "") this.$store.dispatch("ShopStore/getShops", state);
       else
         this.$store.dispatch("ShopStore/searchShops", {
           keyword: this.keyword,
           page: state,
-        }); // 다음 페이지 불러오기 // 검색 상태일 경우 검색api 활용/ 아닐 경우 일반 내주변 모아보기 api활용
+        }); // 다음 페이지 불러오기
+      // 검색 상태일 경우 검색api 활용/ 아닐 경우 일반 내주변 모아보기 api활용
       this.$store.commit("ShopStore/SetCurrentPage", state);
-    },
+    }, // 페이지 이동(조회) 시 요청
     keyword(state) {
-      if (state != "")
+      this.page = 1; //  페이지 초기화
+      if (state != "") {
         this.$store.dispatch("ShopStore/searchShops", {
           keyword: state,
           page: 1,
         });
-      // 검색 요청
-      else this.$store.dispatch("ShopStore/getShops", 1);
-    },
+        // 첫 검색 요청
+      } else this.$store.dispatch("ShopStore/getShops", 1);
+    }, // 첫 조회 시 요청
   },
 };
 </script>

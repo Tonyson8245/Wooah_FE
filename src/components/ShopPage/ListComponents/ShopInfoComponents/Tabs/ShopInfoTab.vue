@@ -84,6 +84,9 @@ export default {
   props: {
     ShopData: Object,
   },
+  mounted() {
+    console.log(this.ShopData); //
+  },
 };
 </script>
 

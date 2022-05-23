@@ -108,7 +108,7 @@ export default {
 }
 .search input {
   height: 45px;
-  color: $pl-1;
+  color: black;
   text-indent: 15px;
   border: 0.5px solid $pl-1;
   border-radius: 2em;

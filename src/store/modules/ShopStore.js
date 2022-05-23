@@ -15,7 +15,7 @@ const ShopStore = {
     //샵 리스트 데이터
     totalpage: 0,
     shops: "",
-    currentpage: 0,
+    currentpage: 1,
     focusmarker: null,
     noResultlist: false,
     pageReset: false,
@@ -37,10 +37,10 @@ const ShopStore = {
     SetCurrentPage(state, payload) {
       state.currentpage = payload;
     },
-    SetPageReset(state, payload) {
-      state.pageReset = payload;
-      state.currentpage = 0;
-    },
+    // SetPageReset(state, payload) {
+    //   state.pageReset = payload;
+    //   // state.currentpage = 1; // 페이지 위치 고정
+    // },
     SetnoResultlist(state, payload) {
       state.noResultlist = payload;
     },
@@ -97,7 +97,7 @@ const ShopStore = {
   actions: {
     async getShops(context, page) {
       if (context.state.keyword == false) {
-        if (page == 1) context.commit("SetPageReset", true);
+        if (page == 1) context.commit("SetCurrentPage", 1);
         await shopApi
           .getShops(page, context.state.sido, context.state.sigungu)
           .then(function (response) {
@@ -161,7 +161,7 @@ const ShopStore = {
         }); //다음 페이지 유무 확인용
     },
     async searchShops(context, payload) {
-      if (payload.page == 1) context.commit("SetPageReset", true);
+      if (payload.page == 1) context.commit("SetCurrentPage", 1);
       await shopApi
         .searchShops(
           payload.page,

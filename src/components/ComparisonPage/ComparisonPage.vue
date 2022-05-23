@@ -6,7 +6,7 @@
       <p class="title">맞춤 시술 가격 비교</p>
     </div>
     <div class="body">
-      <div class="container-lg">
+      <div class="container-lg" style="flex-direction: column; flex: 1">
         <div class="row">
           <div class="tab col-6" :class="tab[0]" @click="clickPage(`hand`)">
             네일(손)
@@ -49,7 +49,7 @@
                 </div>
               </div>
             </div>
-            <div class="result__body mb-1" v-if="this.result != []">
+            <div class="result__body mb-1" v-if="this.result.length > 0">
               <ShopItem
                 v-for="(shop, i) in shops"
                 :key="i"
@@ -145,17 +145,20 @@ export default {
       return this.$store.state.ComparisonStore.result;
     },
     menu() {
-      return this.$store.state.ComparisonStore.result[0].estimate;
+      if (this.result.length > 0) {
+        console.log(123);
+        return this.$store.state.ComparisonStore.result[0].estimate;
+      } else return "";
     },
     shops() {
-      if (this.result != []) {
+      if (this.result.length > 0) {
         return this.$store.state.ComparisonStore.result[0].shops;
       } else return "";
     },
   },
   watch: {
     districttext() {
-      if (this.result != []) {
+      if (this.result.length > 0) {
         this.$store.dispatch("ComparisonStore/fetchPriceList", {
           qeury: this.query,
           sido: this.sido,
@@ -163,6 +166,9 @@ export default {
         });
       } // 결과가 있는 상태에서 텍스트가 바뀌면 지역 바꿔서 검색 결과 노출
     },
+  },
+  shops(a) {
+    console.log(a);
   },
 };
 </script>

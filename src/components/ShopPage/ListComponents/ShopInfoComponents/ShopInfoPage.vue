@@ -103,8 +103,11 @@ export default {
           case "image":
             this.ClickTab(2);
             break;
-          default:
+          case "info":
             this.ClickTab(0);
+            break;
+          default:
+            this.$router.push(`/shop`);
             break;
         }
       }
