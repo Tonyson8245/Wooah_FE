@@ -40,11 +40,10 @@ export default {
   components: {
     NaverMap,
   },
-
   mounted() {
     this.$store.commit("Setpagecondition", "shop");
     window.addEventListener("resize", this.handleResize);
-    this.handleResize(); // 화면 넓이를 측정
+    this.handleResize(); // 화면 넓이를 측정 중 ...//
     this.ShopId = this.$route.params.id; // 현재 샵 상세를 찾는지 확인
 
     if (this.ShopId == undefined && this.width < 768) {
