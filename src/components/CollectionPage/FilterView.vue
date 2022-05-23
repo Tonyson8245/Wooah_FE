@@ -185,7 +185,8 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
 .filter__btn {
-  background-color: $pl-6;
+  /* background-color: $pl-6; */
+  background-color: white;
   width: 350px;
   height: $filter-height-desktop;
   position: relative;

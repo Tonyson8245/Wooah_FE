@@ -14,7 +14,7 @@
             @MakeQuery="ClickTag($MakeQuery)"
           />
           <!-- 검색 창 끝/태그 시작 -->
-          <div class="btn_container">
+          <div class="btn_container" :style="BtnContainerState">
             <div class="btn_outer btn_outer_move">
               <div class="btn-group" @click="ClickFilter">
                 <div class="dropdown">
@@ -283,12 +283,14 @@ export default {
   data() {
     return {
       message: "",
+
       //외부 데이터 시작
       handfoot: handfoot,
       color: color,
       option: option,
       shape: shape,
       //외부 데이터 끝
+
       // 내부 상태 데이터
       post: "", //포스트
       shop: "", // 샵 정보(상세보기에 사용됨)
@@ -720,6 +722,10 @@ export default {
         this.ButtonCondition[1] = "d-none";
       }
     },
+    path() {
+      if (!(this.tag == null && this.filterQuery == ""))
+        this.$router.push(`/library`);
+    },
   },
   components: {
     PostImage,
@@ -729,11 +735,20 @@ export default {
     SearchPage,
   },
   computed: {
+    path() {
+      return this.$route.path;
+    },
     SearchState() {
       if (this.$store.state.collectionStore.SearchState == true)
         return "search__move";
       else {
         return "";
+      }
+    },
+    BtnContainerState() {
+      if (this.$store.state.collectionStore.SearchState == true) return "";
+      else {
+        return `position: sticky;`;
       }
     },
     posts() {
@@ -744,6 +759,12 @@ export default {
     },
     noPost() {
       return this.$store.state.collectionStore.noPost;
+    },
+    tag() {
+      return this.$store.state.collectionStore.tag;
+    },
+    filterQuery() {
+      return this.$store.state.collectionStore.filterQuery;
     },
   },
 };
@@ -965,8 +986,7 @@ export default {
   transform: translate(-50%, -50%);
 }
 .btn_container {
-  position: sticky;
   top: 0%;
-  z-index: 3;
+  z-index: 4;
 }
 </style>

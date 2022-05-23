@@ -41,7 +41,10 @@ export default {
       if (this.$route.path == "/monthlyart") title = "monthlyart";
       else {
         switch (this.$route.params.price) {
-          case `10000`:
+          case `0`:
+            title = `~ ` + (this.$route.params.price / 10000 + 1) + `만원 대`;
+            break;
+          default:
             title = `~ ` + (this.$route.params.price / 10000 + 1) + `만원 대`;
             break;
         }

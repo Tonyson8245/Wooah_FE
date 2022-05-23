@@ -157,7 +157,7 @@ export default {
   background: white;
 }
 .on {
-  z-index: 5;
+  z-index: 4;
   height: 600px;
   @include tablet {
     height: 600px;

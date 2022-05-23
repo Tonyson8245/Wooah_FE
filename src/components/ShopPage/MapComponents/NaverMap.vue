@@ -35,6 +35,12 @@ export default {
     }
   },
   methods: {
+    resize() {
+      setTimeout(function () {
+        window.dispatchEvent(new Event("resize"));
+        console.log(123);
+      }, 600);
+    },
     AnimateMarker(num) {
       if (this.markers.length > 0 && this.markers[num] != null) {
         this.markers[num].setAnimation(naver.maps.Animation.BOUNCE);
