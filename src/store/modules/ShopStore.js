@@ -129,6 +129,7 @@ const ShopStore = {
         .getShopDetail(id)
         .then(function (response) {
           context.commit("FetchShopinfo", response.data);
+          context.commit("SetShop", id); //샵 id 를 vuex에 저장
         })
         .catch(function (error) {
           console.log(error);

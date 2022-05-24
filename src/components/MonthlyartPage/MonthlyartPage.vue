@@ -34,7 +34,6 @@ export default {
       fontSize: `btn-lg`,
     };
   },
-
   computed: {
     title() {
       var title;
@@ -42,10 +41,10 @@ export default {
       else {
         switch (this.$route.params.price) {
           case `0`:
-            title = `~ ` + (this.$route.params.price / 10000 + 1) + `만원 대`;
+            title = `~ ` + (this.$route.params.price / 10000 + 1) + `만원`;
             break;
           default:
-            title = `~ ` + (this.$route.params.price / 10000 + 1) + `만원 대`;
+            title = `~ ` + (this.$route.params.price / 10000 + 1) + `만원`;
             break;
         }
       } //  가격에 따라 배너 타이틀 변경

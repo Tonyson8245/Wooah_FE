@@ -2,7 +2,7 @@
   <div class="outline">
     <div class="header d-flex justify-content-between align-items-center">
       <span class="header__price_range"
-        >~ {{ thumbnail.price_range + 1 }}만원 대</span
+        >~ {{ thumbnail.price_range + 1 }}만원</span
       >
       <div
         class="more"

@@ -139,6 +139,7 @@ export default {
     },
     CloseInfo() {
       this.$router.push("/shop");
+      this.$store.commit("ShopStore/SetShop", null);
     },
     ClickTab(num) {
       this.TabStatus = [``, ``, ``];
@@ -179,10 +180,10 @@ export default {
   background: #fcfcfc;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 793px;
-  @include mobile-s {
+  height: 803px;
+  @include tablet-s {
     height: auto;
-    overflow: none;
+    overflow: hidden;
   }
 }
 //샵 이름 시작

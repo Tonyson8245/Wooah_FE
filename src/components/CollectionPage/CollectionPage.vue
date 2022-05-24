@@ -1,7 +1,7 @@
 <template>
   <div class="outline">
     <AlertDialog />
-    <div class="container-sm p-lg-5 pt-lg-0">
+    <div class="container-lg p-lg-5 pt-lg-0">
       <div
         class="row d-flex justify-content-center align-items-center g-0"
         style="padding: 0 0 0 0"
@@ -107,7 +107,7 @@
                 </div>
                 <button
                   class="btn btn-sm filter__reset"
-                  v-if="ResetStatus"
+                  v-show="ResetStatus"
                   :style="ButtonFocusSetting"
                   style="border-radius: 15px"
                   type="button"
@@ -129,8 +129,8 @@
             <!-- 태그끝 -->
             <!-- 하단 사진들 시작 -->
             <InfiniteScroll
-              @infinite-scroll="moreData"
               v-if="!noPost"
+              @infinite-scroll="moreData"
               :class="ImageContainerMove"
               class="images__container"
               :noResult="noResult"
@@ -153,7 +153,7 @@
                 />
               </div>
             </InfiniteScroll>
-            <div v-if="noPost" class="noPost">
+            <div v-if="noPost" class="noPost" :class="ImageContainerMove">
               <span class="item">조회 결과가 없습니다.</span>
             </div>
           </div>
@@ -396,6 +396,7 @@ export default {
   },
   mounted() {
     //데이터 가져오는 코드 여기 넣쟈
+    this.$store.commit("collectionStore/ChangeSearchOff");
     this.$store.commit("collectionStore/setfilterQuery", "");
     this.$store.dispatch("collectionStore/fetchPosts");
     this.$store.commit("Setpagecondition", "collection");
@@ -521,8 +522,6 @@ export default {
         option_qeury +
         handfoot_qeury +
         monthly_art_qeury;
-
-      // console.log(query);
 
       this.$store.commit("collectionStore/setfilterQuery", query); //필터 쿼리 vuex 적용
       this.$store.commit("collectionStore/resetPage", 1); //페이지 초기화
@@ -694,12 +693,9 @@ export default {
       this.$store.dispatch("collectionStore/fetchPosts");
     },
     ClickTag(tag) {
-      // console.log(tag);
       this.$store.commit("collectionStore/changeTag", tag);
       this.$store.commit("collectionStore/ChangeSearchOff");
       this.$store.commit("collectionStore/InitSearchResult");
-      this.Reset(false);
-      this.MakeQuery();
     },
   },
   watch: {
@@ -726,6 +722,16 @@ export default {
       if (!(this.tag == null && this.filterQuery == ""))
         this.$router.push(`/library`);
     },
+    tag(a, b) {
+      console.log(a + b);
+      if (a != b) {
+        this.Reset(false);
+        this.MakeQuery();
+      }
+    },
+    SearchState(a) {
+      if (a != "") this.FilterStatus = "d-none";
+    },
   },
   components: {
     PostImage,
@@ -739,14 +745,15 @@ export default {
       return this.$route.path;
     },
     SearchState() {
-      if (this.$store.state.collectionStore.SearchState == true)
+      if (this.$store.state.collectionStore.SearchState == true) {
         return "search__move";
-      else {
+      } else {
         return "";
       }
     },
     BtnContainerState() {
-      if (this.$store.state.collectionStore.SearchState == true) return "";
+      if (this.$store.state.collectionStore.SearchState == true)
+        return "visibility: hidden;";
       else {
         return `position: sticky;`;
       }
@@ -928,7 +935,10 @@ export default {
   overflow-y: hidden;
   background: #fbebfd;
 }
-
+.dropdown button span {
+  width: 100%;
+  text-align: center;
+}
 .dropdown button {
   background: white;
   font-family: "GoyangIlsan";
@@ -979,7 +989,6 @@ export default {
   }
 }
 .noPost .item {
-  position: absolute;
   position: absolute;
   left: 50%;
   top: 50%;

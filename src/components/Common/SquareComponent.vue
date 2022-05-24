@@ -1,13 +1,20 @@
 <template>
   <div class="square" style="width: 100%">
-    <img class="inner" :src="url" alt="..." />
+    <img class="inner" :src="true_url" alt="..." @error="oner" />
   </div>
 </template>
 <script>
+import img from "@/assets/img/400x400.png";
 export default {
   name: `SquareComponent`,
   props: {
     url: String,
+  },
+  computed: {
+    true_url() {
+      if (this.url == undefined) return img;
+      else return this.url;
+    },
   },
 };
 </script>

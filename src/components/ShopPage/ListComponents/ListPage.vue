@@ -1,8 +1,13 @@
 <template>
-  <div style="background: white">
+  <div style="background: white; display: flex; flex-direction: column">
     <SearchPage></SearchPage>
     <TitleItem></TitleItem>
-    <div class="shoplist" :style="ListHeight" v-if="!noResultlist">
+    <div
+      class="shoplist"
+      :style="ListHeight"
+      v-if="!noResultlist"
+      style="flex-grow: 1"
+    >
       <ShopItem
         v-for="(shop, index) in shops"
         :key="index"
@@ -134,14 +139,9 @@ export default {
 
 .shoplist {
   overflow-y: auto;
+
   height: $list-desktop-height;
   @include tablet-s {
-    height: $list-tablet-height;
-  }
-  @include tablet {
-    height: $list-tablet-height + 145px;
-  }
-  @include mobile-s {
     height: auto;
     overflow: none;
   }

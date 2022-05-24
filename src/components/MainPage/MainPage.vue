@@ -281,13 +281,19 @@ export default {
     shops() {
       return this.$store.state.MainStore.shops;
     },
+    updateDistrict() {
+      return this.$store.state.CommonStore.updateDistrict;
+    },
   },
   watch: {
-    sigungu() {
-      this.$store.dispatch("MainStore/getShops", {
-        sido: this.sido,
-        sigungu: this.sigungu,
-      }); // 위치가 바뀌면 샵 내용을 바꾼다.
+    updateDistrict(a) {
+      if (a) {
+        this.$store.dispatch("MainStore/getShops", {
+          sido: this.sido,
+          sigungu: this.sigungu,
+        }); // 위치가 바뀌면 샵 내용을 바꾼다.
+        this.$store.commit("CommonStore/setUpdateDistrict", false);
+      }
     },
   },
   components: {
@@ -309,6 +315,12 @@ export default {
     clickShop(shopid) {
       if (shopid == `more`) this.$router.push("/shop");
       else this.$router.push("/shop/" + shopid);
+    },
+    changeDistrict(data) {
+      this.$store.dispatch("MainStore/getShops", {
+        sido: data.sido,
+        sigungu: data.sigungu,
+      });
     },
   },
 };
@@ -600,5 +612,8 @@ export default {
 .carousel__prev--in-active,
 .carousel__next--in-active {
   display: none;
+}
+.swal2-container {
+  visibility: hidden;
 }
 </style>

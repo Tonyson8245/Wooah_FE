@@ -51,7 +51,7 @@ export default {
 }
 .web--content {
   background: $pl-6;
-  min-height: 720px;
+  min-height: 765px;
   @include tablet {
   }
   @include mobile-s {

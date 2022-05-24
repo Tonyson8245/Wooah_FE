@@ -64,6 +64,8 @@ export default {
           this.GetClickHandler(this.shops, i, this.$router, this.$store)
         );
       }
+
+      if (this.shop != null) this.SelectShop();
     },
     InitMap(Lat, Lng) {
       this.map = new naver.maps.Map(document.getElementById("naverMap"));
@@ -117,7 +119,7 @@ export default {
       if (type == "focus") {
         background = "#ce93d8";
         outline = "#ab47bc";
-        color = "#ab47bc";
+        color = "#ffffff";
       } else {
         background = "#ffffff";
         outline = "#ab47bc";

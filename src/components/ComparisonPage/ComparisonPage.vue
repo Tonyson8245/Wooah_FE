@@ -155,6 +155,9 @@ export default {
         return this.$store.state.ComparisonStore.result[0].shops;
       } else return "";
     },
+    updateDistrict() {
+      return this.$store.state.CommonStore.updateDistrict;
+    },
   },
   watch: {
     districttext() {
@@ -165,6 +168,11 @@ export default {
           sigungu: this.sigungu,
         });
       } // 결과가 있는 상태에서 텍스트가 바뀌면 지역 바꿔서 검색 결과 노출
+    },
+    updateDistrict(a) {
+      if (a) {
+        this.$store.commit("CommonStore/setUpdateDistrict", false);
+      }
     },
   },
   shops(a) {

@@ -54,6 +54,8 @@
         :limbs="limbs"
         :SetFilterLimbs="SetFilter.handfoot[i]"
         :FilterCategory="FilterCategory"
+        :tempFilter="tempFilter"
+        :index="i"
         @CheckFilter="InsertTempFilter($event)"
       />
     </div>
@@ -140,7 +142,10 @@ export default {
         this.tempFilter.splice(index, 1);
         // 안에 이미 동일한 데이터가 있음. 삭제
       } else {
-        if (this.tempFilter.length >= 3) {
+        if (this.FilterCategory == "손발" && this.tempFilter.length >= 1) {
+          console.log(this.tempFilter);
+          this.tempFilter[0] = data; // 중복 안되니깐 push가 아니라 바꿔주기만 하면됨
+        } else if (this.tempFilter.length >= 3) {
           this.$store.commit("alertStore/ChangeState");
           this.$store.commit(
             "alertStore/ChangeComment",

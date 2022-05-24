@@ -8,11 +8,18 @@
     />
     <div v-if="toggle" class="toggleOn">
       <transition name="slide-fade">
-        <div class="detail" style="display: flex" v-if="show">
+        <div
+          class="detail"
+          style="display: flex; align-items: center"
+          v-if="show"
+        >
           <div style="margin: auto; width: 90%">
-            <p class="title" @click="clickShop(shop.id)">
-              {{ shop.name }} <i class="bi bi-chevron-right"></i>
-            </p>
+            <div style="display: flex">
+              <p class="title" @click="clickShop(shop.id)">
+                {{ shop.name }}
+              </p>
+              <i class="bi bi-chevron-right"></i>
+            </div>
             <div class="info">
               <span
                 ><i class="bi bi-telephone-fill"></i>{{ shop.contact }}</span
@@ -25,15 +32,23 @@
       </transition>
     </div>
     <div v-if="!toggle" class="toggleOff">
-      <div class="detail" style="display: flex">
+      <div class="detail">
         <div style="margin: auto; width: 90%">
-          <p class="title" @click="clickShop(shop.id)">
-            {{ shop.name }} <i class="bi bi-chevron-right"></i>
-          </p>
-          <div class="info">
-            <span><i class="bi bi-telephone-fill"></i>{{ shop.contact }}</span>
-            <br />
-            <span><i class="bi bi-geo-alt-fill"></i>{{ shop.address }}</span>
+          <div style="display: flex; align-items: center">
+            <p class="title" @click="clickShop(shop.id)">
+              {{ shop.name }}
+            </p>
+            <i class="bi bi-chevron-right"></i>
+          </div>
+          <div class="flex-grow-1">
+            <div class="info">
+              <span
+                ><i class="bi bi-telephone-fill"></i>{{ shop.contact }}</span
+              >
+              <br />
+              <span><i class="bi bi-geo-alt-fill"></i>{{ shop.address }}</span>
+              ...
+            </div>
           </div>
         </div>
       </div>
@@ -127,13 +142,23 @@ export default {
   }
 }
 .title {
-  font-size: 1.1em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
+  font-size: 1.1vw;
   font-weight: bold;
   margin: 0 0 1% 0;
+  @include tablet {
+    font-size: 2.3vw;
+  }
 }
 
 .info {
-  font-size: 0.8em;
+  font-size: 0.8vw;
+  @include tablet {
+    font-size: 1.5vw;
+  }
 }
 .info span {
   margin-right: 3%;

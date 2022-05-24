@@ -5,7 +5,7 @@
     :style="padding"
   >
     <div class="container-lg">
-      <a class="navbar-brand" @click="this.$router.push('/')">우아</a>
+      <a class="navbar-brand" @click="this.$router.push('./')">우아</a>
       <button
         class="navbar-toggler"
         type="button"
