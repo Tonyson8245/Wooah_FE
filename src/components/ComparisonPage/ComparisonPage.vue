@@ -28,13 +28,17 @@
         <div class="result__outline" v-else-if="result">
           <div class="result__container">
             <div class="result__header p-3">
-              <div class="d-flex title">
-                <div class="me-auto p-2 bd-highlight">
+              <div class="d-flex title" style="align-items: center">
+                <div class="me-auto bd-highlight">
                   비교결과 {{ districttext }}
                 </div>
-                <div class="p-2 d-flex" @click="restart">
+                <div
+                  class="d-flex"
+                  style="align-items: center"
+                  @click="restart"
+                >
                   다시하기
-                  <img src="@/assets/img/recheck.svg" alt="" />
+                  <img class="ms-1" src="@/assets/img/recheck.svg" alt="" />
                 </div>
               </div>
               <div class="content">
@@ -237,6 +241,10 @@ export default {
   padding: 5% 0 0 0;
   display: flex;
   justify-content: center;
+  font-size: 1vw;
+  @include tablet {
+    font-size: 2.5vw;
+  }
   @include mobile-s {
     padding: 8% 0 0 0;
   }
@@ -252,17 +260,14 @@ export default {
 }
 
 .result__header .title {
-  font-size: 1.2em;
   font-weight: bold;
   color: $pa-2;
 }
 
 .result__header .content {
   text-align: left;
-  padding-inline: 2%;
 }
 .content .subtitle {
-  font-size: 1.5em;
   font-weight: bold;
 }
 

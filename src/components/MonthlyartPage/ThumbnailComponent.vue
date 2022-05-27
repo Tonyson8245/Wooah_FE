@@ -1,5 +1,11 @@
 <template>
-  <div class="outline" style="overflow: hidden" @mouseleave="show = false">
+  <div
+    class="outline"
+    style="overflow: hidden"
+    @mouseleave="show = false"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+  >
     <square
       @click="clickImage(art.id)"
       :url="art.url"
@@ -75,7 +81,7 @@ export default {
   },
   methods: {
     clickImage(id) {
-      this.$router.push("/library/p/" + id);
+      this.$store.dispatch("MonthlyartStore/fetchPost", id);
     },
     clickShop(id) {
       this.$router.push("/shop/" + id);
@@ -96,7 +102,7 @@ export default {
   transition: all 0.8s;
 }
 .slide-fade-leave-active {
-  transition: all 0.8s;
+  transition: all 0.8;
 }
 .slide-fade-enter-from/* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateY(100%);
@@ -112,8 +118,11 @@ export default {
   position: relative;
   border-radius: 15px;
   overflow: hidden;
+  font-size: 1vw;
+  @include tablet {
+    font-size: 2vw;
+  }
   @include mobile-s {
-    font-size: 70%;
     border-radius: 10px;
   }
 }
@@ -146,22 +155,17 @@ export default {
   text-overflow: ellipsis;
   display: block;
   overflow: hidden;
-  font-size: 1.1vw;
   font-weight: bold;
   margin: 0 0 1% 0;
-  @include tablet {
-    font-size: 2.3vw;
-  }
 }
 
 .info {
-  font-size: 0.8vw;
-  @include tablet {
-    font-size: 1.5vw;
-  }
+  font-size: 70%;
 }
 .info span {
-  margin-right: 3%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .info i {
   margin-right: 1%;

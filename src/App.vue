@@ -1,5 +1,5 @@
 <template>
-  <div class="viewport">
+  <div class="viewport" ref="viewport">
     <TopHeader class="top" />
     <body>
       <div class="web--content">
@@ -24,6 +24,8 @@ export default {
     return {
       width: ``,
       height: ``,
+      htmlwidth: ``,
+      htmlheight: ``,
     };
   },
   mounted() {
@@ -51,12 +53,11 @@ export default {
 }
 .web--content {
   background: $pl-6;
-  min-height: 765px;
-  @include tablet {
-  }
+  /* min-height: 765px;
+
   @include mobile-s {
     min-height: 400px;
-  }
+  } */
 }
 .col {
   width: 100%;

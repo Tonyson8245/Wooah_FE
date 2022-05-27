@@ -6,7 +6,7 @@
       class="carousel slide"
       data-bs-ride="carousel"
     >
-      <div class="carousel-inner">
+      <div class="carousel-inner" @click="clickBanner">
         <div class="carousel-item banner_1 active">
           <img
             src="@/assets/img/banner_1.png"
@@ -49,7 +49,7 @@
     <!-- 상단 배너 끝 -->
     <!-- 최신 아트 디자인 시작 -->
     <div class="newest">
-      <div class="newest_header fw-bold pb-lg-4">
+      <div class="newest_header pb-lg-4">
         <div class="title_en">NEWEST DESIGN</div>
         <div class="title_ko">최신 업데이트 디자인</div>
       </div>
@@ -64,11 +64,12 @@
               v-for="(design, i) in designs"
               :key="i"
               @click="clickNewestDesign(design.id)"
+              @dblclick="DBclickNewestDesign(design.id)"
             >
-              <div class="carousel__item" style="width: 90%; padding: 5%">
+              <div class="carousel__item g-2">
                 <Square :url="design.url" />
-                <div>
-                  <div class="title fw-bold p-2">{{ design.shop.name }}</div>
+                <div class="outer">
+                  <div class="title">{{ design.shop.name }}</div>
                   <div class="tags" v-if="design.tags != null">
                     <span v-for="tag in design.tags" :key="tag"
                       >#{{ tag + " " }}
@@ -99,7 +100,11 @@
               <div class="rank_table__inner inner">
                 <div class="title fw-bold">태그 검색 순위</div>
                 <table class="table table-sm table-borderless m-0">
-                  <tr v-for="tag in tagrank" :key="tag">
+                  <tr
+                    v-for="tag in tagrank"
+                    :key="tag"
+                    @click="clicktag(tag.content)"
+                  >
                     <td scope="row" class="col-2">{{ tag.rank }}</td>
                     <td class="col-7">{{ tag.content }}</td>
                     <td class="col-3">{{ tag.count }}건</td>
@@ -305,7 +310,10 @@ export default {
   },
   methods: {
     clickNewestDesign(id) {
-      this.$router.push("/library/p/" + id);
+      if (this.width < 552) this.$router.push("/library/p/" + id);
+    },
+    DBclickNewestDesign(id) {
+      if (this.width > 551) this.$router.push("/library/p/" + id);
     },
     clickMonthlyart(price_range) {
       if (price_range == `more`) {
@@ -321,6 +329,23 @@ export default {
         sido: data.sido,
         sigungu: data.sigungu,
       });
+    },
+    clickBanner(e) {
+      if (e.target.lastChild.classList.value == "carousel-item banner_2")
+        // 배너 내부에서 click 이벤트가 발생하지 않아서 배너 내부의 마지막 자식의 classlist를 확인해서 구분
+        this.$router.push(`/comparison`);
+      else if (
+        e.target.lastChild.classList.value == "carousel-item banner_2 active"
+      ) {
+        this.clicktag("과일"); // 과일로 키워드를 변경하고, 디자인 보아보기로 이동
+      }
+    },
+    clicktag(tag) {
+      this.$store.commit("collectionStore/resetPage");
+      this.$store.commit("collectionStore/changeTag", tag);
+      this.$store.commit("collectionStore/ChangeSearchOff");
+      this.$store.commit("collectionStore/InitSearchResult");
+      this.$router.push(`/library`);
     },
   },
 };
@@ -393,25 +418,35 @@ export default {
     font-size: 5vw;
   }
 }
-
+.newest_body {
+  font-size: 1em;
+}
 .newest_body .title {
-  font-size: 1.3vw;
+  font-weight: bold;
+  font-size: 120%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .newest_body .tags {
-  font-size: 0.8vw;
   text-align: left;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
+.carousel__item .outer {
+  margin-top: 7%;
+}
+
 .carousel__item {
   border: solid 1px $pl-4;
   background-color: white;
-  color: $pl-1;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
   height: 100%;
+  width: 90%;
+  padding: 5%;
 }
 
 //최신 업데이트 디자인 끝
@@ -568,9 +603,10 @@ export default {
   }
 }
 .content .contact {
-  font-size: 0.8vw;
+  font-size: 0.8em;
 }
 .content .shopinfo {
+  margin-top: 5%;
   text-align: left;
 }
 

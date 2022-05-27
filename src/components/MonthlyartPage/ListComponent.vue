@@ -95,9 +95,9 @@ export default {
 }
 .more_btn {
   width: 100%;
-  border: #e4e4e4 solid 1px;
+  border: $pl-5 solid 1px;
   border-radius: 5px;
-  background: #f4f4f4;
+  background: $pl-5;
 
   @include mobile-s {
     font-size: 60%;

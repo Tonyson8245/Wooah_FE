@@ -180,7 +180,7 @@ export default {
   background: #fcfcfc;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 803px;
+  height: 800px;
   @include tablet-s {
     height: auto;
     overflow: hidden;

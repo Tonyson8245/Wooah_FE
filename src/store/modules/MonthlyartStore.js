@@ -1,4 +1,5 @@
 import * as MonthlyApi from "@/api/montlyart";
+import * as collectionApi from "@/api/collection";
 
 const MonthlyartStore = {
   namespaced: true,
@@ -11,6 +12,10 @@ const MonthlyartStore = {
     page: 1,
     noPost: false, // 포스트가 아예없음
     noResult: false,
+
+    //모달 용
+    shop: "",
+    post: "",
   },
   mutations: {
     fetchThumbnails(state, payload) {
@@ -75,6 +80,22 @@ const MonthlyartStore = {
         })
         .catch(() => {
           context.commit("setNoResult", true); //데이터 없음
+        });
+    },
+    async fetchPost(context, id) {
+      await collectionApi
+        .fetchPost(id)
+        .then(function (response) {
+          if (response.status == 200) {
+            context.state.post = response.data;
+            context.state.shop = response.data.shop;
+          }
+        })
+        .catch(function (error) {
+          let res = error.response;
+          if (res.status == 404) {
+            context.commit(`changeNoPost`, true);
+          } else console.log(res);
         });
     },
   },

@@ -216,11 +216,19 @@ export default {
 
 .filter__outer_button {
   width: 95%;
-  background: $pl-3;
+  background: $pl-2;
   border-radius: 15px;
   border: solid 1px $pl-4;
 
   height: auto;
+}
+.filter__outer_button:hover,
+.filter__outer_button:focus,
+.filter__outer_button:active,
+.filter__outer_button.active,
+.open > .dropdown-toggle.filter__outer_button :hover {
+  background: $pl-3;
+  border: solid 1px $pl-4;
 }
 .filter_title {
   font-family: "GoyangIlsan";

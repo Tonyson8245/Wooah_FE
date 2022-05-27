@@ -1,13 +1,13 @@
 <template>
-  <div class="container_outer p-lg-3">
+  <div class="container_outer p-lg-2">
     <div class="container-lg">
       <div class="row flex-row-reverse">
-        <div v-if="MapView" class="col-md-8 col-sm-12 map__outer g-0">
+        <div v-if="MapView" class="col-lg-8 col-md-7 col-sm-12 map__outer g-0">
           <NaverMap :width="width" />
         </div>
 
         <div
-          class="col-md-4 col-sm-12 g-0"
+          class="col-lg-4 col-md-5 col-sm-12 g-0 list"
           style="display: flex; flex-direction: column"
         >
           <div class="btn__set">
@@ -71,7 +71,7 @@ export default {
   },
   watch: {
     width(state) {
-      if (state > 768) this.$store.commit("ShopStore/SetMapView", true);
+      if (state > 767) this.$store.commit("ShopStore/SetMapView", true);
       else this.$store.commit("ShopStore/SetMapView", false);
     },
   },
@@ -110,8 +110,7 @@ $mobile-height: 250px;
     width: 100%;
   }
 }
-.container-md {
-  margin-top: 1%;
+.container-lg {
   margin-bottom: 1%;
   height: $desktop-height;
   flex-wrap: wrap-reverse;

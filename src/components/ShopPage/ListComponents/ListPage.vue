@@ -90,6 +90,9 @@ export default {
     noResultlist() {
       return this.$store.state.ShopStore.noResultlist;
     },
+    mapView() {
+      return this.$store.state.ShopStore.SetMaMapViewpView;
+    },
   },
   methods: {
     ClickShop(id, index) {
@@ -119,6 +122,12 @@ export default {
         }); // 다음 페이지 불러오기
       // 검색 상태일 경우 검색api 활용/ 아닐 경우 일반 내주변 모아보기 api활용
       this.$store.commit("ShopStore/SetCurrentPage", state);
+      if (!this.mapView)
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "instant",
+        });
     }, // 페이지 이동(조회) 시 요청
     keyword(state) {
       this.page = 1; //  페이지 초기화

@@ -13,33 +13,33 @@
     <div class="p-2">
       <div class="title">연락처</div>
       <div class="content pt-2">
-        <div v-if="ShopData.contacts.phone != null">
+        <div class="line" v-if="ShopData.contacts.phone != null">
           <img src="../../../../../../src/assets/img/telephone.png" alt="" />
           <a v-bind:href="`tel:+82.` + ShopData.contacts.phone">{{
             ShopData.contacts.phone
           }}</a>
         </div>
-        <div v-if="ShopData.contacts.kakao_id != null">
+        <div class="line" v-if="ShopData.contacts.kakao_id != null">
           <img src="../../../../../../src/assets/img/kakao-talk.png" alt="" />
           {{ ShopData.contacts.kakao_id }}
         </div>
-        <div v-if="ShopData.contacts.kakao_openchat != null">
+        <div class="line" v-if="ShopData.contacts.kakao_openchat != null">
           <img src="../../../../../../src/assets/img/kakao-talk.png" alt="" />
           {{ ShopData.contacts.kakao_openchat }}
         </div>
-        <div v-if="ShopData.contacts.instagram != null">
+        <div class="line" v-if="ShopData.contacts.instagram != null">
           <img src="../../../../../../src/assets/img/instagram.png" alt="" />
           <a target="_blank" v-bind:href="ShopData.contacts.instagram">{{
             ShopData.contacts.instagram
           }}</a>
         </div>
-        <div v-if="ShopData.contacts.blog != null">
+        <div class="line" v-if="ShopData.contacts.blog != null">
           <img src="../../../../../../src/assets/img/blogging.png" alt="" />
           <a target="_blank" v-bind:href="ShopData.contacts.blog">{{
             ShopData.contacts.blog
           }}</a>
         </div>
-        <div v-if="ShopData.contacts.site != null">
+        <div class="line" v-if="ShopData.contacts.site != null">
           <img src="../../../../../../src/assets/img/blogging.png" alt="" />
           <a target="_blank" v-bind:href="ShopData.contacts.site">{{
             ShopData.contacts.site
@@ -51,11 +51,8 @@
       <div class="title">영업시간</div>
       <div class="content p-1">
         <div class="mb-2">
-          <span
-            class="badge bg-secondary me-2"
-            v-if="!ShopData.has_holiday_off"
-          >
-            연중무휴
+          <span class="badge bg-secondary me-2" v-if="ShopData.has_holiday_off">
+            공휴일 휴무
           </span>
           <span v-if="ShopData.day_off != null">{{ ShopData.day_off }}</span>
         </div>
@@ -91,17 +88,18 @@ export default {
 @import "/src/assets/style.scss";
 .outline {
   font-family: "GoyangIlsan";
-  font-size: 1.2em;
+  font-size: 1em;
   @include desktop {
     font-size: 90%;
   }
 }
 
 .title {
+  font-size: 120%;
   font-weight: bold;
 }
 .content {
-  font-size: 0.88em;
+  font-size: 100%;
 }
 .content img {
   padding: 2% 1% 2% 2%;
@@ -110,12 +108,18 @@ export default {
   }
 }
 .content .work_hour {
-  font-size: 0.9em;
+  font-size: 100%;
 }
 .content .day {
   font-weight: bold;
 }
 a {
   margin-left: 1.6%;
+}
+.content .line {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
 }
 </style>
