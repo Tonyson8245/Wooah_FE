@@ -77,6 +77,10 @@ export default {
   methods: {
     changeDistrict(sido, sigungu) {
       this.$store.commit("CommonStore/SetDistrict", [sido, sigungu]);
+      this.$store.commit("CommonStore/setUpdateDistrict", true);
+      if (sigungu == 0)
+        this.$emit("changeDistrict", { sido: sido.id, sigungu: 0 });
+      else this.$emit("changeDistrict", { sido: sido.id, sigungu: sigungu.id });
     },
   },
 };

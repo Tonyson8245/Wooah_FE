@@ -1,12 +1,15 @@
 <template>
   <div class="container_outer p-lg-2">
-    <div class="container-md">
+    <div class="container-lg">
       <div class="row flex-row-reverse">
-        <div v-if="MapView" class="col-md-8 col-sm-12 map__outer g-0">
+        <div v-if="MapView" class="col-lg-8 col-md-7 col-sm-12 map__outer g-0">
           <NaverMap :width="width" />
         </div>
 
-        <div class="col-md-4 col-sm-12 list__outer g-0">
+        <div
+          class="col-lg-4 col-md-5 col-sm-12 g-0 list"
+          style="display: flex; flex-direction: column"
+        >
           <div class="btn__set">
             <button class="btn col-12 p-0" v-if="MapView" @click="CloseMap">
               지도 숨기기
@@ -15,7 +18,7 @@
               지도 보기
             </button>
           </div>
-          <router-view v-slot="{ Component }">
+          <router-view v-slot="{ Component }" style="flex: 1">
             <transition name="scale" mode="out-in">
               <component :MapView="MapView" :width="width" :is="Component" />
             </transition>
@@ -40,11 +43,10 @@ export default {
   components: {
     NaverMap,
   },
-
   mounted() {
     this.$store.commit("Setpagecondition", "shop");
     window.addEventListener("resize", this.handleResize);
-    this.handleResize(); // 화면 넓이를 측정
+    this.handleResize(); // 화면 넓이를 측정 중 ...//
     this.ShopId = this.$route.params.id; // 현재 샵 상세를 찾는지 확인
 
     if (this.ShopId == undefined && this.width < 768) {
@@ -69,7 +71,8 @@ export default {
   },
   watch: {
     width(state) {
-      if (state > 768) this.$store.commit("ShopStore/SetMapView", true);
+      if (state > 767) this.$store.commit("ShopStore/SetMapView", true);
+      else this.$store.commit("ShopStore/SetMapView", false);
     },
   },
   computed: {
@@ -107,8 +110,7 @@ $mobile-height: 250px;
     width: 100%;
   }
 }
-.container-md {
-  margin-top: 1%;
+.container-lg {
   margin-bottom: 1%;
   height: $desktop-height;
   flex-wrap: wrap-reverse;
@@ -143,10 +145,24 @@ $mobile-height: 250px;
   }
 }
 .btn__set button {
+  color: $pa-1;
   font-family: "GoyangIlsan";
   font-size: 1em;
   @include mobile-s {
     font-size: 0.5em;
   }
+}
+
+/* TRANSITION */
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

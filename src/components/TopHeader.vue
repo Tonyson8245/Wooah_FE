@@ -115,6 +115,7 @@ export default {
   methods: {
     ClickTo(a) {
       this.$router.push(a);
+      console.log(a);
     },
   },
 };

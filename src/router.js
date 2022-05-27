@@ -59,7 +59,7 @@ const routes = [
         component: ShopInfoPage,
         children: [
           {
-            path: "", //shop/0/info
+            path: "",
             component: ShopInfoTab,
           },
           {

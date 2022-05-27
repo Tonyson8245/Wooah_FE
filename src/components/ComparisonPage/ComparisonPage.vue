@@ -6,7 +6,7 @@
       <p class="title">맞춤 시술 가격 비교</p>
     </div>
     <div class="body">
-      <div class="container-lg">
+      <div class="container-lg" style="flex-direction: column; flex: 1">
         <div class="row">
           <div class="tab col-6" :class="tab[0]" @click="clickPage(`hand`)">
             네일(손)
@@ -28,13 +28,17 @@
         <div class="result__outline" v-else-if="result">
           <div class="result__container">
             <div class="result__header p-3">
-              <div class="d-flex title">
-                <div class="me-auto p-2 bd-highlight">
+              <div class="d-flex title" style="align-items: center">
+                <div class="me-auto bd-highlight">
                   비교결과 {{ districttext }}
                 </div>
-                <div class="p-2 d-flex" @click="restart">
+                <div
+                  class="d-flex"
+                  style="align-items: center"
+                  @click="restart"
+                >
                   다시하기
-                  <img src="@/assets/img/recheck.svg" alt="" />
+                  <img class="ms-1" src="@/assets/img/recheck.svg" alt="" />
                 </div>
               </div>
               <div class="content">
@@ -49,7 +53,7 @@
                 </div>
               </div>
             </div>
-            <div class="result__body mb-1" v-if="this.result != []">
+            <div class="result__body mb-1" v-if="this.result.length > 0">
               <ShopItem
                 v-for="(shop, i) in shops"
                 :key="i"
@@ -145,17 +149,23 @@ export default {
       return this.$store.state.ComparisonStore.result;
     },
     menu() {
-      return this.$store.state.ComparisonStore.result[0].estimate;
+      if (this.result.length > 0) {
+        console.log(123);
+        return this.$store.state.ComparisonStore.result[0].estimate;
+      } else return "";
     },
     shops() {
-      if (this.result != []) {
+      if (this.result.length > 0) {
         return this.$store.state.ComparisonStore.result[0].shops;
       } else return "";
+    },
+    updateDistrict() {
+      return this.$store.state.CommonStore.updateDistrict;
     },
   },
   watch: {
     districttext() {
-      if (this.result != []) {
+      if (this.result.length > 0) {
         this.$store.dispatch("ComparisonStore/fetchPriceList", {
           qeury: this.query,
           sido: this.sido,
@@ -163,6 +173,14 @@ export default {
         });
       } // 결과가 있는 상태에서 텍스트가 바뀌면 지역 바꿔서 검색 결과 노출
     },
+    updateDistrict(a) {
+      if (a) {
+        this.$store.commit("CommonStore/setUpdateDistrict", false);
+      }
+    },
+  },
+  shops(a) {
+    console.log(a);
   },
 };
 </script>
@@ -223,6 +241,10 @@ export default {
   padding: 5% 0 0 0;
   display: flex;
   justify-content: center;
+  font-size: 1vw;
+  @include tablet {
+    font-size: 2.5vw;
+  }
   @include mobile-s {
     padding: 8% 0 0 0;
   }
@@ -238,17 +260,14 @@ export default {
 }
 
 .result__header .title {
-  font-size: 1.2em;
   font-weight: bold;
   color: $pa-2;
 }
 
 .result__header .content {
   text-align: left;
-  padding-inline: 2%;
 }
 .content .subtitle {
-  font-size: 1.5em;
   font-weight: bold;
 }
 

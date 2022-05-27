@@ -1,28 +1,35 @@
 <template>
-  <div class="container-fluid g-0" :style="background">
-    <div class="row align-items-center">
-      <div class="col-8 info__container">
-        <div class="title">{{ shop.name }}</div>
-        <div class="address">{{ shop.address }}</div>
-        <div>
-          <span
-            class="badge rounded-pill text-dark keyword"
-            v-for="a in shop.keywords"
-            :key="a"
-            >{{ a }}</span
-          >
-        </div>
+  <div
+    class="container-fluid pe-1 ps-3 row align-items-center g-0"
+    :style="background"
+  >
+    <div class="col-8 info__container">
+      <div class="title">{{ shop.name }}</div>
+      <div class="address">{{ shop.address }}</div>
+      <div>
+        <span
+          class="badge rounded-pill text-dark keyword"
+          v-for="a in shop.keywords"
+          :key="a"
+          >{{ a }}</span
+        >
       </div>
-      <div class="col-4">
-        <div class="square">
-          <img class="inner" :src="shop.url" alt="..." />
-        </div>
+    </div>
+    <div class="col-4">
+      <div class="square" style="float: none; margin: 0 auto">
+        <img
+          class="inner"
+          :src="url"
+          alt="..."
+          v-if="!(shop.is_partner == false)"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import img from "@/assets/img/400x400.png";
 export default {
   name: `ShopItem`,
   props: {
@@ -33,6 +40,10 @@ export default {
     background() {
       if (this.index % 2 == 0) return `background:#fbebfd`;
       return ``;
+    },
+    url() {
+      if (this.shop.url == undefined) return img;
+      else return this.shop.url;
     },
   },
 };
@@ -85,9 +96,8 @@ export default {
 //샵 정보 끝
 //이미지 시작
 .square {
-  width: 100%;
+  width: 90%;
   position: relative;
-  background: white;
   border-radius: 10%;
 }
 

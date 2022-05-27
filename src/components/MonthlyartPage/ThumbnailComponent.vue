@@ -1,5 +1,11 @@
 <template>
-  <div class="outline" style="overflow: hidden" @mouseleave="show = false">
+  <div
+    class="outline"
+    style="overflow: hidden"
+    @mouseleave="show = false"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+  >
     <square
       @click="clickImage(art.id)"
       :url="art.url"
@@ -8,11 +14,18 @@
     />
     <div v-if="toggle" class="toggleOn">
       <transition name="slide-fade">
-        <div class="detail" style="display: flex" v-if="show">
+        <div
+          class="detail"
+          style="display: flex; align-items: center"
+          v-if="show"
+        >
           <div style="margin: auto; width: 90%">
-            <p class="title" @click="clickShop(shop.id)">
-              {{ shop.name }} <i class="bi bi-chevron-right"></i>
-            </p>
+            <div style="display: flex">
+              <p class="title" @click="clickShop(shop.id)">
+                {{ shop.name }}
+              </p>
+              <i class="bi bi-chevron-right"></i>
+            </div>
             <div class="info">
               <span
                 ><i class="bi bi-telephone-fill"></i>{{ shop.contact }}</span
@@ -25,15 +38,23 @@
       </transition>
     </div>
     <div v-if="!toggle" class="toggleOff">
-      <div class="detail" style="display: flex">
+      <div class="detail">
         <div style="margin: auto; width: 90%">
-          <p class="title" @click="clickShop(shop.id)">
-            {{ shop.name }} <i class="bi bi-chevron-right"></i>
-          </p>
-          <div class="info">
-            <span><i class="bi bi-telephone-fill"></i>{{ shop.contact }}</span>
-            <br />
-            <span><i class="bi bi-geo-alt-fill"></i>{{ shop.address }}</span>
+          <div style="display: flex; align-items: center">
+            <p class="title" @click="clickShop(shop.id)">
+              {{ shop.name }}
+            </p>
+            <i class="bi bi-chevron-right"></i>
+          </div>
+          <div class="flex-grow-1">
+            <div class="info">
+              <span
+                ><i class="bi bi-telephone-fill"></i>{{ shop.contact }}</span
+              >
+              <br />
+              <span><i class="bi bi-geo-alt-fill"></i>{{ shop.address }}</span>
+              ...
+            </div>
           </div>
         </div>
       </div>
@@ -60,7 +81,7 @@ export default {
   },
   methods: {
     clickImage(id) {
-      this.$router.push("/library/p/" + id);
+      this.$store.dispatch("MonthlyartStore/fetchPost", id);
     },
     clickShop(id) {
       this.$router.push("/shop/" + id);
@@ -81,7 +102,7 @@ export default {
   transition: all 0.8s;
 }
 .slide-fade-leave-active {
-  transition: all 0.8s;
+  transition: all 0.8;
 }
 .slide-fade-enter-from/* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateY(100%);
@@ -97,8 +118,11 @@ export default {
   position: relative;
   border-radius: 15px;
   overflow: hidden;
+  font-size: 1vw;
+  @include tablet {
+    font-size: 2vw;
+  }
   @include mobile-s {
-    font-size: 70%;
     border-radius: 10px;
   }
 }
@@ -127,16 +151,21 @@ export default {
   }
 }
 .title {
-  font-size: 1.1em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
   font-weight: bold;
   margin: 0 0 1% 0;
 }
 
 .info {
-  font-size: 0.8em;
+  font-size: 70%;
 }
 .info span {
-  margin-right: 3%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .info i {
   margin-right: 1%;

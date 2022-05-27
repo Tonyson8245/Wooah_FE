@@ -1,19 +1,22 @@
 <template>
   <div class="outline" v-if="ShopData != null">
-    <div class="p-3">
+    <div class="p-2">
       <div v-if="ShopData.has_deposit">
         <div class="container-fluid row p-0 mb-1">
-          <div class="col-5 title" style="text-align: left">예약금</div>
-          <div class="col-7 content" style="text-align: right">
+          <div class="col-3 title" style="text-align: left">예약금</div>
+          <div class="col-9 content" style="text-align: right">
             {{ ShopData.deposit }}원
           </div>
         </div>
       </div>
-      <div class="title">가격 정보</div>
+
+      <div class="container-fluid row p-0 m-0"></div>
       <div class="content">
         <div v-for="(i, type) in ShopData.menu" :key="type" class="menu">
           <div v-if="type == `hand`" class="container-fluid row p-0 mb-1">
-            <div class="col-3 type">손</div>
+            <div class="col-3 title">가격 정보</div>
+            <div class="col-9"></div>
+            <div class="col-3 type border-end">손</div>
             <div class="col-9">
               <div v-for="menu in ShopData.menu.hand" :key="menu" class="pb-3">
                 <div class="d-flex justify-content-between">
@@ -25,7 +28,7 @@
             </div>
           </div>
           <div v-if="type == `foot`" class="container-fluid row p-0 mb-1">
-            <div class="col-3 type">발</div>
+            <div class="col-3 type border-end">발</div>
             <div class="col-9">
               <div v-for="menu in ShopData.menu.foot" :key="menu" class="pb-3">
                 <div class="d-flex justify-content-between">
@@ -40,8 +43,8 @@
             v-if="type == `monthly_art`"
             class="container-fluid row p-0 mb-1"
           >
-            <div class="col-4 type">이달의 아트</div>
-            <div class="col-8">
+            <div class="col-3 type border-end">이달의 아트</div>
+            <div class="col-9 mb-2">
               <div
                 v-for="menu in ShopData.menu.monthly_art"
                 :key="menu"
@@ -71,18 +74,22 @@ export default {
 @import "/src/assets/style.scss";
 .outline {
   font-family: "GoyangIlsan";
-  font-size: 1.2em;
-
-  @include tablet {
+  font-size: 1em;
+  @include desktop {
     font-size: 90%;
+  }
+  @include tablet {
+    font-size: 3vw;
   }
 }
 
 .title {
+  font-size: 120%;
+  text-align: center;
   font-weight: bold;
 }
 .content {
-  font-size: 0.88em;
+  font-size: 100%;
 }
 .content .menu {
   white-space: nowrap;
@@ -90,8 +97,5 @@ export default {
 }
 .menu .type {
   text-align: center;
-  @include tablet {
-    text-align: right;
-  }
 }
 </style>

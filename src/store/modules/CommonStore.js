@@ -5,6 +5,8 @@ const CommonStore = {
   state: {
     width: ``,
     height: ``,
+    htmlheight: ``,
+    htmlwidth: ``,
 
     districtData: [],
     sido: 1,
@@ -18,7 +20,10 @@ const CommonStore = {
       state.height = payload[1];
       state.width = payload[0];
     },
-
+    SethtmlSize(state, payload) {
+      state.htmlheight = payload[1];
+      state.htmlwidth = payload[0];
+    },
     FetchDistrictData(state, payload) {
       state.districtData = payload;
     },

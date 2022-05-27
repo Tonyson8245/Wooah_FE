@@ -1,6 +1,6 @@
 <template>
   <div class="outer align-middle" @click="CheckLimbs">
-    <div class="check" :class="Checked">
+    <div class="check" v-if="show != -1">
       <i class="bi bi-check-lg bi-secondary" style="color: black"></i>
     </div>
     <i class="bi bi-fingerprint img" style="color: #c4c4c4"></i>
@@ -14,6 +14,8 @@ export default {
     limbs: Object,
     SetFilterLimbs: Boolean,
     FilterCategory: String,
+    index: Number,
+    tempFilter: Array,
   },
   data() {
     return {
@@ -37,6 +39,11 @@ export default {
         if (this.SetFilterLimbs == true) this.Checked = "visible";
         else this.Checked = "d-none";
       }
+    },
+  },
+  computed: {
+    show() {
+      return this.tempFilter.indexOf(this.index);
     },
   },
 };

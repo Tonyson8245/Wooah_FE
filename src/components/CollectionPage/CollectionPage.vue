@@ -1,7 +1,7 @@
 <template>
   <div class="outline">
     <AlertDialog />
-    <div class="container-sm p-lg-5 pt-lg-0">
+    <div class="container-lg p-lg-5 pt-lg-0">
       <div
         class="row d-flex justify-content-center align-items-center g-0"
         style="padding: 0 0 0 0"
@@ -9,10 +9,7 @@
         <!-- 전체 컨테이너 -->
         <div class="col-md-10">
           <!-- 검색창 시작 -->
-          <SearchPage
-            @ClickTag="ClickTag($event)"
-            @MakeQuery="ClickTag($MakeQuery)"
-          />
+          <SearchPage @ClickTag="ClickTag($event)" />
           <!-- 검색 창 끝/태그 시작 -->
           <div class="btn_container" :style="BtnContainerState">
             <div class="btn_outer btn_outer_move">
@@ -107,7 +104,7 @@
                 </div>
                 <button
                   class="btn btn-sm filter__reset"
-                  v-if="ResetStatus"
+                  v-show="ResetStatus"
                   :style="ButtonFocusSetting"
                   style="border-radius: 15px"
                   type="button"
@@ -129,8 +126,8 @@
             <!-- 태그끝 -->
             <!-- 하단 사진들 시작 -->
             <InfiniteScroll
-              @infinite-scroll="moreData"
               v-if="!noPost"
+              @infinite-scroll="moreData"
               :class="ImageContainerMove"
               class="images__container"
               :noResult="noResult"
@@ -153,7 +150,7 @@
                 />
               </div>
             </InfiniteScroll>
-            <div v-if="noPost" class="noPost">
+            <div v-if="noPost" class="noPost" :class="ImageContainerMove">
               <span class="item">조회 결과가 없습니다.</span>
             </div>
           </div>
@@ -164,6 +161,7 @@
     <!-- 모달 (디자인 상세보기)시작 -->
     <!-- Modal -->
     <div
+      style="border-radius: 15px"
       class="modal fade"
       id="exampleModal"
       tabindex="-1"
@@ -190,12 +188,6 @@
             </div>
             <div class="row" style="width: 80%">
               <div class="col-lg-8 square" style="padding: 0 0 0 0">
-                <!-- <img
-                  :src="post.url"
-                  class="shadow-sm content"
-                  alt="..."
-                  style="display: inline-block; background: #fbebfd"
-                /> -->
                 <PostImage
                   v-if="post != ``"
                   class="content"
@@ -205,7 +197,10 @@
                 />
                 <!-- 모달의 이미지 -->
               </div>
-              <div class="col-lg-4 ms-auto modal__content_outer">
+              <div
+                class="col-lg-4 ms-auto modal__content_outer"
+                style="display: flex; flex-direction: column"
+              >
                 <div class="modal__content_footer">
                   <div v-if="post.monthly">
                     <i class="bi bi-coin monthly"></i>
@@ -213,25 +208,30 @@
                       post.price
                     }}</span>
                   </div>
-                  <div>
+                  <div
+                    class="modal__content_title"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    @click="
+                      ClickShop(shop.id, $event);
+                      this.Clicked_post_index = ``;
+                    "
+                  >
                     <span class="modal__content_name">
-                      <span>{{ shop.name }}</span>
-                      <i class="bi bi-arrow-right-circle"></i>
-                    </span>
+                      <span>{{ shop.name }}</span> </span
+                    ><i class="bi bi-arrow-right-circle"></i>
                   </div>
-                  <span class="modal__content_info">
-                    <span
-                      ><i class="bi bi-telephone"></i>{{ shop.contact }}
-                    </span>
-                    <span
-                      ><i class="bi bi-geo-alt"></i>{{ shop.address }}
-                    </span>
-                    <span v-if="post.monthly_art"
-                      ><br /><i class="bi bi-coin"></i
-                      >{{ post.price }} 원 </span
-                    ><br />
-                  </span>
-
+                  <div class="row modal__content_info g-0">
+                    <div class="col-7">
+                      <i class="bi bi-telephone"></i>{{ shop.contact }}
+                    </div>
+                    <div class="col-5" v-if="post.monthly_art">
+                      <i class="bi bi-coin"></i>{{ post.price }} 원
+                    </div>
+                    <div class="col-12">
+                      <i class="bi bi-geo-alt"></i>{{ shop.address }}
+                    </div>
+                  </div>
                   <span
                     class="modal__content_tags"
                     v-for="tag in post.tags"
@@ -243,6 +243,12 @@
             </div>
 
             <div style="width: 5%">
+              <i
+                :class="ButtonCondition[1]"
+                class="bi bi-arrow-right-circle-fill modal__btn_right"
+                style="float: right"
+                @click="ClickNextPost"
+              ></i>
               <div class="modal__btn_close">
                 <button
                   type="button"
@@ -252,12 +258,6 @@
                   @click="this.Clicked_post_index = ``"
                 ></button>
               </div>
-              <i
-                :class="ButtonCondition[1]"
-                class="bi bi-arrow-right-circle-fill modal__btn_right"
-                style="float: right"
-                @click="ClickNextPost"
-              ></i>
             </div>
           </div>
         </div>
@@ -396,7 +396,9 @@ export default {
   },
   mounted() {
     //데이터 가져오는 코드 여기 넣쟈
+    this.$store.commit("collectionStore/ChangeSearchOff");
     this.$store.commit("collectionStore/setfilterQuery", "");
+    this.$store.commit("collectionStore/changeTag", null);
     this.$store.dispatch("collectionStore/fetchPosts");
     this.$store.commit("Setpagecondition", "collection");
   }, // 생성 될때 포스트 데이터를 가져오게 한다.
@@ -521,8 +523,6 @@ export default {
         option_qeury +
         handfoot_qeury +
         monthly_art_qeury;
-
-      // console.log(query);
 
       this.$store.commit("collectionStore/setfilterQuery", query); //필터 쿼리 vuex 적용
       this.$store.commit("collectionStore/resetPage", 1); //페이지 초기화
@@ -694,12 +694,12 @@ export default {
       this.$store.dispatch("collectionStore/fetchPosts");
     },
     ClickTag(tag) {
-      // console.log(tag);
       this.$store.commit("collectionStore/changeTag", tag);
       this.$store.commit("collectionStore/ChangeSearchOff");
       this.$store.commit("collectionStore/InitSearchResult");
-      this.Reset(false);
-      this.MakeQuery();
+    },
+    ClickShop(id) {
+      this.$router.push("/shop/" + id + "/info");
     },
   },
   watch: {
@@ -719,12 +719,18 @@ export default {
     },
     noResult() {
       if (this.Clicked_post_index != ``) {
-        this.ButtonCondition[1] = "d-none";
+        if (this.noPost) this.ButtonCondition[1] = "d-none";
       }
     },
-    path() {
-      if (!(this.tag == null && this.filterQuery == ""))
-        this.$router.push(`/library`);
+
+    tag(a, b) {
+      if (a != b) {
+        this.Reset(false);
+        this.MakeQuery();
+      }
+    },
+    SearchState(a) {
+      if (a != "") this.FilterStatus = "d-none";
     },
   },
   components: {
@@ -739,14 +745,15 @@ export default {
       return this.$route.path;
     },
     SearchState() {
-      if (this.$store.state.collectionStore.SearchState == true)
+      if (this.$store.state.collectionStore.SearchState == true) {
         return "search__move";
-      else {
+      } else {
         return "";
       }
     },
     BtnContainerState() {
-      if (this.$store.state.collectionStore.SearchState == true) return "";
+      if (this.$store.state.collectionStore.SearchState == true)
+        return "visibility: hidden;";
       else {
         return `position: sticky;`;
       }
@@ -775,6 +782,11 @@ export default {
 .outline {
   background: $pl-6;
   height: inherit;
+  min-height: 765px;
+
+  @include mobile-s {
+    min-height: 400px;
+  }
 }
 .search__move {
   position: relative;
@@ -844,7 +856,6 @@ export default {
   font-size: 1.5em;
   position: absolute;
   bottom: 50%;
-  transform: translateX(100%);
   @include mobile-s {
     font-size: 80%;
   }
@@ -869,45 +880,57 @@ export default {
 }
 .modal__content_footer {
   color: white;
-  position: absolute;
-  clear: left;
-  float: left;
-  left: 0;
-  top: 75%;
   font-family: "GoyangIlsan";
-  margin: 7% 0 7% 7%;
-  @include mobile-s {
-    top: initial;
-    margin: 7% 0 7% 0%;
-    font-size: 20px;
-    bottom: 0;
-  }
+  top: 70%;
+  position: relative;
   @include tablet {
-    top: initial;
-    bottom: 0;
-    margin: 7% 0 7% 0%;
-    position: relative;
-    font-size: 50%;
+    top: 0%;
   }
 }
 .modal__content_outer {
   background-color: $pl-2;
-  position: relative;
-  height: auto;
+
+  padding: 2%;
+
+  font-size: 1em;
+  @include desktop {
+    font-size: 0.8em;
+  }
+  @include tablet {
+    padding: 5%;
+  }
 }
 .modal__content_monthly_price {
-  font-size: 1em;
+  font-size: 100%;
+}
+.modal__content_title {
+  display: flex;
+  align-items: center;
+  font-size: 150%;
+  @include mobile-s {
+    font-size: 16px;
+  }
 }
 .modal__content_name {
-  font-size: 1.5em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
   font-weight: bold;
 }
 .modal__content_info {
-  font-size: 0.7em;
+  font-size: 100%;
+  margin-top: 3%;
+  @include tablet {
+    margin-top: 0%;
+  }
+}
+.modal__content_info .bi {
+  margin-right: 0.5em;
 }
 .modal__content_tags {
-  font-size: 0.7em;
-  margin-right: 1em;
+  font-size: 100%;
+  margin-right: 0.5em;
 }
 //모달 끝
 //태그 시작
@@ -928,7 +951,10 @@ export default {
   overflow-y: hidden;
   background: #fbebfd;
 }
-
+.dropdown button span {
+  width: 100%;
+  text-align: center;
+}
 .dropdown button {
   background: white;
   font-family: "GoyangIlsan";
@@ -979,7 +1005,6 @@ export default {
   }
 }
 .noPost .item {
-  position: absolute;
   position: absolute;
   left: 50%;
   top: 50%;

@@ -35,12 +35,6 @@ export default {
     }
   },
   methods: {
-    resize() {
-      setTimeout(function () {
-        window.dispatchEvent(new Event("resize"));
-        console.log(123);
-      }, 600);
-    },
     AnimateMarker(num) {
       if (this.markers.length > 0 && this.markers[num] != null) {
         this.markers[num].setAnimation(naver.maps.Animation.BOUNCE);
@@ -70,6 +64,8 @@ export default {
           this.GetClickHandler(this.shops, i, this.$router, this.$store)
         );
       }
+
+      if (this.shop != null) this.SelectShop();
     },
     InitMap(Lat, Lng) {
       this.map = new naver.maps.Map(document.getElementById("naverMap"));
@@ -301,6 +297,9 @@ export default {
       this.SelectShop();
     },
     width() {
+      setTimeout(function () {
+        window.dispatchEvent(new Event("resize"));
+      }, 600);
       this.SetMedia();
     },
     shops() {

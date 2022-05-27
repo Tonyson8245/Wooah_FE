@@ -54,6 +54,8 @@
         :limbs="limbs"
         :SetFilterLimbs="SetFilter.handfoot[i]"
         :FilterCategory="FilterCategory"
+        :tempFilter="tempFilter"
+        :index="i"
         @CheckFilter="InsertTempFilter($event)"
       />
     </div>
@@ -140,7 +142,10 @@ export default {
         this.tempFilter.splice(index, 1);
         // 안에 이미 동일한 데이터가 있음. 삭제
       } else {
-        if (this.tempFilter.length >= 3) {
+        if (this.FilterCategory == "손발" && this.tempFilter.length >= 1) {
+          console.log(this.tempFilter);
+          this.tempFilter[0] = data; // 중복 안되니깐 push가 아니라 바꿔주기만 하면됨
+        } else if (this.tempFilter.length >= 3) {
           this.$store.commit("alertStore/ChangeState");
           this.$store.commit(
             "alertStore/ChangeComment",
@@ -211,11 +216,19 @@ export default {
 
 .filter__outer_button {
   width: 95%;
-  background: $pl-3;
+  background: $pl-2;
   border-radius: 15px;
   border: solid 1px $pl-4;
 
   height: auto;
+}
+.filter__outer_button:hover,
+.filter__outer_button:focus,
+.filter__outer_button:active,
+.filter__outer_button.active,
+.open > .dropdown-toggle.filter__outer_button :hover {
+  background: $pl-3;
+  border: solid 1px $pl-4;
 }
 .filter_title {
   font-family: "GoyangIlsan";

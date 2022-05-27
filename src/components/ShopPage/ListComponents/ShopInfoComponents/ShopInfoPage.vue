@@ -103,8 +103,11 @@ export default {
           case "image":
             this.ClickTab(2);
             break;
-          default:
+          case "info":
             this.ClickTab(0);
+            break;
+          default:
+            this.$router.push(`/shop`);
             break;
         }
       }
@@ -136,6 +139,7 @@ export default {
     },
     CloseInfo() {
       this.$router.push("/shop");
+      this.$store.commit("ShopStore/SetShop", null);
     },
     ClickTab(num) {
       this.TabStatus = [``, ``, ``];
@@ -176,10 +180,10 @@ export default {
   background: #fcfcfc;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 793px;
-  @include mobile-s {
+  height: 800px;
+  @include tablet-s {
     height: auto;
-    overflow: none;
+    overflow: hidden;
   }
 }
 //샵 이름 시작
