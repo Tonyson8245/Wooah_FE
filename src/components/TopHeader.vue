@@ -66,7 +66,7 @@
                 data-bs-dismiss="offcanvas"
                 :class="TapCondition[3]"
                 @click="ClickTo('/comparison')"
-                >가격비교</a
+                >맞춤시술견적</a
               >
             </li>
           </ul>
@@ -115,7 +115,8 @@ export default {
   methods: {
     ClickTo(a) {
       this.$router.push(a);
-      console.log(a);
+
+      this.$store.commit("collectionStore/changeTag", null);
     },
   },
 };

@@ -64,6 +64,7 @@ const MonthlyartStore = {
         });
     },
     async getPosts(context, payload) {
+      context.commit("setNoResult", true); //데이터 없음
       await MonthlyApi.getPosts(
         context.state.page,
         payload.sido,
@@ -78,9 +79,7 @@ const MonthlyartStore = {
 
           context.commit("increasePage"); // 페이지 올리기
         })
-        .catch(() => {
-          context.commit("setNoResult", true); //데이터 없음
-        });
+        .catch(() => {});
     },
     async fetchPost(context, id) {
       await collectionApi

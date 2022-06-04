@@ -139,21 +139,24 @@
           <div class="col-sm-6 col-12 link p-0">
             <div class="square">
               <div class="inner">
-                <div class="row fw-bold m-0" v-if="monthlyart.length > 0">
+                <div class="row fw-bold m-0" v-if="this.monthlyart.length > 0">
                   <div
                     class="col-6 tile p-0"
                     v-for="i in 3"
                     :key="i"
-                    @click="clickMonthlyart(monthlyart[i].price_range)"
+                    @click="clickMonthlyart(i - 1)"
                   >
-                    <square :url="monthlyart[i].arts[0].url" />
+                    <square
+                      :url="monthlyart_url(i - 1)"
+                      v-if="monthlyart_url(i - 1) != ``"
+                    />
                     <div class="text fw-bold">
-                      ~ {{ monthlyart[i].price_range }}만원 대
+                      {{ price_range(i - 1) }}
                     </div>
                   </div>
 
                   <div class="col-6 tile p-0" @click="clickMonthlyart(`more`)">
-                    <square :url="monthlyart[4].arts[0].url" />
+                    <square :url="monthlyart_url(3)" />
                     <div class="text fw-bold">더보기...</div>
                   </div>
                 </div>
@@ -315,10 +318,27 @@ export default {
     DBclickNewestDesign(id) {
       if (this.width > 551) this.$router.push("/library/p/" + id);
     },
-    clickMonthlyart(price_range) {
-      if (price_range == `more`) {
+    clickMonthlyart(i) {
+      var range;
+      if (this.monthlyart[i] != undefined)
+        range = this.monthlyart[i].price_range;
+      else range = "";
+
+      if (i == `more`) {
         this.$router.push("/monthlyart");
-      } else this.$router.push("/monthlyart/" + price_range * 10000);
+      } else if (range != "") {
+        this.$router.push("/monthlyart/" + range * 10000);
+      }
+    },
+    monthlyart_url(i) {
+      if (this.monthlyart[i] != undefined) {
+        return this.monthlyart[i].arts[0].url;
+      } else return "";
+    },
+    price_range(i) {
+      if (this.monthlyart[i] != undefined)
+        return `~` + (this.monthlyart[i].price_range + 1) + `만원`;
+      else return "";
     },
     clickShop(shopid) {
       if (shopid == `more`) this.$router.push("/shop");
@@ -545,9 +565,10 @@ export default {
 .row .tile {
   font-family: "GoyangDeogyang";
   position: relative;
-  background-color: gray;
   color: white;
   font-size: 1.5vw;
+  background: #cf88db;
+  border: solid 1px #f9d1f7;
   @include sm {
     font-size: 5vw;
   }

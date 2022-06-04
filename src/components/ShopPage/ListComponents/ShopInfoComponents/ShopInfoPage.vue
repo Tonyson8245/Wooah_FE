@@ -158,6 +158,10 @@ export default {
       }
     },
   },
+  beforeUnmount() {
+    this.$store.commit("ShopStore/SetShop", null);
+    this.$store.commit("ShopStore/FetchShopinfo", null);
+  },
 };
 </script>
 

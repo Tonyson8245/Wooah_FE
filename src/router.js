@@ -2,7 +2,6 @@ import { createWebHistory, createRouter } from "vue-router";
 import MainPage from "./components/MainPage/MainPage";
 import Collection from "./components/CollectionPage/CollectionPage";
 import Shop from "./components/ShopPage/ShopPage";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
 import DetailPage from "./components/CollectionPage/DetailPage";
 import ShopImgTab from "./components/ShopPage/ListComponents/ShopInfoComponents/Tabs/ShopImgTab";
 import ShopInfoTab from "./components/ShopPage/ListComponents/ShopInfoComponents/Tabs/ShopInfoTab";
@@ -84,7 +83,11 @@ const routes = [
   },
   {
     path: "/:anything(.*)",
-    component: ErrorPage,
+    redirect: (to) => {
+      // the function receives the target route as the argument
+      // we return a redirect path/location here.
+      return { path: "/", query: { q: to.params.searchText } };
+    },
   },
 ];
 

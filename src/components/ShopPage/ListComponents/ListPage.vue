@@ -69,7 +69,6 @@ export default {
   mounted() {
     if (this.currentpage != 0) this.page = this.currentpage;
     this.$store.dispatch("ShopStore/getShops", this.page);
-    this.$store.dispatch("ShopStore/getDistricts");
   },
   computed: {
     currentpage() {
@@ -101,9 +100,8 @@ export default {
         this.shops[index].is_partner == true
       ) {
         this.$router.push("/shop/" + id + "/info");
+        this.$store.commit("ShopStore/SetShop", index); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
       }
-      this.FocusoutShop(); // 해당 샵에서 포커스 벗어남
-      this.$store.commit("ShopStore/SetShop", index); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
     },
     FocusShop(index) {
       this.$store.commit("ShopStore/SetFocusmarker", index);
@@ -151,7 +149,7 @@ export default {
 
   height: $list-desktop-height;
   @include tablet-s {
-    height: auto;
+    height: 100%;
     overflow: none;
   }
 }

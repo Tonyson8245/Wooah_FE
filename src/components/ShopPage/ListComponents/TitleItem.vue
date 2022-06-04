@@ -4,7 +4,7 @@
       <span>{{ title }}</span>
     </div>
     <div class="col-6 region">
-      <div class="dropdown">
+      <!-- <div class="dropdown">
         <button
           class="btn dropdown-toggle"
           type="button"
@@ -29,21 +29,26 @@
             </li>
           </template>
         </ul>
-      </div>
+      </div> -->
+      <region :font="'color:#E760FF; font-size:1.1em'" />
     </div>
   </div>
 </template>
 
 <script>
+import region from "@/components/Common/RegionComponent.vue";
 export default {
   name: `TitleItem`,
   data() {
     return {};
   },
+  components: {
+    region,
+  },
   beforemounted() {},
   computed: {
     districtData() {
-      return this.$store.state.ShopStore.districtData;
+      return this.$store.state.CommonStore.districtData;
     },
     title() {
       if (this.$store.state.ShopStore.keyword == "") {
@@ -53,7 +58,7 @@ export default {
       }
     },
     region() {
-      var data = this.$store.state.ShopStore.districtData;
+      var data = this.$store.state.CommonStore.districtData;
       if (data.length > 0) {
         var sigungu = this.$store.state.ShopStore.sigungu;
         var sido = this.$store.state.ShopStore.sido;

@@ -1,6 +1,6 @@
 <template>
   <div class="square" style="width: 100%">
-    <img class="inner" :src="true_url" alt="..." @error="oner" />
+    <img class="inner" :src="true_url" :alt="alt" @error="oner" v-if="url" />
   </div>
 </template>
 <script>
@@ -9,6 +9,8 @@ export default {
   name: `SquareComponent`,
   props: {
     url: String,
+
+    alt: String,
   },
   computed: {
     true_url() {

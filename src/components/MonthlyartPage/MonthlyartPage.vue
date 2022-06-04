@@ -102,6 +102,7 @@
                   class="btn-close btn-close-white"
                   data-bs-dismiss="modal"
                   aria-label="Close"
+                  ref="close_btn"
                   @click="this.Clicked_post_index = ``"
                 ></button>
               </div>
@@ -124,6 +125,13 @@ export default {
     return {
       fontSize: `btn-lg`,
     };
+  },
+  beforeUpdate() {
+    this.$refs.close_btn.click();
+  },
+  beforeUnmount() {
+    this.$refs.close_btn.click();
+    this.$store.commit("MonthlyartStore/resetPost");
   },
   computed: {
     title() {
@@ -309,5 +317,6 @@ export default {
   font-size: 80%;
   margin-right: 0.5em;
 }
+
 //모달 끝
 </style>

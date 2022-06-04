@@ -3,11 +3,11 @@
     <GDialog :yesno="true" />
     <div class="header">
       <Region :font="font" />
-      <p class="title">맞춤 시술 가격 비교</p>
+      <p class="title">맞춤 시술 견적 받기</p>
     </div>
     <div class="body">
       <div class="container-lg" style="flex-direction: column; flex: 1">
-        <div class="row">
+        <div class="row g-0">
           <div class="tab col-6" :class="tab[0]" @click="clickPage(`hand`)">
             네일(손)
           </div>
@@ -188,15 +188,17 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/style.scss";
 .outline {
-  background: $pl-6;
+  background: $pl-4;
+  height: inherit;
   font-family: "GoyangIlsan";
   @include mobile-s {
     font-size: 80%;
   }
 }
 .header {
+  background: $pl-6;
   text-align: center;
-  padding: 2% 0 2% 0;
+  padding: 1.5% 0 1.5% 0;
 }
 .header .title {
   font-weight: bold;
@@ -205,8 +207,6 @@ export default {
   margin: 0;
 }
 .body {
-  height: auto;
-  background: $pl-5;
   width: 100%;
   text-align: center;
 }

@@ -32,15 +32,30 @@ const ShopStore = {
 
     //검색
     keyword: false,
+
+    //사이즈
+    media: "desktop",
   },
   mutations: {
+    SetMedia(state, payload) {
+      state.media = payload;
+    },
+    Reset(state) {
+      state.focusmarker = null;
+      state.noResultlist = false;
+      state.pageReset = false;
+
+      state.shop = null;
+
+      state.shopimg = [];
+      state.shopinfo = null;
+      state.currentimagepage = 1;
+
+      state.keyword = false;
+    },
     SetCurrentPage(state, payload) {
       state.currentpage = payload;
     },
-    // SetPageReset(state, payload) {
-    //   state.pageReset = payload;
-    //   // state.currentpage = 1; // 페이지 위치 고정
-    // },
     SetnoResultlist(state, payload) {
       state.noResultlist = payload;
     },
@@ -129,7 +144,7 @@ const ShopStore = {
         .getShopDetail(id)
         .then(function (response) {
           context.commit("FetchShopinfo", response.data);
-          context.commit("SetShop", id); //샵 id 를 vuex에 저장
+          // context.commit("SetShop", id); //샵 id 를 vuex에 저장
         })
         .catch(function (error) {
           console.log(error);

@@ -255,6 +255,7 @@
                   class="btn-close btn-close-white"
                   data-bs-dismiss="modal"
                   aria-label="Close"
+                  ref="close_btn"
                   @click="this.Clicked_post_index = ``"
                 ></button>
               </div>
@@ -398,10 +399,12 @@ export default {
     //데이터 가져오는 코드 여기 넣쟈
     this.$store.commit("collectionStore/ChangeSearchOff");
     this.$store.commit("collectionStore/setfilterQuery", "");
-    this.$store.commit("collectionStore/changeTag", null);
     this.$store.dispatch("collectionStore/fetchPosts");
     this.$store.commit("Setpagecondition", "collection");
   }, // 생성 될때 포스트 데이터를 가져오게 한다.
+  beforeUnmount() {
+    this.$refs.close_btn.click();
+  },
   methods: {
     ClickNextPost() {
       this.Clicked_post_index += 1;
@@ -731,6 +734,13 @@ export default {
     },
     SearchState(a) {
       if (a != "") this.FilterStatus = "d-none";
+    },
+    path() {
+      if (this.tag != null || this.filterQuery != "") {
+        this.$store.commit("collectionStore/setfilterQuery", "");
+        this.$store.commit("collectionStore/changeTag", null);
+        this.$router.push("/library");
+      }
     },
   },
   components: {

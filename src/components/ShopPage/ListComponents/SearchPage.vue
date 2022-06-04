@@ -44,7 +44,7 @@ export default {
       } else this.value = "";
     },
     close() {
-      this.$store.commit("ShopStore/SetKeyword", false);
+      this.$store.commit("ShopStore/Reset"); // 초기화
       this.value = "";
     },
   },

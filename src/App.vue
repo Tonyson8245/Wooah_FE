@@ -1,12 +1,16 @@
 <template>
-  <div class="viewport" ref="viewport">
+  <div
+    class="viewport"
+    style="display: flex; flex-direction: column; height: 100vh"
+    ref="viewport"
+  >
     <TopHeader class="top" />
-    <body>
+    <body style="flex: 1">
       <div class="web--content">
         <router-view />
       </div>
     </body>
-    <BottomFooter />
+    <BottomFooter v-if="BottomShow()" />
   </div>
 </template>
 
@@ -37,6 +41,11 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+    BottomShow() {
+      var path = this.$route.fullPath;
+      if (path == "/shop" || path == "/comparison") return false;
+      else return true;
+    },
     handleResize() {
       this.width = window.innerWidth;
       this.height = window.innerHeight;
@@ -53,11 +62,11 @@ export default {
 }
 .web--content {
   background: $pl-6;
-  /* min-height: 765px;
+  height: 100%;
 
   @include mobile-s {
     min-height: 400px;
-  } */
+  }
 }
 .col {
   width: 100%;
