@@ -1,4 +1,5 @@
 <template>
+  <AlertDialog />
   <div class="outline">
     <GDialog :yesno="true" />
     <div class="header">
@@ -8,10 +9,24 @@
     <div class="body">
       <div class="container-lg" style="flex-direction: column; flex: 1">
         <div class="row g-0">
-          <div class="tab col-6" :class="tab[0]" @click="clickPage(`hand`)">
+          <div
+            class="tab col-6"
+            :class="tab[0]"
+            @click="
+              this.page = `hand`;
+              clickPage();
+            "
+          >
             네일(손)
           </div>
-          <div class="tab col-6" :class="tab[1]" @click="clickPage(`foot`)">
+          <div
+            class="tab col-6"
+            :class="tab[1]"
+            @click="
+              this.page = `foot`;
+              clickPage();
+            "
+          >
             페디(발)
           </div>
         </div>
@@ -53,7 +68,7 @@
                 </div>
               </div>
             </div>
-            <div class="result__body mb-1" v-if="this.result.length > 0">
+            <div class="result__body mb-1" v-if="this.result[0].has_result">
               <ShopItem
                 v-for="(shop, i) in shops"
                 :key="i"
@@ -76,17 +91,35 @@ import Steps from "@/components/ComparisonPage/StepsComponent.vue";
 import Detail from "@/components/ComparisonPage/DetailComponent.vue";
 import ShopItem from "@/components/Common/ShopItem.vue";
 import GDialog from "@/components/Common/AlertDialog.vue";
+import AlertDialog from "@/components/Common/AlertDialog.vue";
 
 export default {
   name: `comparison`,
   data() {
-    return {};
+    return {
+      property: "value",
+      page: "",
+    };
   },
   methods: {
-    clickPage(page) {
-      this.$store.commit("ComparisonStore/setType", page);
+    clickPage() {
+      if (this.query.length > 0 && this.result.length == 0) {
+        console.log(`이미 데이터 있음`);
+        this.$store.commit("alertStore/ChangeState");
+        this.$store.commit(
+          "alertStore/ChangeComment",
+          "선택한 정보가 초기화됩니다."
+        );
+        return 0;
+      } else {
+        this.changeTab(this.page);
+      }
+    },
+    changeTab() {
+      this.restart();
+      this.$store.commit("ComparisonStore/setType", this.page);
       this.$store.commit("ComparisonStore/resetQuery");
-      if (page == `foot`) {
+      if (this.page == `foot`) {
         this.$store.commit("ComparisonStore/setTotalStep", 5);
       } else this.$store.commit("ComparisonStore/setTotalStep", 3);
     },
@@ -111,9 +144,13 @@ export default {
     Detail,
     ShopItem,
     GDialog,
+    AlertDialog,
   },
 
   computed: {
+    dialogResult() {
+      return this.$store.state.alertStore.dialogResult;
+    },
     districttext() {
       return "- " + this.$store.state.CommonStore.districttext;
     },
@@ -149,25 +186,30 @@ export default {
       return this.$store.state.ComparisonStore.result;
     },
     menu() {
-      if (this.result.length > 0) {
-        console.log(123);
-        return this.$store.state.ComparisonStore.result[0].estimate;
-      } else return "";
+      return this.$store.state.ComparisonStore.result[0].estimate;
     },
     shops() {
-      if (this.result.length > 0) {
+      if (this.result[0].has_result) {
         return this.$store.state.ComparisonStore.result[0].shops;
       } else return "";
     },
     updateDistrict() {
       return this.$store.state.CommonStore.updateDistrict;
     },
+    query() {
+      return this.$store.state.ComparisonStore.query;
+    },
   },
   watch: {
+    dialogResult(a) {
+      if (a) {
+        this.changeTab();
+        this.$store.commit("alertStore/ChangeResult", null); // 확인 취소 여부 초기화
+      }
+    },
     districttext() {
       if (this.result.length > 0) {
         this.$store.dispatch("ComparisonStore/fetchPriceList", {
-          qeury: this.query,
           sido: this.sido,
           sigungu: this.sigungu,
         });
@@ -277,7 +319,7 @@ export default {
 .result__body {
   background: $pl-6;
   max-height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto;
   @include mobile-s {
     max-height: none;
     overflow: hidden;

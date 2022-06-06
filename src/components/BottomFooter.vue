@@ -1,6 +1,6 @@
 <template>
-  <footer class="">
-    <div class="container-fluid">
+  <footer>
+    <div class="container-lg">
       <div class="info row" style="display: flex">
         <table class="col-lg-6 col-md-6">
           <tr>
@@ -38,7 +38,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {},
+};
 </script>
 
 <style lang="scss" scoped>

@@ -64,9 +64,8 @@
               v-for="(design, i) in designs"
               :key="i"
               @click="clickNewestDesign(design.id)"
-              @dblclick="DBclickNewestDesign(design.id)"
             >
-              <div class="carousel__item g-2">
+              <div class="carousel__item">
                 <Square :url="design.url" />
                 <div class="outer">
                   <div class="title">{{ design.shop.name }}</div>
@@ -93,7 +92,7 @@
       <div class="container-lg p-lg-5">
         <div class="row tag_rank__inner">
           <div class="d-sm-none intro fw-bold">
-            <span>#태그로 알아보는 #네일 아트 디자인 #트렌드</span>
+            <span>#태그로 알아보는 #네일아트 디자인 #트렌드</span>
           </div>
           <div class="col-sm-6 col-12 rank">
             <div class="square rank_table">
@@ -116,7 +115,7 @@
           <div class="d-none d-sm-block col-sm-6 intro fw-bold">
             <span
               >#태그로 알아보는 <br />
-              #네일 아트 디자인 #트렌드</span
+              #네일아트 디자인 #트렌드</span
             >
           </div>
         </div>
@@ -178,15 +177,11 @@
           <div class="content col-sm-9 col-12 align-self-center">
             <Carousel
               :itemsToShow="3"
-              :autoplay="3000"
-              :wrapAround="true"
+              :mouseDrag="true"
+              :snapAlign="ShopsnapAlign"
               v-if="shops.length !== 0"
             >
-              <Slide
-                v-for="(shop, i) in shops"
-                :key="i"
-                @click="clickShop(shop.id)"
-              >
+              <Slide v-for="(shop, i) in shops" :key="i">
                 <div
                   class="m-lg-3 m-1"
                   style="
@@ -198,8 +193,10 @@
                 >
                   <Square :url="shop.url" />
                   <div class="shopinfo">
-                    <span class="fw-bold">{{ shop.name }}</span
-                    >>
+                    <div @click="clickShop(shop.id)">
+                      <span class="fw-bold">{{ shop.name }}</span
+                      ><span style="font-size: 70%"> 바로가기 ></span>
+                    </div>
                     <div class="contact">
                       <i class="bi bi-telephone-fill"></i>
                       <span>{{ shop.contact }}</span>
@@ -210,6 +207,9 @@
                   </div>
                 </div>
               </Slide>
+              <template #addons>
+                <Navigation v-if="bannerStatus == 'desktop'" />
+              </template>
             </Carousel>
           </div>
         </div>
@@ -232,6 +232,7 @@ export default {
       settings: {
         itemsToShow: 2,
         snapAlign: "start",
+        mouseDrag: true,
       },
       // breakpoints are mobile first
       // any settings not specified will fallback to the carousel settings
@@ -240,8 +241,10 @@ export default {
         552: {
           itemsToShow: 4,
           snapAlign: "start",
+          mouseDrag: false,
         },
       },
+
       timer: null,
     };
   },
@@ -257,6 +260,14 @@ export default {
   },
 
   computed: {
+    ShopAutoplay() {
+      if (this.shops.length == 2) return 10000000000000;
+      else return 3000;
+    },
+    ShopsnapAlign() {
+      if (this.shops.length == 2) return `center`;
+      else return `center`;
+    },
     width() {
       return this.$store.state.CommonStore.width;
     },
@@ -313,11 +324,9 @@ export default {
   },
   methods: {
     clickNewestDesign(id) {
-      if (this.width < 552) this.$router.push("/library/p/" + id);
+      this.$router.push("/library/p/" + id);
     },
-    DBclickNewestDesign(id) {
-      if (this.width > 551) this.$router.push("/library/p/" + id);
-    },
+
     clickMonthlyart(i) {
       var range;
       if (this.monthlyart[i] != undefined)
@@ -473,6 +482,7 @@ export default {
 //태그 랭크 시작
 .tag_rank__outer {
   background: url("@/assets/img/tag_rank_background.svg");
+  background-size: cover;
 }
 .tag_rank__inner {
   display: flex;

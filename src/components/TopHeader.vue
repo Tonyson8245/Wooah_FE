@@ -2,7 +2,6 @@
   <nav
     class="Roboto navbar navbar-expand-lg p-0 m-0 navbar-secondary"
     style="width: 100%"
-    :style="padding"
   >
     <div class="container-lg">
       <a class="navbar-brand" @click="this.$router.push('/')">우아</a>
@@ -82,10 +81,9 @@ export default {
   data() {
     return {
       TapCondition: ["", ""], // 실제 상단 헤더의 :class 상태 // 실제 컨디션
-      padding: ``,
     };
   },
-  props: {},
+  props: { margin: Boolean },
   watch: {
     PageConditions(state) {
       switch (state) {

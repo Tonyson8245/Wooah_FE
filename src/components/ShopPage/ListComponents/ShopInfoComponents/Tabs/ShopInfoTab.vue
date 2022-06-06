@@ -100,6 +100,7 @@ export default {
 }
 .content {
   font-size: 100%;
+  white-space: pre-wrap;
 }
 .content img {
   padding: 2% 1% 2% 2%;

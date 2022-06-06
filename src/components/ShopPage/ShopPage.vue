@@ -1,5 +1,5 @@
 <template>
-  <div class="container_outer p-lg-2">
+  <div class="container_outer p-lg-4">
     <div class="container-lg">
       <div class="row flex-row-reverse">
         <div

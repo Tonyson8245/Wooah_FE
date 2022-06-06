@@ -20,7 +20,7 @@
           </slide>
           <template #addons>
             <navigation class="mx-4" />
-            <pagination />
+            <!-- <pagination /> -->
           </template>
         </carousel>
         <div class="title p-1">{{ ShopData.name }}</div>
@@ -58,14 +58,13 @@
 <script>
 import img from "@/assets/img/400x400.png";
 import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import { Carousel, Slide, Navigation } from "vue3-carousel";
 
 export default {
   name: `ShopInfoPage`,
   components: {
     Carousel,
     Slide,
-    Pagination,
     Navigation,
   },
   props: {},
@@ -252,22 +251,16 @@ ol {
 .carousel___pagination {
   padding: initial;
 }
-.carousel__pagination-button {
-  background-color: #c4c4c4 !important;
-  bottom: 100%;
-}
-.carousel__pagination-button--active {
-  background-color: #949494 !important;
-}
+
 .carousel__prev,
 .carousel__next {
-  background-color: white !important;
-  color: #e355fc;
+  background-color: #cf88db !important;
+  color: white;
 }
 .carousel__prev {
-  left: -3%;
+  left: 1%;
 }
 .carousel__next {
-  right: -3%;
+  right: 1%;
 }
 </style>

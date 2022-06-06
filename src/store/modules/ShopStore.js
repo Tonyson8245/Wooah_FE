@@ -98,6 +98,7 @@ const ShopStore = {
     ResetImagePage(state) {
       state.currentimagepage = 1;
       state.shopimg = [];
+      state.noResult = true;
     },
     FetchShopImage(state, payload) {
       state.shopimg.push.apply(state.shopimg, payload);

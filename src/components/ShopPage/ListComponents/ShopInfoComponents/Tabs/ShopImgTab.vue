@@ -11,11 +11,8 @@
       class="pt-2"
       v-if="shopimages.length > 0 || !noResult"
     >
-      <span v-if="!noResult" style="font-size: 0.8em"
-        >마지막 페이지입니다.</span
-      >
       <button
-        v-else
+        v-if="noResult"
         @click="GetShopImage"
         class="btn btn-light"
         style="

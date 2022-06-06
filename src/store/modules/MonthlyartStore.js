@@ -36,6 +36,7 @@ const MonthlyartStore = {
     }, // 전체 이미지 수
     setNoResult(state, payload) {
       state.noResult = payload;
+      state.noPost = payload;
     }, // 응답이 없을 경우 이걸 true 로 한다.
     increasePage(state) {
       state.page += 1;
@@ -76,10 +77,11 @@ const MonthlyartStore = {
           context.commit("setNoResult", false); // 먼저 데이터
           context.commit("setArts", data.arts); // 이미지 데이터 추가
           context.commit("setTotal_amount", data.total_amount); // 전체 디자인 갯수
-
           context.commit("increasePage"); // 페이지 올리기
         })
-        .catch(() => {});
+        .catch(() => {
+          context.commit("setNoResult", true); //데이터 없음
+        });
     },
     async fetchPost(context, id) {
       await collectionApi

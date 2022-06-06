@@ -10,14 +10,20 @@
           확인
         </button>
       </div>
-      <div v-if="yesno" class="container-fluid row">
+      <div v-if="yesno" class="container-fluid row g-0">
         <div class="actions col-6">
-          <button class="btn" @click="$store.commit('alertStore/ChangeState')">
+          <button
+            class="btn"
+            @click="$store.commit('alertStore/ChangeResult', true)"
+          >
             확인
           </button>
         </div>
         <div class="actions col-6">
-          <button class="btn" @click="$store.commit('alertStore/ChangeState')">
+          <button
+            class="btn"
+            @click="$store.commit('alertStore/ChangeResult', false)"
+          >
             취소
           </button>
         </div>
@@ -74,5 +80,8 @@ export default {
   justify-content: flex-end;
   padding: 10px 20px;
   border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.actions button {
+  width: 100%;
 }
 </style>

@@ -132,4 +132,14 @@ export default {
     font-size: 70%;
   }
 }
+.noPost {
+  text-align: center;
+  padding: 15% 0 15% 0;
+  @include tablet {
+    font-size: 80%;
+  }
+  @include mobile-s {
+    font-size: 70%;
+  }
+}
 </style>

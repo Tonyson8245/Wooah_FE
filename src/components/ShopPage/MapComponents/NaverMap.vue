@@ -21,7 +21,7 @@ export default {
   props: {
     width: Number,
   },
-  mounted: function () {
+  mounted() {
     if (window.naver && window.naver.maps) {
       this.InitMap(37.51589, 126.982692);
       this.SetMedia();
@@ -194,7 +194,6 @@ export default {
     SetMedia() {
       if (this.width > 767 || this.width == 0) {
         if (this.media != "desktop") {
-          console.log(`desktop`);
           this.$store.commit("ShopStore/SetMedia", `desktop`);
           this.anchor = [27, 53];
           this.InitMarkers();
@@ -202,7 +201,6 @@ export default {
         }
       } else {
         if (this.media != "mobile") {
-          console.log(`mobile`);
           this.$store.commit("ShopStore/SetMedia", `mobile`);
           this.anchor = [14, 27];
           this.InitMarkers();
@@ -240,30 +238,23 @@ export default {
       this.map.setCenter(position); // 중앙 지정 변경
       this.map.setZoom(zoom, false); // 줌
     },
-    SelectShop(index) {
+    SelectShop(info) {
       var position, name, lat, lng;
-      var info = this.shopinfo;
 
       this.markers.forEach((e) => {
         e.setMap(null);
       });
       this.markers = []; // 전체 마커 없애기
 
-      if (this.shopinfo != null) {
-        name = info.name;
-        lat = info.latitude;
-        lng = info.longitude;
-      } //  shopinfo 가 있는 경우, shop/${id}와 리스트를 통해서 들어오는 경우 모두 가능하게 하기 위해 이렇게 작성
-      else {
-        name = this.shops[index].name;
-        lat = this.shops[index].latitude;
-        lng = this.shops[index].longitude;
-      } // info가 없을 경우 , 리스트를 통해서 들어오게 되기때문에 shops[index]를 이용
+      name = info.name;
+      lat = info.latitude;
+      lng = info.longitude;
+      //  shopinfo 가 있는 경우, shop/${id}와 리스트를 통해서 들어오는 경우 모두 가능하게 하기 위해 이렇게 작성
 
       this.SetMarker(lat, lng, "focus", name);
       position = new naver.maps.LatLng(lat, lng);
       this.map.setCenter(position); // 중앙 지정 변경
-      this.map.setZoom(15, true); // 줌}
+      this.map.setZoom(15, true); // 줌
     }, // Shop info에 데이터가 바뀌면 지도도 바뀐다.
   },
   computed: {
@@ -337,6 +328,9 @@ export default {
     }, // 지역 변경할때 작동
     keyword() {
       this.ZoomOutDistrict(); // 해당 지역 표시
+    },
+    shopinfo(info) {
+      if (info != null) this.SelectShop(info);
     },
   },
 };
