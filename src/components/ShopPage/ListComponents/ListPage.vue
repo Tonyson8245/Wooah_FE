@@ -146,6 +146,7 @@ export default {
 
 .shoplist {
   overflow-y: auto;
+  border: solid $pl-4 1px;
 
   height: $list-desktop-height;
   @include tablet-s {

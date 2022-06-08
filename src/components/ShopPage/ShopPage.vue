@@ -124,7 +124,7 @@ $mobile-height: 250px;
 
 //transtition 끝
 .container_outer {
-  background: $pl-6;
+  background: white;
   height: 100%;
   display: grid;
   align-items: center;
@@ -177,7 +177,7 @@ $mobile-height: 250px;
   }
 }
 .btn__set button {
-  color: $pa-1;
+  color: $pa;
   font-family: "GoyangIlsan";
   font-size: 1em;
   @include mobile-s {

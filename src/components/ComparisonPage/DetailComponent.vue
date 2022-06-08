@@ -311,7 +311,7 @@ img {
   height: 100%;
   position: relative;
   background: #ffffff;
-  border: 1px solid $pa-2;
+  border: 1px solid $pl-2;
   border-radius: 5px;
 }
 .arrow_box_left:after,
@@ -334,7 +334,7 @@ img {
 }
 .arrow_box_left:before {
   border-color: rgba(153, 0, 255, 0);
-  border-right-color: $pa-2;
+  border-right-color: $pl-2;
   border-width: 16px;
   margin-top: -16px;
 }
@@ -343,7 +343,7 @@ img {
   min-height: 50px;
   position: relative;
   background: #ffffff;
-  border: 1px solid $pa-2;
+  border: 1px solid $pl-2;
 }
 .arrow_box:after,
 .arrow_box:before {
@@ -365,7 +365,7 @@ img {
 }
 .arrow_box:before {
   border-color: rgba(153, 0, 255, 0);
-  border-bottom-color: $pa-2;
+  border-bottom-color: $pl-2;
   border-width: 16px;
   margin-left: -16px;
 }
@@ -395,7 +395,7 @@ img {
   text-align: left;
 }
 .stepNum {
-  color: $pa-1;
+  color: $pl-2;
   font-weight: bold;
   font-size: 0.8em;
 }
@@ -407,20 +407,20 @@ img {
 }
 .line {
   border-bottom-style: solid;
-  border-bottom-color: $pa-1;
+  border-bottom-color: $pl-2;
   border-bottom-width: 5px;
   padding-top: 2%;
   width: 20%;
 }
 .btn {
-  background: $pa-0;
+  background: $pl-2;
   width: 100%;
   font-size: 0.8em;
   white-space: nowrap;
   padding-inline: 0;
 }
 .btn-skip {
-  background: $pa-1;
+  background: $pa;
   color: white;
 }
 .buttons {

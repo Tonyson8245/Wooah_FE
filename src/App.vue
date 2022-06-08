@@ -66,7 +66,7 @@ export default {
   }
 }
 .web--content {
-  background: $pl-6;
+  background: $pl-4;
   height: 100%;
 }
 .col {

@@ -47,7 +47,7 @@ export default {
 @import "../assets/style.scss";
 
 footer {
-  background: #fef4ff;
+  background: linear-gradient(to bottom, $pl-4, 85%, white);
   width: 100%;
   height: auto;
   padding: 2.4em 0 2.4em 0;

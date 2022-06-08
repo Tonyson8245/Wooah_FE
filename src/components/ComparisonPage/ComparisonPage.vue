@@ -172,7 +172,7 @@ export default {
       return this.$store.state.CommonStore.width;
     },
     font() {
-      var css = `color:#d500f9; font-weight: bold; padding-bottom:0; `;
+      var css = `color:#6545A4; font-weight: bold; padding-bottom:0; `;
       if (this.width < 420) return css + `font-size:100%`;
       else return css;
     },
@@ -230,7 +230,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/style.scss";
 .outline {
-  background: $pl-4;
+  background: linear-gradient(to top, $pl-4, 20%, white);
   height: inherit;
   font-family: "GoyangIlsan";
   @include mobile-s {
@@ -238,13 +238,13 @@ export default {
   }
 }
 .header {
-  background: $pl-6;
+  background: white;
   text-align: center;
   padding: 1.5% 0 1.5% 0;
 }
 .header .title {
   font-weight: bold;
-  color: $pa-1;
+  color: $pa;
   font-size: 1.8em;
   margin: 0;
 }
@@ -261,15 +261,15 @@ export default {
   }
 } // 가운데 정렬
 .tab {
-  background: $pa-0;
+  background: $pl-4;
   font-size: 1.2em;
   font-weight: bold;
   padding: 1%;
-  color: $pl-6;
+  color: $pa;
 }
 .active {
-  background: $pa-1;
-  color: white;
+  background: $pl-2;
+  color: $pl-4;
 }
 .container__step {
   padding: 5% 0 0 0;
@@ -293,7 +293,7 @@ export default {
 }
 .result__container {
   background: white;
-  border: $pa-2 solid 2px;
+  border: $pa solid 2px;
   border-radius: 10px;
   width: 70%;
   @include tablet {
@@ -303,7 +303,7 @@ export default {
 
 .result__header .title {
   font-weight: bold;
-  color: $pa-2;
+  color: $pa;
 }
 
 .result__header .content {
@@ -317,7 +317,7 @@ export default {
   padding: 1% 0 1% 0;
 }
 .result__body {
-  background: $pl-6;
+  background: $pl-4;
   max-height: 400px;
   overflow-y: auto;
   @include mobile-s {

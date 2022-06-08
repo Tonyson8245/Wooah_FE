@@ -68,7 +68,7 @@ export default {
 //검색쪽 시작
 .search__outline {
   width: 100%;
-  background: $pl-2;
+  background: $pl-4;
   padding: 2%;
   @include mobile-s {
     font-size: 70%;
@@ -110,7 +110,7 @@ export default {
   height: 45px;
   color: black;
   text-indent: 15px;
-  border: 0.5px solid $pl-1;
+  border: 0.5px solid $pl-3;
   border-radius: 2em;
   background-color: #ffffff;
   font-family: "GoyangIlsan";
@@ -124,7 +124,7 @@ export default {
 }
 .search input:focus {
   box-shadow: none;
-  border: 1.5px solid $pa-2;
+  border: 1.5px solid $pa;
 }
 
 .search .fa-search {

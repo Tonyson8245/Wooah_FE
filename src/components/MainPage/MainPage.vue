@@ -385,7 +385,7 @@ export default {
 @import "../../assets/style.scss";
 .outline {
   font-family: "GoyangIlsan";
-  background: $pl-6;
+  background: $pb;
   @include tablet-s {
     font-size: 80%;
   }
@@ -409,10 +409,10 @@ export default {
   left: 0;
   background: linear-gradient(
     to right,
-    $pl-6 0%,
+    $pb 0%,
     rgba(255, 0, 0, 0) 10%,
     rgba(255, 0, 0, 0) 90%,
-    $pl-6 100%
+    $pb 100%
   ); /* W3C */
 } // 배너 페이드 아웃 필터
 .banner_1 {
@@ -433,7 +433,7 @@ export default {
 .newest_header {
   font-family: "GoyangDeogyang";
   text-align: center;
-  color: $pa-2;
+  color: $pa;
 }
 .newest_header .title_en {
   font-size: 1vw;
@@ -468,8 +468,7 @@ export default {
 }
 
 .carousel__item {
-  border: solid 1px $pl-4;
-  background-color: white;
+  background-color: $pl-4;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
@@ -489,7 +488,7 @@ export default {
 }
 .tag_rank__inner .rank {
   padding-inline: 7%;
-  color: $pa-2;
+  color: $pa;
   @include banner {
     padding: 5%;
   }
@@ -510,14 +509,14 @@ export default {
   flex-direction: column;
 }
 .rank_table__inner .title {
-  color: $pa-2;
+  color: $pa;
   font-size: 2vw;
   @include sm {
     font-size: 6vw;
   }
 }
 .rank_table__inner table {
-  color: $pa-1;
+  color: $pl-1;
   flex: 1;
   font-size: 1.5vw;
   height: 80%;
@@ -530,7 +529,7 @@ export default {
 .tag_rank__inner .intro {
   margin: auto;
   font-style: italic;
-  background: linear-gradient(to right, #ff76f1, #c300ff);
+  background: linear-gradient(to right, $pl-3, $pl-2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
@@ -577,8 +576,8 @@ export default {
   position: relative;
   color: white;
   font-size: 1.5vw;
-  background: #cf88db;
-  border: solid 1px #f9d1f7;
+  background: $pl-4;
+  border: solid 0.5px $pb;
   @include sm {
     font-size: 5vw;
   }
@@ -602,7 +601,7 @@ export default {
 // 이달의 아트 끝
 // 샵 시작
 .shops__inner {
-  background: $pl-5;
+  background: $pl-4;
 }
 .shops__inner .title {
   background: $pl-3;
@@ -617,8 +616,9 @@ export default {
 }
 
 .shops__inner .btn {
-  background: $pl-1;
-  color: white;
+  background: $pl-4;
+  color: $pa;
+  font-weight: bold;
   margin-top: 30%;
   width: 80%;
   @include sm {

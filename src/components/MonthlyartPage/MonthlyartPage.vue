@@ -8,7 +8,7 @@
             <region
               class="region"
               :fontSize="fontSize"
-              :font="`color:#CF88DB; `"
+              :font="`color:#6545A4; `"
             />
             <router-view v-slot="{ Component }">
               <transition name="scale" mode="out-in">
@@ -192,7 +192,7 @@ export default {
   text-align: right;
 }
 .outline {
-  background: $pl-6;
+  background: white;
   min-height: 1000px;
   @include mobile-s {
     min-height: 500px;
