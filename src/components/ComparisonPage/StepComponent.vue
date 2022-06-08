@@ -21,11 +21,11 @@ export default {
   },
   computed: {
     nameCSS() {
-      if (!this.focus) return `color: #d500f9;`;
+      if (!this.focus) return `color: #A862EA;`;
       else return `color: #ffffff;`;
     },
     circleCSS() {
-      if (this.focus) return `background: #d500f9;` + this.size + `px`;
+      if (this.focus) return `background: #A862EA;` + this.size + `px`;
       else return `background: #ffffff; opacity: 0.5;` + this.size + `px`;
     },
     width() {
@@ -47,7 +47,7 @@ $desktop_cricle: 70px;
   margin: 0 auto;
   width: $desktop_cricle;
   height: $desktop_cricle;
-  border: 3px solid $pa-1;
+  border: 3px solid $pl-2;
   border-radius: 50%;
   display: flex;
 

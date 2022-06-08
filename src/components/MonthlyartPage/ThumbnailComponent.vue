@@ -143,7 +143,7 @@ export default {
   bottom: 0%;
   width: 100%;
   z-index: 1;
-  background: white;
+  background: $pl-4;
   opacity: 0.8;
   height: 35%;
   @include mobile-s {

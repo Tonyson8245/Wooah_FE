@@ -88,6 +88,7 @@ export default {
 .more {
   display: flex;
   align-items: center;
+  color: $pa;
 }
 
 .body {
@@ -95,9 +96,10 @@ export default {
 }
 .more_btn {
   width: 100%;
-  border: $pl-5 solid 1px;
+  color: $pa;
+  border: $pl-4 solid 1px;
   border-radius: 5px;
-  background: $pl-5;
+  background: $pl-4;
 
   @include mobile-s {
     font-size: 60%;

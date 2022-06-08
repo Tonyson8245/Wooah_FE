@@ -123,7 +123,7 @@ export default {
   }
 }
 .header .btn {
-  background: $pl-3;
+  background: $pl-1;
   color: white;
   @include tablet {
     font-size: 80%;

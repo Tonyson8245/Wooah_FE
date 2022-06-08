@@ -74,8 +74,8 @@ export default {
 @import "/src/assets/style.scss";
 
 .container-fluid {
-  color: $pl-0;
-  border: solid $pl-5 1px;
+  color: $pl-1;
+  border: solid $pl-4 1px;
   padding: 3%;
   font-size: 130%;
 
@@ -96,14 +96,14 @@ export default {
 }
 .info__container .address {
   font-size: 0.7em;
-  color: $pl-0;
+  color: $pl-1;
 }
 .info__container .keyword {
   margin-right: 3%;
   padding-inline: 3%;
   background: $pl-4;
   border: $pl-2 0.5px solid;
-  color: $pl-0 !important;
+  color: $pl-1 !important;
   font-size: 0.6em;
   font-weight: 500;
   font-style: italic;

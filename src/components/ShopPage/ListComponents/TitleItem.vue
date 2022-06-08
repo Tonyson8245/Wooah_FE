@@ -30,7 +30,7 @@
           </template>
         </ul>
       </div> -->
-      <region :font="'color:#E760FF; font-size:1.1em'" />
+      <region :font="'color:#6545A4; font-size:1.1em'" />
     </div>
   </div>
 </template>
@@ -95,8 +95,8 @@ export default {
 @import "/src/assets/style.scss";
 //제목 시작
 .title__container {
-  border: $pl-5 0.5px solid;
-  color: $pl-1;
+  border: $pl-4 0.5px solid;
+  color: $pa;
   height: 4em;
   width: 100%;
   @include tablet {

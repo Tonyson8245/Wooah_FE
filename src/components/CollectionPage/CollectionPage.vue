@@ -580,7 +580,7 @@ export default {
         this.MontlyArtCondition = "";
         this.SetFilter.monntlyart = false;
       } else {
-        this.MontlyArtCondition = "font-weight:bold; background:#fbebfd; ";
+        this.MontlyArtCondition = "font-weight:bold; background:#E7DAFF; ";
         this.SetFilter.monntlyart = true;
       }
       this.MakeQuery();
@@ -588,7 +588,7 @@ export default {
     ChangeFilterbar() {
       let Filters = this.SetFilter;
       let bar = this.Filterbar;
-      let active = `#fbebfd;`;
+      let active = `#E7DAFF;`;
       var color_true = Object.keys(Filters.color).filter(
         (key) => Filters.color[key] === true
       );
@@ -790,7 +790,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
 .outline {
-  background: $pl-6;
+  background: $pb;
   height: inherit;
   min-height: 765px;
 
@@ -959,14 +959,14 @@ export default {
   position: relative;
   overflow-y: scroll;
   overflow-y: hidden;
-  background: #fbebfd;
+  background: white;
 }
 .dropdown button span {
   width: 100%;
   text-align: center;
 }
 .dropdown button {
-  background: white;
+  background: $pl-4;
   font-family: "GoyangIlsan";
   font-size: 14px;
   border: 2px solid $pl-4;
@@ -995,7 +995,7 @@ export default {
   padding-left: 5px;
 }
 .filter__reset {
-  background: white;
+  background: $pl-4;
   border: 2px solid $pl-4;
   @include tablet {
     font-size: 11px;

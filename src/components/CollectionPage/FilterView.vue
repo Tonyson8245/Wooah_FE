@@ -190,8 +190,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
 .filter__btn {
-  /* background-color: $pl-6; */
-  background-color: white;
+  background-color: $pl-4;
   width: 350px;
   height: $filter-height-desktop;
   position: relative;
@@ -228,7 +227,7 @@ export default {
 .filter__outer_button.active,
 .open > .dropdown-toggle.filter__outer_button :hover {
   background: $pl-3;
-  border: solid 1px $pl-4;
+  border: solid 1px $pl-3;
 }
 .filter_title {
   font-family: "GoyangIlsan";

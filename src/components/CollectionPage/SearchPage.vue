@@ -113,7 +113,7 @@ export default {
   cursor: default;
 }
 .ranktags .title {
-  color: $pa-2;
+  color: $pa;
   font-weight: bold;
   @include mobile-s {
     font-size: 14px;
@@ -122,7 +122,7 @@ export default {
 .ranktags .tags {
   margin: 0.5%;
   font-size: 14px;
-  background: $pa-0;
+  background: $pa;
   @include mobile-s {
     font-size: 11px;
   }

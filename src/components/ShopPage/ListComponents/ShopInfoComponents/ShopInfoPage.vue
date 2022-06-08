@@ -169,7 +169,7 @@ export default {
 //탭
 .tab .btn {
   color: black;
-  border: $pl-5 solid 1px;
+  border: $pl-4 solid 1px;
   font-size: 1em;
 }
 
@@ -228,8 +228,8 @@ export default {
 .banner {
   text-align: center;
   font-size: 1.3em;
-  background: $pl-1;
-  color: $pl-6;
+  background: $pl-4;
+  color: $pa;
   font-weight: bold;
   @include mobile-s {
     font-size: 70%;

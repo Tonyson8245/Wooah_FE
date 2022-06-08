@@ -114,13 +114,13 @@ export default {
       var outline;
       var color;
       if (type == "focus") {
-        background = "#ce93d8";
-        outline = "#ab47bc";
+        background = "#A862EA";
+        outline = "#A862EA";
         color = "#ffffff";
       } else {
         background = "#ffffff";
-        outline = "#ab47bc";
-        color = "#ab47bc";
+        outline = "#A862EA";
+        color = "#A862EA";
       }
       return (
         "<div style='font-size:50%'><div style='top: 2.9em;left: 1.4em;border: solid transparent;content: " + // 꼭지 위치
@@ -152,13 +152,13 @@ export default {
       var outline;
       var color;
       if (type == "focus") {
-        background = "#ce93d8";
-        outline = "#ab47bc";
+        background = "#A862EA";
+        outline = "#A862EA";
         color = "#ffffff";
       } else {
         background = "#ffffff";
-        outline = "#ab47bc";
-        color = "#ab47bc";
+        outline = "#A862EA";
+        color = "#A862EA";
       }
 
       return (

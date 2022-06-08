@@ -1,10 +1,15 @@
 <template>
   <nav
-    class="Roboto navbar navbar-expand-lg p-0 m-0 navbar-secondary"
+    class="Roboto navbar navbar-expand-lg m-0 p-0 navbar-secondary"
     style="width: 100%"
   >
     <div class="container-lg">
-      <a class="navbar-brand" @click="this.$router.push('/')">우아</a>
+      <img
+        src="@/assets/img/wooah_too.png"
+        class="navbar-brand logo"
+        alt=""
+        @click="this.$router.push('/')"
+      />
       <button
         class="navbar-toggler"
         type="button"
@@ -130,9 +135,8 @@ export default {
 }
 .navbar {
   font-family: "GoyangDeogyang";
-  background: white;
+  background: linear-gradient(to bottom, white, 30%, $pl-4);
   font-size: 20px;
-  border: solid $pl-4;
   border-width: 0 0 0.5px 0;
   @include tablet {
     font-size: 20px;
@@ -147,7 +151,7 @@ export default {
   width: 100px;
   height: auto;
   font-weight: bold;
-  color: $pa-1;
+  color: $pa;
 
   @include tablet {
     font-size: 30px;
@@ -171,12 +175,25 @@ export default {
   padding: 0.1% 0 0.1% 0;
 }
 .nav-item > a:hover {
-  color: $pl-3;
+  color: $pa;
 }
 .active {
-  color: $pl-3;
+  color: $pa;
   text-decoration: underline;
   text-underline-position: under;
+}
+.logo {
+  height: 70px;
+  width: 110px;
+  object-fit: contain;
+  @include tablet {
+    height: 60px;
+    width: auto;
+  }
+  @include mobile-s {
+    height: 35px;
+    width: auto;
+  }
 }
 </style>
 

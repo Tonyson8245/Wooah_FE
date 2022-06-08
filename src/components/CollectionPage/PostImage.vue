@@ -75,7 +75,7 @@ $thumbnail-padding: 0.25rem;
   width: 100%;
   height: 100%;
   position: absolute;
-  background: $pl-6;
+  background: $pl-4;
   background-color: white;
 }
 
