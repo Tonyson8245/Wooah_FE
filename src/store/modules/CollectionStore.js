@@ -118,6 +118,7 @@ const CollectionStore = {
             } else {
               console.log(error);
             }
+
             context.commit("setnoResult", true);
           });
       }

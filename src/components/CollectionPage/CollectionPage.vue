@@ -688,7 +688,6 @@ export default {
       this.$store.dispatch("collectionStore/fetchPosts");
     },
     Visiblity(boolean) {
-      console.log(boolean);
       if (boolean) {
         return "visible";
       } else return "invisible";

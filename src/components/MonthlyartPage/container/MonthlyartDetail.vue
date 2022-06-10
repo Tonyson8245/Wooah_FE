@@ -7,8 +7,8 @@
     <div class="body">
       <InfiniteScroll
         @infinite-scroll="moreData()"
-        v-if="!noPost"
-        :noResult="noResult"
+        v-if="!noResult"
+        :noResult="noPost"
         class="row g-1"
       >
         <div
@@ -19,7 +19,7 @@
           <thumbnail :art="art" :toggle="false"></thumbnail>
         </div>
       </InfiniteScroll>
-      <div v-if="noPost" class="noPost">
+      <div v-if="noResult" class="noResult">
         <span class="item">조회 결과가 없습니다.</span>
       </div>
     </div>
@@ -132,7 +132,7 @@ export default {
     font-size: 70%;
   }
 }
-.noPost {
+.noResult {
   text-align: center;
   padding: 15% 0 15% 0;
   @include tablet {

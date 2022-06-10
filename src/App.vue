@@ -1,6 +1,8 @@
 <template>
   <div class="viewport" ref="viewport">
-    <div :style="Bottomstyle()"><TopHeader /></div>
+    <div style="position: sticky; right: 0; z-index: 2" class="border-bottom">
+      <TopHeader />
+    </div>
     <body style="flex: 1">
       <div class="web--content">
         <router-view />
@@ -36,14 +38,15 @@ export default {
   methods: {
     BottomShow() {
       var path = this.$route.fullPath;
-      if (path == "/shop" || path == "/comparison") return false;
+      if (
+        path.indexOf("/shop") != -1 ||
+        path == "/comparison" ||
+        path == "/library"
+      )
+        return false;
       else return true;
     },
-    Bottomstyle() {
-      var path = this.$route.fullPath;
-      if (path == "/shop" || path == "/comparison") return `margin-right:17px`;
-      else return ``;
-    },
+
     handleResize() {
       this.width = window.innerWidth;
       this.height = window.innerHeight;
@@ -66,7 +69,6 @@ export default {
   }
 }
 .web--content {
-  background: $pl-4;
   height: 100%;
 }
 .col {

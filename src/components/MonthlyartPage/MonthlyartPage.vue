@@ -103,7 +103,7 @@
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   ref="close_btn"
-                  @click="this.Clicked_post_index = ``"
+                  @click="CloseModal()"
                 ></button>
               </div>
             </div>
@@ -126,11 +126,10 @@ export default {
       fontSize: `btn-lg`,
     };
   },
-  beforeUpdate() {
-    this.$refs.close_btn.click();
-  },
   beforeUnmount() {
-    this.$refs.close_btn.click();
+    if (this.modal_shop != "") {
+      this.$refs.close_btn.click();
+    }
     this.$store.commit("MonthlyartStore/resetPost");
   },
   computed: {
@@ -140,10 +139,10 @@ export default {
       else {
         switch (this.$route.params.price) {
           case `0`:
-            title = `~ ` + (this.$route.params.price / 10000 + 1) + `만원`;
+            title = this.$route.params.price / 10000 + `만원 미만`;
             break;
           default:
-            title = `~ ` + (this.$route.params.price / 10000 + 1) + `만원`;
+            title = this.$route.params.price / 10000 + `만원 대`;
             break;
         }
       } //  가격에 따라 배너 타이틀 변경
@@ -157,6 +156,10 @@ export default {
     },
   },
   methods: {
+    CloseModal() {
+      this.Clicked_post_index = ``;
+      this.$store.commit("MonthlyartStore/resetModal");
+    },
     ClickShop(id) {
       this.$router.push("/shop/" + id + "/info");
     },

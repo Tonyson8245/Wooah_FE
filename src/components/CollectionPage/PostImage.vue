@@ -76,7 +76,7 @@ $thumbnail-padding: 0.25rem;
   height: 100%;
   position: absolute;
   background: $pl-4;
-  background-color: white;
+  background-color: $pl-4;
 }
 
 .img__outline {

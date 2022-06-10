@@ -40,7 +40,7 @@
             <Detail />
           </div>
         </div>
-        <div class="result__outline" v-else-if="result">
+        <div class="result__outline" v-else-if="result != ``">
           <div class="result__container">
             <div class="result__header p-3">
               <div class="d-flex title" style="align-items: center">
@@ -186,11 +186,15 @@ export default {
       return this.$store.state.ComparisonStore.result;
     },
     menu() {
-      return this.$store.state.ComparisonStore.result[0].estimate;
+      if (this.result.length > 0) {
+        return this.$store.state.ComparisonStore.result[0].estimate;
+      } else return "";
     },
     shops() {
-      if (this.result[0].has_result) {
-        return this.$store.state.ComparisonStore.result[0].shops;
+      if (this.result.length > 0) {
+        if (this.result[0].has_result) {
+          return this.$store.state.ComparisonStore.result[0].shops;
+        } else return "";
       } else return "";
     },
     updateDistrict() {

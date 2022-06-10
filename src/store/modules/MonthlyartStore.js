@@ -36,6 +36,8 @@ const MonthlyartStore = {
     }, // 전체 이미지 수
     setNoResult(state, payload) {
       state.noResult = payload;
+    }, // 응답이 없을 경우 이걸 true 로 한다.
+    setNoPost(state, payload) {
       state.noPost = payload;
     }, // 응답이 없을 경우 이걸 true 로 한다.
     increasePage(state) {
@@ -48,6 +50,10 @@ const MonthlyartStore = {
       state.arts = [];
       state.noResult = false;
       state.noPost = false;
+    },
+    resetModal(state) {
+      state.shop = "";
+      state.post = "";
     },
   },
   actions: {
@@ -65,23 +71,32 @@ const MonthlyartStore = {
         });
     },
     async getPosts(context, payload) {
-      context.commit("setNoResult", true); //데이터 없음
-      await MonthlyApi.getPosts(
-        context.state.page,
-        payload.sido,
-        payload.sigungu,
-        payload.price_range
-      )
-        .then((res) => {
-          var data = res.data;
-          context.commit("setNoResult", false); // 먼저 데이터
-          context.commit("setArts", data.arts); // 이미지 데이터 추가
-          context.commit("setTotal_amount", data.total_amount); // 전체 디자인 갯수
-          context.commit("increasePage"); // 페이지 올리기
-        })
-        .catch(() => {
-          context.commit("setNoResult", true); //데이터 없음
-        });
+      if (!context.state.noPost) {
+        context.commit("setNoPost", true);
+        await MonthlyApi.getPosts(
+          context.state.page,
+          payload.sido,
+          payload.sigungu,
+          payload.price_range
+        )
+          .then((res) => {
+            var data = res.data;
+            context.commit("increasePage"); // 페이지 올리기
+            context.commit("setArts", data.arts); // 이미지 데이터 추가
+            context.commit("setTotal_amount", data.total_amount); // 전체
+
+            context.commit("setNoPost", false);
+            context.commit("setNoResult", false);
+          })
+          .catch((error) => {
+            let res = error.response;
+            console.log(res.data.detail);
+            if (
+              res.data.detail == `조건에 맞는 이달의 아트가 존재하지 않습니다`
+            )
+              context.commit("setNoResult", true); //데이터 없음
+          });
+      }
     },
     async fetchPost(context, id) {
       await collectionApi

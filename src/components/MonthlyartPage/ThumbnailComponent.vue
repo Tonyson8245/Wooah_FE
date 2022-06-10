@@ -1,13 +1,9 @@
 <template>
-  <div
-    class="outline"
-    style="overflow: hidden"
-    @mouseleave="show = false"
-    data-bs-toggle="modal"
-    data-bs-target="#exampleModal"
-  >
+  <div class="outline" style="overflow: hidden" @mouseleave="show = false">
     <square
       @click="clickImage(art.id)"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
       :url="art.url"
       style="width: 100%"
       @mouseover="show = true"

@@ -135,9 +135,8 @@ export default {
 }
 .navbar {
   font-family: "GoyangDeogyang";
-  background: linear-gradient(to bottom, white, 30%, $pl-4);
   font-size: 20px;
-  border-width: 0 0 0.5px 0;
+
   @include tablet {
     font-size: 20px;
   }
@@ -171,7 +170,7 @@ export default {
   }
 }
 .nav-link {
-  color: $pl-2;
+  color: darkgray;
   padding: 0.1% 0 0.1% 0;
 }
 .nav-item > a:hover {
@@ -179,11 +178,9 @@ export default {
 }
 .active {
   color: $pa;
-  text-decoration: underline;
-  text-underline-position: under;
 }
 .logo {
-  height: 70px;
+  height: 60px;
   width: 110px;
   object-fit: contain;
   @include tablet {

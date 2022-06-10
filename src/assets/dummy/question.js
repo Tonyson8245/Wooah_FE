@@ -131,7 +131,7 @@ export default {
       step: 3,
       substep: [
         {
-          name: "손톱 연장",
+          name: "발톱 연장",
           description: `연장 하실 건가요?`,
           answer: [`네, 연장 할 거에요`, `아니요, 연장 안할거에요.`],
           skip: false,
