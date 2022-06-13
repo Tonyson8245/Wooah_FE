@@ -8,7 +8,7 @@
         <router-view />
       </div>
     </body>
-    <BottomFooter v-if="BottomShow()" />
+    <BottomFooter />
   </div>
 </template>
 
@@ -32,21 +32,14 @@ export default {
   },
   mounted() {
     this.$store.dispatch("CommonStore/getDistricts");
+    window.addEventListener("resize", this.handleResize);
     this.handleResize();
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.handleResize);
   },
 
   methods: {
-    BottomShow() {
-      var path = this.$route.fullPath;
-      if (
-        path.indexOf("/shop") != -1 ||
-        path == "/comparison" ||
-        path == "/library"
-      )
-        return false;
-      else return true;
-    },
-
     handleResize() {
       this.width = window.innerWidth;
       this.height = window.innerHeight;

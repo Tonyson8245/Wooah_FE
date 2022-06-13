@@ -25,6 +25,7 @@ instance.interceptors.response.use(
     if (errors.response.status === 500) {
       store.commit("error/setValidationError", errors.response.data);
     } else if (errors.response.status === 502) {
+      console.log(`서버 이상 발생`);
     }
     // else if (errors.response.status === 404) {
     //   store.commit("error/setnoResult", true);

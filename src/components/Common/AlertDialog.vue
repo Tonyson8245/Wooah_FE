@@ -1,5 +1,5 @@
 <template>
-  <GDialog v-model="dialogState" max-width="500">
+  <GDialog v-model="dialogState" max-width="500" persistent>
     <div class="wrapper">
       <div class="content">
         <p>{{ dialogComment }}</p>

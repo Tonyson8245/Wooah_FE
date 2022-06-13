@@ -1,7 +1,6 @@
 <template>
   <div class="back">
     <AlertDialog />
-    <!-- <div>{{ $route.params.id }}</div> -->
     <div class="outer" v-if="!noPost">
       <div
         class="container-fluid p-md-0"
@@ -171,6 +170,9 @@ export default {
 
 //모달 시작
 .row {
+  border: solid $pl-2 1px;
+  border-radius: 15px;
+  overflow: hidden;
   width: 70%;
   @include tablet-s {
     width: 100%;

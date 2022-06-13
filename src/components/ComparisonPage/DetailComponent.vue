@@ -403,6 +403,7 @@ img {
   font-size: 1.2em;
 }
 .content {
+  white-space: pre-line;
   font-size: 0.8em;
 }
 .line {

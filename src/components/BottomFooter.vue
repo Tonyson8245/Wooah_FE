@@ -11,10 +11,46 @@
             </th>
           </tr>
           <tr>
-            <td><span class="link">회사소개</span></td>
-            <td><span class="link">서비스 이용약관</span></td>
-            <td><span class="link">개인정보 처리 방침</span></td>
-            <td><span class="link">오픈소스 라이센스</span></td>
+            <td>
+              <span
+                class="link"
+                @click="onClickRedirect(`http://pf.kakao.com/_fRSHb/chat `)"
+                >1:1 문의</span
+              >
+            </td>
+            <td>
+              <span
+                class="link"
+                @click="
+                  onClickRedirect(
+                    `https://coffee-bubbler-3e6.notion.site/84c658a31c254c988c6dd0fa8ee4f4d5`
+                  )
+                "
+                >서비스이용약관</span
+              >
+            </td>
+            <td>
+              <span
+                class="link"
+                @click="
+                  onClickRedirect(
+                    `https://coffee-bubbler-3e6.notion.site/0e3ca0e2019e49efb4ffa1d9e403a837`
+                  )
+                "
+                >개인정보처리방침</span
+              >
+            </td>
+            <td>
+              <span
+                class="link"
+                @click="
+                  onClickRedirect(
+                    `https://coffee-bubbler-3e6.notion.site/WEB-3c2ab7511218455fa75e0c985027ae50`
+                  )
+                "
+                >오픈소스라이센스</span
+              >
+            </td>
           </tr>
           <tr>
             <th colspan="4">Copyright Since 2022, Woo-uA All rights</th>
@@ -40,6 +76,11 @@
 <script>
 export default {
   props: {},
+  methods: {
+    onClickRedirect: function (a) {
+      window.open(a, "_blank");
+    },
+  },
 };
 </script>
 
@@ -75,6 +116,7 @@ footer {
 }
 .title {
   font-weight: bold;
+
   margin-right: 0.25em;
 }
 .link {

@@ -76,7 +76,12 @@
                     type="button"
                     @click="FilterOpen('옵션')"
                   >
-                    <span v-if="Filterbar.condition[2] == ``" class="btn__name"
+                    <span
+                      v-if="
+                        Filterbar.condition[2] == `` &&
+                        Filterbar.option.length == 0
+                      "
+                      class="btn__name"
                       >옵션<i class="bi bi-caret-down-fill"
                     /></span>
                     <span v-else class="settedFilter btn__name">{{
@@ -609,14 +614,14 @@ export default {
       } else bar.condition[0] = ``;
 
       if (shape_true.length > 0) {
-        bar.shape = []; // 초기화
+        bar.shape = ""; // 초기화
         bar.condition[1] = active;
         bar.shape = this.shape[shape_true[0]].name;
         if (shape_true.length > 1) bar.shape += " +"; //1개 이상이면 + 붙임
       } else bar.condition[1] = ``;
 
       if (option_true.length > 0) {
-        bar.option = []; // 초기화
+        bar.option = ""; // 초기화
         bar.condition[2] = active;
         bar.option = this.option[option_true[0]].name;
         if (option_true.length > 1) bar.option += " +"; //1개 이상이면 + 붙임
@@ -809,8 +814,8 @@ export default {
 }
 //이미지 컨테이너 시작
 .images__container {
+  z-index: 0;
   position: relative;
-  z-index: 2;
 }
 .image__container__move {
   top: -$filter-height-desktop;
@@ -874,6 +879,7 @@ export default {
   font-size: 1.5em;
   position: absolute;
   bottom: 50%;
+  left: 7%;
   @include mobile-s {
     font-size: 80%;
   }
@@ -954,7 +960,6 @@ export default {
   }
 }
 .btn_outer {
-  z-index: 2;
   position: relative;
   overflow-y: scroll;
   overflow-y: hidden;
@@ -1021,6 +1026,6 @@ export default {
 }
 .btn_container {
   top: 0%;
-  z-index: 4;
+  z-index: 1;
 }
 </style>

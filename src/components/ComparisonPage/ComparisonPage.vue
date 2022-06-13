@@ -104,7 +104,6 @@ export default {
   methods: {
     clickPage() {
       if (this.query.length > 0 && this.result.length == 0) {
-        console.log(`이미 데이터 있음`);
         this.$store.commit("alertStore/ChangeState");
         this.$store.commit(
           "alertStore/ChangeComment",
@@ -224,9 +223,6 @@ export default {
         this.$store.commit("CommonStore/setUpdateDistrict", false);
       }
     },
-  },
-  shops(a) {
-    console.log(a);
   },
 };
 </script>

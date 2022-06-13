@@ -76,16 +76,16 @@ export default {
 }
 .info__container .title {
   font-weight: bold;
-  font-size: 1em;
+  font-size: 1.1em;
 }
 .info__container .address {
   font-size: 0.7em;
 }
 .info__container .keyword {
+  font-size: 0.6em;
   margin-right: 3%;
   padding-inline: 3%;
   background: $pl-3;
-  font-size: 0.6em;
   font-weight: 500;
   color: white;
   font-style: italic;
