@@ -7,12 +7,13 @@
       <div class="title">{{ shop.name }}</div>
       <div class="address">{{ shop.address }}</div>
       <div>
-        <span
+        <div
           class="badge rounded-pill text-dark keyword"
           v-for="a in shop.keywords"
           :key="a"
-          >{{ a }}</span
         >
+          {{ a }}
+        </div>
       </div>
     </div>
     <div class="col-4">
@@ -82,13 +83,13 @@ export default {
   font-size: 0.7em;
 }
 .info__container .keyword {
-  font-size: 0.6em;
+  font-size: 0.5em;
   margin-right: 3%;
-  padding-inline: 3%;
   background: $pl-3;
   font-weight: 500;
   color: white;
   font-style: italic;
+  white-space: nowrap;
 }
 
 //샵 정보 끝

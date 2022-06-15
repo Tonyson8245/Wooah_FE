@@ -185,11 +185,11 @@ export default {
   object-fit: contain;
   @include tablet {
     height: 60px;
-    width: auto;
+    width: 80px;
   }
   @include mobile-s {
-    height: 35px;
-    width: auto;
+    height: 50px;
+    width: 70px;
   }
 }
 </style>

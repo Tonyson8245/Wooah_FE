@@ -109,11 +109,10 @@
                 </div>
                 <button
                   class="btn btn-sm filter__reset"
-                  v-show="ResetStatus"
-                  :style="ButtonFocusSetting"
+                  :style="[ButtonFocusSetting, ResetBackground]"
                   style="border-radius: 15px"
                   type="button"
-                  @click="Reset(true)"
+                  @click="if (ResetStatus) Reset(true);"
                 >
                   <i class="bi bi-arrow-clockwise"></i>
                 </button>
@@ -755,6 +754,10 @@ export default {
     SearchPage,
   },
   computed: {
+    ResetBackground() {
+      if (!this.ResetStatus) return `background:#c4c4c4; border-color:#c4c4c4;`;
+      else return `background:#E7DAFF`;
+    },
     path() {
       return this.$route.path;
     },

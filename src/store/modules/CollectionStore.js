@@ -18,6 +18,11 @@ const CollectionStore = {
     shop: "",
   },
   mutations: {
+    ResetSearch(state) {
+      state.SearchState = false;
+      state.SearchResult = "";
+      state.tag = null;
+    },
     ChangeSearchOn(state) {
       state.SearchState = true;
     },

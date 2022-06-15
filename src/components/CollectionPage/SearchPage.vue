@@ -4,6 +4,7 @@
       <input
         type="text"
         class="form-control"
+        ref="input"
         :placeholder="keyword"
         :value="value"
         @focus="ChangeState"
@@ -73,22 +74,26 @@ export default {
       return this.$store.state.collectionStore.Ranktags;
     },
     keyword() {
-      if (this.$store.state.collectionStore.tag == null)
+      if (this.$store.state.collectionStore.tag == null) {
         return "찾고 싶은 이미지 태그를 검색해 보세요";
-      else {
+      } else {
         return this.$store.state.collectionStore.tag;
       }
     },
   },
   methods: {
     ChangeState() {
-      if (this.keyword != "") this.$store.state.collectionStore.tag = null; // 키워드 초기화
+      this.value = this.keyword; // 기존 키워드 유지
+      // if (this.keyword != "") this.$store.state.collectionStore.tag = null; // 키워드 초기화
+      this.$store.dispatch("collectionStore/searchTag", this.value);
 
       this.$store.commit("collectionStore/ChangeSearchOn");
       this.$store.dispatch("collectionStore/fetchRankTag");
     },
     close() {
+      this.value = "";
       this.$store.commit("collectionStore/ChangeSearchOff");
+      this.$store.commit("collectionStore/ResetSearch");
       if (this.$store.state.collectionStore.tag == null) {
         this.$emit("MakeQuery");
       }
@@ -98,9 +103,7 @@ export default {
       this.$store.dispatch("collectionStore/searchTag", searchkeyword);
     },
   },
-  watch: {
-    keyword() {},
-  },
+  watch: {},
 };
 </script>
 
