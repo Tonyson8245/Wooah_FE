@@ -9,12 +9,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "gitart-vue-dialog/dist/style.css";
 import { GDialog } from "gitart-vue-dialog";
 import "whatwg-fetch";
-import VueGtag from "vue-gtag-next";
+import VueGtag from "vue-gtag";
 
 let emitter = mitt();
 let app = createApp(App);
 app.config.globalProperties.emitter = emitter;
 
-app.use({ VueGtag, config: { id: "G-V9WCQE12V1" } });
-
-app.use(router).use(store).component("GDialog", GDialog).mount("#app");
+app
+  .use(VueGtag, {
+    config: { id: "G-V9WCQE12V1" },
+  })
+  .use(router)
+  .use(store)
+  .component("GDialog", GDialog)
+  .mount("#app");
+// GA
