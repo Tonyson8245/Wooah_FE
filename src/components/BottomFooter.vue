@@ -23,7 +23,7 @@
                 class="link"
                 @click="
                   onClickRedirect(
-                    `https://coffee-bubbler-3e6.notion.site/84c658a31c254c988c6dd0fa8ee4f4d5`
+                    `https://wooah.notion.site/2022-06-17-c3af1c94433d47debeb827904d657f48`
                   )
                 "
                 >서비스이용약관</span
@@ -34,7 +34,7 @@
                 class="link"
                 @click="
                   onClickRedirect(
-                    `https://coffee-bubbler-3e6.notion.site/0e3ca0e2019e49efb4ffa1d9e403a837`
+                    `https://wooah.notion.site/2022-06-17-8003577b00b04f10b2ceb0d495f3c186`
                   )
                 "
                 >개인정보처리방침</span
@@ -45,7 +45,7 @@
                 class="link"
                 @click="
                   onClickRedirect(
-                    `https://coffee-bubbler-3e6.notion.site/WEB-3c2ab7511218455fa75e0c985027ae50`
+                    `https://wooah.notion.site/Web-40bcc432ef6f4b539d40179710ad8dd1`
                   )
                 "
                 >오픈소스라이센스</span

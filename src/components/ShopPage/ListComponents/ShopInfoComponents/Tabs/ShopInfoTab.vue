@@ -20,29 +20,20 @@
           }}</a>
         </div>
         <div class="line" v-if="ShopData.contacts.kakao_id != null">
-          <img src="../../../../../../src/assets/img/kakao-talk.png" alt="" />
+          <img src="../../../../../../src/assets/icon/카카오톡ID.png" alt="" />
           {{ ShopData.contacts.kakao_id }}
         </div>
-        <div class="line" v-if="ShopData.contacts.kakao_openchat != null">
-          <img src="../../../../../../src/assets/img/kakao-talk.png" alt="" />
-          {{ ShopData.contacts.kakao_openchat }}
+        <div class="line" v-if="ShopData.contacts.kakao_id != null">
+          <img
+            src="../../../../../../src/assets/icon/카카오톡Chat.png"
+            alt=""
+          />
+          {{ ShopData.contacts.kakao_chat }}
         </div>
         <div class="line" v-if="ShopData.contacts.instagram != null">
-          <img src="../../../../../../src/assets/img/instagram.png" alt="" />
+          <img src="../../../../../../src/assets/icon/instagram.svg" alt="" />
           <a target="_blank" v-bind:href="ShopData.contacts.instagram">{{
             ShopData.contacts.instagram
-          }}</a>
-        </div>
-        <div class="line" v-if="ShopData.contacts.blog != null">
-          <img src="../../../../../../src/assets/img/blogging.png" alt="" />
-          <a target="_blank" v-bind:href="ShopData.contacts.blog">{{
-            ShopData.contacts.blog
-          }}</a>
-        </div>
-        <div class="line" v-if="ShopData.contacts.site != null">
-          <img src="../../../../../../src/assets/img/blogging.png" alt="" />
-          <a target="_blank" v-bind:href="ShopData.contacts.site">{{
-            ShopData.contacts.site
           }}</a>
         </div>
       </div>
@@ -104,9 +95,7 @@ export default {
 }
 .content img {
   padding: 2% 1% 2% 2%;
-  @include desktop {
-    width: 25px;
-  }
+  width: 2.1em;
 }
 .content .work_hour {
   font-size: 100%;

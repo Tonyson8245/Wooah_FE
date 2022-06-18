@@ -217,7 +217,11 @@ export default {
       return this.$store.state.ComparisonStore.step;
     },
     imgUrl() {
-      return require("../../assets/img/" + this.image[this.step - 1]);
+      if (this.step == 3) {
+        if (this.type == "hand")
+          return require("../../assets/img/step3_nail.png");
+        else return require("../../assets/img/step3_pedi.png");
+      } else return require("../../assets/img/" + this.image[this.step - 1]);
     },
     width() {
       return this.$store.state.CommonStore.width;

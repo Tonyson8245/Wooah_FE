@@ -50,6 +50,7 @@ export default {
       if (data.length > 0) {
         var sigungu = this.$store.state.CommonStore.sigungu;
         var sido = this.$store.state.CommonStore.sido;
+        console.log(sido + ` ` + sigungu);
 
         var sigunguName, sidoName;
 

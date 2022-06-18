@@ -53,8 +53,8 @@
         <div class="title_en">NEWEST DESIGN</div>
         <div class="title_ko">최신 업데이트 디자인</div>
       </div>
-      <div class="newest_body ps-lg-5 pe-lg-5">
-        <div class="container-lg ps-lg-5 pe-lg-5">
+      <div class="newest_body">
+        <div class="container-lg p-lg-0 px-4 py-1">
           <carousel
             :settings="settings"
             :breakpoints="breakpoints"
@@ -79,7 +79,7 @@
             </slide>
 
             <template #addons>
-              <Navigation v-if="bannerStatus == 'desktop'" />
+              <Navigation />
             </template>
           </carousel>
         </div>
@@ -174,10 +174,10 @@
             <div>네일샵</div>
             <button class="btn" @click="clickShop(`more`)">샵 더보기</button>
           </div>
-          <div class="content col-sm-9 col-12 align-self-center">
+          <div class="content col-sm-9 col-12 align-self-center px-4">
             <Carousel
-              :itemsToShow="3"
-              :mouseDrag="true"
+              :settings="settings_shop"
+              :breakpoints="breakpoints_shop"
               :snapAlign="ShopsnapAlign"
               v-if="shops.length !== 0"
             >
@@ -190,12 +190,12 @@
                     width: 100%;
                     border-radius: 15px;
                   "
+                  @click="clickShop(shop.id)"
                 >
                   <Square :url="shop.url" />
                   <div class="shopinfo">
-                    <div @click="clickShop(shop.id)">
-                      <span class="fw-bold">{{ shop.name }}</span
-                      ><span style="font-size: 70%"> 바로가기 ></span>
+                    <div>
+                      <span class="fw-bold">{{ shop.name }}</span>
                     </div>
                     <div class="contact">
                       <i class="bi bi-telephone-fill"></i>
@@ -208,7 +208,7 @@
                 </div>
               </Slide>
               <template #addons>
-                <Navigation v-if="bannerStatus == 'desktop'" />
+                <Navigation />
               </template>
             </Carousel>
           </div>
@@ -232,15 +232,30 @@ export default {
       settings: {
         itemsToShow: 2,
         snapAlign: "start",
-        mouseDrag: true,
+        mouseDrag: false,
       },
       // breakpoints are mobile first
       // any settings not specified will fallback to the carousel settings
       breakpoints: {
         // 700px and up
-        552: {
+        576: {
           itemsToShow: 4,
           snapAlign: "start",
+          mouseDrag: false,
+        },
+      },
+
+      settings_shop: {
+        itemsToShow: 2,
+        snapAlign: "start",
+        mouseDrag: false,
+      },
+      // breakpoints are mobile first
+      // any settings not specified will fallback to the carousel settings
+      breakpoints_shop: {
+        // 700px and up
+        576: {
+          itemsToShow: 3,
           mouseDrag: false,
         },
       },

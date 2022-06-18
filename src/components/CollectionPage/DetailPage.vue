@@ -23,7 +23,7 @@
             <!-- 모달의 이미지 -->
           </div>
           <div
-            class="col-lg-4 ms-auto modal__content_outer"
+            class="col-lg-4 modal__content_outer"
             style="display: flex; flex-direction: column"
           >
             <div style="flex: 1"></div>
@@ -40,11 +40,11 @@
                 aria-label="Close"
                 @click="ClickShop(shop.id, $event)"
               >
-                <span class="modal__content_name">
+                <span class="modal__content_name pe-2 fw-bold d-flex">
                   <span>{{ shop.name }}</span> </span
                 ><i class="bi bi-arrow-right-circle"></i>
               </div>
-              <div class="row modal__content_info g-0">
+              <!-- <div class="row modal__content_info g-0">
                 <div class="col-7">
                   <i class="bi bi-telephone"></i>{{ shop.contact }}
                 </div>
@@ -54,6 +54,17 @@
                 <div class="col-12">
                   <i class="bi bi-geo-alt"></i>{{ shop.address }}
                 </div>
+              </div> -->
+              <div class="row modal__content_info g-0">
+                <i class="bi bi-telephone"
+                  ><span class="ps-1">{{ shop.contact }}</span></i
+                >
+                <i class="bi bi-coin"
+                  ><span class="ps-1">{{ post.price }}</span>
+                </i>
+                <i class="bi bi-geo-alt"
+                  ><span class="ps-1">{{ shop.address }}</span></i
+                >
               </div>
               <span
                 class="modal__content_tags"
@@ -170,6 +181,7 @@ export default {
 
 //모달 시작
 .row {
+  background-color: $pl-2;
   border: solid $pl-2 1px;
   border-radius: 15px;
   overflow: hidden;
@@ -180,7 +192,6 @@ export default {
 }
 .square {
   position: relative;
-  left: 5px;
   width: 66.6%;
   @include tablet {
     width: 100%;
@@ -251,8 +262,6 @@ export default {
   }
 }
 .modal__content_outer {
-  background-color: $pl-2;
-
   padding: 2%;
 
   font-size: 1em;
@@ -277,9 +286,7 @@ export default {
 .modal__content_name {
   white-space: nowrap;
   text-overflow: ellipsis;
-  display: block;
   overflow: hidden;
-  font-weight: bold;
 }
 .modal__content_info {
   font-size: 80%;
@@ -295,6 +302,7 @@ export default {
   font-size: 80%;
   margin-right: 0.5em;
 }
+
 //모달 끝
 .noPost {
   font-family: "GoyangIlsan";

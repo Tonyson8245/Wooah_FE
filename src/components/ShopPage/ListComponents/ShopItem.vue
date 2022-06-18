@@ -18,19 +18,14 @@
     </div>
     <div class="col-4">
       <div class="square" style="float: none; margin: 0 auto">
-        <img
-          class="inner"
-          :src="url"
-          alt="..."
-          v-if="!(shop.is_partner == false)"
-        />
+        <img class="inner" :src="url" alt="..." @error="onError" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import img from "@/assets/img/400x400.png";
+import img from "@/assets/img/failed_shop.png";
 export default {
   name: `ShopItem`,
   props: {
@@ -47,6 +42,13 @@ export default {
       else return this.shop.url;
     },
   },
+  methods: {
+    onError(e) {
+      this.error = true;
+      e.target.src = img; //어차피 오류나면 클릭해서 모달이 뜨지 않을테니, 그냥 새로고침하게 하자
+      e.target.setAttribute(`data-bs-toggle`, "");
+    },
+  },
 };
 </script>
 
@@ -54,6 +56,7 @@ export default {
 @import "/src/assets/style.scss";
 
 .container-fluid {
+  font-family: "GoyangIlsan";
   color: $pa;
   padding: 3%;
   font-size: 130%;
@@ -71,9 +74,9 @@ export default {
   }
 }
 //샵 정보 시작
+
 .info__container {
   color: $pa;
-  font-family: "GoyangIlsan";
 }
 .info__container .title {
   font-weight: bold;

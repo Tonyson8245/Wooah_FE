@@ -1,9 +1,16 @@
 <template>
-  <div class="outer align-middle" @click="CheckShape">
+  <div class="outer" @click="CheckShape">
     <div class="check" :class="Checked">
-      <i class="bi bi-check-lg bi-secondary" style="color: black"></i>
+      <i class="bi bi-check-lg bi-secondary" style="color: #6545a4"></i>
     </div>
-    <i class="bi bi-fingerprint img" style="color: #c4c4c4"></i>
+    <div class="d-flex flex-column justify-content-center">
+      <img
+        :src="require(`@/assets/img/filter/${this.shape.url}`)"
+        alt=""
+        class="m-auto"
+      />
+      <span class="py-1 fw-bold">{{ this.shape.name }}</span>
+    </div>
   </div>
 </template>
 
@@ -65,10 +72,10 @@ export default {
     left: 29%;
   }
 }
-.img {
-  font-size: 50px;
-  @include mobile-xs {
-    font-size: 40px;
+img {
+  width: 40%;
+  @include tablet {
+    width: 30%;
   }
 }
 </style>

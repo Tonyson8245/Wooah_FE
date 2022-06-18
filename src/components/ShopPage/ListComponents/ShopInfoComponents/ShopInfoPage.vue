@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import img from "@/assets/img/400x400.png";
+import img from "@/assets/img/failed_shop.png";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 
@@ -258,9 +258,9 @@ ol {
   color: white;
 }
 .carousel__prev {
-  left: 1%;
+  /* left: 4%; */
 }
 .carousel__next {
-  right: 1%;
+  /* right: 4%; */
 }
 </style>

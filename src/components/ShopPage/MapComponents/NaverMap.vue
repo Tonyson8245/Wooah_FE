@@ -223,15 +223,22 @@ export default {
       var sigungu = this.district[1];
       var sido = this.district[0];
       var latitude, longitude, zoom;
-
-      if (sigungu != 0) {
-        zoom = 14;
-        latitude = this.districtData[sido - 1].sigungu[sigungu - 1].latitude;
-        longitude = this.districtData[sido - 1].sigungu[sigungu - 1].longitude;
-      } else {
+      try {
+        if (sigungu != 0) {
+          zoom = 14;
+          latitude = this.districtData[sido - 1].sigungu[sigungu - 1].latitude;
+          longitude =
+            this.districtData[sido - 1].sigungu[sigungu - 1].longitude;
+        } else {
+          zoom = 12;
+          latitude = this.districtData[sido - 1].latitude;
+          longitude = this.districtData[sido - 1].longitude;
+        }
+      } catch (error) {
         zoom = 12;
-        latitude = this.districtData[sido - 1].latitude;
-        longitude = this.districtData[sido - 1].longitude;
+        latitude = 37.51589;
+        longitude = 126.982692;
+        console.log(`지역 좌표정보가 없습니다.`);
       }
 
       var position = new naver.maps.LatLng(latitude, longitude);

@@ -1,11 +1,18 @@
 <template>
   <div class="col img__outline" style="position: relative">
-    <i
+    <!-- <i
       class="bi bi-heart-fill monthly"
       v-if="post.monthly_art"
       :class="[post.monthly_art, isLoaded]"
-    ></i>
+    ></i> -->
     <img
+      class="monthly"
+      v-if="post.monthly_art"
+      :class="[post.monthly_art, isLoaded]"
+      src="../../assets/icon/monthly_art.png"
+    />
+    <img
+      class="img__inner"
       :src="post.url + `?` + index"
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
@@ -24,7 +31,7 @@
 </template>
 
 <script>
-import img from "../../assets/img/400x400.png";
+import img from "../../assets/img/failed_design.png";
 
 export default {
   name: "PostImage",
@@ -71,7 +78,7 @@ export default {
 @import "../../assets/style.scss";
 $thumbnail-padding: 0.25rem;
 
-.col img {
+.img__inner {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -90,12 +97,12 @@ $thumbnail-padding: 0.25rem;
 .monthly {
   position: absolute;
   top: 3%;
-  right: 5%;
+  right: 3%;
   color: #ffbdf1;
-  font-size: 20px;
+  width: 30px;
   z-index: 1;
   @include tablet {
-    font-size: 18px;
+    width: 15%;
   }
 }
 </style>

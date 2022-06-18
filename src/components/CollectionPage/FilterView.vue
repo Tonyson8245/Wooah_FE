@@ -1,6 +1,6 @@
 <template>
   <div class="filter__btn">
-    <h6 class="filter_title">{{ FilterCategory }}</h6>
+    <h5 class="filter_title">{{ FilterCategory }}</h5>
     <div :class="FilterSelected[0]" class="row filter__outer">
       <ColorPaltte
         class="col-3"

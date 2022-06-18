@@ -64,7 +64,6 @@ export default {
   left: 32%;
   top: 10%;
   z-index: 2;
-  font-size: 30px;
   @include mobile-s {
     top: 3%;
     left: 30%;
