@@ -146,13 +146,7 @@ export default {
           this.name += "젤제거";
 
           break;
-        // case "자샵":
-        // case "타샵":
-        //   this.increseStep();
 
-        //   this.name += "젤제거";
-        //   this.inertOption(answer);
-        // break;
         case "아니요, 없어요.":
           this.increseStep();
           break;
@@ -205,7 +199,7 @@ export default {
         );
       if (id != -1) return this.procedure_table[id].id;
       else return -1;
-    },
+    }, //procedure table 의 이름과 옵션을 비교해서 현재 스탭의 id 값을 파악해서 돌려준다.
   },
   computed: {
     procedure_table() {

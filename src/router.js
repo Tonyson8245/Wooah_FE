@@ -17,19 +17,31 @@ const routes = [
   {
     path: "",
     component: MainPage,
+    meta: {
+      title: "main",
+    },
   },
   {
     path: "/",
     component: MainPage,
+    meta: {
+      title: "main",
+    },
   },
   {
     path: "/comparison",
     component: ComparisonPage,
+    meta: {
+      title: "가격비교",
+    },
   },
 
   {
     path: "/monthlyart",
     component: MonthlyartPage,
+    meta: {
+      title: "이달의아트",
+    },
     children: [
       {
         path: "",
@@ -44,14 +56,23 @@ const routes = [
   {
     path: "/library/p/:id(\\d+)",
     component: DetailPage,
+    meta: {
+      title: "디자인모아보기",
+    },
   },
   {
     path: "/library",
     component: Collection,
+    meta: {
+      title: "디자인모아보기",
+    },
   },
   {
     path: "/shop",
     component: Shop,
+    meta: {
+      title: "샵",
+    },
     children: [
       {
         path: ":id(\\d+)",

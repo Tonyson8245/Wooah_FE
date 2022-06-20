@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, nextTick } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import mitt from "mitt";
@@ -17,10 +17,22 @@ app.config.globalProperties.emitter = emitter;
 
 app
   .use(VueGtag, {
-    config: { id: "G-V9WCQE12V1" },
+    config: {
+      id: "G-V9WCQE12V1",
+      params: {
+        send_page_view: false,
+      },
+      debug_mode: true,
+    },
   })
   .use(router)
   .use(store)
   .component("GDialog", GDialog)
   .mount("#app");
-// GA
+
+router.afterEach((to) => {
+  //nextTick은 Dom이 업데이트 된 후 실행됩니다.
+  nextTick(() => {
+    document.title = to.meta.title;
+  });
+});

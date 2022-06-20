@@ -30,7 +30,7 @@ export default {
           name: "색상 갯수",
           description: `기본가격에 포함된 색상 갯수를 선택해 주세요?
           ex ) 추가금 없이 제공되는 컬러 수 `,
-          answer: [`원컬러`, `투컬러 이상`],
+          answer: [`원컬러`, `투컬러`],
           skip: false,
           input: false,
         },
@@ -105,7 +105,7 @@ export default {
           name: "색상 갯수",
           description: `기본가격에 포함된 색상 갯수를 선택해 주세요?
           ex ) 추가금 없이 제공되는 컬러 수 `,
-          answer: [`원컬러`, `투컬러 이상`],
+          answer: [`원컬러`, `투컬러`],
           skip: false,
           input: false,
         },
