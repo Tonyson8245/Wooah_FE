@@ -155,6 +155,7 @@ export default {
       return this.$store.state.MonthlyartStore.post;
     },
   },
+
   methods: {
     CloseModal() {
       this.Clicked_post_index = ``;

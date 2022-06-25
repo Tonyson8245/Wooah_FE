@@ -1,5 +1,5 @@
 <template>
-  <div id="wrap" class="section">
+  <div id="wrap" class="section user-select-none">
     <div id="naverMap"></div>
   </div>
 </template>
@@ -57,11 +57,15 @@ export default {
       }
 
       for (var i = 0, ii = this.markers.length; i < ii; i++) {
-        naver.maps.Event.addListener(
-          this.markers[i],
-          "click",
-          this.GetClickHandler(this.shops, i, this.$router, this.$store)
-        );
+        if (
+          this.shops[i].is_partner == undefined ||
+          this.shops[i].is_partner == true
+        )
+          naver.maps.Event.addListener(
+            this.markers[i],
+            "click",
+            this.GetClickHandler(this.shops, i, this.$router, this.$store)
+          );
       }
 
       // if (this.shop != null) this.SelectShop();
@@ -79,17 +83,18 @@ export default {
           zoom: 12,
           zoomControl: true,
           zoomControlOptions: {
-            position: naver.maps.Position.RIGHT_TOP,
+            position: naver.maps.Position.LEFT_BOTTOM,
           },
         });
       } else {
+        console.log("mobile");
         this.map.setOptions({
           minZoom: 10,
           maxZoom: 21,
           zoom: 14,
-          zoomControl: true,
+          zoomControl: false,
           zoomControlOptions: {
-            position: naver.maps.Position.RIGHT_TOP,
+            position: naver.maps.Position.LEFT_BOTTOM,
           },
         });
       }
@@ -194,16 +199,24 @@ export default {
     SetMedia() {
       if (this.width > 767 || this.width == 0) {
         if (this.media != "desktop") {
+          console.log(`desktop`);
           this.$store.commit("ShopStore/SetMedia", `desktop`);
           this.anchor = [27, 53];
           this.InitMarkers();
+          this.map.setOptions({
+            zoomControl: true,
+          });
           if (this.districtData.length > 0) this.ZoomOutDistrict();
         }
       } else {
         if (this.media != "mobile") {
+          console.log(`mobile`);
           this.$store.commit("ShopStore/SetMedia", `mobile`);
           this.anchor = [14, 27];
           this.InitMarkers();
+          this.map.setOptions({
+            zoomControl: false,
+          });
           if (this.districtData.length > 0) this.ZoomOutDistrict();
         }
       }

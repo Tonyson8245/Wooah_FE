@@ -1,50 +1,52 @@
 <template>
-  <div class="container-fluid g-0" :style="background">
-    <div class="row align-items-center" v-if="comparison">
-      <div class="col-3">
-        <thumbnail :url="shop.url" />
-      </div>
-      <div class="col-9 info__container" style="text-align: left">
-        <div class="title p-1">{{ shop.name }}</div>
-        <div class="d-flex p-1">
-          <div class="address pe-2">
-            <i class="bi bi-geo-alt-fill"></i> {{ shop.address }}
-          </div>
-          <div class="address pe-2">
-            <i class="bi bi-telephone-fill"></i> {{ shop.contact }}
-          </div>
+  <div>
+    <div class="container-fluid g-0" :style="background">
+      <div class="row align-items-center" v-if="comparison">
+        <div class="col-3">
+          <thumbnail :url="shop.url" />
         </div>
-        <div class="d-flex p-1">
-          <div class="me-auto">
-            <div class="d-flex">
-              <span
-                class="badge rounded-pill text-dark keyword"
-                v-for="a in shop.keywords"
-                :key="a"
-                >{{ a }}</span
-              >
+        <div class="col-9 info__container" style="text-align: left">
+          <div class="title p-1">{{ shop.name }}</div>
+          <div class="d-flex p-1">
+            <div class="address pe-2">
+              <i class="bi bi-geo-alt-fill"></i> {{ shop.address }}
+            </div>
+            <div class="address pe-2">
+              <i class="bi bi-telephone-fill"></i> {{ shop.contact }}
             </div>
           </div>
-          <div style="font-weight: bold">{{ shop.price }} 원</div>
+          <div class="d-flex p-1">
+            <div class="me-auto">
+              <div class="d-flex">
+                <span
+                  class="badge rounded-pill text-dark keyword"
+                  v-for="a in shop.keywords"
+                  :key="a"
+                  >{{ a }}</span
+                >
+              </div>
+            </div>
+            <div style="font-weight: bold">{{ shop.price }} 원</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div v-if="!comparison">
-    <div class="col-8 info__container">
-      <div class="title">{{ shop.name }}</div>
-      <div class="address">{{ shop.address }}</div>
-      <div>
-        <span
-          class="badge rounded-pill text-dark keyword"
-          v-for="a in shop.keywords"
-          :key="a"
-          >{{ a }}</span
-        >
+    <div v-if="!comparison">
+      <div class="col-8 info__container">
+        <div class="title">{{ shop.name }}</div>
+        <div class="address">{{ shop.address }}</div>
+        <div>
+          <span
+            class="badge rounded-pill text-dark keyword"
+            v-for="a in shop.keywords"
+            :key="a"
+            >{{ a }}</span
+          >
+        </div>
       </div>
-    </div>
-    <div class="col-4">
-      <thumbnail :url="shop.url" />
+      <div class="col-4">
+        <thumbnail :url="shop.url" />
+      </div>
     </div>
   </div>
 </template>

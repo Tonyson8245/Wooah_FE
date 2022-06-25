@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container-fluid pe-1 ps-3 row align-items-center g-0"
+    class="container-fluid pe-1 ps-3 row align-items-center g-0 user-select-none"
     :style="background"
   >
     <div class="col-8 info__container">

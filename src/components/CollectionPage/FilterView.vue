@@ -10,7 +10,7 @@
         :tempFilterfull="tempFilterfull"
         :SetFilterColor="SetFilter.color[i]"
         :FilterCategory="FilterCategory"
-        @CheckFilter="InsertTempFilter($event)"
+        @CheckFilter="InsertTempFilter($event);"
       />
     </div>
     <!-- 필터카테고리가 보내지는 이유는 저값이 ""이 될때 초기화 시키기 위해 -->

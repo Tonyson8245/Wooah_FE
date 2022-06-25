@@ -56,13 +56,13 @@
                 </div>
               </div> -->
               <div class="row modal__content_info g-0">
-                <i class="bi bi-telephone"
+                <i class="bi bi-telephone" v-if="shop.contact"
                   ><span class="ps-1">{{ shop.contact }}</span></i
                 >
-                <i class="bi bi-coin"
+                <i class="bi bi-coin" v-if="post.price"
                   ><span class="ps-1">{{ post.price }}</span>
                 </i>
-                <i class="bi bi-geo-alt"
+                <i class="bi bi-geo-alt" v-if="shop.address"
                   ><span class="ps-1">{{ shop.address }}</span></i
                 >
               </div>

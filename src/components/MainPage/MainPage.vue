@@ -9,7 +9,7 @@
       <div class="carousel-inner" @click="clickBanner">
         <div class="carousel-item banner_1 active">
           <img
-            src="@/assets/img/banner_1.png"
+            src="@/assets/img/banner_1.svg"
             v-if="bannerStatus == `desktop`"
             alt="..."
           />
@@ -18,6 +18,7 @@
           <!-- 이거 이미지 사이즈 1200 이여야지 "자동 넘어가기" 된다. -->
         </div>
         <div class="carousel-item banner_2">
+          png
           <img
             src="@/assets/img/banner_2.png"
             v-if="bannerStatus == `desktop`"
@@ -361,7 +362,7 @@ export default {
     },
     price_range(i) {
       if (this.monthlyart[i] != undefined)
-        return `~` + (this.monthlyart[i].price_range + 1) + `만원`;
+        return this.monthlyart[i].price_range + `만원 대`;
       else return "";
     },
     clickShop(shopid) {
@@ -591,7 +592,7 @@ export default {
   position: relative;
   color: white;
   font-size: 1.5vw;
-  background: $pl-4;
+  background: white;
   border: solid 0.5px $pb;
   @include sm {
     font-size: 5vw;

@@ -7,6 +7,9 @@
         :thumbnail="thumbnail"
       />
     </div>
+    <div v-if="nothumbnails" class="noResult">
+      <span class="item">조회 결과가 없습니다.</span>
+    </div>
   </div>
 </template>
 
@@ -57,12 +60,10 @@ export default {
     thumbnails() {
       this.componentKey += 1; // 갱신이 안되는 문제 가 있어 component 키를 올려줌으로서 갱신을 시킴
     },
-    updateDistrict(a) {
-      if (a) {
-        this.reset();
-        this.getThumbnails();
-        this.$store.commit("CommonStore/setUpdateDistrict", false);
-      }
+    sigungu() {
+      this.reset();
+      this.getThumbnails();
+      this.$store.commit("CommonStore/setUpdateDistrict", false);
     },
   },
   components: {
@@ -71,4 +72,16 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "@/assets/style.scss";
+.noResult {
+  text-align: center;
+  padding: 15% 0 15% 0;
+  @include tablet {
+    font-size: 80%;
+  }
+  @include mobile-s {
+    font-size: 70%;
+  }
+}
+</style>

@@ -1,63 +1,77 @@
 <template>
-  <div class="search__outline border-top-0 border" :class="SearchState">
-    <div class="search">
-      <input
-        type="text"
-        class="form-control"
-        ref="input"
-        :placeholder="keyword"
-        :value="value"
-        @focus="ChangeState"
-        @input="
-          search($event);
-          value = $event.target.value;
-        "
-      />
-      <i class="bi bi-search"></i>
-      <i
-        class="bi bi-x-circle-fill"
-        v-if="SearchStateBoolean"
-        @click="close"
-      ></i>
-    </div>
-    <div v-if="SearchStateBoolean" class="result__outline">
-      <div class="result">
-        <ul class="list-group">
-          <li
-            v-for="result in SearchResult"
-            :key="result"
-            class="list-group-item"
+  <div>
+    <GDialog :yesno="false" />
+    <div class="search__outline border-top-0 border" :class="SearchState">
+      <div class="search">
+        <input
+          type="text"
+          class="form-control"
+          ref="input"
+          :placeholder="keyword"
+          :value="value"
+          @focus="ChangeState"
+          @keyup.enter="EnterEvent"
+          @input="
+            search($event);
+            value = $event.target.value;
+          "
+        />
+        <i class="bi bi-search"></i>
+        <i
+          class="bi bi-x-circle-fill"
+          v-if="SearchStateBoolean"
+          @click="close"
+        ></i>
+      </div>
+      <div v-if="SearchStateBoolean" class="result__outline">
+        <div class="result">
+          <ul class="list-group">
+            <li
+              class="list-group-item badge align-left"
+              v-if="this.value != `` && SearchResult.length == 0"
+            >
+              조건에 맞는 태그가 없습니다.
+            </li>
+            <li
+              v-for="result in SearchResult"
+              :key="result"
+              class="list-group-item"
+              @click="
+                $emit('ClickTag', result);
+                value = ``;
+              "
+            >
+              {{ result }}
+            </li>
+          </ul>
+        </div>
+        <div class="ranktags">
+          <h4 class="title">인기 태그</h4>
+          <span
+            class="tags badge rounded-pill"
+            v-for="tag in RankTags"
+            :key="tag"
             @click="
-              $emit('ClickTag', result);
+              $emit('ClickTag', tag);
               value = ``;
             "
+            >{{ tag }}</span
           >
-            {{ result }}
-          </li>
-        </ul>
-      </div>
-      <div class="ranktags">
-        <h4 class="title">인기 태그</h4>
-        <span
-          class="tags badge rounded-pill"
-          v-for="tag in RankTags"
-          :key="tag"
-          @click="
-            $emit('ClickTag', tag);
-            value = ``;
-          "
-          >{{ tag }}</span
-        >
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import GDialog from "@/components/Common/AlertDialog.vue";
 export default {
   name: "SearchPage",
   data() {
     return { value: `` };
+  },
+  components: {
+    GDialog,
   },
   computed: {
     SearchState() {
@@ -83,7 +97,8 @@ export default {
   },
   methods: {
     ChangeState() {
-      this.value = this.keyword; // 기존 키워드 유지
+      if (this.keyword != "찾고 싶은 이미지 태그를 검색해 보세요")
+        this.value = this.keyword; // 기존 키워드 유지
       // if (this.keyword != "") this.$store.state.collectionStore.tag = null; // 키워드 초기화
       this.$store.dispatch("collectionStore/searchTag", this.value);
 
@@ -100,7 +115,15 @@ export default {
     },
     search(e) {
       let searchkeyword = e.target.value;
+      // this.$store.commit("collectionStore/changeTag", searchkeyword);
       this.$store.dispatch("collectionStore/searchTag", searchkeyword);
+    },
+    EnterEvent() {
+      this.$store.commit("alertStore/ChangeState");
+      this.$store.commit(
+        "alertStore/ChangeComment",
+        "하단의 태그를 클릭하여 검색해주세요."
+      );
     },
   },
   watch: {},

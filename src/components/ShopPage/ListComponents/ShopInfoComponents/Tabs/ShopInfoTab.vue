@@ -23,12 +23,14 @@
           <img src="../../../../../../src/assets/icon/카카오톡ID.png" alt="" />
           {{ ShopData.contacts.kakao_id }}
         </div>
-        <div class="line" v-if="ShopData.contacts.kakao_id != null">
+        <div class="line" v-if="ShopData.contacts.kakao_chat != null">
           <img
             src="../../../../../../src/assets/icon/카카오톡Chat.png"
             alt=""
           />
-          {{ ShopData.contacts.kakao_chat }}
+          <a target="_blank" v-bind:href="ShopData.contacts.kakao_chat">{{
+            ShopData.contacts.kakao_chat
+          }}</a>
         </div>
         <div class="line" v-if="ShopData.contacts.instagram != null">
           <img src="../../../../../../src/assets/icon/instagram.svg" alt="" />

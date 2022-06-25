@@ -49,7 +49,6 @@
               >
               <br />
               <span><i class="bi bi-geo-alt-fill"></i>{{ shop.address }}</span>
-              ...
             </div>
           </div>
         </div>

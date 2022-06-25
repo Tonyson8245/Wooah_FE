@@ -3,7 +3,7 @@
     <div style="position: sticky; right: 0; z-index: 2" class="border-bottom">
       <TopHeader />
     </div>
-    <body style="flex: 1">
+    <body>
       <div class="web--content">
         <router-view />
       </div>
@@ -58,7 +58,7 @@ export default {
   height: 100vh;
   @include mobile-s {
     height: auto;
-    min-height: 400px;
+    min-height: 700px;
   }
 }
 .web--content {

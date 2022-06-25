@@ -5,7 +5,8 @@
       <div style="z-index: 1">
         <div v-if="title == `monthlyart`">
           <div class="icons">
-            <p>{{ Month }}월의 네일 디자인</p>
+            <!-- <p>{{ Month }}월의 네일 디자인</p> -->
+            <p>이달의 네일아트</p>
           </div>
           <div class="text container g-0" :style="`width:` + textWidth">
             <div class="row g-0" style="font-size: 70%">

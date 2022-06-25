@@ -14,7 +14,7 @@
         <div
           v-for="art in arts"
           :key="art"
-          class="col-lg-3 col-sm-6 col-6 mb-3 g-2"
+          class="col-lg-3 col-sm-4 col-6 mb-3 g-2"
         >
           <thumbnail :art="art" :toggle="false"></thumbnail>
         </div>
@@ -41,6 +41,7 @@ export default {
     this.reset();
     this.moreData();
   },
+
   methods: {
     clickAll() {
       this.$router.push({ path: "/monthlyart" }); // 이달의 아트 메인페이지로 이동
@@ -86,7 +87,12 @@ export default {
       return this.$store.state.CommonStore.updateDistrict;
     },
   },
+
   watch: {
+    sigungu() {
+      this.reset();
+      this.moreData();
+    },
     updateDistrict(a) {
       if (a) {
         this.reset();

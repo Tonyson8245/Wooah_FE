@@ -18,21 +18,21 @@ const routes = [
     path: "",
     component: MainPage,
     meta: {
-      title: "main",
+      title: "우아 - 다양한 네일 정보을 한눈에!",
     },
   },
   {
     path: "/",
     component: MainPage,
     meta: {
-      title: "main",
+      title: "우아 - 다양한 네일 정보을 한눈에!",
     },
   },
   {
     path: "/comparison",
     component: ComparisonPage,
     meta: {
-      title: "가격비교",
+      title: "가격비교 : 우아",
     },
   },
 
@@ -40,7 +40,7 @@ const routes = [
     path: "/monthlyart",
     component: MonthlyartPage,
     meta: {
-      title: "이달의아트",
+      title: "이달의아트 : 우아",
     },
     children: [
       {
@@ -57,21 +57,21 @@ const routes = [
     path: "/library/p/:id(\\d+)",
     component: DetailPage,
     meta: {
-      title: "디자인모아보기",
+      title: "디자인모아보기 : 우아",
     },
   },
   {
     path: "/library",
     component: Collection,
     meta: {
-      title: "디자인모아보기",
+      title: "디자인모아보기 : 우아",
     },
   },
   {
     path: "/shop",
     component: Shop,
     meta: {
-      title: "샵",
+      title: "샵 : 우아",
     },
     children: [
       {

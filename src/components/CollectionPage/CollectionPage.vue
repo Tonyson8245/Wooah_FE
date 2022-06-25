@@ -712,10 +712,12 @@ export default {
     Clicked_post_index() {
       // 현재 페이지 위치에 따라 버튼 사라지게 하는 것
       this.ButtonCondition = ["visible", "visible"];
-      if (this.Clicked_post_index == "0") this.ButtonCondition[0] = "d-none";
       if (this.Clicked_post_index + 1 >= this.posts.length) {
         this.moreData();
       }
+
+      if (this.Clicked_post_index == "0") this.ButtonCondition[0] = "d-none";
+      if (this.noResult) this.ButtonCondition[1] = "d-none";
     },
     FilterStatus(state) {
       if (state == "d-none") {
@@ -723,10 +725,8 @@ export default {
         this.ResetStatus = true;
       } else this.ImageContainerMove = "image__container__move";
     },
-    noResult() {
-      if (this.Clicked_post_index != ``) {
-        if (this.noPost) this.ButtonCondition[1] = "d-none";
-      }
+    noResult(a) {
+      if (a) this.ButtonCondition[1] = "d-none";
     },
 
     tag(a, b) {
@@ -744,6 +744,7 @@ export default {
         this.$store.commit("collectionStore/changeTag", null);
         this.$router.push("/library");
       }
+      if (this.Clicked_post_index != "") this.$router.push("/library");
     },
   },
   components: {

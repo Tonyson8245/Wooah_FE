@@ -7,8 +7,8 @@ const ShopStore = {
 
     //설정 시도
     districtData: [],
-    sido: 1,
-    sigungu: 0,
+    // sido: 1,
+    // sigungu: 0,
     newDistrictSet: "",
     mapCenter: [], // 지도 중심
 
@@ -111,11 +111,11 @@ const ShopStore = {
     },
   },
   actions: {
-    async getShops(context, page) {
+    async getShops(context, payload) {
       if (context.state.keyword == false) {
-        if (page == 1) context.commit("SetCurrentPage", 1);
+        if (payload.page == 1) context.commit("SetCurrentPage", 1);
         await shopApi
-          .getShops(page, context.state.sido, context.state.sigungu)
+          .getShops(payload.page, payload.sido, payload.sigungu)
           .then(function (response) {
             context.commit("FetchTotalpage", response.data.total_page);
             context.commit("FetchShops", response.data.shops);
@@ -159,6 +159,7 @@ const ShopStore = {
           if (response.status == 200) {
             context.commit("FetchShopImage", response.data);
             context.commit("IncreaseImagePage");
+            console.log(response.data);
           }
         })
         .catch(function (error) {
@@ -182,8 +183,8 @@ const ShopStore = {
       await shopApi
         .searchShops(
           payload.page,
-          context.state.sido,
-          context.state.sigungu,
+          payload.sido,
+          payload.sigungu,
           payload.keyword
         )
         .then(function (response) {

@@ -9,15 +9,14 @@ const ComparisonStore = {
     procedure_table: "",
     query: [],
     result: "",
+
+    noQuery: false,
   },
-  watch: {
-    // step(a) {
-    //   if (a > this.totalStep) {
-    //     this.step = 1;
-    //   }
-    // },
-  },
+
   mutations: {
+    setNoQuery(state, payload) {
+      state.noQuery = payload;
+    },
     setQuery(state, payload) {
       state.query[payload.index] = payload.value;
     },
@@ -65,15 +64,18 @@ const ComparisonStore = {
       }); // 배열을 API 에 맞느는 쿼리 형태로 만듬
 
       // context.commit("resetQuery"); 쿼리 초기화
-
-      await comparisonApi
-        .fetchPriceList(newQuery, payload.sido, payload.sigungu)
-        .then(function (response) {
-          context.commit("setResult", response.data);
-        })
-        .catch(function () {
-          context.commit("setResult", []);
-        });
+      if (newQuery == "") context.commit("setNoQuery", true);
+      else {
+        context.commit("setNoQuery", false);
+        await comparisonApi
+          .fetchPriceList(newQuery, payload.sido, payload.sigungu)
+          .then(function (response) {
+            context.commit("setResult", response.data);
+          })
+          .catch(function () {
+            context.commit("setResult", []);
+          });
+      }
     },
   },
 };

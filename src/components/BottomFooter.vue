@@ -53,7 +53,7 @@
             </td>
           </tr>
           <tr>
-            <th colspan="4">Copyright Since 2022, Woo-uA All rights</th>
+            <th colspan="4">Copyright Since 2022, Wooah All rights</th>
           </tr>
         </table>
         <div class="col-lg-6 col-md-6">

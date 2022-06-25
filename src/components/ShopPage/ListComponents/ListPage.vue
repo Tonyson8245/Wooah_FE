@@ -68,7 +68,6 @@ export default {
   },
   mounted() {
     if (this.currentpage != 0) this.page = this.currentpage;
-    this.$store.dispatch("ShopStore/getShops", this.page);
   },
   computed: {
     currentpage() {
@@ -92,6 +91,12 @@ export default {
     mapView() {
       return this.$store.state.ShopStore.SetMaMapViewpView;
     },
+    sido() {
+      return this.$store.state.CommonStore.sido;
+    },
+    sigungu() {
+      return this.$store.state.CommonStore.sigungu;
+    },
   },
   methods: {
     ClickShop(id, index) {
@@ -112,11 +117,18 @@ export default {
   },
   watch: {
     page(state) {
-      if (this.keyword == "") this.$store.dispatch("ShopStore/getShops", state);
+      if (this.keyword == "")
+        this.$store.dispatch("ShopStore/getShops", {
+          page: state,
+          sido: this.sido,
+          sigungu: this.sigungu,
+        });
       else
         this.$store.dispatch("ShopStore/searchShops", {
           keyword: this.keyword,
           page: state,
+          sido: this.sido,
+          sigungu: this.sigungu,
         }); // 다음 페이지 불러오기
       // 검색 상태일 경우 검색api 활용/ 아닐 경우 일반 내주변 모아보기 api활용
       this.$store.commit("ShopStore/SetCurrentPage", state);
@@ -133,10 +145,21 @@ export default {
         this.$store.dispatch("ShopStore/searchShops", {
           keyword: state,
           page: 1,
+          sido: this.sido,
+          sigungu: this.sigungu,
         });
         // 첫 검색 요청
-      } else this.$store.dispatch("ShopStore/getShops", 1);
+      } else
+        this.$store.dispatch("ShopStore/getShops", {
+          page: 1,
+          sido: this.sido,
+          sigungu: this.sigungu,
+        });
     }, // 첫 조회 시 요청
+    currentpage(a) {
+      console.log(a);
+      this.page = a;
+    },
   },
 };
 </script>

@@ -76,7 +76,12 @@ const CollectionStore = {
           .then(function (response) {
             context.commit("changeSearchResult", response.data);
           })
-          .catch(function () {});
+          .catch(function (error) {
+            var res = error.response;
+            if (res.status == 404) {
+              console.log("일치하는 태그가 없습니다.");
+            }
+          });
         keyword = "";
       } else context.commit("changeSearchResult", "");
     },
@@ -109,8 +114,6 @@ const CollectionStore = {
               context.commit("setPosts", response.data);
               context.commit("changeNoPost", false);
             }
-
-            context.commit("setnoResult", true);
             context.state.completeFetch = true; // 무한 페이지 로드를 막기위한 플래그
           })
           .catch(function (error) {
@@ -119,6 +122,8 @@ const CollectionStore = {
               if (res.data.detail == "조건에 맞는 디자인이 존재하지 않습니다") {
                 context.commit("resetPage");
                 context.commit("changeNoPost", true);
+              } else if (res.data.detail == "존재하지 않은 페이지입니다") {
+                context.commit("setnoResult", true);
               }
             } else {
               console.log(error);
@@ -139,9 +144,7 @@ const CollectionStore = {
         })
         .catch(function (error) {
           let res = error.response;
-          if (res.status == 404) {
-            context.commit(`changeNoPost`, true);
-          } else console.log(res);
+          console.log(res);
         });
     },
   },

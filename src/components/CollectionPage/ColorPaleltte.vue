@@ -28,6 +28,7 @@ export default {
   methods: {
     CheckColor() {
       this.$emit("CheckFilter", this.color.id);
+      console.log(this.color.id);
 
       if (this.Checked == "d-none" && !this.tempFilterfull) {
         this.Checked = "visible";
@@ -64,9 +65,10 @@ export default {
   left: 32%;
   top: 10%;
   z-index: 2;
+  font-size: 30px;
   @include mobile-s {
-    top: 3%;
-    left: 30%;
+    top: 2%;
+    left: 29%;
   }
 }
 .circle {

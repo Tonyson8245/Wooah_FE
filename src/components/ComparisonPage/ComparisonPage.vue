@@ -1,83 +1,124 @@
 <template>
-  <AlertDialog />
-  <div class="outline">
-    <GDialog :yesno="true" />
-    <div class="header">
-      <Region :font="font" />
-      <p class="title">맞춤 시술 견적 받기</p>
-    </div>
-    <div class="body">
-      <div class="container-lg" style="flex-direction: column; flex: 1">
-        <div class="row g-0">
-          <div
-            class="tab col-6"
-            :class="tab[0]"
-            @click="
-              this.page = `hand`;
-              clickPage();
-            "
-          >
-            네일(손)
+  <div>
+    <AlertDialog />
+    <div class="outline">
+      <GDialog :yesno="true" />
+      <div class="header">
+        <Region :font="font" />
+        <p class="title">맞춤 시술 견적 받기</p>
+      </div>
+      <div class="body">
+        <div class="container-lg" style="flex-direction: column; flex: 1">
+          <div class="row g-0">
+            <div
+              class="tab col-6"
+              :class="tab[0]"
+              @click="
+                this.page = `hand`;
+                clickPage();
+              "
+            >
+              네일(손)
+            </div>
+            <div
+              class="tab col-6"
+              :class="tab[1]"
+              @click="
+                this.page = `foot`;
+                clickPage();
+              "
+            >
+              페디(발)
+            </div>
           </div>
-          <div
-            class="tab col-6"
-            :class="tab[1]"
-            @click="
-              this.page = `foot`;
-              clickPage();
-            "
-          >
-            페디(발)
-          </div>
-        </div>
 
-        <div v-if="totalStep >= step">
-          <!-- <div v-if="false"> -->
-          <div class="container__step">
-            <Steps />
+          <div v-if="totalStep >= step">
+            <!-- <div v-if="false"> -->
+            <div class="container__step">
+              <Steps />
+            </div>
+            <div>
+              <Detail />
+            </div>
           </div>
-          <div>
-            <Detail />
-          </div>
-        </div>
-        <div class="result__outline" v-else-if="result != ``">
-          <div class="result__container">
-            <div class="result__header p-3">
-              <div class="d-flex title" style="align-items: center">
-                <div class="me-auto bd-highlight">
-                  비교결과 {{ districttext }}
-                </div>
-                <div
-                  class="d-flex"
-                  style="align-items: center"
-                  @click="restart"
-                >
-                  다시하기
-                  <img class="ms-1" src="@/assets/img/recheck.svg" alt="" />
-                </div>
-              </div>
-              <div class="content">
-                <div class="subtitle">내가 선택한 시술</div>
-                <div class="estimate d-flex">
-                  <div>
-                    <img src="@/assets/img/nailicon.png" alt="" class="pe-2" />
+          <div class="result__outline" v-else-if="result != ``">
+            <div class="result__container">
+              <div class="result__header p-3">
+                <div class="d-flex title" style="align-items: center">
+                  <div class="me-auto bd-highlight">
+                    비교결과 {{ districttext }}
                   </div>
-                  <div class="align-self-center">
-                    {{ menu }}
+                  <div
+                    class="d-flex"
+                    style="align-items: center"
+                    @click="restart"
+                  >
+                    다시하기
+                    <img class="ms-1" src="@/assets/img/recheck.svg" alt="" />
                   </div>
                 </div>
+                <div class="content">
+                  <div class="subtitle">내가 선택한 시술</div>
+                  <div class="estimate d-flex">
+                    <div>
+                      <img
+                        src="@/assets/img/nailicon.png"
+                        alt=""
+                        class="pe-2"
+                      />
+                    </div>
+                    <div class="align-self-center">
+                      {{ menu }}
+                    </div>
+                  </div>
+                </div>
               </div>
+              <div class="result__body mb-1" v-if="this.result[0].has_result">
+                <ShopItem
+                  v-for="(shop, i) in shops"
+                  :key="i"
+                  :comparison="true"
+                  :index="i"
+                  :shop="shop"
+                  @click="clickShopItem(shop)"
+                />
+              </div>
+              <div v-else class="p-5">조건에 맞는 샵이 없습니다.</div>
             </div>
-            <div class="result__body mb-1" v-if="this.result[0].has_result">
-              <ShopItem
-                v-for="(shop, i) in shops"
-                :key="i"
-                :comparison="true"
-                :index="i"
-                :shop="shop"
-              />
+          </div>
+          <div class="result__outline" v-else-if="noQuery != ``">
+            <div class="result__container">
+              <div class="result__header p-3">
+                <div class="d-flex title" style="align-items: center">
+                  <div class="me-auto bd-highlight">
+                    비교결과 {{ districttext }}
+                  </div>
+                  <div
+                    class="d-flex"
+                    style="align-items: center"
+                    @click="restart"
+                  >
+                    다시하기
+                    <img class="ms-1" src="@/assets/img/recheck.svg" alt="" />
+                  </div>
+                </div>
+                <div class="content">
+                  <div class="subtitle">내가 선택한 시술</div>
+                  <div class="estimate d-flex">
+                    <div>
+                      <img
+                        src="@/assets/img/nailicon.png"
+                        alt=""
+                        class="pe-2"
+                      />
+                    </div>
+                    <div class="align-self-center">선택한 시술이 없습니다.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-5">시술을 한 개 이상 선택하셔야 합니다.</div>
             </div>
-            <div v-else class="p-5">조건에 맞는 샵이 없습니다.</div>
           </div>
         </div>
       </div>
@@ -102,6 +143,10 @@ export default {
     };
   },
   methods: {
+    clickShopItem(shop) {
+      // console.log(shop);
+      this.$router.push("/shop/" + shop.id + "/info");
+    },
     clickPage() {
       if (this.query.length > 0 && this.result.length == 0) {
         this.$store.commit("alertStore/ChangeState");
@@ -147,6 +192,9 @@ export default {
   },
 
   computed: {
+    noQuery() {
+      return this.$store.state.ComparisonStore.noQuery;
+    },
     dialogResult() {
       return this.$store.state.alertStore.dialogResult;
     },
@@ -284,13 +332,17 @@ export default {
   display: flex;
   justify-content: center;
   font-size: 1vw;
+  min-height: 400px;
   @include tablet {
+    min-height: 400px;
     font-size: 2.5vw;
   }
   @include mobile-s {
+    min-height: 300px;
     padding: 8% 0 0 0;
   }
 }
+
 .result__container {
   background: white;
   border: $pa solid 2px;

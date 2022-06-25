@@ -165,7 +165,7 @@ export default {
       substep: [
         {
           name: `발 각질관리`,
-          description: `발 각질관리 받길 원하세요??`,
+          description: `발 각질관리 받길 원하세요?`,
           answer: [`네, 각질관리 할거에요.`, `아니요, 안할거에요.`],
           skip: false,
           input: false,

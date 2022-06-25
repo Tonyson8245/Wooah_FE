@@ -10,5 +10,7 @@ export function fetchPriceList(query, sido, sigungu) {
       `price-comparisons?ids=${query}&sido=${sido}&sigungu=${sigungu}`,
       {}
     );
+  } else if (query == "") {
+    return http.get(`price-comparisons?sido=${sido}`, {});
   } else return http.get(`price-comparisons?ids=${query}&sido=${sido}`, {});
 }

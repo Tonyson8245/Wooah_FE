@@ -6,7 +6,11 @@
         <i class="bi bi-x-lg" @click="CloseInfo"></i>
       </div>
       <div class="info__content">
-        <carousel v-if="ShopData.images.length > 0" :items-to-show="1">
+        <carousel
+          v-if="ShopData.images.length > 0"
+          :items-to-show="1"
+          class="user-select-none"
+        >
           <slide class="square" v-for="slide in ShopData.images" :key="slide">
             <img
               class="inner"
@@ -82,6 +86,21 @@ export default {
   },
   mounted() {
     this.FetchShopInfo();
+    var a = this.$route.path.split("/");
+    if (a[1] == `shop` && a[2] != undefined) {
+      // 샵페이지면서 샵아이디가 있을 경우에만 탭 이동
+      switch (a[3]) {
+        case "price":
+          this.ClickTab(1);
+          break;
+        case "image":
+          this.ClickTab(2);
+          break;
+        default:
+          this.ClickTab(0);
+          break;
+      }
+    }
   },
   computed: {
     ShopData() {
@@ -91,27 +110,7 @@ export default {
       return this.$route.path.split("/");
     },
   },
-  watch: {
-    path(a) {
-      if (a[1] == `shop` && a[2] != undefined) {
-        // 샵페이지면서 샵아이디가 있을 경우에만 탭 이동
-        switch (a[3]) {
-          case "price":
-            this.ClickTab(1);
-            break;
-          case "image":
-            this.ClickTab(2);
-            break;
-          case "info":
-            this.ClickTab(0);
-            break;
-          default:
-            this.$router.push(`/shop`);
-            break;
-        }
-      }
-    },
-  },
+
   methods: {
     onImgLoad() {
       this.isLoaded = "visible";

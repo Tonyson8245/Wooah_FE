@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="Roboto navbar navbar-expand-lg m-0 p-0 navbar-secondary"
+    class="Roboto navbar navbar-expand-md m-0 p-0 navbar-secondary"
     style="width: 100%"
   >
     <div class="container-lg">
@@ -144,6 +144,11 @@ export default {
   box-shadow: none;
 }
 .navbar {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
   font-family: "GoyangDeogyang";
   font-size: 20px;
 
