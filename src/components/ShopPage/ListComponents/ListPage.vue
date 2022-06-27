@@ -1,5 +1,8 @@
 <template>
-  <div style="background: white; display: flex; flex-direction: column">
+  <div
+    style="background: white; display: flex; flex-direction: column"
+    class="pe-click"
+  >
     <SearchPage></SearchPage>
     <TitleItem></TitleItem>
     <div

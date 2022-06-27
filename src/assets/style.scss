@@ -79,6 +79,9 @@ $sm : 575px;
   display: block;
   padding-top: 100%; /* 1:1 비율 */
 }
+.pe-click{
+  cursor: pointer;
+}
 
 //필터 사이즈 시작
 $filter-height-desktop: 350px;

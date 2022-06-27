@@ -1,5 +1,5 @@
 <template>
-  <div class="col img__outline" style="position: relative">
+  <div class="col img__outline pe-click" style="position: relative">
     <!-- <i
       class="bi bi-heart-fill monthly"
       v-if="post.monthly_art"

@@ -61,6 +61,7 @@
             v-if="designs.length !== 0"
           >
             <slide
+              class="pe-click"
               v-for="(design, i) in designs"
               :key="i"
               @click="clickNewestDesign(design.id)"
@@ -100,6 +101,7 @@
                 <div class="title fw-bold">태그 검색 순위</div>
                 <table class="table table-sm table-borderless m-0">
                   <tr
+                    class="pe-click"
                     v-for="tag in tagrank"
                     :key="tag"
                     @click="clicktag(tag.content)"
@@ -140,7 +142,7 @@
               <div class="inner">
                 <div class="row fw-bold m-0" v-if="this.monthlyart.length > 0">
                   <div
-                    class="col-6 tile p-0"
+                    class="col-6 tile p-0 pe-click"
                     v-for="i in 3"
                     :key="i"
                     @click="clickMonthlyart(i - 1)"
@@ -154,7 +156,10 @@
                     </div>
                   </div>
 
-                  <div class="col-6 tile p-0" @click="clickMonthlyart(`more`)">
+                  <div
+                    class="col-6 tile p-0 pe-click"
+                    @click="clickMonthlyart(`more`)"
+                  >
                     <square :url="monthlyart_url(3)" />
                     <div class="text fw-bold">더보기...</div>
                   </div>
@@ -181,7 +186,7 @@
               :snapAlign="ShopsnapAlign"
               v-if="shops.length !== 0"
             >
-              <Slide v-for="(shop, i) in shops" :key="i">
+              <Slide v-for="(shop, i) in shops" :key="i" class="pe-click">
                 <div
                   class="m-lg-3 m-1"
                   style="

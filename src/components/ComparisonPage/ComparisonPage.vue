@@ -9,7 +9,7 @@
       </div>
       <div class="body">
         <div class="container-lg" style="flex-direction: column; flex: 1">
-          <div class="row g-0">
+          <div class="row g-0 pe-click">
             <div
               class="tab col-6"
               :class="tab[0]"

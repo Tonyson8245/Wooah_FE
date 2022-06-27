@@ -1,5 +1,9 @@
 <template>
-  <div class="outline" style="overflow: hidden" @mouseleave="show = false">
+  <div
+    class="outline pe-click"
+    style="overflow: hidden"
+    @mouseleave="show = false"
+  >
     <square
       @click="clickImage(art.id)"
       data-bs-toggle="modal"

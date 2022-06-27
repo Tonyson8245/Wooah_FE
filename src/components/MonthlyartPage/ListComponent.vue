@@ -9,7 +9,8 @@
         v-if="width > 400"
         @click="clickMore(thumbnail.price_range)"
       >
-        <span class="me-1">더보기</span><i class="bi bi-chevron-right"></i>
+        <span class="me-1 pe-click">더보기</span
+        ><i class="bi bi-chevron-right"></i>
       </div>
     </div>
     <div class="body container">
