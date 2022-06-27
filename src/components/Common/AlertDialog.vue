@@ -1,8 +1,8 @@
 <template>
-  <GDialog v-model="dialogState" max-width="500" persistent>
+  <GDialog v-model="dialogState" max-width="300" persistent>
     <div class="wrapper">
-      <div class="content">
-        <p>{{ dialogComment }}</p>
+      <div class="content text-center mb-0">
+        <h6>{{ dialogComment }}</h6>
       </div>
 
       <div class="actions" v-if="!yesno">

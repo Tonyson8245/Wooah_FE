@@ -53,6 +53,13 @@ const ShopStore = {
 
       state.keyword = false;
     },
+    ResetShops(state) {
+      state.shops = "";
+      state.currentpage = 1;
+      state.focusmarker = null;
+      state.noResultlist = false;
+      state.pageReset = false;
+    },
     SetCurrentPage(state, payload) {
       state.currentpage = payload;
     },
@@ -128,7 +135,29 @@ const ShopStore = {
               context.commit("SetnoResultlist", true);
             }
           });
-      }
+      } // 검색어가 없는 경우
+      else {
+        if (payload.page == 1) context.commit("SetCurrentPage", 1);
+        await shopApi
+          .searchShops(
+            payload.page,
+            payload.sido,
+            payload.sigungu,
+            context.state.keyword
+          )
+          .then(function (response) {
+            context.commit("FetchTotalpage", response.data.total_page);
+            context.commit("FetchShops", response.data.shops);
+            context.commit("SetnoResultlist", false);
+          })
+          .catch(function (error) {
+            if (error.response.status == 404) {
+              context.commit("FetchTotalpage", null);
+              context.commit("FetchShops", null);
+              context.commit("SetnoResultlist", true);
+            }
+          });
+      } //검색어가 있는 경우
     },
     async getDistricts(context) {
       await shopApi

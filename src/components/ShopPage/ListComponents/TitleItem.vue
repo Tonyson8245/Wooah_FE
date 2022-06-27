@@ -72,6 +72,7 @@ export default {
   },
   watch: {
     sigungu(a) {
+      console.log("sigungu: " + a);
       this.$store.dispatch("ShopStore/getShops", {
         page: 1,
         sido: this.sido,

@@ -117,20 +117,12 @@ export default {
   },
   watch: {
     page(state) {
-      if (this.keyword == "")
-        this.$store.dispatch("ShopStore/getShops", {
-          page: state,
-          sido: this.sido,
-          sigungu: this.sigungu,
-        });
-      else
-        this.$store.dispatch("ShopStore/searchShops", {
-          keyword: this.keyword,
-          page: state,
-          sido: this.sido,
-          sigungu: this.sigungu,
-        }); // 다음 페이지 불러오기
-      // 검색 상태일 경우 검색api 활용/ 아닐 경우 일반 내주변 모아보기 api활용
+      this.$store.dispatch("ShopStore/getShops", {
+        page: state,
+        sido: this.sido,
+        sigungu: this.sigungu,
+      });
+      // 다음 페이지 불러오기
       this.$store.commit("ShopStore/SetCurrentPage", state);
       if (!this.mapView)
         window.scrollTo({
@@ -142,8 +134,7 @@ export default {
     keyword(state) {
       this.page = 1; //  페이지 초기화
       if (state != "") {
-        this.$store.dispatch("ShopStore/searchShops", {
-          keyword: state,
+        this.$store.dispatch("ShopStore/getShops", {
           page: 1,
           sido: this.sido,
           sigungu: this.sigungu,
