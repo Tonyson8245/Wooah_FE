@@ -30,7 +30,9 @@
         aria-labelledby="offcanvasNavbarLabel"
       >
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">전체 메뉴</h5>
+          <h5 class="offcanvas-title pt-1" id="offcanvasNavbarLabel">
+            전체 메뉴
+          </h5>
           <button
             type="button"
             class="btn-close text-reset"
@@ -155,9 +157,6 @@ export default {
   @include tablet {
     font-size: 20px;
   }
-  @include mobile-s {
-    font-size: 80%;
-  }
 }
 .navbar-brand {
   vertical-align: middle;
@@ -169,9 +168,6 @@ export default {
 
   @include tablet {
     font-size: 30px;
-  }
-  @include mobile-s {
-    font-size: 20px;
   }
 } //로고
 
@@ -185,8 +181,12 @@ export default {
   }
 }
 .nav-link {
+  cursor: pointer;
   color: darkgray;
   padding: 0.1% 0 0.1% 0;
+  @include tablet {
+    padding-bottom: 5%;
+  }
 }
 .nav-item > a:hover {
   color: $pa;

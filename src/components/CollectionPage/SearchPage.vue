@@ -7,14 +7,11 @@
           type="text"
           class="form-control"
           ref="input"
-          :placeholder="keyword"
-          :value="value"
+          placeholder="찾고 싶은 이미지 태그를 검색해 보세요"
+          :value="keyword"
           @focus="ChangeState"
           @keyup.enter="EnterEvent"
-          @input="
-            search($event);
-            value = $event.target.value;
-          "
+          @input="search($event)"
         />
         <i class="bi bi-search"></i>
         <i
@@ -68,11 +65,12 @@ import GDialog from "@/components/Common/AlertDialog.vue";
 export default {
   name: "SearchPage",
   data() {
-    return { value: `` };
+    return {};
   },
   components: {
     GDialog,
   },
+  mounted() {},
   computed: {
     SearchState() {
       if (this.$store.state.collectionStore.SearchState == true) return "on";
@@ -88,25 +86,18 @@ export default {
       return this.$store.state.collectionStore.Ranktags;
     },
     keyword() {
-      if (this.$store.state.collectionStore.tag == null) {
-        return "찾고 싶은 이미지 태그를 검색해 보세요";
-      } else {
-        return this.$store.state.collectionStore.tag;
-      }
+      return this.$store.state.collectionStore.tag;
     },
   },
   methods: {
     ChangeState() {
-      if (this.keyword != "찾고 싶은 이미지 태그를 검색해 보세요")
-        this.value = this.keyword; // 기존 키워드 유지
       // if (this.keyword != "") this.$store.state.collectionStore.tag = null; // 키워드 초기화
-      this.$store.dispatch("collectionStore/searchTag", this.value);
+      this.$store.dispatch("collectionStore/searchTag", this.keyword);
 
       this.$store.commit("collectionStore/ChangeSearchOn");
       this.$store.dispatch("collectionStore/fetchRankTag");
     },
     close() {
-      this.value = "";
       this.$store.commit("collectionStore/ChangeSearchOff");
       this.$store.commit("collectionStore/ResetSearch");
       if (this.$store.state.collectionStore.tag == null) {
@@ -115,7 +106,7 @@ export default {
     },
     search(e) {
       let searchkeyword = e.target.value;
-      // this.$store.commit("collectionStore/changeTag", searchkeyword);
+      this.$store.commit("collectionStore/changeTag", searchkeyword);
       this.$store.dispatch("collectionStore/searchTag", searchkeyword);
     },
     EnterEvent() {

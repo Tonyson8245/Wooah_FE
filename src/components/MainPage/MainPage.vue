@@ -18,7 +18,6 @@
           <!-- 이거 이미지 사이즈 1200 이여야지 "자동 넘어가기" 된다. -->
         </div>
         <div class="carousel-item banner_2">
-          png
           <img
             src="@/assets/img/banner_2.png"
             v-if="bannerStatus == `desktop`"

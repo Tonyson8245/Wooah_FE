@@ -1,34 +1,36 @@
 <template>
   <GDialog v-model="dialogState" max-width="300" persistent>
-    <div class="wrapper">
-      <div class="content text-center mb-0">
-        <h6>{{ dialogComment }}</h6>
-      </div>
+    <transition name="fade">
+      <div class="wrapper">
+        <div class="content text-center">
+          <span>{{ dialogComment }}</span>
+        </div>
 
-      <div class="actions" v-if="!yesno">
-        <button class="btn" @click="$store.commit('alertStore/ChangeState')">
-          확인
-        </button>
-      </div>
-      <div v-if="yesno" class="container-fluid row g-0">
-        <div class="actions col-6">
-          <button
-            class="btn"
-            @click="$store.commit('alertStore/ChangeResult', true)"
-          >
+        <div class="actions" v-if="!yesno">
+          <button class="btn" @click="$store.commit('alertStore/ChangeState')">
             확인
           </button>
         </div>
-        <div class="actions col-6">
-          <button
-            class="btn"
-            @click="$store.commit('alertStore/ChangeResult', false)"
-          >
-            취소
-          </button>
+        <div v-if="yesno" class="container-fluid row g-0">
+          <div class="actions col-6">
+            <button
+              class="btn"
+              @click="$store.commit('alertStore/ChangeResult', true)"
+            >
+              확인
+            </button>
+          </div>
+          <div class="actions col-6" style="background: #a86cc1">
+            <button
+              class="btn"
+              @click="$store.commit('alertStore/ChangeResult', false)"
+            >
+              취소
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
   </GDialog>
 </template>
 
@@ -54,6 +56,7 @@ export default {
 
 .wrapper {
   color: #000;
+  font-family: "GoyangIlsan";
   @include mobile-s {
     font-size: 12px;
   }
@@ -72,16 +75,23 @@ export default {
 .title {
   font-size: 30px;
   font-weight: 700;
-  margin-bottom: 20px;
 }
 
 .actions {
+  background: $pl-4;
   display: flex;
   justify-content: flex-end;
-  padding: 10px 20px;
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 .actions button {
   width: 100%;
+  font-size: 80%;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
