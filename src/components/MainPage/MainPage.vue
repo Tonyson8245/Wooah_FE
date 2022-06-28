@@ -9,7 +9,7 @@
       <div class="carousel-inner" @click="clickBanner">
         <div class="carousel-item banner_1 active">
           <img
-            src="@/assets/img/banner_1.svg"
+            src="@/assets/img/banner_1.png"
             v-if="bannerStatus == `desktop`"
             alt="..."
           />
@@ -386,7 +386,7 @@ export default {
       else if (
         e.target.lastChild.classList.value == "carousel-item banner_2 active"
       ) {
-        this.clicktag("과일"); // 과일로 키워드를 변경하고, 디자인 보아보기로 이동
+        this.clicktag("알록발록네일"); // 알록발록로 키워드를 변경하고, 디자인 보아보기로 이동
       }
     },
     clicktag(tag) {
@@ -433,13 +433,13 @@ export default {
     rgba(255, 0, 0, 0) 10%,
     rgba(255, 0, 0, 0) 90%,
     $pb 100%
-  ); /* W3C */
+  );
 } // 배너 페이드 아웃 필터
 .banner_1 {
-  background: #ffd8fa;
+  background: #f4dff8;
 } // 배너 1 배경
 .banner_2 {
-  background: #e0bfe6;
+  background: #ace6fd;
 } // 배너 2 배경
 .carousel-control-next,
 .carousel-control-prev /*, .carousel-indicators */ {

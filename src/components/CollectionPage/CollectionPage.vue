@@ -194,7 +194,7 @@
               <div class="col-lg-8 square" style="padding: 0 0 0 0">
                 <PostImage
                   v-if="post != ``"
-                  class="content"
+                  class="content pe-none"
                   style="display: inline-block"
                   :post="post"
                   :objectfit="`contain`"
@@ -205,6 +205,7 @@
                 class="col-lg-4 ms-auto modal__content_outer"
                 style="display: flex; flex-direction: column"
               >
+                <div style="flex: 1"></div>
                 <div class="modal__content_footer">
                   <div v-if="post.monthly">
                     <i class="bi bi-coin monthly"></i>
@@ -223,7 +224,7 @@
                   >
                     <span class="modal__content_name">
                       <span>{{ shop.name }}</span> </span
-                    ><i class="bi bi-arrow-right-circle"></i>
+                    ><i class="bi bi-arrow-right-circle ps-2 pe-click"></i>
                   </div>
                   <div class="row modal__content_info g-0">
                     <div class="col-7">
@@ -900,11 +901,6 @@ export default {
 .modal__content_footer {
   color: white;
   font-family: "GoyangIlsan";
-  top: 70%;
-  position: relative;
-  @include tablet {
-    top: 0%;
-  }
 }
 .modal__content_outer {
   background-color: $pl-2;
@@ -945,7 +941,7 @@ export default {
   }
 }
 .modal__content_info .bi {
-  margin-right: 0.5em;
+  font-size: 1em;
 }
 .modal__content_tags {
   font-size: 100%;

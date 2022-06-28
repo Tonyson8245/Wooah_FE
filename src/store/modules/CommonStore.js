@@ -28,10 +28,8 @@ const CommonStore = {
       state.districtData = payload;
     },
     SetDistrict(state, payload) {
-      state.sido = payload[0].id;
-
-      if (payload[1] != 0) state.sigungu = payload[1].id;
-      else state.sigungu = 0;
+      state.sido = payload.sido;
+      state.sigungu = payload.sigungu;
 
       state.updateDistrict = true;
     },
