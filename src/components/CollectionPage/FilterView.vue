@@ -3,20 +3,20 @@
     <h5 class="filter_title">{{ FilterCategory }}</h5>
     <div :class="FilterSelected[0]" class="row filter__outer">
       <ColorPaltte
-        class="col-3"
+        class="col-3 pe-click"
         v-for="(color, i) in colors"
         :key="color"
         :color="color"
         :tempFilterfull="tempFilterfull"
         :SetFilterColor="SetFilter.color[i]"
         :FilterCategory="FilterCategory"
-        @CheckFilter="InsertTempFilter($event);"
+        @CheckFilter="InsertTempFilter($event)"
       />
     </div>
     <!-- 필터카테고리가 보내지는 이유는 저값이 ""이 될때 초기화 시키기 위해 -->
     <div :class="FilterSelected[1]" class="row filter__outer">
       <ShapePalette
-        class="col-3"
+        class="col-3 pe-click"
         v-for="(shape, i) in shapes"
         :key="shape"
         :shape="shape"
@@ -32,7 +32,7 @@
       style="padding: 5% 0 10% 0"
     >
       <OptionPalette
-        class="col-4"
+        class="col-4 pe-click"
         v-for="(option, i) in options"
         :key="option"
         :option="option"
@@ -48,7 +48,7 @@
       style="padding: 20% 0 10% 0"
     >
       <HandfootPalette
-        class="col-6"
+        class="col-6 pe-click"
         v-for="(limbs, i) in handfoot"
         :key="limbs"
         :limbs="limbs"
@@ -60,7 +60,7 @@
       />
     </div>
     <button
-      class="btn btn-secondary btn-sm filter__outer_button"
+      class="btn btn-secondary btn-sm filter__outer_button pe-click"
       @click="ClickApply"
     >
       확인

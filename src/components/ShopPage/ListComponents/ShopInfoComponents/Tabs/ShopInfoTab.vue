@@ -44,8 +44,11 @@
       <div class="title">영업시간</div>
       <div class="content p-1">
         <div class="mb-2">
-          <span class="badge bg-secondary me-2" v-if="ShopData.has_holiday_off">
-            공휴일 휴무
+          <span
+            class="badge bg-secondary me-2"
+            v-if="ShopData.holiday != `알수없음`"
+          >
+            {{ ShopData.holiday }}
           </span>
           <span v-if="ShopData.day_off != null">{{ ShopData.day_off }}</span>
         </div>

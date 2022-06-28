@@ -9,7 +9,7 @@
         <!-- 전체 컨테이너 -->
         <div class="col-md-10">
           <!-- 검색창 시작 -->
-          <SearchPage @ClickTag="ClickTag($event)" />
+          <SearchPage @ClickTag="ClickTag($event)" @MakeQuery="MakeQuery" />
           <!-- 검색 창 끝/태그 시작 -->
           <div class="btn_container" :style="BtnContainerState">
             <div class="btn_outer btn_outer_move">
@@ -166,7 +166,7 @@
     <!-- Modal -->
     <div
       style="border-radius: 15px"
-      class="modal fade"
+      class="modal"
       id="exampleModal"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
@@ -187,10 +187,13 @@
               <i
                 :class="ButtonCondition[0]"
                 @click="ClickPrevPost"
-                class="bi bi-arrow-left-circle-fill modal__btn_left"
+                class="bi bi-arrow-left-circle-fill modal__btn_left pe-click"
               ></i>
             </div>
-            <div class="row" style="width: 80%">
+            <div
+              class="row"
+              style="width: 80%; border-radius: 15px; overflow: hidden"
+            >
               <div class="col-lg-8 square" style="padding: 0 0 0 0">
                 <PostImage
                   v-if="post != ``"
@@ -198,6 +201,7 @@
                   style="display: inline-block"
                   :post="post"
                   :objectfit="`contain`"
+                  :monthlyoff="true"
                 />
                 <!-- 모달의 이미지 -->
               </div>
@@ -250,7 +254,7 @@
             <div style="width: 5%">
               <i
                 :class="ButtonCondition[1]"
-                class="bi bi-arrow-right-circle-fill modal__btn_right"
+                class="bi bi-arrow-right-circle-fill modal__btn_right pe-click"
                 style="float: right"
                 @click="ClickNextPost"
               ></i>
@@ -261,7 +265,7 @@
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   ref="close_btn"
-                  @click="this.Clicked_post_index = ``"
+                  @click="CloseModal"
                 ></button>
               </div>
             </div>
@@ -534,6 +538,8 @@ export default {
 
       this.$store.commit("collectionStore/setfilterQuery", query); //필터 쿼리 vuex 적용
       this.$store.commit("collectionStore/resetPage", 1); //페이지 초기화
+
+      console.log(`MakeQuery`);
       this.$store.dispatch("collectionStore/fetchPosts"); // 불러오기
     },
     FindApplyColor(filters) {
@@ -690,6 +696,8 @@ export default {
       this.$store.commit("collectionStore/setfilterQuery", "");
       this.$store.commit("collectionStore/resetPage", 1);
       if (withTag) this.$store.commit("collectionStore/InitTag");
+
+      console.log(`Reset`);
       this.$store.dispatch("collectionStore/fetchPosts");
     },
     Visiblity(boolean) {
@@ -698,15 +706,23 @@ export default {
       } else return "invisible";
     },
     moreData() {
+      console.log(`moreData`);
       this.$store.dispatch("collectionStore/fetchPosts");
     },
     ClickTag(tag) {
       this.$store.commit("collectionStore/changeTag", tag);
       this.$store.commit("collectionStore/ChangeSearchOff");
       this.$store.commit("collectionStore/InitSearchResult");
+
+      this.Reset(false);
+      this.MakeQuery();
     },
     ClickShop(id) {
       this.$router.push("/shop/" + id + "/info");
+    },
+    CloseModal() {
+      this.Clicked_post_index = ``;
+      this.post = "";
     },
   },
   watch: {
@@ -714,11 +730,11 @@ export default {
       // 현재 페이지 위치에 따라 버튼 사라지게 하는 것
       this.ButtonCondition = ["visible", "visible"];
       if (this.Clicked_post_index + 1 >= this.posts.length) {
-        this.moreData();
+        if (this.noResult) this.ButtonCondition[1] = "d-none";
+        else this.moreData();
       }
 
       if (this.Clicked_post_index == "0") this.ButtonCondition[0] = "d-none";
-      if (this.noResult) this.ButtonCondition[1] = "d-none";
     },
     FilterStatus(state) {
       if (state == "d-none") {
@@ -730,12 +746,12 @@ export default {
       if (a) this.ButtonCondition[1] = "d-none";
     },
 
-    tag(a, b) {
-      if (a != b) {
-        this.Reset(false);
-        this.MakeQuery();
-      }
-    },
+    // tag(a, b) {
+    //   if (a != b) {
+    //     this.Reset(false);
+    //     this.MakeQuery();
+    //   }
+    // },
     SearchState(a) {
       if (a != "") this.FilterStatus = "d-none";
     },
@@ -835,7 +851,6 @@ export default {
 //모달 시작
 .square {
   position: relative;
-  left: 5px;
   width: 66.6%;
   @include tablet {
     width: 100%;
@@ -874,7 +889,7 @@ export default {
   color: $pl-4;
   font-size: 1.5em;
   position: absolute;
-  bottom: 50%;
+  bottom: 45%;
   @include mobile-s {
     font-size: 80%;
   }
@@ -883,10 +898,11 @@ export default {
   color: $pl-4;
   font-size: 1.5em;
   position: absolute;
-  bottom: 50%;
-  left: 7%;
+  bottom: 45%;
+  left: 6%;
   @include mobile-s {
     font-size: 80%;
+    left: 5%;
   }
 }
 .modal-body {

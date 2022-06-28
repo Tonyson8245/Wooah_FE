@@ -79,7 +79,7 @@ const CollectionStore = {
           .catch(function (error) {
             var res = error.response;
             if (res.status == 404) {
-              console.log("일치하는 태그가 없습니다.");
+              context.commit("changeSearchResult", "");
             }
           });
         keyword = "";

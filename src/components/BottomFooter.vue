@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <GDialog />
+    <GDialog :yesno="false" />
     <div class="container-lg">
       <div class="info row" style="display: flex">
         <table class="col-lg-6 col-md-6">

@@ -25,18 +25,15 @@
           <ul class="list-group">
             <li
               class="list-group-item badge align-left"
-              v-if="this.value != `` && SearchResult.length == 0"
+              v-if="this.keyword != `` && SearchResult.length == 0"
             >
               조건에 맞는 태그가 없습니다.
             </li>
             <li
               v-for="result in SearchResult"
               :key="result"
-              class="list-group-item"
-              @click="
-                $emit('ClickTag', result);
-                value = ``;
-              "
+              class="list-group-item pe-click"
+              @click="$emit('ClickTag', result)"
             >
               {{ result }}
             </li>
@@ -45,13 +42,10 @@
         <div class="ranktags">
           <h4 class="title">인기 태그</h4>
           <span
-            class="tags badge rounded-pill"
+            class="tags badge rounded-pill pe-click"
             v-for="tag in RankTags"
             :key="tag"
-            @click="
-              $emit('ClickTag', tag);
-              value = ``;
-            "
+            @click="$emit('ClickTag', tag)"
             >{{ tag }}</span
           >
         </div>

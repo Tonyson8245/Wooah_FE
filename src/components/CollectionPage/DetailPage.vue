@@ -19,6 +19,7 @@
               style="display: inline-block"
               :post="post"
               :objectfit="`contain`"
+              :monthlyoff="true"
             />
             <!-- 모달의 이미지 -->
           </div>

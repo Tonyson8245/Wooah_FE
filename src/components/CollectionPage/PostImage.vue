@@ -7,7 +7,7 @@
     ></i> -->
     <img
       class="monthly"
-      v-if="post.monthly_art"
+      v-if="post.monthly_art && monthlyoff != true"
       :class="[post.monthly_art, isLoaded]"
       src="../../assets/icon/monthly_art.png"
     />
@@ -39,6 +39,7 @@ export default {
     post: Object,
     index: Number,
     objectfit: String,
+    monthlyoff: Boolean,
   },
   data() {
     return {

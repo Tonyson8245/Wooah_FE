@@ -22,7 +22,7 @@
     </div>
     <div
       style="border-radius: 15px"
-      class="modal fade"
+      class="modal"
       id="exampleModal"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
@@ -40,7 +40,10 @@
             "
           >
             <div style="width: 5%"></div>
-            <div class="row" style="width: 80%">
+            <div
+              class="row"
+              style="width: 80%; border-radius: 15px; overflow: hidden"
+            >
               <div class="col-lg-8 square" style="padding: 0 0 0 0">
                 <PostImage
                   v-if="modal_post != ``"
@@ -48,6 +51,7 @@
                   style="display: inline-block"
                   :post="modal_post"
                   :objectfit="`contain`"
+                  :monthlyoff="true"
                 />
                 <!-- 모달의 이미지 -->
               </div>
@@ -103,7 +107,7 @@
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   ref="close_btn"
-                  @click="CloseModal()"
+                  @click="CloseModal"
                 ></button>
               </div>
             </div>
@@ -154,8 +158,18 @@ export default {
     modal_post() {
       return this.$store.state.MonthlyartStore.post;
     },
+    path() {
+      return this.$route.path;
+    },
   },
-
+  watch: {
+    path(a, b) {
+      if (this.modal_post != "") {
+        this.$refs.close_btn.click();
+        this.$router.push(b);
+      }
+    },
+  },
   methods: {
     CloseModal() {
       this.Clicked_post_index = ``;
@@ -177,10 +191,10 @@ export default {
 <style lang="scss" scoped>
 @import "/src/assets/style.scss";
 //router transition
-.scale-enter-active,
+/* .scale-enter-active,
 .scale-leave-active {
-  transition: all 0.2s ease;
-}
+  transition: all 0.1s ease;
+} */
 
 .scale-enter-from,
 .scale-leave-to {
@@ -206,7 +220,6 @@ export default {
 //모달 시작
 .square {
   position: relative;
-  left: 5px;
   width: 66.6%;
   @include tablet {
     width: 100%;

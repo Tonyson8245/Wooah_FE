@@ -20,7 +20,10 @@
               확인
             </button>
           </div>
-          <div class="actions col-6" style="background: #a86cc1">
+          <div
+            class="actions col-6 border-start"
+            style="background: #e7daff; border-color: #cbc0e0 !important"
+          >
             <button
               class="btn"
               @click="$store.commit('alertStore/ChangeResult', false)"
