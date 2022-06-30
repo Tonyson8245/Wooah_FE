@@ -18,7 +18,7 @@ app.config.globalProperties.emitter = emitter;
 app
   .use(VueGtag, {
     config: {
-      id: "G-V9WCQE12V1",
+      id: process.env.G_ID,
       params: {
         send_page_view: false,
       },

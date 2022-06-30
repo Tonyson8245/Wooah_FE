@@ -5,7 +5,7 @@
       <GDialog :yesno="true" />
       <div class="header">
         <Region :font="font" />
-        <p class="title">맞춤 시술 견적 받기</p>
+        <p class="title">맞춤 시술 견적</p>
       </div>
       <div class="body">
         <div class="container-lg" style="flex-direction: column; flex: 1">
@@ -282,7 +282,7 @@ export default {
   height: inherit;
   font-family: "GoyangIlsan";
   @include mobile-s {
-    font-size: 80%;
+    font-size: 90%;
   }
 }
 .header {

@@ -49,7 +49,7 @@
     <!-- 상단 배너 끝 -->
     <!-- 최신 아트 디자인 시작 -->
     <div class="newest">
-      <div class="newest_header pb-lg-4">
+      <div class="newest_header pb-lg-4" @click="this.$router.push('/library')">
         <div class="title_en">NEWEST DESIGN</div>
         <div class="title_ko">최신 업데이트 디자인</div>
       </div>
@@ -107,8 +107,8 @@
                     @click="clicktag(tag.content)"
                   >
                     <td scope="row" class="col-2">{{ tag.rank }}</td>
-                    <td class="col-7">{{ tag.content }}</td>
-                    <td class="col-3">{{ tag.count }}건</td>
+                    <td class="col-8">{{ tag.content }}</td>
+                    <td class="col-2">{{ tag.count }}건</td>
                   </tr>
                 </table>
               </div>
@@ -130,7 +130,7 @@
         <div class="monthlyart__inner row">
           <div class="col-sm-6 col-12 title p-0">
             <div class="square_half">
-              <div class="inner">
+              <div class="inner" @click="this.$router.push('/monthlyart')">
                 <span class="monthly_title_span fw-bold"
                   >{{ Month }}월의 아트</span
                 >
@@ -386,7 +386,7 @@ export default {
       else if (
         e.target.lastChild.classList.value == "carousel-item banner_2 active"
       ) {
-        this.clicktag("알록발록네일"); // 알록발록로 키워드를 변경하고, 디자인 보아보기로 이동
+        this.clicktag("알록달록네일"); // 알록달록로 키워드를 변경하고, 디자인 보아보기로 이동
       }
     },
     clicktag(tag) {

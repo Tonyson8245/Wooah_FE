@@ -33,6 +33,7 @@
             <td>
               <span
                 class="link"
+                style="color: #aa00ff"
                 @click="
                   onClickRedirect(
                     `https://wooah.notion.site/2022-06-17-8003577b00b04f10b2ceb0d495f3c186`
@@ -62,7 +63,11 @@
             class="footer-button"
             src="../assets/img/AppStoreDownloadButton.svg"
             alt=""
-            @click="Download(`Android`)"
+            @click="
+              onClickRedirect(
+                `https://apps.apple.com/kr/app/%EC%9A%B0%EC%95%84/id1631369961`
+              )
+            "
           />
           <img
             class="footer-button"

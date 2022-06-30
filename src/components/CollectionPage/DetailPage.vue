@@ -60,19 +60,26 @@
                 <i class="bi bi-telephone" v-if="shop.contact"
                   ><span class="ps-1">{{ shop.contact }}</span></i
                 >
-                <i class="bi bi-coin" v-if="post.price"
-                  ><span class="ps-1">{{ post.price }}</span>
-                </i>
+                <div class="d-flex">
+                  <img
+                    style="height: 1.2em; width: auto"
+                    v-if="post.price"
+                    src="@/assets/icon/monthly_art_white.png"
+                  />
+                  <span class="ps-1">{{ post.price }} </span>
+                </div>
                 <i class="bi bi-geo-alt" v-if="shop.address"
                   ><span class="ps-1">{{ shop.address }}</span></i
                 >
               </div>
-              <span
-                class="modal__content_tags"
-                v-for="tag in post.tags"
-                :key="tag"
-                >#{{ tag }}
-              </span>
+              <div>
+                <span
+                  class="modal__content_tags"
+                  v-for="tag in post.tags"
+                  :key="tag"
+                  >#{{ tag }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -175,6 +182,7 @@ export default {
   height: auto;
   width: 100%;
   padding: 2% 10% 0 10%;
+  font-size: 110%;
   @include tablet-s {
     padding: 2%;
   }
@@ -187,6 +195,12 @@ export default {
   border-radius: 15px;
   overflow: hidden;
   width: 70%;
+  @include desktop {
+    width: 100%;
+  }
+  @include tablet {
+    width: 80%;
+  }
   @include tablet-s {
     width: 100%;
   }
@@ -292,6 +306,7 @@ export default {
 .modal__content_info {
   font-size: 80%;
   margin-top: 3%;
+  width: 100%;
   @include tablet {
     margin-top: 0%;
   }
@@ -301,7 +316,9 @@ export default {
 }
 .modal__content_tags {
   font-size: 80%;
-  margin-right: 0.5em;
+  margin-right: 0.2em;
+
+  white-space: nowrap;
 }
 
 //모달 끝

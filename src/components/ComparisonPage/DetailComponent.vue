@@ -281,20 +281,20 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/style.scss";
 .container {
-  padding: 5%;
+  padding: 3%;
 }
 .arrow {
-  padding: 4%;
+  padding: 2%;
   @include desktop {
     padding: 0;
     /* font-size: 80%; */
   }
 }
-input {
+/* input {
   @include tablet {
     font-size: 80%;
   }
-}
+} */
 img {
   height: 100%;
   width: auto;
@@ -388,6 +388,10 @@ img {
 .message {
   padding: 7%;
   height: 100%;
+  @include tablet-s {
+    padding: 4%;
+    height: auto;
+  }
 }
 .message__header {
   text-align: left;
@@ -395,14 +399,14 @@ img {
 .stepNum {
   color: $pl-2;
   font-weight: bold;
-  font-size: 0.8em;
+  font-size: 1em;
 }
 .title {
   font-size: 1.2em;
 }
 .content {
   white-space: pre-line;
-  font-size: 0.8em;
+  font-size: 1em;
 }
 .line {
   border-bottom-style: solid;
@@ -412,10 +416,11 @@ img {
   width: 20%;
 }
 .btn {
+  white-space: pre-line;
   background: $pl-2;
   width: 100%;
-  font-size: 0.8em;
-  white-space: nowrap;
+  font-size: 1em;
+  /* white-space: nowrap; */
   padding-inline: 0;
 }
 .btn-skip {
@@ -428,6 +433,7 @@ img {
   display: flex;
 }
 .buttons_inner {
+  padding: 3%;
   margin: auto;
   width: 100%;
 }

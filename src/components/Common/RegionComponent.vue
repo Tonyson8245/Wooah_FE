@@ -22,10 +22,10 @@
         >
       </template>
     </div> -->
-    <GDialog v-model="dialogState" max-width="300">
+    <GDialog v-model="dialogState" max-width="320">
       <transition name="fade">
         <div class="wrapper">
-          <div class="content p-3 py-4">
+          <div class="content p-4 py-4">
             <h6 class="text-center">서울특별시</h6>
             <div>
               <div
@@ -33,11 +33,14 @@
                 :key="i"
                 class="text-center"
               >
-                <div class="d-block">
-                  <span class="p-0" @click="changeTempDistict(1, { id: 0 })">
+                <div class="row">
+                  <div
+                    class="col-4 col-md-3 p-0"
+                    @click="changeTempDistict(1, { id: 0 })"
+                  >
                     <span
                       v-if="this.sigunguTemp == 0"
-                      class="badge rounded-pill text-dark m-1 pe-click sigungu px-3"
+                      class="badge rounded-pill text-dark my-1 pe-click sigungu px-3"
                       style="
                         background: #a863ea !important;
                         color: white !important;
@@ -46,20 +49,20 @@
                     >
                     <span
                       v-else
-                      class="badge rounded-pill text-dark m-1 pe-click sigungu px-3"
+                      class="badge rounded-pill text-dark my-1 pe-click sigungu px-3"
                       style="background: #ceb5ff"
                       >전체</span
                     >
-                  </span>
-                  <span
-                    class="p-0"
+                  </div>
+                  <div
+                    class="col-4 col-md-3 p-0"
                     v-for="sigungu in districtData[i].sigungu"
                     :key="sigungu"
                     @click="changeTempDistict(1, sigungu)"
                   >
                     <span
                       v-if="this.sigunguTemp == sigungu.id"
-                      class="badge rounded-pill text-dark m-1 pe-click sigungu"
+                      class="badge rounded-pill text-dark my-1 pe-click sigungu"
                       style="
                         background: #a862ea !important;
                         color: white !important;
@@ -68,11 +71,11 @@
                     >
                     <span
                       v-else
-                      class="badge rounded-pill text-dark m-1 pe-click sigungu"
+                      class="badge rounded-pill text-dark my-1 pe-click sigungu"
                       style="background: #ceb5ff"
                       >{{ sigungu.name }}</span
                     >
-                  </span>
+                  </div>
                 </div>
               </div>
             </div>

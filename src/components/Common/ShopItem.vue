@@ -26,7 +26,7 @@
                 >
               </div>
             </div>
-            <div style="font-weight: bold">{{ shop.price }} 원</div>
+            <div style="font-weight: bold">{{ shop.price }}</div>
           </div>
         </div>
       </div>
@@ -76,10 +76,11 @@ export default {
 @import "/src/assets/style.scss";
 
 .container-fluid {
+  overflow-x: none;
   color: $pl-1;
   border: solid $pl-4 1px;
   padding: 3%;
-  font-size: 130%;
+  font-size: 100%;
 
   @include tablet-s {
     font-size: 100%;

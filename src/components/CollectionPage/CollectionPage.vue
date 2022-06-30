@@ -192,7 +192,12 @@
             </div>
             <div
               class="row"
-              style="width: 80%; border-radius: 15px; overflow: hidden"
+              style="
+                width: 80%;
+                border-radius: 15px;
+                overflow: hidden;
+                background: #a862ea;
+              "
             >
               <div class="col-lg-8 square" style="padding: 0 0 0 0">
                 <PostImage
@@ -232,13 +237,20 @@
                   </div>
                   <div class="row modal__content_info g-0">
                     <div class="col-7">
-                      <i class="bi bi-telephone"></i>{{ shop.contact }}
+                      <i class="bi bi-telephone pe-1"></i>{{ shop.contact }}
                     </div>
                     <div class="col-5" v-if="post.monthly_art">
-                      <i class="bi bi-coin"></i>{{ post.price }} 원
+                      <div class="d-flex">
+                        <img
+                          style="height: 1.2em; width: auto"
+                          v-if="post.price"
+                          src="@/assets/icon/monthly_art_white.png"
+                        />
+                        <span class="ps-1">{{ post.price }} </span>
+                      </div>
                     </div>
                     <div class="col-12">
-                      <i class="bi bi-geo-alt"></i>{{ shop.address }}
+                      <i class="bi bi-geo-alt pe-1"></i>{{ shop.address }}
                     </div>
                   </div>
                   <span

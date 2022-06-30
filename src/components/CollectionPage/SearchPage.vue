@@ -190,6 +190,7 @@ export default {
   }
 }
 .search .bi-x-circle-fill {
+  color: $pa;
   position: absolute;
   left: 93%;
   @include tablet {
@@ -226,6 +227,7 @@ export default {
 }
 
 .search i {
+  color: $pa;
   position: absolute;
   font-weight: bold;
   top: 0.7rem;

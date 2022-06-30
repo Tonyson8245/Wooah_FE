@@ -48,7 +48,7 @@
                 data-bs-dismiss="offcanvas"
                 :class="TapCondition[0]"
                 @click="ClickTo('/library')"
-                >디자인</a
+                >디자인모아보기</a
               >
             </li>
             <li class="nav-item">

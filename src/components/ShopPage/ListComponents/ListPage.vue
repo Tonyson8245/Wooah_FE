@@ -1,6 +1,11 @@
 <template>
   <div
-    style="background: white; display: flex; flex-direction: column"
+    style="
+      background: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 550px;
+    "
     class="pe-click"
   >
     <SearchPage></SearchPage>
