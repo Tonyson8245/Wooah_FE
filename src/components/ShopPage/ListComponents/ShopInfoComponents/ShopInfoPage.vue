@@ -156,6 +156,24 @@ export default {
       }
     },
   },
+  watch: {
+    path(a) {
+      if (a[1] == `shop` && a[2] != undefined) {
+        // 샵페이지면서 샵아이디가 있을 경우에만 탭 이동
+        switch (a[3]) {
+          case "price":
+            this.ClickTab(1);
+            break;
+          case "image":
+            this.ClickTab(2);
+            break;
+          default:
+            this.ClickTab(0);
+            break;
+        }
+      }
+    },
+  },
   beforeUnmount() {
     this.$store.commit("ShopStore/SetShop", null);
     this.$store.commit("ShopStore/FetchShopinfo", null);
