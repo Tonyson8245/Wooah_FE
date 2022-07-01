@@ -1,9 +1,16 @@
 <template>
-  <div class="outer align-middle" @click="CheckLimbs">
+  <div class="outer" @click="CheckLimbs">
     <div class="check" :class="Checked">
-      <i class="bi bi-check-lg bi-secondary" style="color: black"></i>
+      <i class="bi bi-check-lg bi-secondary" style="color: #6545a4"></i>
     </div>
-    <i class="bi bi-fingerprint img" style="color: #c4c4c4"></i>
+    <div class="d-flex flex-column justify-content-center">
+      <img
+        :src="require(`@/assets/img/filter/${this.limbs.url}`)"
+        alt=""
+        class="m-auto"
+      />
+      <h6 class="py-1 fw-bold">{{ this.limbs.name }}</h6>
+    </div>
   </div>
 </template>
 
@@ -14,6 +21,8 @@ export default {
     limbs: Object,
     SetFilterLimbs: Boolean,
     FilterCategory: String,
+    index: Number,
+    tempFilter: Array,
   },
   data() {
     return {
@@ -37,6 +46,11 @@ export default {
         if (this.SetFilterLimbs == true) this.Checked = "visible";
         else this.Checked = "d-none";
       }
+    },
+  },
+  computed: {
+    show() {
+      return this.tempFilter.indexOf(this.index);
     },
   },
 };
@@ -64,10 +78,7 @@ export default {
     left: 39%;
   }
 }
-.img {
-  font-size: 50px;
-  @include mobile-xs {
-    font-size: 40px;
-  }
+img {
+  width: 50%;
 }
 </style>

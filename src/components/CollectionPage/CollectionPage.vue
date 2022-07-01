@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="outline">
     <AlertDialog />
-    <div class="container-sm p-lg-5 pt-lg-0">
+    <div class="container-lg p-lg-5 pt-lg-0">
       <div
         class="row d-flex justify-content-center align-items-center g-0"
         style="padding: 0 0 0 0"
@@ -9,12 +9,9 @@
         <!-- 전체 컨테이너 -->
         <div class="col-md-10">
           <!-- 검색창 시작 -->
-          <SearchPage
-            @ClickTag="ClickTag($event)"
-            @MakeQuery="ClickTag($MakeQuery)"
-          />
+          <SearchPage @ClickTag="ClickTag($event)" @MakeQuery="MakeQuery" />
           <!-- 검색 창 끝/태그 시작 -->
-          <div :class="SearchState">
+          <div class="btn_container" :style="BtnContainerState">
             <div class="btn_outer btn_outer_move">
               <div class="btn-group" @click="ClickFilter">
                 <div class="dropdown">
@@ -79,7 +76,12 @@
                     type="button"
                     @click="FilterOpen('옵션')"
                   >
-                    <span v-if="Filterbar.condition[2] == ``" class="btn__name"
+                    <span
+                      v-if="
+                        Filterbar.condition[2] == `` &&
+                        Filterbar.option.length == 0
+                      "
+                      class="btn__name"
                       >옵션<i class="bi bi-caret-down-fill"
                     /></span>
                     <span v-else class="settedFilter btn__name">{{
@@ -107,17 +109,15 @@
                 </div>
                 <button
                   class="btn btn-sm filter__reset"
-                  v-if="ResetStatus"
-                  :style="ButtonFocusSetting"
-                  style="border: 2px solid #c4c4c4; border-radius: 15px"
+                  :style="[ButtonFocusSetting, ResetBackground]"
+                  style="border-radius: 15px"
                   type="button"
-                  @click="Reset(true)"
+                  @click="if (ResetStatus) Reset(true);"
                 >
                   <i class="bi bi-arrow-clockwise"></i>
                 </button>
               </div>
             </div>
-
             <FilterView
               class="filter_content"
               :class="FilterStatus"
@@ -125,11 +125,13 @@
               :SetFilter="SetFilter"
               @ClickApply="FilterApply($event)"
             />
+          </div>
+          <div :class="SearchState">
             <!-- 태그끝 -->
             <!-- 하단 사진들 시작 -->
             <InfiniteScroll
-              @infinite-scroll="moreData"
               v-if="!noPost"
+              @infinite-scroll="moreData"
               :class="ImageContainerMove"
               class="images__container"
               :noResult="noResult"
@@ -138,11 +140,12 @@
               <div
                 class="row row-cols-3 row-cols-sm-3 row-cols-lg-3 row-cols-xs-3 g-0"
               >
-                <PostImage
+                <post-image
                   v-for="(post, i) in posts"
                   :key="post"
                   :post="post"
                   :index="i"
+                  :objectfit="`cover`"
                   @ClickPost="
                     this.post = $event;
                     this.shop = this.post.shop;
@@ -151,7 +154,7 @@
                 />
               </div>
             </InfiniteScroll>
-            <div v-if="noPost" class="noPost">
+            <div v-if="noPost" class="noPost" :class="ImageContainerMove">
               <span class="item">조회 결과가 없습니다.</span>
             </div>
           </div>
@@ -162,7 +165,8 @@
     <!-- 모달 (디자인 상세보기)시작 -->
     <!-- Modal -->
     <div
-      class="modal fade"
+      style="border-radius: 15px"
+      class="modal"
       id="exampleModal"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
@@ -183,19 +187,34 @@
               <i
                 :class="ButtonCondition[0]"
                 @click="ClickPrevPost"
-                class="bi bi-arrow-left-circle-fill modal__btn_left"
+                class="bi bi-arrow-left-circle-fill modal__btn_left pe-click"
               ></i>
             </div>
-            <div class="row" style="width: 80%">
+            <div
+              class="row"
+              style="
+                width: 80%;
+                border-radius: 15px;
+                overflow: hidden;
+                background: #a862ea;
+              "
+            >
               <div class="col-lg-8 square" style="padding: 0 0 0 0">
-                <img
-                  :src="post.url"
-                  class="shadow-sm content"
-                  alt="..."
+                <PostImage
+                  v-if="post != ``"
+                  class="content pe-none"
                   style="display: inline-block"
+                  :post="post"
+                  :objectfit="`contain`"
+                  :monthlyoff="true"
                 />
+                <!-- 모달의 이미지 -->
               </div>
-              <div class="col-lg-4 ms-auto modal__content_outer">
+              <div
+                class="col-lg-4 ms-auto modal__content_outer"
+                style="display: flex; flex-direction: column"
+              >
+                <div style="flex: 1"></div>
                 <div class="modal__content_footer">
                   <div v-if="post.monthly">
                     <i class="bi bi-coin monthly"></i>
@@ -203,25 +222,37 @@
                       post.price
                     }}</span>
                   </div>
-                  <div>
+                  <div
+                    class="modal__content_title"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    @click="
+                      ClickShop(shop.id, $event);
+                      this.Clicked_post_index = ``;
+                    "
+                  >
                     <span class="modal__content_name">
-                      <span>{{ shop.name }}</span>
-                      <i class="bi bi-arrow-right-circle"></i>
-                    </span>
+                      <span>{{ shop.name }}</span> </span
+                    ><i class="bi bi-arrow-right-circle ps-2 pe-click"></i>
                   </div>
-                  <span class="modal__content_info">
-                    <span
-                      ><i class="bi bi-telephone"></i>{{ shop.contact }}
-                    </span>
-                    <span
-                      ><i class="bi bi-geo-alt"></i>{{ shop.address }}
-                    </span>
-                    <span v-if="post.monthly_art"
-                      ><br /><i class="bi bi-coin"></i
-                      >{{ post.price }} 원 </span
-                    ><br />
-                  </span>
-
+                  <div class="row modal__content_info g-0">
+                    <div class="col-7">
+                      <i class="bi bi-telephone pe-1"></i>{{ shop.contact }}
+                    </div>
+                    <div class="col-5" v-if="post.monthly_art">
+                      <div class="d-flex">
+                        <img
+                          style="height: 1.2em; width: auto"
+                          v-if="post.price"
+                          src="@/assets/icon/monthly_art_white.png"
+                        />
+                        <span class="ps-1">{{ post.price }} </span>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <i class="bi bi-geo-alt pe-1"></i>{{ shop.address }}
+                    </div>
+                  </div>
                   <span
                     class="modal__content_tags"
                     v-for="tag in post.tags"
@@ -233,21 +264,22 @@
             </div>
 
             <div style="width: 5%">
+              <i
+                :class="ButtonCondition[1]"
+                class="bi bi-arrow-right-circle-fill modal__btn_right pe-click"
+                style="float: right"
+                @click="ClickNextPost"
+              ></i>
               <div class="modal__btn_close">
                 <button
                   type="button"
                   class="btn-close btn-close-white"
                   data-bs-dismiss="modal"
                   aria-label="Close"
-                  @click="this.Clicked_post_index = ``"
+                  ref="close_btn"
+                  @click="CloseModal"
                 ></button>
               </div>
-              <i
-                :class="ButtonCondition[1]"
-                class="bi bi-arrow-right-circle-fill modal__btn_right"
-                style="float: right"
-                @click="ClickNextPost"
-              ></i>
             </div>
           </div>
         </div>
@@ -273,12 +305,14 @@ export default {
   data() {
     return {
       message: "",
+
       //외부 데이터 시작
       handfoot: handfoot,
       color: color,
       option: option,
       shape: shape,
       //외부 데이터 끝
+
       // 내부 상태 데이터
       post: "", //포스트
       shop: "", // 샵 정보(상세보기에 사용됨)
@@ -384,9 +418,14 @@ export default {
   },
   mounted() {
     //데이터 가져오는 코드 여기 넣쟈
+    this.$store.commit("collectionStore/ChangeSearchOff");
+    this.$store.commit("collectionStore/setfilterQuery", "");
     this.$store.dispatch("collectionStore/fetchPosts");
     this.$store.commit("Setpagecondition", "collection");
   }, // 생성 될때 포스트 데이터를 가져오게 한다.
+  beforeUnmount() {
+    this.$refs.close_btn.click();
+  },
   methods: {
     ClickNextPost() {
       this.Clicked_post_index += 1;
@@ -461,7 +500,7 @@ export default {
       let color_qeury = "&color=";
       let shape_qeury = "&shape=";
       let option_qeury = "&option=";
-      let handfoot_qeury = "&type=";
+      let handfoot_qeury = "&body_part=";
       let monthly_art_qeury = "";
 
       for (let i in filterdata.color) {
@@ -509,10 +548,10 @@ export default {
         handfoot_qeury +
         monthly_art_qeury;
 
-      // console.log(query);
-
       this.$store.commit("collectionStore/setfilterQuery", query); //필터 쿼리 vuex 적용
       this.$store.commit("collectionStore/resetPage", 1); //페이지 초기화
+
+      console.log(`MakeQuery`);
       this.$store.dispatch("collectionStore/fetchPosts"); // 불러오기
     },
     FindApplyColor(filters) {
@@ -564,7 +603,7 @@ export default {
         this.MontlyArtCondition = "";
         this.SetFilter.monntlyart = false;
       } else {
-        this.MontlyArtCondition = "font-weight:bold; background:#c4c4c4";
+        this.MontlyArtCondition = "font-weight:bold; background:#E7DAFF; ";
         this.SetFilter.monntlyart = true;
       }
       this.MakeQuery();
@@ -572,7 +611,7 @@ export default {
     ChangeFilterbar() {
       let Filters = this.SetFilter;
       let bar = this.Filterbar;
-      let active = `#c4c4c4;`;
+      let active = `#E7DAFF;`;
       var color_true = Object.keys(Filters.color).filter(
         (key) => Filters.color[key] === true
       );
@@ -593,14 +632,14 @@ export default {
       } else bar.condition[0] = ``;
 
       if (shape_true.length > 0) {
-        bar.shape = []; // 초기화
+        bar.shape = ""; // 초기화
         bar.condition[1] = active;
         bar.shape = this.shape[shape_true[0]].name;
         if (shape_true.length > 1) bar.shape += " +"; //1개 이상이면 + 붙임
       } else bar.condition[1] = ``;
 
       if (option_true.length > 0) {
-        bar.option = []; // 초기화
+        bar.option = ""; // 초기화
         bar.condition[2] = active;
         bar.option = this.option[option_true[0]].name;
         if (option_true.length > 1) bar.option += " +"; //1개 이상이면 + 붙임
@@ -669,34 +708,45 @@ export default {
       this.$store.commit("collectionStore/setfilterQuery", "");
       this.$store.commit("collectionStore/resetPage", 1);
       if (withTag) this.$store.commit("collectionStore/InitTag");
+
+      console.log(`Reset`);
       this.$store.dispatch("collectionStore/fetchPosts");
     },
     Visiblity(boolean) {
-      console.log(boolean);
       if (boolean) {
         return "visible";
       } else return "invisible";
     },
     moreData() {
+      console.log(`moreData`);
       this.$store.dispatch("collectionStore/fetchPosts");
     },
     ClickTag(tag) {
-      // console.log(tag);
       this.$store.commit("collectionStore/changeTag", tag);
       this.$store.commit("collectionStore/ChangeSearchOff");
       this.$store.commit("collectionStore/InitSearchResult");
+
       this.Reset(false);
       this.MakeQuery();
+    },
+    ClickShop(id) {
+      this.$router.push("/shop/" + id + "/info");
+    },
+    CloseModal() {
+      this.Clicked_post_index = ``;
+      this.post = "";
     },
   },
   watch: {
     Clicked_post_index() {
       // 현재 페이지 위치에 따라 버튼 사라지게 하는 것
       this.ButtonCondition = ["visible", "visible"];
-      if (this.Clicked_post_index == "0") this.ButtonCondition[0] = "d-none";
       if (this.Clicked_post_index + 1 >= this.posts.length) {
-        this.moreData();
+        if (this.noResult) this.ButtonCondition[1] = "d-none";
+        else this.moreData();
       }
+
+      if (this.Clicked_post_index == "0") this.ButtonCondition[0] = "d-none";
     },
     FilterStatus(state) {
       if (state == "d-none") {
@@ -704,10 +754,26 @@ export default {
         this.ResetStatus = true;
       } else this.ImageContainerMove = "image__container__move";
     },
-    noResult() {
-      if (this.Clicked_post_index != ``) {
-        this.ButtonCondition[1] = "d-none";
+    noResult(a) {
+      if (a) this.ButtonCondition[1] = "d-none";
+    },
+
+    // tag(a, b) {
+    //   if (a != b) {
+    //     this.Reset(false);
+    //     this.MakeQuery();
+    //   }
+    // },
+    SearchState(a) {
+      if (a != "") this.FilterStatus = "d-none";
+    },
+    path() {
+      if (this.tag != null || this.filterQuery != "") {
+        this.$store.commit("collectionStore/setfilterQuery", "");
+        this.$store.commit("collectionStore/changeTag", null);
+        this.$router.push("/library");
       }
+      if (this.Clicked_post_index != "") this.$router.push("/library");
     },
   },
   components: {
@@ -718,11 +784,25 @@ export default {
     SearchPage,
   },
   computed: {
+    ResetBackground() {
+      if (!this.ResetStatus) return `background:#c4c4c4; border-color:#c4c4c4;`;
+      else return `background:#E7DAFF`;
+    },
+    path() {
+      return this.$route.path;
+    },
     SearchState() {
-      if (this.$store.state.collectionStore.SearchState == true)
+      if (this.$store.state.collectionStore.SearchState == true) {
         return "search__move";
-      else {
+      } else {
         return "";
+      }
+    },
+    BtnContainerState() {
+      if (this.$store.state.collectionStore.SearchState == true)
+        return "visibility: hidden;";
+      else {
+        return `position: sticky;`;
       }
     },
     posts() {
@@ -734,13 +814,27 @@ export default {
     noPost() {
       return this.$store.state.collectionStore.noPost;
     },
+    tag() {
+      return this.$store.state.collectionStore.tag;
+    },
+    filterQuery() {
+      return this.$store.state.collectionStore.filterQuery;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
+.outline {
+  background: $pb;
+  height: inherit;
+  min-height: 765px;
 
+  @include mobile-s {
+    min-height: 400px;
+  }
+}
 .search__move {
   position: relative;
   top: -$search_height-desktop;
@@ -753,8 +847,8 @@ export default {
 }
 //이미지 컨테이너 시작
 .images__container {
+  z-index: 0;
   position: relative;
-  z-index: 2;
 }
 .image__container__move {
   top: -$filter-height-desktop;
@@ -769,9 +863,7 @@ export default {
 //모달 시작
 .square {
   position: relative;
-  left: 5px;
   width: 66.6%;
-  background-color: #f1f1f1;
   @include tablet {
     width: 100%;
     left: 0px;
@@ -785,10 +877,11 @@ export default {
 }
 
 .content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  position: absolute !important;
+  margin: 0 0 0 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
 }
 
 .modal__btn_close {
@@ -805,22 +898,23 @@ export default {
   }
 }
 .modal__btn_right {
-  color: white;
+  color: $pl-4;
   font-size: 1.5em;
   position: absolute;
-  bottom: 50%;
-  transform: translateX(100%);
+  bottom: 45%;
   @include mobile-s {
     font-size: 80%;
   }
 }
 .modal__btn_left {
-  color: white;
+  color: $pl-4;
   font-size: 1.5em;
   position: absolute;
-  bottom: 50%;
+  bottom: 45%;
+  left: 6%;
   @include mobile-s {
     font-size: 80%;
+    left: 5%;
   }
 }
 .modal-body {
@@ -834,45 +928,52 @@ export default {
 }
 .modal__content_footer {
   color: white;
-  position: absolute;
-  clear: left;
-  float: left;
-  left: 0;
-  top: 75%;
   font-family: "GoyangIlsan";
-  margin: 7% 0 7% 7%;
-  @include mobile-s {
-    top: initial;
-    margin: 7% 0 7% 0%;
-    font-size: 20px;
-    bottom: 0;
-  }
-  @include tablet {
-    top: initial;
-    bottom: 0;
-    margin: 7% 0 7% 0%;
-    position: relative;
-    font-size: 50%;
-  }
 }
 .modal__content_outer {
-  background-color: #a1a1a1;
-  position: relative;
-  height: auto;
+  background-color: $pl-2;
+
+  padding: 2%;
+
+  font-size: 1em;
+  @include desktop {
+    font-size: 0.8em;
+  }
+  @include tablet {
+    padding: 5%;
+  }
 }
 .modal__content_monthly_price {
-  font-size: 1em;
+  font-size: 100%;
+}
+.modal__content_title {
+  display: flex;
+  align-items: center;
+  font-size: 150%;
+  @include mobile-s {
+    font-size: 16px;
+  }
 }
 .modal__content_name {
-  font-size: 1.5em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
   font-weight: bold;
 }
 .modal__content_info {
-  font-size: 0.7em;
+  font-size: 100%;
+  margin-top: 3%;
+  @include tablet {
+    margin-top: 0%;
+  }
+}
+.modal__content_info .bi {
+  font-size: 1em;
 }
 .modal__content_tags {
-  font-size: 0.7em;
-  margin-right: 1em;
+  font-size: 100%;
+  margin-right: 0.5em;
 }
 //모달 끝
 //태그 시작
@@ -887,17 +988,20 @@ export default {
   }
 }
 .btn_outer {
-  z-index: 2;
   position: relative;
   overflow-y: scroll;
   overflow-y: hidden;
+  background: white;
 }
-
+.dropdown button span {
+  width: 100%;
+  text-align: center;
+}
 .dropdown button {
-  background: #ffffff;
+  background: $pl-4;
   font-family: "GoyangIlsan";
   font-size: 14px;
-  border: 2px solid #c4c4c4;
+  border: 2px solid $pl-4;
   border-radius: 15px;
   height: 2.5em;
   min-width: 4em;
@@ -923,6 +1027,8 @@ export default {
   padding-left: 5px;
 }
 .filter__reset {
+  background: $pl-4;
+  border: 2px solid $pl-4;
   @include tablet {
     font-size: 11px;
   }
@@ -942,9 +1048,12 @@ export default {
 }
 .noPost .item {
   position: absolute;
-  position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+.btn_container {
+  top: 0%;
+  z-index: 1;
 }
 </style>

@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --mode development",
     "build": "vue-cli-service build",
+    "production": "vue-cli-service build --mode production",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -19,6 +20,9 @@
     "mitt": "^3.0.0",
     "sass": "^1.49.9",
     "vue": "^3.2.13",
+    "vue-gtag": "^2.0.1",
+    "vue-gtag-next": "^1.14.0",
+    "vue-long-click": "^0.1.0",
     "vue-naver-maps": "^0.14.3",
     "vue-router": "4.0.13",
     "vue3-carousel": "^0.1.38",

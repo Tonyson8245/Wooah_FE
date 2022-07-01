@@ -3,6 +3,7 @@ const AlertStore = {
   state: {
     dialogState: false,
     dialogComment: "",
+    dialogResult: null, // 확인 취소값
   },
   mutations: {
     ChangeState(state) {
@@ -10,6 +11,10 @@ const AlertStore = {
     },
     ChangeComment(state, data) {
       return (state.dialogComment = data);
+    },
+    ChangeResult(state, data) {
+      state.dialogResult = data;
+      state.dialogState = false;
     },
   },
 };

@@ -7,15 +7,15 @@ const ShopStore = {
 
     //설정 시도
     districtData: [],
-    sido: 1,
-    sigungu: 0,
+    // sido: 1,
+    // sigungu: 0,
     newDistrictSet: "",
     mapCenter: [], // 지도 중심
 
     //샵 리스트 데이터
     totalpage: 0,
     shops: "",
-    currentpage: 0,
+    currentpage: 1,
     focusmarker: null,
     noResultlist: false,
     pageReset: false,
@@ -32,14 +32,36 @@ const ShopStore = {
 
     //검색
     keyword: false,
+
+    //사이즈
+    media: "desktop",
   },
   mutations: {
+    SetMedia(state, payload) {
+      state.media = payload;
+    },
+    Reset(state) {
+      state.focusmarker = null;
+      state.noResultlist = false;
+      state.pageReset = false;
+
+      state.shop = null;
+
+      state.shopimg = [];
+      state.shopinfo = null;
+      state.currentimagepage = 1;
+
+      state.keyword = false;
+    },
+    ResetShops(state) {
+      state.shops = "";
+      state.currentpage = 1;
+      state.focusmarker = null;
+      state.noResultlist = false;
+      state.pageReset = false;
+    },
     SetCurrentPage(state, payload) {
       state.currentpage = payload;
-    },
-    SetPageReset(state, payload) {
-      state.pageReset = payload;
-      state.currentpage = 0;
     },
     SetnoResultlist(state, payload) {
       state.noResultlist = payload;
@@ -83,6 +105,7 @@ const ShopStore = {
     ResetImagePage(state) {
       state.currentimagepage = 1;
       state.shopimg = [];
+      state.noResult = true;
     },
     FetchShopImage(state, payload) {
       state.shopimg.push.apply(state.shopimg, payload);
@@ -95,11 +118,11 @@ const ShopStore = {
     },
   },
   actions: {
-    async getShops(context, page) {
+    async getShops(context, payload) {
       if (context.state.keyword == false) {
-        if (page == 1) context.commit("SetPageReset", true);
+        if (payload.page == 1) context.commit("SetCurrentPage", 1);
         await shopApi
-          .getShops(page, context.state.sido, context.state.sigungu)
+          .getShops(payload.page, payload.sido, payload.sigungu)
           .then(function (response) {
             context.commit("FetchTotalpage", response.data.total_page);
             context.commit("FetchShops", response.data.shops);
@@ -112,7 +135,29 @@ const ShopStore = {
               context.commit("SetnoResultlist", true);
             }
           });
-      }
+      } // 검색어가 없는 경우
+      else {
+        if (payload.page == 1) context.commit("SetCurrentPage", 1);
+        await shopApi
+          .searchShops(
+            payload.page,
+            payload.sido,
+            payload.sigungu,
+            context.state.keyword
+          )
+          .then(function (response) {
+            context.commit("FetchTotalpage", response.data.total_page);
+            context.commit("FetchShops", response.data.shops);
+            context.commit("SetnoResultlist", false);
+          })
+          .catch(function (error) {
+            if (error.response.status == 404) {
+              context.commit("FetchTotalpage", null);
+              context.commit("FetchShops", null);
+              context.commit("SetnoResultlist", true);
+            }
+          });
+      } //검색어가 있는 경우
     },
     async getDistricts(context) {
       await shopApi
@@ -129,21 +174,21 @@ const ShopStore = {
         .getShopDetail(id)
         .then(function (response) {
           context.commit("FetchShopinfo", response.data);
-          context.commit("ResetImagePage");
+          // context.commit("SetShop", id); //샵 id 를 vuex에 저장
         })
         .catch(function (error) {
           console.log(error);
         });
     },
-
     async getShopImage(context, id) {
-      context.commit("IncreaseImagePage");
       context.state.completeFetch = false; // 무한 페이지 로드를 막기위한 플래그
       await shopApi
         .getShopImg(id, context.state.currentimagepage) // id와 페이지
         .then((response) => {
           if (response.status == 200) {
             context.commit("FetchShopImage", response.data);
+            context.commit("IncreaseImagePage");
+            console.log(response.data);
           }
         })
         .catch(function (error) {
@@ -152,14 +197,23 @@ const ShopStore = {
             context.commit(`SetNoResult`, false);
           }
         });
+
+      await shopApi
+        .getShopImg(id, context.state.currentimagepage) //
+        .catch(function (error) {
+          let res = error.response;
+          if (res.status == 404) {
+            context.commit(`SetNoResult`, false);
+          }
+        }); //다음 페이지 유무 확인용
     },
     async searchShops(context, payload) {
-      if (payload.page == 1) context.commit("SetPageReset", true);
+      if (payload.page == 1) context.commit("SetCurrentPage", 1);
       await shopApi
         .searchShops(
           payload.page,
-          context.state.sido,
-          context.state.sigungu,
+          payload.sido,
+          payload.sigungu,
           payload.keyword
         )
         .then(function (response) {

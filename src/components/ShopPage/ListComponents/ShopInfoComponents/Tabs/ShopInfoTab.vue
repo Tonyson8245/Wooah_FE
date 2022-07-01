@@ -13,31 +13,30 @@
     <div class="p-2">
       <div class="title">연락처</div>
       <div class="content pt-2">
-        <div v-if="ShopData.contact.phone != null">
+        <div class="line" v-if="ShopData.contacts.phone != null">
           <img src="../../../../../../src/assets/img/telephone.png" alt="" />
-          {{ ShopData.contact.phone }}
-        </div>
-        <div v-if="ShopData.contact.kakao_id != null">
-          <img src="../../../../../../src/assets/img/kakao-talk.png" alt="" />
-          {{ ShopData.contact.kakao_id }}
-        </div>
-        <div v-if="ShopData.contact.kakao_openchat != null">
-          <img src="../../../../../../src/assets/img/kakao-talk.png" alt="" />
-          {{ ShopData.contact.kakao_openchat }}
-        </div>
-        <div v-if="ShopData.contact.instagram != null">
-          <img src="../../../../../../src/assets/img/instagram.png" alt="" />
-          <a href="{{ ShopData.contact.instagram }}">{{
-            ShopData.contact.instagram
+          <a v-bind:href="`tel:+82.` + ShopData.contacts.phone">{{
+            ShopData.contacts.phone
           }}</a>
         </div>
-        <div v-if="ShopData.contact.blog != null">
-          <img src="../../../../../../src/assets/img/blogging.png" alt="" />
-          <a href="{{ ShopData.contact.blog }}">{{ ShopData.contact.blog }}</a>
+        <div class="line" v-if="ShopData.contacts.kakao_id != null">
+          <img src="../../../../../../src/assets/icon/카카오톡ID.png" alt="" />
+          {{ ShopData.contacts.kakao_id }}
         </div>
-        <div v-if="ShopData.contact.site != null">
-          <img src="../../../../../../src/assets/img/blogging.png" alt="" />
-          <a href="{{ ShopData.contact.site }}">{{ ShopData.contact.site }}</a>
+        <div class="line" v-if="ShopData.contacts.kakao_chat != null">
+          <img
+            src="../../../../../../src/assets/icon/카카오톡Chat.png"
+            alt=""
+          />
+          <a target="_blank" v-bind:href="ShopData.contacts.kakao_chat">{{
+            ShopData.contacts.kakao_chat
+          }}</a>
+        </div>
+        <div class="line" v-if="ShopData.contacts.instagram != null">
+          <img src="../../../../../../src/assets/icon/instagram.svg" alt="" />
+          <a target="_blank" v-bind:href="ShopData.contacts.instagram">{{
+            ShopData.contacts.instagram
+          }}</a>
         </div>
       </div>
     </div>
@@ -47,9 +46,9 @@
         <div class="mb-2">
           <span
             class="badge bg-secondary me-2"
-            v-if="!ShopData.has_holiday_off"
+            v-if="ShopData.holiday != `알수없음`"
           >
-            연중무휴
+            {{ ShopData.holiday }}
           </span>
           <span v-if="ShopData.day_off != null">{{ ShopData.day_off }}</span>
         </div>
@@ -85,31 +84,37 @@ export default {
 @import "/src/assets/style.scss";
 .outline {
   font-family: "GoyangIlsan";
-  font-size: 1.2em;
+  font-size: 1em;
   @include desktop {
     font-size: 90%;
   }
 }
 
 .title {
+  font-size: 120%;
   font-weight: bold;
 }
 .content {
-  font-size: 0.88em;
+  font-size: 100%;
+  white-space: pre-wrap;
 }
 .content img {
   padding: 2% 1% 2% 2%;
-  @include desktop {
-    width: 25px;
-  }
+  width: 2.1em;
 }
 .content .work_hour {
-  font-size: 0.9em;
+  font-size: 100%;
 }
 .content .day {
   font-weight: bold;
 }
 a {
   margin-left: 1.6%;
+}
+.content .line {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
 }
 </style>

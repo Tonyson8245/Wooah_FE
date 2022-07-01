@@ -1,5 +1,5 @@
 <template>
-  <div id="wrap" class="section">
+  <div id="wrap" class="section user-select-none">
     <div id="naverMap"></div>
   </div>
 </template>
@@ -15,14 +15,13 @@ export default {
     return {
       map: null,
       markers: [],
-      media: "desktop",
       anchor: [27, 53],
     };
   },
   props: {
     width: Number,
   },
-  mounted: function () {
+  mounted() {
     if (window.naver && window.naver.maps) {
       this.InitMap(37.51589, 126.982692);
       this.SetMedia();
@@ -58,12 +57,18 @@ export default {
       }
 
       for (var i = 0, ii = this.markers.length; i < ii; i++) {
-        naver.maps.Event.addListener(
-          this.markers[i],
-          "click",
-          this.GetClickHandler(this.shops, i, this.$router, this.$store)
-        );
+        if (
+          this.shops[i].is_partner == undefined ||
+          this.shops[i].is_partner == true
+        )
+          naver.maps.Event.addListener(
+            this.markers[i],
+            "click",
+            this.GetClickHandler(this.shops, i, this.$router, this.$store)
+          );
       }
+
+      // if (this.shop != null) this.SelectShop();
     },
     InitMap(Lat, Lng) {
       this.map = new naver.maps.Map(document.getElementById("naverMap"));
@@ -78,24 +83,23 @@ export default {
           zoom: 12,
           zoomControl: true,
           zoomControlOptions: {
-            position: naver.maps.Position.RIGHT_TOP,
+            position: naver.maps.Position.LEFT_BOTTOM,
           },
         });
       } else {
+        console.log("mobile");
         this.map.setOptions({
           minZoom: 10,
           maxZoom: 21,
           zoom: 14,
-          zoomControl: true,
+          zoomControl: false,
           zoomControlOptions: {
-            position: naver.maps.Position.RIGHT_TOP,
+            position: naver.maps.Position.LEFT_BOTTOM,
           },
         });
       }
       var position = new naver.maps.LatLng(Lat, Lng);
       this.map.setCenter(position); // 중심 좌표 이동
-      new naver.maps.Event.addListener(this.map, "mousewheel", function () {});
-      new naver.maps.Event.addListener(this.map, "touchstart", function () {});
     },
     SetMarker(Lat, Lng, type, name) {
       var marker = new naver.maps.Marker({
@@ -115,13 +119,13 @@ export default {
       var outline;
       var color;
       if (type == "focus") {
-        background = "#7f7f7f";
-        outline = "#000000";
-        color = "#FFFFFF";
+        background = "#A862EA";
+        outline = "#A862EA";
+        color = "#ffffff";
       } else {
         background = "#ffffff";
-        outline = "#7f7f7f";
-        color = "#000000";
+        outline = "#A862EA";
+        color = "#A862EA";
       }
       return (
         "<div style='font-size:50%'><div style='top: 2.9em;left: 1.4em;border: solid transparent;content: " + // 꼭지 위치
@@ -132,12 +136,12 @@ export default {
         background +
         ";border: 0.11em solid " +
         outline +
-        "; width:13em; height:3em; display: flex; align-items: center;'>" +
+        "; width:auto; height:3em; display: flex; align-items: center;'>" +
         "<div style='border-radius:50%;height:2em;width:2em;  margin-top:0.3em;margin-left:0.3em;margin-bottom:0.3em;background: " +
         outline +
         ";text-align: center;'><img src=" +
         nail +
-        " style='height:50%;'/></div><span style='margin:0.5em; text-align: center; font-weight:bold;color:" +
+        " style='height:50%;'/></div><span style='white-space: nowrap;margin:0.5em; text-align: center; font-weight:bold;color:" +
         color +
         "'>" +
         name +
@@ -153,13 +157,13 @@ export default {
       var outline;
       var color;
       if (type == "focus") {
-        background = "#7f7f7f";
-        outline = "#000000";
-        color = "#FFFFFF";
+        background = "#A862EA";
+        outline = "#A862EA";
+        color = "#ffffff";
       } else {
         background = "#ffffff";
-        outline = "#7f7f7f";
-        color = "#000000";
+        outline = "#A862EA";
+        color = "#A862EA";
       }
 
       return (
@@ -176,7 +180,7 @@ export default {
         outline +
         ";text-align: center;'><img src=" +
         nail +
-        " style='height:50%; z-index:100;'/></div><span style='margin: 0 1em 0 1em; white-space:nowrap;font-weight:bold;color:" +
+        " style='height:50%; z-index:100;'/></div><span style='white-space: nowrap; margin: 0 1em 0 1em; white-space:nowrap;font-weight:bold;color:" +
         color +
         "'>" +
         name +
@@ -193,77 +197,90 @@ export default {
       else return this.GetMarkerLayoutMobile(name, type);
     }, //위의 커스텀 마커를 화면 상황에 따라 제공해주는 메서드
     SetMedia() {
-      if (this.width > 768 || this.width == 0) {
+      if (this.width > 767 || this.width == 0) {
         if (this.media != "desktop") {
-          this.media = "desktop";
+          console.log(`desktop`);
+          this.$store.commit("ShopStore/SetMedia", `desktop`);
           this.anchor = [27, 53];
           this.InitMarkers();
+          this.map.setOptions({
+            zoomControl: true,
+          });
+          if (this.districtData.length > 0) this.ZoomOutDistrict();
         }
       } else {
         if (this.media != "mobile") {
-          this.media = "mobile";
+          console.log(`mobile`);
+          this.$store.commit("ShopStore/SetMedia", `mobile`);
           this.anchor = [14, 27];
           this.InitMarkers();
+          this.map.setOptions({
+            zoomControl: false,
+          });
+          if (this.districtData.length > 0) this.ZoomOutDistrict();
         }
       }
-    }, //현재 화면 넓이를 확인해 desktop 또는 mobile 형태로 media 변수를 변경해주는 메서드
+    }, //현재 화면 넓이를 확인해 desktop 또는 mobile 형태로 media 변수를 변경해주는 메서드strctData
     GetClickHandler(shops, seq, router, store) {
       return function () {
         if (shops[seq].is_partner == null || shops[seq].is_partner == true) {
-          router.push("./shop/" + shops[seq].id);
+          router.push("/shop/" + shops[seq].id);
         }
         store.commit("ShopStore/SetShop", seq); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
       };
     },
     MovetoShopDetail(i) {
-      this.$router.push("./shop/" + i);
+      this.$router.push("/shop/" + i);
     },
     ZoomOutDistrict() {
       var sigungu = this.district[1];
       var sido = this.district[0];
       var latitude, longitude, zoom;
-
-      if (sigungu != 0) {
-        zoom = 14;
-        latitude = this.distrctData[sido - 1].sigungu[sigungu - 1].latitude;
-        longitude = this.distrctData[sido - 1].sigungu[sigungu - 1].longitude;
-      } else {
+      try {
+        if (sigungu != 0) {
+          zoom = 14;
+          latitude = this.districtData[sido - 1].sigungu[sigungu - 1].latitude;
+          longitude =
+            this.districtData[sido - 1].sigungu[sigungu - 1].longitude;
+        } else {
+          zoom = 12;
+          latitude = this.districtData[sido - 1].latitude;
+          longitude = this.districtData[sido - 1].longitude;
+        }
+      } catch (error) {
         zoom = 12;
-        latitude = this.distrctData[sido - 1].latitude;
-        longitude = this.distrctData[sido - 1].longitude;
+        latitude = 37.51589;
+        longitude = 126.982692;
+        console.log(`지역 좌표정보가 없습니다.`);
       }
 
       var position = new naver.maps.LatLng(latitude, longitude);
       this.map.setCenter(position); // 중앙 지정 변경
-      this.map.setZoom(zoom, true); // 줌
+      this.map.setZoom(zoom, false); // 줌
     },
-    SelectShop(index) {
+    SelectShop(info) {
       var position, name, lat, lng;
-      var info = this.shopinfo;
 
       this.markers.forEach((e) => {
         e.setMap(null);
       });
       this.markers = []; // 전체 마커 없애기
 
-      if (this.shopinfo != null) {
-        name = info.name;
-        lat = info.latitude;
-        lng = info.longitude;
-      } //  shopinfo 가 있는 경우, shop/${id}와 리스트를 통해서 들어오는 경우 모두 가능하게 하기 위해 이렇게 작성
-      else {
-        name = this.shops[index].name;
-        lat = this.shops[index].latitude;
-        lng = this.shops[index].longitude;
-      } // info가 없을 경우 , 리스트를 통해서 들어오게 되기때문에 shops[index]를 이용
+      name = info.name;
+      lat = info.latitude;
+      lng = info.longitude;
+      //  shopinfo 가 있는 경우, shop/${id}와 리스트를 통해서 들어오는 경우 모두 가능하게 하기 위해 이렇게 작성
 
       this.SetMarker(lat, lng, "focus", name);
       position = new naver.maps.LatLng(lat, lng);
       this.map.setCenter(position); // 중앙 지정 변경
-      this.map.setZoom(20, true); // 줌}
+      this.map.setZoom(15, true); // 줌
     }, // Shop info에 데이터가 바뀌면 지도도 바뀐다.
   },
   computed: {
+    media() {
+      return this.$store.state.ShopStore.media;
+    },
     shops() {
       return this.$store.state.ShopStore.shops;
     }, // 전체 마커 설정을 위한 샵 리스트
@@ -275,13 +292,13 @@ export default {
     }, // 샵리스트를 클릭 했을때 이벤트 발생을 위한 변수
     district() {
       return [
-        this.$store.state.ShopStore.sido,
-        this.$store.state.ShopStore.sigungu,
-        this.$store.state.ShopStore.newDistrictSet,
+        this.$store.state.CommonStore.sido,
+        this.$store.state.CommonStore.sigungu,
+        this.$store.state.CommonStore.newDistrictSet,
       ];
     },
-    distrctData() {
-      return this.$store.state.ShopStore.districtData;
+    districtData() {
+      return this.$store.state.CommonStore.districtData;
     },
     keyword() {
       return this.$store.state.ShopStore.keyword; // 검색할때 현재 설정 지역 전체를 보여주기 위함
@@ -291,10 +308,10 @@ export default {
     },
   },
   watch: {
-    shopinfo() {
-      this.SelectShop();
-    },
     width() {
+      setTimeout(function () {
+        window.dispatchEvent(new Event("resize"));
+      }, 2000);
       this.SetMedia();
     },
     shops() {
@@ -322,6 +339,8 @@ export default {
     shop(state) {
       if (state != null) {
         this.SelectShop(state);
+      } else {
+        this.InitMarkers();
       }
     }, // 샵을 클릭했을때 지도 형태를 위한 설정
     district() {
@@ -329,6 +348,9 @@ export default {
     }, // 지역 변경할때 작동
     keyword() {
       this.ZoomOutDistrict(); // 해당 지역 표시
+    },
+    shopinfo(info) {
+      if (info != null) this.SelectShop(info);
     },
   },
 };

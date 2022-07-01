@@ -1,11 +1,15 @@
 <template>
-  <TopHeader :PageCondition="PageCondition" />
-  <body>
-    <div class="web--content" :style="padding">
-      <router-view @ChangePageCondition="ChangePageCondition" />
+  <div class="viewport" ref="viewport">
+    <div style="position: sticky; right: 0; z-index: 2" class="border-bottom">
+      <TopHeader />
     </div>
-  </body>
-  <BottomFooter />
+    <body>
+      <div class="web--content">
+        <router-view />
+      </div>
+    </body>
+    <BottomFooter />
+  </div>
 </template>
 
 <script>
@@ -20,41 +24,45 @@ export default {
   },
   data() {
     return {
-      PageCondition: ["", ""],
-      padding: ``,
+      width: ``,
+      height: ``,
+      htmlwidth: ``,
+      htmlheight: ``,
     };
+  },
+  mounted() {
+    this.$store.dispatch("CommonStore/getDistricts");
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.handleResize);
   },
 
   methods: {
-    ChangePageCondition(page) {
-      let newArray = ["", ""];
-      this.padding = ``;
-      this.PageCondition = [...newArray];
-      switch (page) {
-        case "collection":
-          this.PageCondition[0] = "active";
-          break;
-        case "shop":
-          this.PageCondition[1] = "active";
-          break;
-      }
-    }, // 각 컴포넌트에서 본인으로 바뀌었다고 신호를 줌 -> 위쪽에서 이걸 TopHeader로 전달함
+    handleResize() {
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
+      this.$store.commit("CommonStore/SetSize", [this.width, this.height]);
+    },
   },
 };
 </script>
 
 <style lang="scss">
 @import "./assets/style.scss";
-
-.web--content {
-  background: #fafafa;
-  min-height: 750px;
-
-  @include tablet {
-  }
+.viewport {
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   @include mobile-s {
-    min-height: 400px;
+    height: auto;
+    min-height: 700px;
   }
+}
+.web--content {
+  height: 100%;
 }
 .col {
   width: 100%;

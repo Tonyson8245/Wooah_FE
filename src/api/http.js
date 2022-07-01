@@ -1,8 +1,7 @@
 import axios from "axios";
 import store from "@/store";
-
 const instance = axios.create({
-  baseURL: "http://15.164.228.184/api", // 저 instance 로 보내지는 domain은 무조건 baseURL 를 따르게 한다.
+  baseURL: process.env.VUE_APP_API, // 저 instance 로 보내지는 domain은 무조건 baseURL 를 따르게 한다.
 });
 // instance.interceptors.request.use(function (config) {
 //   //서버에 요청 보낼때 넣는 것은 .request/ 서버에서 보내준 데이터를 먼저 사용할 경우 .response
@@ -25,7 +24,7 @@ instance.interceptors.response.use(
     if (errors.response.status === 500) {
       store.commit("error/setValidationError", errors.response.data);
     } else if (errors.response.status === 502) {
-      console.log(`서버주금`);
+      console.log(`서버 이상 발생`);
     }
     // else if (errors.response.status === 404) {
     //   store.commit("error/setnoResult", true);

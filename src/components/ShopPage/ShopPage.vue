@@ -2,11 +2,17 @@
   <div class="container_outer p-lg-2">
     <div class="container-lg">
       <div class="row flex-row-reverse">
-        <div v-if="MapView" class="col-md-8 col-sm-12 map__outer g-0">
+        <div
+          v-show="MapView"
+          class="col-lg-8 col-md-7 col-sm-12 map__outer g-0"
+        >
           <NaverMap :width="width" />
         </div>
 
-        <div class="col-md-4 col-sm-12 list__outer g-0">
+        <div
+          class="col-lg-4 col-md-5 col-sm-12 g-0 list"
+          style="display: flex; flex-direction: column; height: 100%"
+        >
           <div class="btn__set">
             <button class="btn col-12 p-0" v-if="MapView" @click="CloseMap">
               지도 숨기기
@@ -15,7 +21,7 @@
               지도 보기
             </button>
           </div>
-          <router-view v-slot="{ Component }">
+          <router-view v-slot="{ Component }" style="flex: 1">
             <transition name="scale" mode="out-in">
               <component :MapView="MapView" :width="width" :is="Component" />
             </transition>
@@ -40,11 +46,12 @@ export default {
   components: {
     NaverMap,
   },
-
   mounted() {
+    this.$store.dispatch("CommonStore/getDistricts");
     this.$store.commit("Setpagecondition", "shop");
+    this.reset();
     window.addEventListener("resize", this.handleResize);
-    this.handleResize(); // 화면 넓이를 측정
+    this.handleResize(); // 화면 넓이를 측정 중 ...//
     this.ShopId = this.$route.params.id; // 현재 샵 상세를 찾는지 확인
 
     if (this.ShopId == undefined && this.width < 768) {
@@ -66,15 +73,34 @@ export default {
       this.width = window.innerWidth;
       this.height = window.innerHeight;
     },
+    reset() {
+      this.$store.commit("ShopStore/Reset"); // 초기화
+    },
   },
   watch: {
     width(state) {
-      if (state > 768) this.$store.commit("ShopStore/SetMapView", true);
+      if (state > 767) this.$store.commit("ShopStore/SetMapView", true);
+      else this.$store.commit("ShopStore/SetMapView", false);
     },
   },
   computed: {
     MapView() {
       return this.$store.state.ShopStore.MapView;
+    },
+    path() {
+      return this.$route.path;
+    },
+    keyword() {
+      return this.$store.state.ShopStore.keyword;
+    },
+    shop() {
+      return this.$store.state.ShopStore.shop;
+    },
+    shops() {
+      return this.$store.state.ShopStore.shops;
+    },
+    shopinfo() {
+      return this.$store.state.ShopStore.shopinfo;
     },
   },
 };
@@ -98,28 +124,47 @@ $mobile-height: 250px;
 
 //transtition 끝
 .container_outer {
-  padding: 0 10% 0 10%;
+  background: white;
+  height: 100%;
+  display: grid;
+  align-items: center;
   @include desktop {
     padding: 0 0 0 0;
     margin: 0 0 0 0;
   }
   @include tablet {
     width: 100%;
+    align-items: baseline;
   }
 }
 .container-lg {
+  display: inline;
+  height: $desktop-height;
   flex-wrap: wrap-reverse;
-  border: #f3f3f3 1px solid;
+  border: $pl-4 1px solid;
+  border-radius: 15px;
+  overflow: hidden;
+  @include tablet {
+    height: 100%;
+    border-radius: 0px;
+  }
   @include mobile-s {
+    height: 100%;
     border: none;
   }
 }
+.container-lg .row {
+  @include tablet {
+    height: 100%;
+  }
+}
+
 .map__outer {
   height: $desktop-height;
-  @include tablet-s {
-    height: $tablet-height - 50;
+  @include tablet {
+    height: 100%;
   }
-  @include mobile-s {
+  @include tablet-s {
     height: $mobile-height - 50;
     /* height: 0px; */
   }
@@ -132,10 +177,24 @@ $mobile-height: 250px;
   }
 }
 .btn__set button {
+  color: $pa;
   font-family: "GoyangIlsan";
   font-size: 1em;
   @include mobile-s {
     font-size: 0.5em;
   }
+}
+
+/* TRANSITION */
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

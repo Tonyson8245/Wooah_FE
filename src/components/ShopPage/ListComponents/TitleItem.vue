@@ -1,10 +1,10 @@
 <template>
-  <div class="title__container container-fluid row g-0">
+  <div class="title__container container-fluid row g-0 user-select-none">
     <div class="col-6 title">
       <span>{{ title }}</span>
     </div>
     <div class="col-6 region">
-      <div class="dropdown">
+      <!-- <div class="dropdown">
         <button
           class="btn dropdown-toggle"
           type="button"
@@ -29,21 +29,32 @@
             </li>
           </template>
         </ul>
-      </div>
+      </div> -->
+      <region :font="'color:#6545A4; font-size:1.1em; padding:0 0 0 0'" />
     </div>
   </div>
 </template>
 
 <script>
+import region from "@/components/Common/RegionComponent.vue";
 export default {
   name: `TitleItem`,
   data() {
     return {};
   },
-  beforemounted() {},
+  components: {
+    region,
+  },
+  mounted() {
+    this.$store.dispatch("ShopStore/getShops", {
+      page: 1,
+      sido: this.sido,
+      sigungu: this.sigungu,
+    });
+  },
   computed: {
     districtData() {
-      return this.$store.state.ShopStore.districtData;
+      return this.$store.state.CommonStore.districtData;
     },
     title() {
       if (this.$store.state.ShopStore.keyword == "") {
@@ -52,35 +63,21 @@ export default {
         return `검색 결과`;
       }
     },
-    region() {
-      var data = this.$store.state.ShopStore.districtData;
-      if (data.length > 0) {
-        var sigungu = this.$store.state.ShopStore.sigungu;
-        var sido = this.$store.state.ShopStore.sido;
-
-        var sigunguName, sidoName;
-
-        if (sigungu != 0) {
-          sigunguName = data[sido - 1].sigungu[sigungu - 1].name;
-          sidoName = data[sido - 1].name;
-
-          return sidoName + ` ` + sigunguName;
-        } else {
-          sidoName = data[sido - 1].name;
-
-          return sidoName + ` 전체`;
-        }
-      } else return "서울특별시 전체";
+    sido() {
+      return this.$store.state.CommonStore.sido;
+    },
+    sigungu() {
+      return this.$store.state.CommonStore.sigungu;
     },
   },
-  methods: {
-    changeDistrict(sido, sigungu) {
-      this.$store.commit("ShopStore/SetDistrict", [
-        sido,
-        sigungu,
-        Math.random(),
-      ]);
-      this.$store.dispatch("ShopStore/getShops", 1);
+  watch: {
+    sigungu(a) {
+      console.log("sigungu: " + a);
+      this.$store.dispatch("ShopStore/getShops", {
+        page: 1,
+        sido: this.sido,
+        sigungu: a,
+      }); // 시군구가 바뀔때, 바뀌게함
     },
   },
 };
@@ -90,6 +87,8 @@ export default {
 @import "/src/assets/style.scss";
 //제목 시작
 .title__container {
+  border: $pl-4 0.5px solid;
+  color: $pa;
   height: 4em;
   width: 100%;
   @include tablet {
@@ -112,8 +111,16 @@ export default {
   margin: auto;
   font-size: 1em;
   text-align: right;
+  padding-right: 0.5em;
+}
+
+.dropdown-menu span,
+.dropdown-item {
+  color: $pl-2;
 }
 .dropdown-toggle {
+  box-shadow: unset;
+  color: $pl-1;
   @include tablet-s {
     font-size: 1.8em;
   }

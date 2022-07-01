@@ -1,9 +1,18 @@
 <template>
-  <div class="outer align-middle" @click="CheckOption">
+  <div class="outer" @click="CheckOption">
     <div class="check" :class="Checked">
-      <i class="bi bi-check-lg bi-secondary" style="color: black"></i>
+      <i class="bi bi-check-lg bi-secondary" style="color: #6545a4"></i>
     </div>
-    <i class="bi bi-fingerprint img" style="color: #c4c4c4"></i>
+    <!-- <i class="bi bi-fingerprint img"></i> -->
+
+    <div class="d-flex flex-column justify-content-center">
+      <img
+        :src="require(`@/assets/img/filter/${this.option.url}`)"
+        alt=""
+        class="m-auto"
+      />
+      <span class="py-2 fw-bold">{{ this.option.name }}</span>
+    </div>
   </div>
 </template>
 
@@ -19,6 +28,7 @@ export default {
   data() {
     return {
       Checked: "d-none",
+      src: this.option.url,
     };
   },
   methods: {
@@ -56,7 +66,7 @@ export default {
 }
 .check {
   position: absolute;
-  left: 35%;
+  left: 37%;
   top: 15%;
   z-index: 2;
   font-size: 30px;
@@ -65,10 +75,7 @@ export default {
     left: 34%;
   }
 }
-.img {
-  font-size: 50px;
-  @include mobile-xs {
-    font-size: 40px;
-  }
+img {
+  width: 40%;
 }
 </style>

@@ -1,8 +1,21 @@
 <template>
-  <div style="background: white">
+  <div
+    style="
+      background: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 550px;
+    "
+    class="pe-click"
+  >
     <SearchPage></SearchPage>
     <TitleItem></TitleItem>
-    <div class="shoplist" :style="ListHeight" v-if="!noResultlist">
+    <div
+      class="shoplist"
+      :style="ListHeight"
+      v-if="!noResultlist"
+      style="flex-grow: 1"
+    >
       <ShopItem
         v-for="(shop, index) in shops"
         :key="index"
@@ -62,8 +75,6 @@ export default {
     VPagination,
   },
   mounted() {
-    this.$store.dispatch("ShopStore/getShops", 1);
-    this.$store.dispatch("ShopStore/getDistricts");
     if (this.currentpage != 0) this.page = this.currentpage;
   },
   computed: {
@@ -85,6 +96,15 @@ export default {
     noResultlist() {
       return this.$store.state.ShopStore.noResultlist;
     },
+    mapView() {
+      return this.$store.state.ShopStore.SetMaMapViewpView;
+    },
+    sido() {
+      return this.$store.state.CommonStore.sido;
+    },
+    sigungu() {
+      return this.$store.state.CommonStore.sigungu;
+    },
   },
   methods: {
     ClickShop(id, index) {
@@ -92,10 +112,9 @@ export default {
         this.shops[index].is_partner == null ||
         this.shops[index].is_partner == true
       ) {
-        this.$router.push("/shop/" + id);
+        this.$router.push("/shop/" + id + "/info");
+        this.$store.commit("ShopStore/SetShop", index); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
       }
-      this.FocusoutShop(); // 해당 샵에서 포커스 벗어남
-      this.$store.commit("ShopStore/SetShop", index); //vuex에 올려서, 마커 위로 올라올수 있게 하기 위함.
     },
     FocusShop(index) {
       this.$store.commit("ShopStore/SetFocusmarker", index);
@@ -105,29 +124,40 @@ export default {
     },
   },
   watch: {
-    pageReset(state) {
-      if (state) {
-        this.page = 1;
-        this.$store.commit("ShopStore/SetPageReset", false);
-      }
-    },
     page(state) {
-      if (this.keyword == "") this.$store.dispatch("ShopStore/getShops", state);
-      else
-        this.$store.dispatch("ShopStore/searchShops", {
-          keyword: this.keyword,
-          page: state,
-        }); // 다음 페이지 불러오기 // 검색 상태일 경우 검색api 활용/ 아닐 경우 일반 내주변 모아보기 api활용
+      this.$store.dispatch("ShopStore/getShops", {
+        page: state,
+        sido: this.sido,
+        sigungu: this.sigungu,
+      });
+      // 다음 페이지 불러오기
       this.$store.commit("ShopStore/SetCurrentPage", state);
-    },
-    keyword(state) {
-      if (state != "")
-        this.$store.dispatch("ShopStore/searchShops", {
-          keyword: state,
-          page: 1,
+      if (!this.mapView)
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "instant",
         });
-      // 검색 요청
-      else this.$store.dispatch("ShopStore/getShops", 1);
+    }, // 페이지 이동(조회) 시 요청
+    keyword(state) {
+      this.page = 1; //  페이지 초기화
+      if (state != "") {
+        this.$store.dispatch("ShopStore/getShops", {
+          page: 1,
+          sido: this.sido,
+          sigungu: this.sigungu,
+        });
+        // 첫 검색 요청
+      } else
+        this.$store.dispatch("ShopStore/getShops", {
+          page: 1,
+          sido: this.sido,
+          sigungu: this.sigungu,
+        });
+    }, // 첫 조회 시 요청
+    currentpage(a) {
+      console.log(a);
+      this.page = a;
     },
   },
 };
@@ -138,15 +168,11 @@ export default {
 
 .shoplist {
   overflow-y: auto;
+  border: solid $pl-4 1px;
+
   height: $list-desktop-height;
   @include tablet-s {
-    height: $list-tablet-height;
-  }
-  @include tablet {
-    height: $list-tablet-height + 145px;
-  }
-  @include mobile-s {
-    height: auto;
+    height: 100%;
     overflow: none;
   }
 }

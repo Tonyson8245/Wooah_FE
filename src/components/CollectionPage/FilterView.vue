@@ -1,9 +1,9 @@
 <template>
   <div class="filter__btn">
-    <h6 class="filter_title">{{ FilterCategory }}</h6>
+    <h5 class="filter_title">{{ FilterCategory }}</h5>
     <div :class="FilterSelected[0]" class="row filter__outer">
       <ColorPaltte
-        class="col-3"
+        class="col-3 pe-click"
         v-for="(color, i) in colors"
         :key="color"
         :color="color"
@@ -16,7 +16,7 @@
     <!-- 필터카테고리가 보내지는 이유는 저값이 ""이 될때 초기화 시키기 위해 -->
     <div :class="FilterSelected[1]" class="row filter__outer">
       <ShapePalette
-        class="col-3"
+        class="col-3 pe-click"
         v-for="(shape, i) in shapes"
         :key="shape"
         :shape="shape"
@@ -32,7 +32,7 @@
       style="padding: 5% 0 10% 0"
     >
       <OptionPalette
-        class="col-4"
+        class="col-4 pe-click"
         v-for="(option, i) in options"
         :key="option"
         :option="option"
@@ -48,17 +48,19 @@
       style="padding: 20% 0 10% 0"
     >
       <HandfootPalette
-        class="col-6"
+        class="col-6 pe-click"
         v-for="(limbs, i) in handfoot"
         :key="limbs"
         :limbs="limbs"
         :SetFilterLimbs="SetFilter.handfoot[i]"
         :FilterCategory="FilterCategory"
+        :tempFilter="tempFilter"
+        :index="i"
         @CheckFilter="InsertTempFilter($event)"
       />
     </div>
     <button
-      class="btn btn-secondary btn-sm filter__outer_button"
+      class="btn btn-secondary btn-sm filter__outer_button pe-click"
       @click="ClickApply"
     >
       확인
@@ -140,7 +142,9 @@ export default {
         this.tempFilter.splice(index, 1);
         // 안에 이미 동일한 데이터가 있음. 삭제
       } else {
-        if (this.tempFilter.length >= 3) {
+        if (this.FilterCategory == "손발" && this.tempFilter.length >= 1) {
+          this.tempFilter[0] = data; // 중복 안되니깐 push가 아니라 바꿔주기만 하면됨
+        } else if (this.tempFilter.length >= 3) {
           this.$store.commit("alertStore/ChangeState");
           this.$store.commit(
             "alertStore/ChangeComment",
@@ -185,12 +189,12 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/style.scss";
 .filter__btn {
-  background-color: white;
+  background-color: $pl-4;
   width: 350px;
   height: $filter-height-desktop;
   position: relative;
-  border-radius: 5px;
-  border: #a1a1a1 solid 0.5px;
+  border-radius: 15px;
+  border: $pl-4 solid 0.5px;
   z-index: 4;
   text-align: center;
   padding: 2% 2% 2% 2%;
@@ -210,7 +214,19 @@ export default {
 
 .filter__outer_button {
   width: 95%;
+  background: $pl-2;
+  border-radius: 15px;
+  border: solid 1px $pl-4;
+
   height: auto;
+}
+.filter__outer_button:hover,
+.filter__outer_button:focus,
+.filter__outer_button:active,
+.filter__outer_button.active,
+.open > .dropdown-toggle.filter__outer_button :hover {
+  background: $pl-3;
+  border: solid 1px $pl-3;
 }
 .filter_title {
   font-family: "GoyangIlsan";

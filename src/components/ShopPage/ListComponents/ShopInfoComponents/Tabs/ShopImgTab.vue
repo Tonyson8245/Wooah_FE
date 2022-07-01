@@ -3,10 +3,19 @@
     <div class="container-fluid row g-0 p-0">
       <div v-for="image in shopimages" :key="image" class="col-4 square">
         <img class="inner" :src="image.url" alt="" @click="Click(image.id)" />
-        <i class="bi bi-heart-fill monthly" v-if="image.monthly_art"></i>
+        <!-- <i class="bi bi-heart-fill monthly" v-if="image.monthly_art"></i> -->
+        <img
+          src="@/assets/icon/monthly_art.png"
+          class="monthly"
+          v-if="image.monthly_art"
+        />
       </div>
     </div>
-    <div style="text-align: center" class="pt-2">
+    <div
+      style="text-align: center"
+      class="pt-2"
+      v-if="shopimages.length > 0 || !noResult"
+    >
       <button
         v-if="noResult"
         @click="GetShopImage"
@@ -21,7 +30,6 @@
       >
         더보기
       </button>
-      <span v-else style="font-size: 0.8em">마지막 페이지입니다.</span>
     </div>
   </div>
 </template>
@@ -41,7 +49,7 @@ export default {
     },
   },
   mounted() {
-    // this.$store.commit("ShopStore/ResetImagePage");
+    this.$store.commit("ShopStore/ResetImagePage");
     this.GetShopImage();
   },
   methods: {
@@ -62,18 +70,15 @@ export default {
   width: 33.3%;
   position: relative;
   background: white;
-  /* border-radius: 5%; */
+  /* border-radius: 10%; */
 }
-.square .bi {
+.square .monthly {
   position: absolute;
   top: 3%;
-  right: 5%;
+  right: 3%;
   color: #ffbdf1;
-  font-size: 20px;
+  width: 15%;
   z-index: 1;
-  @include tablet {
-    font-size: 18px;
-  }
 }
 .square:after {
   content: "";
@@ -87,7 +92,7 @@ export default {
   height: 100%;
   object-fit: cover;
   padding: 0.5%;
-  /* border-radius: 5%; */
+  /* border-radius: 10%; */
   /* border: solid #e1e1e1 1px; */
 }
 </style>

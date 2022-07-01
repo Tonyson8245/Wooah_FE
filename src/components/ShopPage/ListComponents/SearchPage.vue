@@ -44,7 +44,7 @@ export default {
       } else this.value = "";
     },
     close() {
-      this.$store.commit("ShopStore/SetKeyword", false);
+      this.$store.commit("ShopStore/Reset"); // 초기화
       this.value = "";
     },
   },
@@ -68,7 +68,7 @@ export default {
 //검색쪽 시작
 .search__outline {
   width: 100%;
-  background: #d4d4d4;
+  background: $pl-4;
   padding: 2%;
   @include mobile-s {
     font-size: 70%;
@@ -76,7 +76,6 @@ export default {
   }
 }
 .search__container {
-  background-color: #a4a4a4;
   width: 100%;
   position: relative;
   border-radius: 35px;
@@ -88,7 +87,6 @@ export default {
 .search {
   display: inline;
   margin: 1em 0 0 0;
-  background: #f8f9fa;
 
   @include tablet {
     margin: 0.5em 0 0 0;
@@ -110,8 +108,9 @@ export default {
 }
 .search input {
   height: 45px;
+  color: black;
   text-indent: 15px;
-  border: 0.5px solid #d6d4d4;
+  border: 0.5px solid $pl-3;
   border-radius: 2em;
   background-color: #ffffff;
   font-family: "GoyangIlsan";
@@ -125,7 +124,7 @@ export default {
 }
 .search input:focus {
   box-shadow: none;
-  border: 1.5px solid #e4e4e4;
+  border: 1.5px solid $pa;
 }
 
 .search .fa-search {
@@ -136,7 +135,7 @@ export default {
 
 .search i {
   position: absolute;
-  color: #a4a4a4;
+  color: $pl-2;
   top: 0.6rem;
   left: 1rem;
   font-size: 18px;
