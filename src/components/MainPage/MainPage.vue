@@ -149,9 +149,12 @@
                   >
                     <square
                       :url="monthlyart_url(i - 1)"
-                      v-if="monthlyart_url(i - 1) != ``"
+                      :style="background(monthlyart_url(i - 1))"
                     />
-                    <div class="text fw-bold">
+                    <div
+                      class="text fw-bold"
+                      v-if="monthlyart_url(i - 1) != ``"
+                    >
                       {{ price_range(i - 1) }}
                     </div>
                   </div>
@@ -160,7 +163,10 @@
                     class="col-6 tile p-0 pe-click"
                     @click="clickMonthlyart(`more`)"
                   >
-                    <square :url="monthlyart_url(3)" />
+                    <square
+                      :url="monthlyart_url(3)"
+                      style="background: #ceb5ff; border-radius: 0px"
+                    />
                     <div class="text fw-bold">더보기...</div>
                   </div>
                 </div>
@@ -343,6 +349,10 @@ export default {
     Region,
   },
   methods: {
+    background(a) {
+      if (a != undefined) return `background: #CEB5FF; border-radius: 0px`;
+      else return ``;
+    },
     clickNewestDesign(id) {
       this.$router.push("/library/p/" + id);
     },
