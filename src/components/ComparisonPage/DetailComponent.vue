@@ -310,7 +310,7 @@ img {
   position: relative;
   background: #ffffff;
   border: 1px solid $pl-2;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 .arrow_box_left:after,
 .arrow_box_left:before {
