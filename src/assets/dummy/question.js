@@ -62,7 +62,7 @@ export default {
         {
           name: "손톱 연장",
           description: `손톱 연장 하실건가요? `,
-          answer: [`네, 할 거에요`, `아니요, 안할거에요.`],
+          answer: [`네, 연장 할 거에요`, `아니요, 연장 안할거에요.`],
           skip: false,
           input: false,
         },
@@ -137,7 +137,7 @@ export default {
         {
           name: "발톱 연장",
           description: `발톱 연장 하실건가요? `,
-          answer: [`네, 할 거에요`, `아니요, 안할거에요.`],
+          answer: [`네, 연장 할 거에요`, `아니요, 연장 안할거에요.`],
           skip: false,
           input: false,
         },
