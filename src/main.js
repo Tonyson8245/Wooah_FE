@@ -15,10 +15,12 @@ let emitter = mitt();
 let app = createApp(App);
 app.config.globalProperties.emitter = emitter;
 
+//develop // G_ID=G-V9WCQE12V1
+//production //G_ID=G-94T10DHKSC
 app
   .use(VueGtag, {
     config: {
-      id: process.env.G_ID,
+      id: `G-94T10DHKSC`,
       params: {
         send_page_view: false,
       },
