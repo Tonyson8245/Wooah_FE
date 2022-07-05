@@ -265,8 +265,12 @@ export default {
       this.option = "";
       this.name = "";
 
+      if (this.step == 2) this.$gtag.event(`Click_comparison_start`);
+
       // 만약 전체 갯수를 넘으면 쿼리 실행
       if (this.totalStep < this.step) {
+        this.$gtag.event(`Click_comparison_result`);
+
         this.$store.dispatch("ComparisonStore/fetchPriceList", {
           qeury: this.query,
           sido: this.sido,

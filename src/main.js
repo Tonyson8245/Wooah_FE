@@ -13,14 +13,18 @@ import VueGtag from "vue-gtag";
 
 let emitter = mitt();
 let app = createApp(App);
+let G_ID;
 app.config.globalProperties.emitter = emitter;
 
-//develop // G_ID=G-V9WCQE12V1
+//develop // G_ID=G-V9WCQE12V
 //production //G_ID=G-94T10DHKSC
+if (process.env.NODE_ENV == "production") G_ID = `G-94T10DHKSC`;
+else G_ID = `G-V9WCQE12V1`;
+
 app
   .use(VueGtag, {
     config: {
-      id: `G-94T10DHKSC`,
+      id: G_ID, // develop
       params: {
         send_page_view: false,
       },

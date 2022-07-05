@@ -34,7 +34,10 @@
 
           <div v-if="totalStep >= step">
             <!-- <div v-if="false"> -->
-            <div class="container__step">
+            <div
+              class="container__step"
+              @click="this.$gtag.event(`Click_comparison_step`)"
+            >
               <Steps />
             </div>
             <div>

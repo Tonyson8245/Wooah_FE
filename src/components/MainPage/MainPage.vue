@@ -64,7 +64,10 @@
               class="pe-click"
               v-for="(design, i) in designs"
               :key="i"
-              @click="clickNewestDesign(design.id)"
+              @click="
+                clickNewestDesign(design.id);
+                this.$gtag.event(`Click_design_` + design.id);
+              "
             >
               <div class="carousel__item">
                 <Square :url="design.url" />
@@ -354,10 +357,12 @@ export default {
       else return ``;
     },
     clickNewestDesign(id) {
+      this.$gtag.event(`Click_main_디자인모아보기`);
       this.$router.push("/library/p/" + id);
     },
 
     clickMonthlyart(i) {
+      this.$gtag.event(`Click_main_이달의아트`);
       var range;
       if (this.monthlyart[i] != undefined)
         range = this.monthlyart[i].price_range;
@@ -380,6 +385,8 @@ export default {
       else return "";
     },
     clickShop(shopid) {
+      this.$gtag.event(`Click_main_샵`);
+
       if (shopid == `more`) this.$router.push("/shop");
       else this.$router.push("/shop/" + shopid);
     },
@@ -390,12 +397,15 @@ export default {
       });
     },
     clickBanner(e) {
-      if (e.target.lastChild.classList.value == "carousel-item banner_2")
+      if (e.target.lastChild.classList.value == "carousel-item banner_2") {
         // 배너 내부에서 click 이벤트가 발생하지 않아서 배너 내부의 마지막 자식의 classlist를 확인해서 구분
+
+        this.$gtag.event(`Click_main_배너(1)`);
         this.$router.push(`/comparison`);
-      else if (
+      } else if (
         e.target.lastChild.classList.value == "carousel-item banner_2 active"
       ) {
+        this.$gtag.event(`Click_main_배너(2)`);
         this.clicktag("알록달록네일"); // 알록달록로 키워드를 변경하고, 디자인 보아보기로 이동
       }
     },

@@ -142,6 +142,15 @@ export default {
       fontSize: `btn-lg`,
     };
   },
+  mounted() {
+    var myModalEl = document.getElementById("exampleModal");
+    myModalEl.addEventListener("hidden.bs.modal", function () {
+      document.title = `이달의아트모아보기 : 우아`;
+    });
+    myModalEl.addEventListener("shown.bs.modal", function () {
+      document.title = `이달의아트상세보기 : 우아`;
+    });
+  },
   beforeUnmount() {
     if (this.modal_shop != "") {
       this.$refs.close_btn.click();

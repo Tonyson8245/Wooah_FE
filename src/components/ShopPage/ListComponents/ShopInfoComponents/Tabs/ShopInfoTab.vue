@@ -15,9 +15,14 @@
       <div class="content pt-2">
         <div class="line" v-if="ShopData.contacts.phone != null">
           <img src="../../../../../../src/assets/img/telephone.png" alt="" />
-          <a v-bind:href="`tel:+82.` + ShopData.contacts.phone">{{
-            ShopData.contacts.phone
-          }}</a>
+          <a
+            v-bind:href="`tel:+82.` + ShopData.contacts.phone"
+            @click="
+              this.$gtag.event(`Click_contact_` + this.shopid);
+              this.$gtag.event(`Click_contact_phone`);
+            "
+            >{{ ShopData.contacts.phone }}</a
+          >
         </div>
         <div class="line" v-if="ShopData.contacts.kakao_id != null">
           <img src="../../../../../../src/assets/icon/카카오톡ID.png" alt="" />
@@ -28,15 +33,27 @@
             src="../../../../../../src/assets/icon/카카오톡Chat.png"
             alt=""
           />
-          <a target="_blank" v-bind:href="ShopData.contacts.kakao_chat">{{
-            ShopData.contacts.kakao_chat
-          }}</a>
+          <a
+            target="_blank"
+            v-bind:href="ShopData.contacts.kakao_chat"
+            @click="
+              this.$gtag.event(`Click_contact_` + this.shopid);
+              this.$gtag.event(`Click_contact_kakao_chat`);
+            "
+            >{{ ShopData.contacts.kakao_chat }}</a
+          >
         </div>
         <div class="line" v-if="ShopData.contacts.instagram != null">
           <img src="../../../../../../src/assets/icon/instagram.svg" alt="" />
-          <a target="_blank" v-bind:href="ShopData.contacts.instagram">{{
-            ShopData.contacts.instagram
-          }}</a>
+          <a
+            target="_blank"
+            v-bind:href="ShopData.contacts.instagram"
+            @click="
+              this.$gtag.event(`Click_contact_` + this.shopid);
+              this.$gtag.event(`Click_contact_instagram`);
+            "
+            >{{ ShopData.contacts.instagram }}</a
+          >
         </div>
       </div>
     </div>
@@ -76,6 +93,11 @@ export default {
   name: `ShopInfoTab`,
   props: {
     ShopData: Object,
+  },
+  computed: {
+    shopid() {
+      return this.$route.params.id;
+    },
   },
 };
 </script>
