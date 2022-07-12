@@ -17,7 +17,14 @@
             <button class="btn col-12 p-0" v-if="MapView" @click="CloseMap">
               지도 숨기기
             </button>
-            <button class="btn col-12 p-0" v-if="!MapView" @click="OpenMap">
+            <button
+              class="btn col-12 p-0"
+              v-if="!MapView"
+              @click="
+                OpenMap();
+                this.$gtag.event(`Click_open_Map`);
+              "
+            >
               지도 보기
             </button>
           </div>

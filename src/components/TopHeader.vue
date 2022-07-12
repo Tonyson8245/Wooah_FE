@@ -8,10 +8,7 @@
         src="@/assets/img/wooah_too.png"
         class="navbar-brand logo"
         alt=""
-        @click="
-          this.test();
-          this.$router.push('/');
-        "
+        @click="ClickTo('/')"
       />
       <button
         class="navbar-toggler"
@@ -119,19 +116,16 @@ export default {
     PageConditions() {
       return this.$store.state.pagecondintion;
     },
+    tag() {
+      return this.$store.state.collectionStore.tag;
+    },
   },
   methods: {
-    test() {
-      this.$gtag.event("test", {
-        event_category: "play",
-        event_label: "music",
-        value: `끼야홋`,
-      });
-    },
     ClickTo(a) {
-      this.$router.push(a);
-
       this.$store.commit("collectionStore/changeTag", null);
+      setTimeout(() => {
+        this.$router.push(a);
+      }, 1);
     },
   },
 };
@@ -184,7 +178,7 @@ export default {
   cursor: pointer;
   color: darkgray;
   padding: 0.1% 0 0.1% 0;
-  @include tablet {
+  @include tablet-s {
     padding-bottom: 5%;
   }
 }
