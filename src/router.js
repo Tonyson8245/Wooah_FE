@@ -32,7 +32,7 @@ const routes = [
     path: "/comparison",
     component: ComparisonPage,
     meta: {
-      title: "가격비교 : 우아",
+      title: "맞춤시술견적 : 우아",
     },
   },
 
@@ -40,15 +40,21 @@ const routes = [
     path: "/monthlyart",
     component: MonthlyartPage,
     meta: {
-      title: "이달의아트 : 우아",
+      title: "이달의아트모아보기 : 우아",
     },
     children: [
       {
         path: "",
+        meta: {
+          title: "이달의아트모아보기 : 우아",
+        },
         component: MonthlyartMain,
       },
       {
         path: ":price(\\d+)",
+        meta: {
+          title: "이달의아트상세보기 : 우아",
+        },
         component: MonthlyartDetail,
       },
     ],
@@ -57,7 +63,7 @@ const routes = [
     path: "/library/p/:id(\\d+)",
     component: DetailPage,
     meta: {
-      title: "디자인모아보기 : 우아",
+      title: "디자인상세보기 : 우아",
     },
   },
   {
@@ -77,6 +83,9 @@ const routes = [
       {
         path: ":id(\\d+)",
         component: ShopInfoPage,
+        meta: {
+          title: "샵상세보기 : 우아",
+        },
         children: [
           {
             path: "",

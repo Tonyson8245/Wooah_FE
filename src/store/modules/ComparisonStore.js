@@ -59,21 +59,27 @@ const ComparisonStore = {
     }, // 시술 목록 가져옴
     async fetchPriceList(context, payload) {
       var newQuery = "";
+      var body_part = "";
       context.state.query.forEach((e) => {
-        if (e != null) newQuery += e + " ";
+        if (e != null) newQuery += e + ".";
       }); // 배열을 API 에 맞느는 쿼리 형태로 만듬
+
+      if (context.state.type == "hand") body_part = `HAND`;
+      else body_part = `FOOT`;
 
       // context.commit("resetQuery"); 쿼리 초기화
       if (newQuery == "") context.commit("setNoQuery", true);
       else {
         context.commit("setNoQuery", false);
         await comparisonApi
-          .fetchPriceList(newQuery, payload.sido, payload.sigungu)
+          .fetchPriceList(newQuery, body_part, payload.sido, payload.sigungu)
           .then(function (response) {
+            // context.commit("setResult", response.data);
             context.commit("setResult", response.data);
+            // console.log(response.data);
           })
           .catch(function () {
-            context.commit("setResult", []);
+            context.commit("setResult", "");
           });
       }
     },

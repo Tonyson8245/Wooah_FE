@@ -2,7 +2,15 @@
   <div class="outline">
     <div class="container-fluid row g-0 p-0">
       <div v-for="image in shopimages" :key="image" class="col-4 square">
-        <img class="inner" :src="image.url" alt="" @click="Click(image.id)" />
+        <img
+          class="inner"
+          :src="image.url"
+          alt=""
+          @click="
+            Click(image.id);
+            this.$gtag.event(`Click_design_` + image.id);
+          "
+        />
         <!-- <i class="bi bi-heart-fill monthly" v-if="image.monthly_art"></i> -->
         <img
           src="@/assets/icon/monthly_art.png"

@@ -150,6 +150,8 @@
                     this.post = $event;
                     this.shop = this.post.shop;
                     this.Clicked_post_index = i;
+                    this.$gtag.event(`Click_design_detail`);
+                    this.$gtag.event(`Click_design_` + this.post.id);
                   "
                 />
               </div>
@@ -417,6 +419,13 @@ export default {
     };
   },
   mounted() {
+    var myModalEl = document.getElementById("exampleModal");
+    myModalEl.addEventListener("hidden.bs.modal", function () {
+      document.title = `디자인모아보기 : 우아`;
+    });
+    myModalEl.addEventListener("shown.bs.modal", function () {
+      document.title = `디자인상세보기 : 우아`;
+    });
     //데이터 가져오는 코드 여기 넣쟈
     this.$store.commit("collectionStore/ChangeSearchOff");
     this.$store.commit("collectionStore/setfilterQuery", "");
@@ -532,7 +541,7 @@ export default {
       flag = false;
       for (let i in filterdata.handfoot) {
         if (filterdata.handfoot[i] == true) {
-          handfoot_qeury += this.handfoot[i].en_name + " ";
+          handfoot_qeury += this.handfoot[i].en_name;
           flag = true;
         }
       }
@@ -757,13 +766,6 @@ export default {
     noResult(a) {
       if (a) this.ButtonCondition[1] = "d-none";
     },
-
-    // tag(a, b) {
-    //   if (a != b) {
-    //     this.Reset(false);
-    //     this.MakeQuery();
-    //   }
-    // },
     SearchState(a) {
       if (a != "") this.FilterStatus = "d-none";
     },

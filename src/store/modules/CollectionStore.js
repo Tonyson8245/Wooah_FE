@@ -100,7 +100,7 @@ const CollectionStore = {
       query += context.state.filterQuery;
 
       if (context.state.tag != null) {
-        query += `&tag=${context.state.tag}`;
+        query += `&query=${context.state.tag}`;
       } //태그가 있을경우
 
       if (context.state.completeFetch) {

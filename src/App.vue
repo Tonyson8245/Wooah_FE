@@ -31,6 +31,10 @@ export default {
     };
   },
   mounted() {
+    if (process.env.NODE_ENV === "production") {
+      console.log = function no_console() {};
+      console.warn = function no_console() {};
+    }
     this.$store.dispatch("CommonStore/getDistricts");
     window.addEventListener("resize", this.handleResize);
     this.handleResize();

@@ -1,8 +1,11 @@
 import { createApp, nextTick } from "vue";
 import App from "./App.vue";
 import router from "./router";
+
 import mitt from "mitt";
 import store from "./store/index.js";
+import * as Sentry from "@sentry/vue";
+import { BrowserTracing } from "@sentry/tracing";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,19 +18,33 @@ let emitter = mitt();
 let app = createApp(App);
 app.config.globalProperties.emitter = emitter;
 
-//develop // G_ID=G-V9WCQE12V1
-//production //G_ID=G-94T10DHKSC
+Sentry.init({
+  app,
+  dsn: process.env.VUE_APP_Sentry,
+  integrations: [
+    new BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+      tracingOrigins: ["localhost", process.env.VUP_APP_URL, /^\//],
+    }),
+  ],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
+
+app.use(router);
+
 app
   .use(VueGtag, {
     config: {
-      id: `G-94T10DHKSC`,
+      id: process.env.VUE_APP_G_ID, // develop
       params: {
         send_page_view: false,
       },
       debug_mode: true,
     },
   })
-  .use(router)
   .use(store)
   .component("GDialog", GDialog)
   .mount("#app");

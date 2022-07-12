@@ -32,12 +32,6 @@ export default {
   methods: {
     CheckLimbs() {
       this.$emit("CheckFilter", this.limbs.id);
-
-      if (this.Checked == "d-none") {
-        this.Checked = "visible";
-      } else {
-        this.Checked = "d-none";
-      }
     },
   },
   watch: {
@@ -46,6 +40,10 @@ export default {
         if (this.SetFilterLimbs == true) this.Checked = "visible";
         else this.Checked = "d-none";
       }
+    },
+    show(a) {
+      if (a == -1) this.Checked = "d-none";
+      else this.Checked = "visible";
     },
   },
   computed: {

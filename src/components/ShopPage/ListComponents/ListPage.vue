@@ -21,7 +21,10 @@
         :key="index"
         :shop="shop"
         :index="index"
-        @click="ClickShop(shop.id, index)"
+        @click="
+          ClickShop(shop.id, index);
+          this.$gtag.event(`Click_shop_detail`);
+        "
         @mouseover="FocusShop(index)"
         @mouseleave="FocusoutShop()"
       ></ShopItem>

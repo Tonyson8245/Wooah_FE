@@ -5,7 +5,10 @@
     @mouseleave="show = false"
   >
     <square
-      @click="clickImage(art.id)"
+      @click="
+        clickImage(art.id);
+        this.$gtag.event(`Click_monthly_art_design_` + art.id);
+      "
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
       :url="art.url"
