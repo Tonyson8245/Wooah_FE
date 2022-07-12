@@ -160,7 +160,7 @@ export default {
         case "확인":
           if (this.value > 0 && this.value <= 10) {
             this.increseStep();
-            this.option = "개당";
+            // this.option = "개당";
           } else {
             this.shakeAnimation();
           }
@@ -186,20 +186,20 @@ export default {
       this.$store.commit("ComparisonStore/increseSubStep");
     }, // 서브 스텝으로가기
     inertOption(answer) {
-      if (this.option.length > 0) this.option += " " + answer;
+      if (this.option.length > 0) this.option += "-" + answer;
       else this.option = answer;
     }, //옵션에 값있을때 띄어쓰기
-    findid(keyword, option) {
-      var id;
-      if (option == "")
-        id = this.procedure_table.findIndex((x) => x.name === keyword);
-      else
-        id = this.procedure_table.findIndex(
-          (x) => x.name === keyword && x.option === option
-        );
-      if (id != -1) return this.procedure_table[id].id;
-      else return -1;
-    }, //procedure table 의 이름과 옵션을 비교해서 현재 스탭의 id 값을 파악해서 돌려준다.
+    // findid(keyword, option) {
+    //   var id;
+    //   if (option == "")
+    //     id = this.procedure_table.findIndex((x) => x.name === keyword);
+    //   else
+    //     id = this.procedure_table.findIndex(
+    //       (x) => x.name === keyword && x.option === option
+    //     );
+    //   if (id != -1) return this.procedure_table[id].id;
+    //   else return -1;
+    // }, //procedure table 의 이름과 옵션을 비교해서 현재 스탭의 id 값을 파악해서 돌려준다.
   },
   computed: {
     procedure_table() {
@@ -249,19 +249,22 @@ export default {
   },
   watch: {
     step(a) {
-      var id = "";
+      var query = "";
 
-      if (this.option.length > 0) this.option = "(" + this.option + ")";
+      if (this.option.length > 0) query = this.name + "-" + this.option;
+      else query = this.name;
 
-      id = this.findid(this.name, this.option);
-      if (id != -1) {
-        if (id == 19 || id == 38) id += "e" + this.value;
+      if (query != "") {
+        if (query == `연장`) {
+          query += "-" + this.value;
+        }
 
         this.$store.commit("ComparisonStore/setQuery", {
           index: a - 2,
-          value: id,
+          value: query,
         });
       }
+
       this.option = "";
       this.name = "";
 
@@ -269,10 +272,10 @@ export default {
 
       // 만약 전체 갯수를 넘으면 쿼리 실행
       if (this.totalStep < this.step) {
-        this.$gtag.event(`Click_comparison_result`);
+        this.$gtag.event(`Comparison_result`);
 
         this.$store.dispatch("ComparisonStore/fetchPriceList", {
-          qeury: this.query,
+          qeury: query,
           sido: this.sido,
           sigungu: this.sigungu,
         });

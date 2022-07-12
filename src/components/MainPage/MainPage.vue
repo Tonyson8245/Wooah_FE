@@ -109,9 +109,11 @@
                     :key="tag"
                     @click="clicktag(tag.content)"
                   >
-                    <td scope="row" class="col-2">{{ tag.rank }}</td>
+                    <td scope="row" class="col-2">
+                      {{ tag.rank }}
+                    </td>
                     <td class="col-8">{{ tag.content }}</td>
-                    <td class="col-2">{{ tag.count }}건</td>
+                    <td class="col-2 text-center">{{ tag.count }}건</td>
                   </tr>
                 </table>
               </div>
@@ -447,13 +449,13 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to right,
     $pb 0%,
     rgba(255, 0, 0, 0) 10%,
     rgba(255, 0, 0, 0) 90%,
     $pb 100%
-  );
+  ); */
 } // 배너 페이드 아웃 필터
 .banner_1 {
   background: #f4dff8;

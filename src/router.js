@@ -32,7 +32,7 @@ const routes = [
     path: "/comparison",
     component: ComparisonPage,
     meta: {
-      title: "가격비교 : 우아",
+      title: "맞춤시술견적 : 우아",
     },
   },
 

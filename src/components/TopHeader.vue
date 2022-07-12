@@ -8,7 +8,7 @@
         src="@/assets/img/wooah_too.png"
         class="navbar-brand logo"
         alt=""
-        @click="this.$router.push('/')"
+        @click="ClickTo('/')"
       />
       <button
         class="navbar-toggler"
@@ -116,12 +116,16 @@ export default {
     PageConditions() {
       return this.$store.state.pagecondintion;
     },
+    tag() {
+      return this.$store.state.collectionStore.tag;
+    },
   },
   methods: {
     ClickTo(a) {
-      this.$router.push(a);
-
       this.$store.commit("collectionStore/changeTag", null);
+      setTimeout(() => {
+        this.$router.push(a);
+      }, 1);
     },
   },
 };

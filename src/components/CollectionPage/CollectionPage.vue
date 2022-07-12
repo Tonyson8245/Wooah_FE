@@ -541,7 +541,7 @@ export default {
       flag = false;
       for (let i in filterdata.handfoot) {
         if (filterdata.handfoot[i] == true) {
-          handfoot_qeury += this.handfoot[i].en_name + " ";
+          handfoot_qeury += this.handfoot[i].en_name;
           flag = true;
         }
       }

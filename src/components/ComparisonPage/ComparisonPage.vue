@@ -76,7 +76,7 @@
                   </div>
                 </div>
               </div>
-              <div class="result__body mb-1" v-if="this.result[0].has_result">
+              <div class="result__body mb-1" v-if="this.result.has_result">
                 <ShopItem
                   v-for="(shop, i) in shops"
                   :key="i"
@@ -177,7 +177,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("ComparisonStore/fetchProcedure");
+    // this.$store.dispatch("ComparisonStore/fetchProcedure");
     this.$store.commit("Setpagecondition", "comparison");
     this.$store.commit("ComparisonStore/setType", "hand");
     this.restart();
@@ -236,14 +236,14 @@ export default {
       return this.$store.state.ComparisonStore.result;
     },
     menu() {
-      if (this.result.length > 0) {
-        return this.$store.state.ComparisonStore.result[0].estimate;
+      if (this.result != "") {
+        return this.result.estimate;
       } else return "";
     },
     shops() {
-      if (this.result.length > 0) {
-        if (this.result[0].has_result) {
-          return this.$store.state.ComparisonStore.result[0].shops;
+      if (this.result != "") {
+        if (this.result.has_result) {
+          return this.result.shops;
         } else return "";
       } else return "";
     },
@@ -351,8 +351,10 @@ export default {
   border: $pa solid 2px;
   border-radius: 10px;
   width: 70%;
+  min-height: 475px;
   @include tablet {
     width: 100%;
+    min-height: 450px;
   }
 }
 

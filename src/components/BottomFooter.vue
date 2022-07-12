@@ -73,7 +73,11 @@
             class="footer-button"
             src="../assets/img/PlaystoreDownloadButton.svg"
             alt=""
-            @click="Download(`Android`)"
+            @click="
+              onClickRedirect(
+                `https://play.google.com/store/apps/details?id=com.changchanghada.woo_ah&hl=ko`
+              )
+            "
           />
         </div>
       </div>
