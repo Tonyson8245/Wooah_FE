@@ -164,10 +164,8 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
   font-family: "GoyangDeogyang";
   font-size: 20px;
-
   @include tablet {
     font-size: 20px;
   }
@@ -179,12 +177,10 @@ export default {
   height: auto;
   font-weight: bold;
   color: $pa;
-
   @include tablet {
     font-size: 30px;
   }
 } //로고
-
 .container-lg {
   padding-inline: 0.3%;
   @include tablet {

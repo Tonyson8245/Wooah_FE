@@ -31,7 +31,6 @@
 <script>
 import TopHeader from "./components/TopHeader.vue";
 import BottomFooter from "./components/BottomFooter.vue";
-
 export default {
   name: "App",
   components: {
@@ -58,7 +57,6 @@ export default {
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
   },
-
   methods: {
     onClickRedirect: function (a) {
       window.open(a, "_blank");
