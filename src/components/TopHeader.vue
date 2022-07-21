@@ -77,6 +77,23 @@
             </li>
           </ul>
         </div>
+
+        <div class="d-block d-md-none d-lg-none d-xl-none">
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  data-bs-dismiss="offcanvas"
+                  style="align-items: center"
+                  :class="TapCondition[0]"
+                  @click="onClickRedirect(`http://pf.kakao.com/_fRSHb/chat `)"
+                  ><span>1:1 문의</span></a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -127,6 +144,9 @@ export default {
         this.$router.push(a);
       }, 1);
     },
+    onClickRedirect: function (a) {
+      window.open(a, "_blank");
+    },
   },
 };
 </script>
@@ -144,10 +164,8 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
   font-family: "GoyangDeogyang";
   font-size: 20px;
-
   @include tablet {
     font-size: 20px;
   }
@@ -159,12 +177,10 @@ export default {
   height: auto;
   font-weight: bold;
   color: $pa;
-
   @include tablet {
     font-size: 30px;
   }
 } //로고
-
 .container-lg {
   padding-inline: 0.3%;
   @include tablet {
