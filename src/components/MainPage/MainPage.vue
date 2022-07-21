@@ -423,7 +423,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
 @import "../../assets/style.scss";
 .outline {
   font-family: "GoyangIlsan";
