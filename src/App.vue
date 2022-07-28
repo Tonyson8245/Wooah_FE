@@ -45,6 +45,7 @@ export default {
       htmlheight: ``,
     };
   },
+
   mounted() {
     if (process.env.NODE_ENV === "production") {
       console.log = function no_console() {};
@@ -52,7 +53,6 @@ export default {
     }
     this.$store.dispatch("CommonStore/getDistricts");
     window.addEventListener("resize", this.handleResize);
-    this.handleResize();
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
