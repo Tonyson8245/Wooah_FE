@@ -49,21 +49,13 @@ export default {
     yesno: Boolean,
   },
   data() {
-    return {};
+    return {
+      dialogState: false,
+    };
   },
   computed: {
-    dialogState() {
-      return this.$store.state.alertStore.dialogState;
-    },
     dialogComment() {
       return this.$store.state.alertStore.dialogComment;
-    },
-  },
-  watch: {
-    dialogState(a) {
-      if (!a) {
-        document.getElementById("html").removeAttribute("class");
-      }
     },
   },
 };

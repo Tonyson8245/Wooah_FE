@@ -76,12 +76,7 @@
                     type="button"
                     @click="FilterOpen('옵션')"
                   >
-                    <span
-                      v-if="
-                        Filterbar.condition[2] == `` &&
-                        Filterbar.option.length == 0
-                      "
-                      class="btn__name"
+                    <span v-if="Filterbar.condition[2] == ``" class="btn__name"
                       >옵션<i class="bi bi-caret-down-fill"
                     /></span>
                     <span v-else class="settedFilter btn__name">{{

@@ -17,7 +17,7 @@
     "bootstrap": "^5.1.3",
     "bootstrap-icons": "^1.8.1",
     "core-js": "^3.8.3",
-    "gitart-vue-dialog": "^2.0.5",
+    "gitart-vue-dialog": "^2.4.0",
     "infinite-loading-vue3": "^1.0.1",
     "logrocket": "^3.0.1",
     "mitt": "^3.0.0",
