@@ -9,19 +9,7 @@
     >
       {{ region }}
     </button>
-    <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-      <template v-for="(sido, i) in districtData" :key="i">
-        <span class="dropdown-header">{{ sido.name }}</span>
-        <a class="dropdown-item" @click="changeDistrict(sido, 0)"> 전체 </a>
-        <a
-          v-for="sigungu in districtData[i].sigungu"
-          :key="sigungu"
-          class="dropdown-item"
-          @click="changeDistrict(sido, sigungu)"
-          >{{ sigungu.name }}</a
-        >
-      </template>
-    </div> -->
+
     <GDialog v-model="dialogState" max-width="320">
       <transition name="fade">
         <div class="wrapper">
