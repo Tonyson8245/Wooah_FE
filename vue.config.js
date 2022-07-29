@@ -47,4 +47,27 @@ module.exports = {
   productionSourceMap: false,
 
   transpileDependencies: ["vue-meta"],
+
+  //indexpath 바꿔보기
+  pages: {
+    index: {
+      // entry for the page
+      entry: "src/main.js",
+      // the source template
+      template:
+        process.env.NODE_ENV === "production"
+          ? "src/index_production.html"
+          : "src/index_development.html", // 정식
+      // process.env.NODE_ENV === "development"
+      //   ? "public/index_development.html"
+      //   : "public/index_development.html", //테스트용
+      // output as dist/index.html
+      filename: "index.html",
+      // when using title option,
+      // template title tag needs to be <title><%= htmlWebpackPlugin.options.title %></title>
+      // chunks to include on this page, by default includes
+      // extracted common chunks and vendor chunks.
+      chunks: ["chunk-vendors", "chunk-common", "index"],
+    },
+  },
 };
