@@ -44,7 +44,42 @@
               <Detail />
             </div>
           </div>
-          <div class="result__outline" v-else-if="result != ``">
+
+          <div class="result__outline" v-else-if="noQuery != ``">
+            <div class="result__container">
+              <div class="result__header p-3">
+                <div class="d-flex title" style="align-items: center">
+                  <div class="me-auto bd-highlight">
+                    비교결과 {{ districttext }}
+                  </div>
+                  <div
+                    class="d-flex"
+                    style="align-items: center"
+                    @click="restart"
+                  >
+                    다시하기
+                    <img class="ms-1" src="@/assets/img/recheck.svg" alt="" />
+                  </div>
+                </div>
+                <div class="content">
+                  <div class="subtitle">내가 선택한 시술</div>
+                  <div class="estimate d-flex">
+                    <div>
+                      <img
+                        src="@/assets/img/nailicon.png"
+                        alt=""
+                        class="pe-2"
+                      />
+                    </div>
+                    <div class="align-self-center">선택한 시술이 없습니다.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-5">시술을 한 개 이상 선택하셔야 합니다.</div>
+            </div>
+          </div>
+          <div class="result__outline" v-else>
             <div class="result__container">
               <div class="result__header p-3">
                 <div class="d-flex title" style="align-items: center">
@@ -86,41 +121,10 @@
                   @click="clickShopItem(shop)"
                 />
               </div>
-              <div v-else class="p-5">조건에 맞는 샵이 없습니다.</div>
-            </div>
-          </div>
-          <div class="result__outline" v-else-if="noQuery != ``">
-            <div class="result__container">
-              <div class="result__header p-3">
-                <div class="d-flex title" style="align-items: center">
-                  <div class="me-auto bd-highlight">
-                    비교결과 {{ districttext }}
-                  </div>
-                  <div
-                    class="d-flex"
-                    style="align-items: center"
-                    @click="restart"
-                  >
-                    다시하기
-                    <img class="ms-1" src="@/assets/img/recheck.svg" alt="" />
-                  </div>
-                </div>
-                <div class="content">
-                  <div class="subtitle">내가 선택한 시술</div>
-                  <div class="estimate d-flex">
-                    <div>
-                      <img
-                        src="@/assets/img/nailicon.png"
-                        alt=""
-                        class="pe-2"
-                      />
-                    </div>
-                    <div class="align-self-center">선택한 시술이 없습니다.</div>
-                  </div>
-                </div>
+              <div v-else-if="result == ``" class="p-5">
+                결과를 가져오지 못했습니다
               </div>
-
-              <div class="p-5">시술을 한 개 이상 선택하셔야 합니다.</div>
+              <div v-else class="p-5">조건에 맞는 샵이 없습니다.</div>
             </div>
           </div>
         </div>

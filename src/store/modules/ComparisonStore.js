@@ -74,11 +74,10 @@ const ComparisonStore = {
         await comparisonApi
           .fetchPriceList(newQuery, body_part, payload.sido, payload.sigungu)
           .then(function (response) {
-            // context.commit("setResult", response.data);
             context.commit("setResult", response.data);
-            // console.log(response.data);
           })
-          .catch(function () {
+          .catch(function (error) {
+            console.log("실패" + error);
             context.commit("setResult", "");
           });
       }
