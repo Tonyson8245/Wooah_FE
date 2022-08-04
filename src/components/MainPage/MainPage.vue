@@ -243,8 +243,6 @@ export default {
   name: "MainPage",
   data() {
     return {
-      url: "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fnaverbooking-phinf.pstatic.net%2F20220124_272%2F1642992557576RPwQH_JPEG%2Fimage.jpg",
-
       settings: {
         itemsToShow: 2,
         snapAlign: "start",
