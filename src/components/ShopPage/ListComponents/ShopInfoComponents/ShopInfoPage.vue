@@ -27,8 +27,23 @@
             <!-- <pagination /> -->
           </template>
         </carousel>
-        <div class="title p-1">{{ ShopData.name }}</div>
-        <div class="container-fluid g-0 row tab mt-3">
+        <div class="title p-1">
+          <div>{{ ShopData.name }}</div>
+
+          <a
+            target="_blank"
+            class="btn btn-success btn-sm"
+            style="background: #21d78a; border: #21d78a"
+            v-bind:href="ShopData.reservation_link"
+            @click="
+              this.$gtag.event(`Click_naver_reserve`);
+              this.$gtag.event(`Click_naver_reserve_` + this.shopid);
+            "
+          >
+            네이버 예약</a
+          >
+        </div>
+        <div class="container-fluid g-0 row tab mt-1">
           <div
             class="col-4 btn btn-light"
             :style="TabStatus[0]"

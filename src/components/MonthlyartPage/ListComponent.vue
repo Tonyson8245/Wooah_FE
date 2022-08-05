@@ -5,8 +5,7 @@
         >{{ thumbnail.price_range }}만원 대</span
       >
       <div
-        class="more"
-        v-if="width > 400"
+        class="more d-none d-lg-block"
         @click="clickMore(thumbnail.price_range)"
       >
         <span class="me-1 pe-click">더보기</span
@@ -24,7 +23,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!(width > 576)" class="footer">
+    <div class="footer d-lg-none">
       <div class="more_btn btn">
         <div style="display: block" @click="clickMore(thumbnail.price_range)">
           더보기 <i class="bi bi-plus"></i>

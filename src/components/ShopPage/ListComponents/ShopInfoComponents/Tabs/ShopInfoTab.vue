@@ -2,8 +2,11 @@
   <div class="outline">
     <div class="p-2">
       <div class="title">샵 소개</div>
-      <div class="content p-2">
+      <div class="content p-2" v-if="ShopData.introduction">
         {{ ShopData.introduction }}
+      </div>
+      <div class="content p-2" v-else>
+        <span>샵 소개가 없습니다.</span>
       </div>
     </div>
     <div class="p-2">
