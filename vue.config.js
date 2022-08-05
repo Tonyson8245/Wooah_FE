@@ -36,7 +36,45 @@
 //   },
 // };
 
+const SitemapPlugin = require("sitemap-webpack-plugin").default;
+const paths = [
+  {
+    path: "/",
+    priority: 1.0,
+    changefreq: "yearly",
+  },
+  {
+    path: "/library",
+    priority: 1.0,
+    changefreq: "yearly",
+  },
+  {
+    path: "/shop",
+    priority: 1.0,
+    changefreq: "yearly",
+  },
+  {
+    path: "/monthlyart",
+    priority: 1.0,
+    changefreq: "yearly",
+  },
+  {
+    path: "/comparison",
+    priority: 1.0,
+    changefreq: "yearly",
+  },
+];
 module.exports = {
+  pluginOptions: {
+    sitemap: {
+      urls: ["https://example.com/", "https://example.com/about"],
+    },
+  },
+  configureWebpack: {
+    plugins: [new SitemapPlugin({ base: "https://www.woo-ah.co.kr/", paths })],
+  },
+  // Other exports here
+
   outputDir: "D:/응용 2단게/project/frontend-web-production/dist", // git 경로
   // outputDir: "D:/응용 2단게/project/frontend-web-production-test/dist", // test 경로
 
@@ -45,8 +83,6 @@ module.exports = {
   publicPath: process.env.NODE_ENV === "production" ? "/" : "/",
   lintOnSave: false,
   productionSourceMap: false,
-
-  transpileDependencies: ["vue-meta"],
 
   //indexpath 바꿔보기
   pages: {
@@ -63,10 +99,6 @@ module.exports = {
       //   : "public/index_development.html", //테스트용
       // output as dist/index.html
       filename: "index.html",
-      // when using title option,
-      // template title tag needs to be <title><%= htmlWebpackPlugin.options.title %></title>
-      // chunks to include on this page, by default includes
-      // extracted common chunks and vendor chunks.
       chunks: ["chunk-vendors", "chunk-common", "index"],
     },
   },
