@@ -714,7 +714,6 @@ export default {
       if (withTag) this.$store.commit("collectionStore/InitTag");
 
       console.log(`Reset`);
-      this.$store.dispatch("collectionStore/fetchPosts");
     },
     Visiblity(boolean) {
       if (boolean) {
