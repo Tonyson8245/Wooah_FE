@@ -27,16 +27,13 @@ Sentry.init({
       tracingOrigins: ["localhost", process.env.VUP_APP_URL, /^\//],
     }),
   ],
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
+
   tracesSampleRate: 1.0,
   enabled: process.env.NODE_ENV !== "development",
 });
 
-app.use(router);
-
 app
+  .use(router)
   .use(VueGtag, {
     config: {
       id: process.env.VUE_APP_G_ID, // develop

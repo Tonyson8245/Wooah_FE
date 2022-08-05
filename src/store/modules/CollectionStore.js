@@ -104,8 +104,11 @@ const CollectionStore = {
       } //태그가 있을경우
 
       if (context.state.completeFetch) {
+        console.log(page);
         context.commit("setnoResult", false);
         context.state.completeFetch = false; // 무한 페이지 로드를 막기위한 플래그
+        console.log(`로드`);
+
         await collectionApi
           .fetchPosts(page, unit, query)
           .then(function (response) {
@@ -113,6 +116,9 @@ const CollectionStore = {
               context.commit("increasePage");
               context.commit("setPosts", response.data);
               context.commit("changeNoPost", false);
+              if (response.data.length < 15) {
+                context.commit("setnoResult", true); // 15개 이하라서 보이지 않음
+              }
             }
             context.state.completeFetch = true; // 무한 페이지 로드를 막기위한 플래그
           })

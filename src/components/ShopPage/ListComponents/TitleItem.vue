@@ -4,32 +4,6 @@
       <span>{{ title }}</span>
     </div>
     <div class="col-6 region">
-      <!-- <div class="dropdown">
-        <button
-          class="btn dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          {{ region }}
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <template v-for="(sido, i) in districtData" :key="i">
-            <span class="dropdown-header">{{ sido.name }}</span>
-            <li>
-              <a class="dropdown-item" @click="changeDistrict(sido, 0)">
-                전체
-              </a>
-            </li>
-            <li v-for="sigungu in districtData[i].sigungu" :key="sigungu">
-              <a class="dropdown-item" @click="changeDistrict(sido, sigungu)">{{
-                sigungu.name
-              }}</a>
-            </li>
-          </template>
-        </ul>
-      </div> -->
       <region :font="'color:#6545A4; font-size:1.1em; padding:0 0 0 0'" />
     </div>
   </div>
