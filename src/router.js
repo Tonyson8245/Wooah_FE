@@ -18,14 +18,14 @@ const routes = [
     path: "",
     component: MainPage,
     meta: {
-      title: "우아 - 다양한 네일 정보을 한눈에!",
+      title: "우아 - 다양한 네일 정보를 한눈에!",
     },
   },
   {
     path: "/",
     component: MainPage,
     meta: {
-      title: "우아 - 다양한 네일 정보을 한눈에!",
+      title: "우아 - 다양한 네일 정보를 한눈에!",
     },
   },
   {

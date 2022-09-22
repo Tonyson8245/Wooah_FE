@@ -5,22 +5,26 @@
       <div class="info row" style="display: flex">
         <table class="col-lg-6 col-md-6">
           <tr>
-            <td><span class="title">상호</span>우아</td>
-            <td><span class="title">대표</span>윤지열</td>
-            <th colspan="2" style="font-weight: normal">
-              <span class="title">주소</span>서울시 동작구 사당로 16길7(07011)
-            </th>
+            <td>
+              <span class="title">상호</span>우아(우리들의 아름다움)<span
+                class="title"
+                >대표</span
+              >윤지열 <span class="title">주소</span
+              ><span>경기도 파주시 미래로 422, 103동 1401호</span>
+            </td>
+            <td></td>
+            <!-- <th colspan="2" style="font-weight: normal">
+             
+            </th> -->
           </tr>
           <tr>
             <td>
+              <span class="title">사업자등록번호</span>179-09-01778
               <span
                 class="link"
                 @click="onClickRedirect(`http://pf.kakao.com/_fRSHb/chat `)"
                 >1:1 문의</span
-              >
-            </td>
-            <td>
-              <span
+              ><span
                 class="link"
                 @click="
                   onClickRedirect(
@@ -28,10 +32,7 @@
                   )
                 "
                 >서비스이용약관</span
-              >
-            </td>
-            <td>
-              <span
+              ><span
                 class="link"
                 style="color: #aa00ff"
                 @click="
@@ -40,10 +41,7 @@
                   )
                 "
                 >개인정보처리방침</span
-              >
-            </td>
-            <td>
-              <span
+              ><span
                 class="link"
                 @click="
                   onClickRedirect(
@@ -53,6 +51,18 @@
                 >오픈소스라이센스</span
               >
             </td>
+            <!-- <td>
+             
+            </td>
+            <td>
+              
+            </td>
+            <td>
+              
+            </td>
+            <td>
+              
+            </td> -->
           </tr>
           <tr>
             <th colspan="4">Copyright Since 2022, Wooah All rights</th>
@@ -123,7 +133,7 @@ footer {
   text-align: center;
   font-size: 12px;
   margin: auto;
-  max-width: 60em;
+  max-width: 90em;
 
   @include tablet {
     max-width: 60em;
@@ -134,14 +144,16 @@ footer {
     margin: none;
   }
 }
+
 .title {
   font-weight: bold;
-
-  margin-right: 0.25em;
+  margin-inline: 0.5em;
+  white-space: pre;
 }
 .link {
   font-weight: bold;
-  margin-right: 0.125em;
+  margin-inline: 0.25em;
+  white-space: pre;
 }
 .footer-button {
   margin: 0.25em;
